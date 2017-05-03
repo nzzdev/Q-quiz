@@ -1,0 +1,44 @@
+{
+  "name": "@nzz/q-quiz",
+  "version": "1.0.0",
+  "description": "Q quiz",
+  "keywords": [
+    "storytelling",
+    "nzz"
+  ],
+  "homepage": "https://github.com/nzzdev/Q-quiz",
+  "bugs": {
+    "url": "https://github.com/nzzdev/Q-quiz/issues"
+  },
+  "license": "",
+  "contributors": [
+    {
+      "name": "Beni Buess",
+      "email": "beni.buess@nzz.ch"
+    },
+    {
+      "name": "Sharon Funke",
+      "email": "sharon.funke@nzz.ch"
+    }
+  ],
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nzzdev/Q-quiz.git"
+  },
+  "dependencies": {
+    "autoprefixer": "^6.7.7",
+    "chai": "^3.5.0",
+    "enjoi": "^2.1.0",
+    "hapi": "^16.1.0",
+    "hoek": "^4.1.0",
+    "inert": "^4.1.0",
+    "json-schema-faker": "^0.4.0",
+    "mocha": "^3.2.0",
+    "node-sass": "^4.3.0",
+    "svelte": "1.6.3"
+  }
+}
