@@ -1,0 +1,47 @@
+<h3 class="s-q-item__title">{{question.question}}</h3>
+<div>
+  <div class="q-quiz-input">
+    {{#if isMultipleChoice}}
+      <MultipleChoice question="{{question}}" />
+    {{/if}}
+    {{#if isNumberGuess}}
+      <NumberGuess question="{{question}}" />
+    {{/if}}
+    {{#if isMapPointGuess}}
+      <MapPointGuess question="{{question}}" />
+    {{/if}}
+  </div>
+  <div class="q-quiz-result"></div>
+  <div class="s-q-item__footer">
+    {{#if question.notes}}
+      <div class="s-q-item__footer__notes">
+        {{question.notes}}
+      </div>
+    {{/if}}
+  </div>
+</div>
+
+<script>
+  import MultipleChoice from './MultipleChoice.html';
+  import NumberGuess from './NumberGuess.html';
+  import MapPointGuess from './MapPointGuess.html';
+
+  export default {
+    computed: {
+      isMultipleChoice: (question) => {
+        return question.type === 'multipleChoice';
+      },
+      isNumberGuess: (question) => {
+        return question.type === 'numberGuess';
+      },
+      isMapPointGuess: (question) => {
+        return question.type === 'mapPointGuess';
+      }
+    },
+    components: {
+      MultipleChoice,
+      NumberGuess,
+      MapPointGuess
+    }
+  };
+</script>

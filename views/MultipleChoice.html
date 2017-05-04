@@ -1,0 +1,22 @@
+{{#each answers as answer}}
+<button class="q-quiz-answer-button q-quiz-answer-button--soft s-font-note s-color-gray-4" value="{{answer}}">
+  <span class="s-color-primary-6" style="pointer-events: none;">{{answer}}</span>
+</button>
+{{/each}}
+
+<script>
+  export default {
+    computed: {
+      answers: (question) => {
+        let answers = question.choices.concat(question.answer);
+        for (let i = answers.length; i; i--) {
+          const randomIndex = Math.floor(Math.random() * i);
+          const element = answers[i - 1];
+          answers[i - 1] = answers[randomIndex];
+          answers[randomIndex] = element;
+        }
+        return answers;
+      }
+    }
+  };  
+</script>

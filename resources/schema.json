@@ -6,92 +6,252 @@
       "title": "Titel",
       "type": "string"
     },
-    "subtitle": {
-      "title": "Untertitel",
-      "type": "string"
-    },
-    "sampleData": {
-      "title": "Beispiele",
+    "elements": {
+      "title": "Elemente",
       "type": "array",
       "Q:options": {
         "expandable": {
-          "itemLabelProperty": "name"
+          "itemLabelProperty": "type"
         }
       },
       "items": {
-        "type": "object",
-        "title": "Beispiel",
-        "properties": {
-          "name": {
-            "title": "Name",
-            "type": "string"
-          },
-          "value": {
-            "title": "Wert",
-            "type": "number",
-            "Q:options": {
-              "step": "0.1"
-            }
-          },
-          "compactObject": {
-            "title": "kompaktes Objekt",
-            "type": "object",
-            "Q:options": {
-              "compact": true
-            },
-            "properties": {
-              "url": {
-                "title": "Url",
-                "type": "string"
-              }
-            }
-          },
-          "status": {
-            "title": "Status",
+        "oneOf": [
+          {"$ref": "#/definitions/cover"},
+          {"$ref": "#/definitions/multipleChoice"},
+          {"$ref": "#/definitions/numberGuess"},
+          {"$ref": "#/definitions/mapPointGuess"},
+          {"$ref": "#/definitions/lastCard"}
+        ]
+      }
+    }
+  },   
+  "required": [
+    "title"
+  ],
+  "definitions": {
+    "cover": {
+      "type": "object",
+      "title": "Cover",
+      "properties": {
+        "id": {"$ref": "#/definitions/elementId"},
+        "type": {
+          "type": "string",
+          "default": "cover",
+          "enum": ["cover"],
+          "Q:options": {
+            "hideInEditor": true
+          }
+        },
+        "title": {
+          "type": "string",
+          "title": "Titel"
+        }
+      }
+    },
+    "multipleChoice": {
+      "type": "object",
+      "title": "Multiple Choice",
+      "properties": {
+        "id": {"$ref": "#/definitions/elementId"},
+        "type": {
+          "type": "string",
+          "default": "multipleChoice",
+          "enum": ["multipleChoice"],
+          "Q:options": {
+            "hideInEditor": true
+          }
+        },
+        "question": {
+          "type": "string",
+          "title": "Frage"
+        },
+        "choices": {
+          "type": "array",
+          "title": "Antwortmöglichkeiten",
+          "items": {
             "type": "string",
-            "default": "open",
-            "enum": [
-              "open",
-              "in progress",
-              "done"
-            ],
-            "Q:options": {
-              "enum_titles": [
-                "offen",
-                "in Bearbeitung",
-                "erledigt"
-              ]
+            "title": "Antwortmöglichkeit"
+          }
+        },
+        "answer": {
+          "type": "string",
+          "title": "Korrekte Antwort"
+        },
+        "answerText": {
+          "type": "string",
+          "title": "Ausformulierte Antwort"
+        },
+        "notes": {
+          "type": "string",
+          "title": "Anmerkungen"
+        },
+        "image": {"$ref": "#/definitions/image"},
+        "articleRecommendations": {"$ref": "#/definitions/articleRecommendations"}
+      }
+    },
+    "numberGuess": {
+      "type": "object",
+      "title": "Zahl schätzen",
+      "properties": {
+        "id": {"$ref": "#/definitions/elementId"},
+        "type": {
+          "type": "string",
+          "default": "numberGuess",
+          "enum": ["numberGuess"],
+          "Q:options": {
+            "hideInEditor": true
+          }
+        },
+        "question": {
+          "type": "string",
+          "title": "Frage"
+        },
+        "unit": {
+          "type": "string",
+          "title": "Einheit Plural"
+        },
+        "unit_singular": {
+          "type": "string",
+          "title": "Einheit Singular (nur falls abweichend von Einheit Plural)"
+        },
+        "min": {
+          "type": "number",
+          "title": "Minimalwert"
+        },
+        "max": {
+          "type": "number",
+          "title": "Maximalwert"
+        },
+        "step": {
+          "type": "number",
+          "title": "Grösse der Zwischenschritte"
+        },
+        "answer": {
+          "type": "string",
+          "title": "Korrekte Antwort"
+        },
+        "answerText": {
+          "type": "string",
+          "title": "Ausformulierte Antwort"
+        },
+        "notes": {
+          "type": "string",
+          "title": "Anmerkungen"
+        },
+        "image": {"$ref": "#/definitions/image"},
+        "articleRecommendations": {"$ref": "#/definitions/articleRecommendations"}
+      }
+    },
+    "mapPointGuess": {
+      "type": "object",
+      "title": "Ort schätzen",
+      "properties": {
+        "id": {"$ref": "#/definitions/elementId"},
+        "type": {
+          "type": "string",
+          "default": "mapPointGuess",
+          "enum": ["mapPointGuess"],
+          "Q:options": {
+            "hideInEditor": true
+          }
+        },
+        "question": {
+          "type": "string",
+          "title": "Frage"
+        },
+        "answer": {
+          "type": "object",
+          "title": "Korrekte Antwort",
+          "properties": {
+            "lat": {
+              "type": "number"
+            },
+            "lng": {
+              "type": "number"
             }
+          }
+        },
+        "bbox": {
+          "type": "string"
+        },
+        "answerText": {
+          "type": "string",
+          "title": "Ausformulierte Antwort"
+        },
+        "notes": {
+          "type": "string",
+          "title": "Anmerkungen"
+        },
+        "image": {"$ref": "#/definitions/image"},
+        "articleRecommendations": {"$ref": "#/definitions/articleRecommendations"}
+      }
+    },
+    "lastCard": {
+      "type": "object",
+      "title": "letzte Seite",
+      "properties": {
+        "id": {"$ref": "#/definitions/elementId"},
+        "type": {
+          "type": "string",
+          "default": "lastCard",
+          "enum": ["lastCard"],
+          "Q:options": {
+            "hideInEditor": true
+          }
+        },
+        "title": {
+          "type": "string",
+          "title": "Titel"
+        },
+        "text": {
+          "type": "string",
+          "title": "Text"
+        },
+        "quizLink": {
+          "type": "string",
+          "title": "Link zu Anschlussquiz"
+        },
+        "quizTitle": {
+          "type": "string",
+          "title": "Titel Anschlussquiz"
+        },
+        "articleRecommendations": {"$ref": "#/definitions/articleRecommendations"}
+      }
+    },
+    "elementId": {
+      "type": "string",
+      "title": "ID",
+      "Q:options": {
+        "hideInEditor": true
+      }
+    },
+    "articleRecommendations": {
+      "type": "array",
+      "title": "Artikelempfehlungen",
+      "items": {
+        "type": "object",
+        "title": "Artikelempfehlung",
+        "properties": {
+          "text": {
+            "type": "string",
+            "title": "Anmoderation"
+          },
+          "articleId": {
+            "type": "string",
+            "title": "Artikel ID"
           }
         }
       }
     },
-    "source": {
-      "title": "Quelle",
+    "image": {
       "type": "object",
+      "title": "Bild",
       "properties": {
-        "text": {
-          "title": "Text",
-          "type": "string"
-        },
-        "link": {
-          "Q:type": "link",
-          "title": "Link",
-          "type": "object",
-          "properties": {
-            "url": {
-              "title": "Url",
-              "type": "string"
-            },
-            "isValid": {
-              "type": "boolean"
-            }
-          }
+        "url": {
+          "type": "string",
+          "title": "URL zum Bild"
         }
       }
     }
-  },
-  "required": [
-    "title"
-  ]
+  }
 }

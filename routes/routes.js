@@ -1,9 +1,5 @@
-const htmlStatic = require('./rendering-info/html-static.js');
-const stylesheet = require('./stylesheet.js');
-const schema = require('./schema.js');
-
 module.exports = [
-	htmlStatic,
-	stylesheet,
-	schema
-]
+	require('./rendering-info/html-js.js'),
+	require('./stylesheet.js'),
+	require('./schema.js')
+].concat(require('./scripts.js'))

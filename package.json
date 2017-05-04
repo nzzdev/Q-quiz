@@ -33,12 +33,22 @@
     "autoprefixer": "^6.7.7",
     "chai": "^3.5.0",
     "enjoi": "^2.1.0",
+    "forever": "^0.15.3",
     "hapi": "^16.1.0",
     "hoek": "^4.1.0",
     "inert": "^4.1.0",
     "json-schema-faker": "^0.4.0",
+    "jspm": "^0.17.0-beta.41",
     "mocha": "^3.2.0",
     "node-sass": "^4.3.0",
     "svelte": "1.6.3"
+  },
+  "jspm": {
+    "name": "@nzz/q-quiz",
+    "main": "@nzz/q-quiz.js",
+    "dependencies": {},
+    "devDependencies": {
+      "plugin-babel": "npm:systemjs-plugin-babel@^0.0.21"
+    }
   }
 }

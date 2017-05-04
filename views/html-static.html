@@ -1,31 +1,92 @@
-<!-- tiny example to show how svelte templating works -->
-<Header title='{{title}}' subtitle='{{subtitle}}'/>
-<div class="renderer-sum">Sum of all values: {{sumValues}}</div>
-  {{#each sampleData as sample}}
-  <div class="renderer-data-entry">
-    <div>{{sample.name || ''}}</div>
-    <div>{{sample.status || ''}}</div>
+<div class="q-quiz">
+  <Header />
+
+  <div class="q-quiz-multi-container" style="width:{{elementCount * 100}}%;">
+    {{#if cover}}
+      <div class="q-quiz-element-container q-quiz__cover s-color-primary-1 q-quiz-element-container--is-active" style="width: {{elementWidth}}%;">
+        <h3 class="q-quiz__cover-title s-font-title">{{cover.title}}</h3>
+        <button class="q-quiz-button">
+          <div class="q-quiz-button__icon q-quiz-button__icon--large s-color-primary-6">
+            <svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg">
+              <g fill="none" fill-rule="evenodd">
+                <path fill="#FFF" d="M9.8 22.4l1.4 1.4L21 14l-9.8-9.8-1.4 1.4 8.4 8.4z"></path>
+              </g>
+            </svg>
+          </div>
+          <div class="s-font-note-s">Das Quiz starten</div>
+        </button>
+      </div>
+    {{/if}}
+    {{#each questions as question, index}}
+      {{#if !cover && index === 0}}
+        <div class="q-quiz-element-container q-quiz-element-container--is-active" style="width: {{elementWidth}}%;">
+          <Question question="{{question}}" />
+        </div>
+      {{/if}}
+      <div class="q-quiz-element-container q-quiz-element-container--is-inactive" style="width: {{elementWidth}}%;">
+        <Question question="{{question}}" />
+      </div>
+    {{/each}}
+    {{#if lastCard}}
+      <div class="q-quiz-element-container q-quiz__last-card s-color-primary-1 q-quiz-element-container--is-inactive" style="width: {{elementWidth}}%;">
+
+      </div>
+    {{/if}}
   </div>
-  {{/each}}
-<Footer source='{{source}}' />
+
+</div>
 
 <script>
   import Header from './Header.html';
-  import Footer from './Footer.html';
+  import Question from './Question.html';
   
   export default {
     computed: {
-      sumValues: (sampleData) => {
-        return sampleData
-          .map(sample => sample.value || 0)
-          .reduce((sum, sampleValue) => {
-            return sum + sampleValue;
-          }, 0);
+      elements: (item) => {
+        return item.elements;
+      },
+      elementCount: (elements) => {
+        return elements.length;
+      },
+      elementWidth: (elementCount) => {
+        if (elementCount > 0) {
+          return 100 / elementCount;
+        }
+        return 0;
+      },
+      cover: (elements) => {
+        const coverElements = elements.filter(element => {
+          return element.type === 'cover';
+        });
+        console.log('coverElements: ', coverElements);
+        if (coverElements.length > 0) {
+          return coverElements[0];
+        } else {
+          return undefined;
+        }
+      },
+      lastCard: (elements) => {
+        const lastCardElements = elements.filter(element => {
+          return element.type === 'lastCard';
+        });
+        console.log('lastCardElements: ', lastCardElements);
+        if (lastCardElements.length > 0) {
+          return lastCardElements[0];
+        } else {
+          return undefined;
+        }
+      },
+      questions: (elements) => {
+        const questionTypes = ['multipleChoice', 'numberGuess', 'mapPointGuess'];
+        const questionElements = elements.filter(element => {
+          return questionTypes.includes(element.type);
+        })
+        return questionElements;
       }
     },
     components: {
       Header,
-      Footer
+      Question
     }
   };
 </script>

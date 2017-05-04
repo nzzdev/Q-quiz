@@ -7,40 +7,103 @@
     <meta name="description" content="">
     <link rel="stylesheet" href="https://service.sophie.nzz.ch/bundle/sophie-q@^1,sophie-font@^1,sophie-color@^1,sophie-viz-color@^1[diverging-6].css">
     <script src="https://rawgit.com/filamentgroup/loadCSS/master/src/loadCSS.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/loadjs/3.5.0/loadjs.min.js"></script>
   </head>
   <body>
     <div id="container">
-      <div id="renderer"></div>
+      <div id="quiz"></div>
     </div>
     <script>
       let data = {
         "item": {
-          "title": "Demo Renderer Skeleton",
-          "sampleData": [
+          "title": "Literatur-Quiz",
+          "elements": [
             {
-              "name": "Name 1",
-              "value": 12,
-              "status": "open"
+              "title": "Wie gut kennen Sie die Weltliteratur?",
+              "type": "cover",
+              "id": "24e0125fe3583db8016ae44c2df47a64-1492782826375-7417"
             },
             {
-              "name": "Name 2"
+              "id": "24e0125fe3583db8016ae44c2df47a64-1492782862005-3923",
+              "question": "Wie heisst der Autor der \"Odyssee\"?",
+              "type": "multipleChoice",
+              "choices": [
+                "James Joyce",
+                "Friedrich Dürrenmatt",
+                "Ernst Jandl",
+                "Derek Walcott"
+              ],
+              "answer": "Homer",
+              "answerText": "Homer hatte die \"Odyssee\" gesungen, von James Joyce stammte der \"Ulysses\", und Derek Walcott hatte das Epos \"Omeros\" geschrieben.",
+              "notes": "",
+              "articleRecommendations": [
+                {
+                  "text": "Der karibische Dichter Derek Walcott hatte 1992 den Literaturnobelpreis erhalten und ist im letzten März 87-jährig gestorben:",
+                  "articleId": "ld.152029"
+                }
+              ]
             },
             {
-              "name": "Name 3",
-              "value": 7
+              "id": "24e0125fe3583db8016ae44c2df47a64-1492783275801-3327",
+              "question": "Welchen Preis erzielte im Jahr 2000 die Auktion der ersten Manuskript-Seite von Marcel Prousts \"A la recherche du temps perdu\"?",
+              "type": "numberGuess",
+              "unit": "£",
+              "min": "100000",
+              "max": "1000000",
+              "step": "50",
+              "answer": "663750",
+              "answerText": "Die Manuskript-Seite wurde im Juli 2000 bei Christie's für 663'750 Pfund versteigert.",
+              "notes": "",
+              "articleRecommendations": [
+                {
+                  "text": "Marcel Proust war übrigens auch ein grandioser Briefschreiber:",
+                  "articleId": "ld.144636"
+                }
+              ]
+            },
+            {
+              "id": "24e0125fe3583db8016ae44c2df47a64-1492786169038-1451",
+              "question": "Welches ist das meist verkaufte und in die meisten Sprachen übersetzte Buch der Schweizer Literaturgeschichte?",
+              "type": "multipleChoice",
+              "choices": [
+                "\"Der grüne Heinrich\" von Gottfried Keller",
+                "\"Anne Bäbi Jowäger\" von Jeremias Gotthelf",
+                "\"Stiller\" von Max Frisch"
+              ],
+              "answer": "\"Heidi\" von Johanna Spyri",
+              "answerText": "Johanna Spyris 1880 erschienenes Jugendbuch \"Heidi\" wurde in mehr als fünfzig Sprachen übersetzt.",
+              "notes": "",
+              "articleRecommendations": []
+            },
+            {
+              "id": "24e0125fe3583db8016ae44c2df47a64-1492786574258-7503",
+              "question": "In welcher Stadt spielt James Joyces \"Ulysses\"?",
+              "type": "mapPointGuess",
+              "answer": {
+                "lat": 53.33928,
+                "lng": -6.281314
+              },
+              "answerText": "\"Ulysses\" von James Joyce spielt am 16. Juni 1904 in Dublin.",
+              "notes": "",
+              "articleRecommendations": [],
+              "pointLabel": "Dublin",
+              "bbox": "-13.710937500000002,42.42345651793833,28.4765625,57.51582286553883"
             }
-          ],
-          "source": {
-            "text": "NZZ Storytelling",
-            "link": {
-              "url": "https://nzz.ch/storytelling",
-              "isValid": true
-            }
-          }
+          ]
         }
       };
 
-      fetch(`http://localhost:3000/rendering-info/html-static?updatedDate=2017-02-09T17:16:49.120Z`, {
+      function loadAllScripts(scripts, index, callback) {
+        if (scripts[index] && scripts[index].url) {
+          loadjs(scripts[index].url, () => {
+            loadAllScripts(scripts, index + 1, callback)
+          })
+        } else {
+          callback();
+        }
+      }
+
+      fetch(`http://localhost:3000/rendering-info/html-js`, {
           method: 'POST',
           body: JSON.stringify(data),
           headers: {
@@ -57,7 +120,29 @@
             }
             loadCSS(stylesheet.url)
           })
-          document.getElementById('renderer').innerHTML = data.markup;
+          document.getElementById('quiz').innerHTML = data.markup;
+
+          if (!data.scripts) {
+            return;
+          }
+          data.scripts = data.scripts
+            .map(script => {
+              if (script.name) {
+                script.url = `http://${window.location.hostname}:3000/script/${script.name}`
+              }
+              return script;
+            })
+          let urlScripts = data.scripts
+            .filter(script => script.url)
+          let contentScripts = data.scripts
+            .filter(script => script.content)
+          loadAllScripts(urlScripts, 0, () => {
+            contentScripts.forEach(script => {
+              let scriptElement = document.createElement('script');
+              scriptElement.innerHTML = script.content;
+              document.getElementById('map').appendChild(scriptElement);
+            })
+          })
         })
     </script>
   </body>

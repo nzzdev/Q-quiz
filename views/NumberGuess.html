@@ -1,0 +1,43 @@
+<div class="s-input-range-container">
+  <div class="s-input-range-position-label-container">
+    <div class="s-input-range-position-label s-font-title-xs s-color-primary-6">
+      <!-- value and position has to be set later on -->
+    </div>
+  </div>
+  <input type="range" class="s-input-range s-input-range--large" min="{{question.min}}" max="{{question.max}}" step="{{question.step}}" value="{{intialValue}}" />
+  <div class="s-input-range-min s-font-note-s s-font-note-s--light">
+    {{labelMin}}  
+  </div>
+  <div class="s-input-range-max s-font-note-s s-font-note-s--light">
+    {{labelMax}}
+  </div>
+</div>
+<button class="q-quiz-answer-button s-font-note s-color-primary-6">
+  <span class="s-color-gray-1">Antworten</span>
+</button>
+
+<script>
+  export default {
+    computed: {
+      initialValue: (question) => {
+        return (parseFloat(question.max) - parseFloat(question.min)) / 2 + parseFloat(question.min);
+      },
+      labelMin: (question) => {
+        let min = question.min !== undefined ? question.min : '';
+        let unit = question.unit;
+        if (parseFloat(min) === 1 && question.unit_singular) {
+          unit = question.unit_singular;
+        }
+        return min + ' ' + unit;
+      },
+      labelMax: (question) => {
+        let max = question.max !== undefined ? question.max : '';
+        let unit = question.unit;
+        if (parseFloat(max) === 1 && question.unit_singular) {
+          unit = question.unit_singular;
+        }
+        return max + ' ' + unit;
+      }
+    }
+  }
+</script>
