@@ -14,7 +14,7 @@ const schema = Enjoi(schemaString);
 const hashMap = require(`${scriptsDir}/hashMap.json`);
 
 require('svelte/ssr/register');
-const staticTemplate = require(viewsDir + 'html-static.html');
+const staticTemplate = require(viewsDir + 'html-js.html');
 
 module.exports = {
 	method: 'POST',

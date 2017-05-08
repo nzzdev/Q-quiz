@@ -39,6 +39,11 @@
   margin-left: auto;
 }
 
+.q-quiz-button--hidden {
+  visibility: hidden;
+  pointer-events: none;
+}
+
 .q-quiz-button__icon {
   background: currentColor;
   width: 44px;

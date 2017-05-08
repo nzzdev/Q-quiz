@@ -1,4 +1,7 @@
 <h3 class="s-q-item__title">{{question.question}}</h3>
+{{#if question.image}}
+  <img src="{{question.image.url}}" />
+{{/if}}
 <div>
   <div class="q-quiz-input">
     {{#if isMultipleChoice}}

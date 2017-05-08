@@ -1,9 +1,25 @@
-<!-- TODO: header of quiz which shows Frage x/n and link to next question -->
-<header class="q-quiz-header q-quiz-multi-header">
-  <div class="q-quiz-header__Title s-font-note-s"></div>
-  <button class="q-quiz-button q-quiz-button--horizontal s-font-note-s">
+<header class="q-quiz-header q-quiz-multi-header {{headerClassAttribute}}">
+  <div class="q-quiz-header__title s-font-note-s">
+    {{#if !hasCover}}
+      Frage 1 / {{numberQuestions}}
+    {{/if}}
+  </div>
+  <button class="q-quiz-button q-quiz-button--horizontal s-font-note-s {{buttonClassAttribute}}">
     <div class="q-quiz-button__content">
       <span class="s-color-primary-7">Nächste Frage</span>
     </div>
   </button>
 </header>
+
+<script>
+  export default {
+    computed: {
+      headerClassAttribute: (hasCover) => {
+        return hasCover ? 'q-quiz-header--is-empty' : '';
+      },
+      buttonClassAttribute: (hasCover) => {
+        return hasCover ? 'q-quiz-button--hidden' : '';
+      }
+    }
+  };
+</script>
