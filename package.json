@@ -23,7 +23,8 @@
   ],
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha"
+    "test": "./node_modules/mocha/bin/mocha",
+    "build": "node tasks/build.js"
   },
   "repository": {
     "type": "git",

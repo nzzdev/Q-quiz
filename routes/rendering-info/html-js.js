@@ -32,22 +32,57 @@ module.exports = {
     cors: true
 	},
 	handler: function(request, reply) {
-    let renderingData = {
-      item: request.payload.item
+
+    let systemConfigScript = `
+        System.config({
+          map: {
+            "q-quiz/quiz.js": "${request.payload.toolRuntimeConfig.toolBaseUrl}/script/${hashMap['quiz.js']}"
+          }
+        });
+    `;
+
+    const id = request.payload.item._id || (Math.random() * 10000).toFixed();
+    const quizContainerId = `q-quiz-${id}`;
+
+    let data = {
+      correctAnswers: []
     }
-		let data = {
+
+    let loaderScript = `
+        System.import('q-quiz/quiz.js')
+          .then(function(module) {
+            return module.display(${JSON.stringify(data)}, document.querySelector('#${quizContainerId}'))
+          })
+          .catch(function(error) {
+            console.log(error)
+          });
+      `;
+
+    let renderingData = {
+      item: request.payload.item,
+      quizContainerId: quizContainerId
+    }
+    let renderingInfo = {
+      loaderConfig: {
+        polyfills: ['Promise'],
+        loadSystemJs: 'full'
+      },
 			stylesheets: [
 				{
 					name: 'default'
 				}
 			], 
       scripts: [
+				{
+          content: systemConfigScript,
+          loadOnce: true
+        },
         {
-          name: `${hashMap['quiz.js']}`
+          content: loaderScript
         }
       ],
 			markup: staticTemplate.render(renderingData)
 		}
-		return reply(data);
+		return reply(renderingInfo);
 	}
 }
