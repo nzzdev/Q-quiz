@@ -1,7 +1,6 @@
 <div class="q-quiz s-color-gray-4" id="{{ quizContainerId }}">
   <Header hasCover="{{hasCover}}" numberQuestions="{{numberQuestions}}"/>
-
-  <div class="q-quiz-multi-container" style="width:{{elementCount * 100}}%;">
+  <div class="q-quiz-container" style="width:{{elementCount * 100}}%;">
     {{#if cover}}
       <div class="q-quiz-element-container q-quiz__cover s-color-primary-1 q-quiz-element-container--is-active" style="width: {{elementWidth}}%;">
         <h3 class="q-quiz__cover-title s-font-title">{{cover.title}}</h3>
@@ -57,6 +56,9 @@
     computed: {
       elements: (item) => {
         return item.elements;
+      },
+      checked: (item) => {
+        return '';
       },
       elementCount: (elements) => {
         return elements.length;

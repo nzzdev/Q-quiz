@@ -44,8 +44,34 @@ module.exports = {
     const id = request.payload.item._id || (Math.random() * 10000).toFixed();
     const quizContainerId = `q-quiz-${id}`;
 
+    const item = request.payload.item;
+    const coverElements = item.elements.filter(element => {
+      return element.type === 'cover';
+    });
+
+    const lastCardElements = item.elements.filter(element => {
+      return element.type === 'lastCard';
+    });
+
+    const questionElements = item.elements.filter(element => {
+      return coverElements.indexOf(element) === -1 && lastCardElements.indexOf(element) === -1;
+    });
+
+    const correctAnswers = questionElements.map(element => {
+        return {
+          id: element.id,
+          type: element.type,
+          answer: element.answer,
+          answerText: element.answerText
+        }
+      });
+
     let data = {
-      correctAnswers: []
+      correctAnswers: correctAnswers,
+      hasCover: coverElements.length > 0,
+      hasLastCard: lastCardElements.length > 0,
+      numberElements: item.elements.length,
+      numberQuestions: questionElements.length
     }
 
     let loaderScript = `
@@ -59,7 +85,7 @@ module.exports = {
       `;
 
     let renderingData = {
-      item: request.payload.item,
+      item: item,
       quizContainerId: quizContainerId
     }
     let renderingInfo = {

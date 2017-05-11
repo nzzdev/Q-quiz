@@ -44,7 +44,8 @@
   opacity: 0;
 }
 
-.q-quiz-input {
+.q-quiz-input,
+.q-quiz-result {
   &.state-hidden {
     visibility: hidden;
     overflow: hidden;
@@ -157,7 +158,7 @@
 @import "./numberGuess";
 @import "./mapPointGuess";
 @import "./multipleChoice";
-@import "./q-quiz-multi-header";
-@import "./q-quiz-multi-container";
+@import "./q-quiz-header";
+@import "./q-quiz-container";
 @import "./cover";
 @import "./q-quiz-button";

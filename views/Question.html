@@ -3,18 +3,15 @@
   <img src="{{question.image.url}}" />
 {{/if}}
 <div>
-  <div class="q-quiz-input">
-    {{#if isMultipleChoice}}
-      <MultipleChoice question="{{question}}" />
-    {{/if}}
-    {{#if isNumberGuess}}
-      <NumberGuess question="{{question}}" />
-    {{/if}}
-    {{#if isMapPointGuess}}
-      <MapPointGuess question="{{question}}" />
-    {{/if}}
-  </div>
-  <div class="q-quiz-result"></div>
+  {{#if isMultipleChoice}}
+    <MultipleChoice question="{{question}}" />
+  {{/if}}
+  {{#if isNumberGuess}}
+    <NumberGuess question="{{question}}" />
+  {{/if}}
+  {{#if isMapPointGuess}}
+    <MapPointGuess question="{{question}}" />
+  {{/if}}
   <div class="s-q-item__footer">
     {{#if question.notes}}
       <div class="s-q-item__footer__notes">

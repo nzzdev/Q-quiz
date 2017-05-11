@@ -1,61 +1,34 @@
-const correctAnswers = [
-  {
-    id: "24e0125fe3583db8016ae44c2df47a64-1492782862005-3923",
-    answer: "Homer",
-    answerText: "Homer hatte die \"Odyssee\" gesungen, von James Joyce stammte der \"Ulysses\", und Derek Walcott hatte das Epos \"Omeros\" geschrieben."
-  },
-  {
-    id: "24e0125fe3583db8016ae44c2df47a64-1492783275801-3327",
-    answer: "663750",
-    answerText: "Die Manuskript-Seite wurde im Juli 2000 bei Christie's für 663'750 Pfund versteigert."
-  },
-  {
-    id: "24e0125fe3583db8016ae44c2df47a64-1492786169038-1451",
-    answer: "\"Heidi\" von Johanna Spyri",
-    answerText: "Johanna Spyris 1880 erschienenes Jugendbuch \"Heidi\" wurde in mehr als fünfzig Sprachen übersetzt."
-  },
-  {
-    id: "24e0125fe3583db8016ae44c2df47a64-1492786574258-7503",
-    answer: {
-      "lat": 53.33928,
-      "lng": -6.281314
-    },
-    answerText: "\"Ulysses\" von James Joyce spielt am 16. Juni 1904 in Dublin."
-  }
-]
+const checkmark = '<svg class="q-quiz-result__answer__checkmark s-viz-color-three-5" width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path fill="none" d="M0 12V0h16v16H0z"/><path d="M0 9l5 5L16 3l-2-2-9 9-3-3-2 2z" fill="currentColor"/></g></svg>';
+const crossmark = '<svg class="q-quiz-result__answer__checkmark s-viz-color-six-5" width="16" height="16" viewBox="0 0 16 16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path fill="none" d="M0 12V0h16v16H0z"/><path fill="currentColor" d="M8 10l-5 5-2-2 5-5-5-5 2-2 5 5 5-5 2 2-5 5 5 5-2 2-5-5z"/></g></svg>';
 
-let quiz = document.getElementsByClassName('q-quiz')[0];
-let header = quiz.querySelector('.q-quiz-header');
+let header;
+let quizContainer;
+let numberElements;
+let numberQuestions;
+let hasCover;
+let hasLastCard;
 
-const numberQuestions = correctAnswers.length;
-let numberElements = numberQuestions;
-
-// how to encapsulate from other quizzes?
-let multiQuizContainerElement = document.getElementsByClassName('q-quiz-multi-container')[0];
-let coverCard = multiQuizContainerElement.querySelector('.q-quiz__cover');
-let lastCard = multiQuizContainerElement.querySelector('.q-quiz__last-card');
-let currentPosition = 0;
-const hasCover = coverCard !== undefined && coverCard !== null;
-const hasLastCard = lastCard !== undefined && lastCard !== null;
-if (hasCover) {
-  numberElements++;
-}
-if (hasLastCard) {
-  numberElements++;
+function initValues(data, quizRootElement) {
+  header = quizRootElement.querySelector('.q-quiz-header');
+  quizContainer = quizRootElement.querySelector('.q-quiz-container');
+  numberElements = data.numberElements;
+  numberQuestions = data.numberQuestions;
+  hasCover = data.hasCover;
+  hasLastCard = data.hasLastCard;
 }
 
 function setPosition(position) {
-  multiQuizContainerElement.style.transform = `translateX(${position * -100/numberElements}%)`;
-  multiQuizContainerElement.style.webkitTransform = `translateX(${position * -100/numberElements}%)`;
-  let multiQuizElements = multiQuizContainerElement.children;
+  quizContainer.style.transform = `translateX(${position * -100 / numberElements}%)`;
+  quizContainer.style.webkitTransform = `translateX(${position * -100 / numberElements}%)`;
+  let quizElements = quizContainer.querySelectorAll('.q-quiz-element-container');
 
-  for (let i = 0; i < multiQuizElements.length; i++) {
+  for (let i = 0; i < quizElements.length; i++) {
     if (i === position) {
-      multiQuizElements.item(i).classList.remove('q-quiz-element-container--is-inactive')
-      multiQuizElements.item(i).classList.add('q-quiz-element-container--is-active')
+      quizElements.item(i).classList.remove('q-quiz-element-container--is-inactive')
+      quizElements.item(i).classList.add('q-quiz-element-container--is-active')
     } else {
-      multiQuizElements.item(i).classList.remove('q-quiz-element-container--is-active')
-      multiQuizElements.item(i).classList.add('q-quiz-element-container--is-inactive')
+      quizElements.item(i).classList.remove('q-quiz-element-container--is-active')
+      quizElements.item(i).classList.add('q-quiz-element-container--is-inactive')
     }
   }
 }
@@ -81,29 +54,83 @@ function showHeader() {
   header.querySelector('.q-quiz-button').classList.remove('q-quiz-button--hidden');
 }
 
-if (hasCover) {
-  let quizStartButton = multiQuizContainerElement.querySelector('.q-quiz-button');
-  quizStartButton.addEventListener('click', function(event) {
-    currentPosition++;
-    setPosition(currentPosition);
-    changeHeader(currentPosition);
-    showHeader();
+// todo: different handling for different question types
+function handleAnswer(correctAnswer) {
+  const activeQuestion = quizContainer.querySelector('.q-quiz-element-container--is-active');
+  if (correctAnswer.type === 'multipleChoice') {
+    handleMultipleChoice(correctAnswer, activeQuestion);
+  } else if (correctAnswer.type === 'numberGuess') {
+
+  } else if (correctAnswer.type === 'mapPointGuess') {
+    
+  }
+}
+
+function handleMultipleChoice(correctAnswer, activeQuestion) {
+  let answerButtons = activeQuestion.querySelectorAll('.q-quiz-answer-button');
+  answerButtons.forEach(answerButton => {
+    answerButton.addEventListener('click', function(event) {
+      activeQuestion.querySelector('.q-quiz-input').classList.add('state-hidden');
+      activeQuestion.querySelector('.q-quiz-result').classList.remove('state-hidden');
+      activeQuestion.querySelector('.q-quiz-result').classList.add('state-visible');
+      activeQuestion.querySelectorAll('.q-quiz-result__answer > span').forEach(element => {
+        if (element.textContent === correctAnswer.answer) {
+          element.classList.add('s-font-note--strong', 's-viz-color-three-5');
+
+          let correctAnswerElement = document.createElement('span');
+          correctAnswerElement.classList.add('s-viz-color-three-5');
+          correctAnswerElement.innerText = "korrekte Antwort";
+          element.parentNode.insertBefore(correctAnswerElement, element.nextSibling);
+
+          if (correctAnswer.answer === event.target.textContent) {
+            let checkmarkElement = document.createElement('span');
+            checkmarkElement.innerHTML = checkmark;
+            element.parentNode.insertBefore(checkmarkElement, element);
+          }
+        } else {
+          if (element.textContent === event.target.textContent) {
+            let crossmarkElement = document.createElement('span');
+            crossmarkElement.innerHTML = crossmark;
+            element.parentNode.insertBefore(crossmarkElement, element);
+            element.classList.add('s-font-note--strong', 's-viz-color-six-5');
+
+            let wrongAnswerElement = document.createElement('span');
+            wrongAnswerElement.classList.add('s-viz-color-six-5');
+            wrongAnswerElement.innerText = "falsche Antwort";
+            element.parentNode.insertBefore(wrongAnswerElement, element.nextSibling);
+          } else {
+            element.classList.add('s-font-note--light');
+          }
+        }
+      });
+    })
   })
 }
 
-let nextQuestionButton = header.querySelector('.q-quiz-button');
-nextQuestionButton.addEventListener('click', function(event) {
-  currentPosition++;
-  setPosition(currentPosition);
-  changeHeader(currentPosition);
-})
+export function display(data, quizRootElement) {
+  initValues(data, quizRootElement);
+  let currentPosition = 0;
+  let offset = 0;
 
+  if (hasCover) {
+    // maybe better solution for non-question elements (differently build data object?)
+    offset = -1;
+    let quizStartButton = quizContainer.querySelector('.q-quiz-button');
+    quizStartButton.addEventListener('click', function(event) {
+      currentPosition++;
+      setPosition(currentPosition);
+      changeHeader(currentPosition);
+      showHeader();
+      handleAnswer(data.correctAnswers[currentPosition + offset]);
+    });
+  }
 
-export function display(data, element) {
-  console.log(data);
-  console.log(element);
+  let nextQuestionButton = header.querySelector('.q-quiz-button');
+  nextQuestionButton.addEventListener('click', function(event) {
+    currentPosition++;
+    setPosition(currentPosition);
+    changeHeader(currentPosition);
+    handleAnswer(data.correctAnswers[currentPosition + offset]);
+  })
 }
 
-
-// endpoint to fetch json of correct answers
-// and then do fancy stuff with it :)

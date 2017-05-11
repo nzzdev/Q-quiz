@@ -14,6 +14,8 @@
 
 .q-quiz-result__multiple-choice-bar {
   width: 0;
+  height: 16px;
+  background: currentColor;
   position: relative;
 
   transition: width 0.15s ease-out;
