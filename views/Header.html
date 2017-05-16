@@ -1,19 +1,28 @@
-<header class="q-quiz-header {{headerClassAttribute}}">
-  <div class="q-quiz-header__title s-font-note-s">
-    {{#if !hasCover}}
-      Frage 1 / {{numberQuestions}}
-    {{/if}}
-  </div>
-  <button class="q-quiz-button q-quiz-button--horizontal s-font-note-s {{buttonClassAttribute}}">
-    <div class="q-quiz-button__content">
-      <span class="s-color-primary-7">Nächste Frage</span>
+<header class="q-quiz-header {{multiHeaderClassAttribute}} {{headerClassAttribute}}">
+  {{#if isMultiQuiz}}
+    <div class="q-quiz-header__title s-font-note-s">
+      {{#if !hasCover}}
+        Frage 1 / {{numberQuestions}}
+      {{/if}}
     </div>
-  </button>
+    <button class="q-quiz-button q-quiz-button--horizontal s-font-note-s {{buttonClassAttribute}}">
+      <div class="q-quiz-button__content">
+        <span class="s-color-primary-7">nächste Frage</span>
+      </div>
+    </button>
+  {{/if}}
 </header>
+
 
 <script>
   export default {
     computed: {
+      multiHeaderClassAttribute: (isMultiQuiz) => {
+        if (isMultiQuiz) {
+          return 'q-quiz-multi-header'
+        }
+        return '';
+      },
       headerClassAttribute: (hasCover) => {
         return hasCover ? 'q-quiz-header--is-empty' : '';
       },

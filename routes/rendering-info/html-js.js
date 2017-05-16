@@ -62,7 +62,8 @@ module.exports = {
           id: element.id,
           type: element.type,
           answer: element.answer,
-          answerText: element.answerText
+          answerText: element.answerText,
+          articleRecommendations: element.articleRecommendations
         }
       });
 
@@ -71,7 +72,6 @@ module.exports = {
       hasCover: coverElements.length > 0,
       hasLastCard: lastCardElements.length > 0,
       numberElements: item.elements.length,
-      numberQuestions: questionElements.length
     }
 
     let loaderScript = `

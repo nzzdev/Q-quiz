@@ -15,6 +15,12 @@
   &:hover {
     text-decoration: none;
   }
+
+  &.state-hidden {
+    visibility: hidden;
+    overflow: hidden;
+    height: 0;
+  }
 }
 
 .q-quiz-button--horizontal {

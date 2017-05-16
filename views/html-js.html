@@ -1,6 +1,6 @@
 <div class="q-quiz s-color-gray-4" id="{{ quizContainerId }}">
-  <Header hasCover="{{hasCover}}" numberQuestions="{{numberQuestions}}"/>
-  <div class="q-quiz-container" style="width:{{elementCount * 100}}%;">
+  <Header isMultiQuiz="{{isMultiQuiz}}" hasCover="{{hasCover}}" numberQuestions="{{numberQuestions}}"/>
+  <div class="{{quizContainerClassAttribute}}" style="width:{{elementCount * 100}}%;">
     {{#if cover}}
       <div class="q-quiz-element-container q-quiz__cover s-color-primary-1 q-quiz-element-container--is-active" style="width: {{elementWidth}}%;">
         <h3 class="q-quiz__cover-title s-font-title">{{cover.title}}</h3>
@@ -17,14 +17,15 @@
       </div>
     {{/if}}
     {{#each questions as question, index}}
-      {{#if !cover && index === 0}}
+      {{#if !isMultiQuiz || !hasCover && index === 0}}
         <div class="q-quiz-element-container q-quiz-element-container--is-active" style="width: {{elementWidth}}%;">
           <Question question="{{question}}" />
         </div>
+      {{else}}
+        <div class="q-quiz-element-container q-quiz-element-container--is-inactive" style="width: {{elementWidth}}%;">
+          <Question question="{{question}}" />
+        </div>
       {{/if}}
-      <div class="q-quiz-element-container q-quiz-element-container--is-inactive" style="width: {{elementWidth}}%;">
-        <Question question="{{question}}" />
-      </div>
     {{/each}}
     {{#if lastCard}}
       <div class="q-quiz-element-container q-quiz__last-card s-color-primary-1 q-quiz-element-container--is-inactive" style="width: {{elementWidth}}%;">
@@ -73,7 +74,6 @@
         const coverElements = elements.filter(element => {
           return element.type === 'cover';
         });
-        console.log('coverElements: ', coverElements);
         if (coverElements.length > 0) {
           return coverElements[0];
         } else {
@@ -87,12 +87,14 @@
         const lastCardElements = elements.filter(element => {
           return element.type === 'lastCard';
         });
-        console.log('lastCardElements: ', lastCardElements);
         if (lastCardElements.length > 0) {
           return lastCardElements[0];
         } else {
           return undefined;
         }
+      },
+      hasLastCard: (lastCard) => {
+        return lastCard !== undefined;
       },
       questions: (elements) => {
         const questionTypes = ['multipleChoice', 'numberGuess', 'mapPointGuess'];
@@ -103,6 +105,15 @@
       },
       numberQuestions: (questions) => {
         return questions.length;
+      },
+      isMultiQuiz: (elementCount, hasCover, hasLastCard) => {
+        return elementCount > 1;
+      },
+      quizContainerClassAttribute: (isMultiQuiz) => {
+        if (isMultiQuiz) {
+          return 'q-quiz-multi-container';
+        }
+        return 'q-quiz-container';
       }
     },
     components: {
