@@ -47,7 +47,10 @@
   "jspm": {
     "name": "@nzz/q-quiz",
     "main": "@nzz/q-quiz.js",
-    "dependencies": {},
+    "dependencies": {
+      "leaflet": "github:Leaflet/Leaflet@^1.0.3",
+      "text": "github:systemjs/plugin-text@^0.0.9"
+    },
     "devDependencies": {
       "plugin-babel": "npm:systemjs-plugin-babel@^0.0.21"
     }

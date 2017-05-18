@@ -1,15 +1,16 @@
+import MapPointGuessHandler from './MapPointGuessHandler.js';
+
 export default class MultiQuizPositionHandler {
 
-  constructor(quizHeaderElement, quizContainerElement, answerData) {
+  constructor(quizHeaderElement, quizContainerElement, data) {
     this.quizContainerElement = quizContainerElement;
     this.quizElements = this.quizContainerElement.querySelectorAll('.q-quiz-element-container');
     this.headerElement = quizHeaderElement;
 
-    this.numberElements = answerData.numberElements;
-    this.numberQuestions = answerData.correctAnswers.length;
-    this.correctAnswers = answerData.correctAnswers;
-    this.hasLastCard = answerData.hasLastCard;
-    this.hasCover = answerData.hasCover;
+    this.quizElementData = data.quizElementData;
+    this.numberElements = data.numberElements;
+    this.numberQuestions = data.quizElementData.length;
+    this.hasCover = data.hasCover;
   }
 
   getPosition() {
@@ -28,11 +29,19 @@ export default class MultiQuizPositionHandler {
 
     for (let i = 0; i < this.quizElements.length; i++) {
       if (i === this.position) {
-        this.quizElements.item(i).classList.remove('q-quiz-element-container--is-inactive')
-        this.quizElements.item(i).classList.add('q-quiz-element-container--is-active')
+        this.quizElements.item(i).classList.remove('q-quiz-element-container--is-inactive');
+        this.quizElements.item(i).classList.add('q-quiz-element-container--is-active');
+        const questionPosition = this.getQuestionNumber() - 1;
+        if (this.quizElementData[questionPosition] && this.quizElementData[questionPosition].type === 'mapPointGuess') {
+          console.log(this.quizElements.item(i));
+          let mapInputContainer = this.quizElements.item(i).querySelector('.q-quiz-input');
+          console.log(mapInputContainer);
+          let mapPointGuessHandler = new MapPointGuessHandler(mapInputContainer, this.quizElementData[questionPosition])
+          mapPointGuessHandler.renderInput(mapInputContainer.querySelector('.q-quiz-map-container'));
+        }
       } else {
-        this.quizElements.item(i).classList.remove('q-quiz-element-container--is-active')
-        this.quizElements.item(i).classList.add('q-quiz-element-container--is-inactive')
+        this.quizElements.item(i).classList.remove('q-quiz-element-container--is-active');
+        this.quizElements.item(i).classList.add('q-quiz-element-container--is-inactive');
       }
     }
   }
@@ -52,10 +61,11 @@ export default class MultiQuizPositionHandler {
   }
 
   getQuestionNumber() {
-    if (this.hasCover) {
-      return this.position;
+    let questionPosition = this.position;
+    if (!this.hasCover) {
+      questionPosition++;
     }
-    return this.position + 1;
+    return questionPosition;
   }
 
   setTitle(questionNumber) {

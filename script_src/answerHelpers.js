@@ -67,7 +67,7 @@ export function getAnswerTextElement(data, answer, stats, isCorrectAnswer, getDi
   return element
 }
 
-export function getRecommendationsElement(articleRecommendations) {
+function getRecommendationsElement(articleRecommendations) {
   let recommendationsElement = document.createElement('p');
   recommendationsElement.classList.add('s-font-text-s');
   let recommendationsHtml = '';
@@ -93,3 +93,14 @@ export function getRecommendationsElement(articleRecommendations) {
   }
   return recommendationsElement
 }
+
+export function renderAdditionalInformation(questionElement, correctAnswer) {
+    let detailedAnswer = questionElement.querySelector('.q-quiz-result p');
+    detailedAnswer.innerText = correctAnswer.answerText;
+
+    let articleRecommendationsElement = getRecommendationsElement(correctAnswer.articleRecommendations);
+    detailedAnswer.parentNode.insertBefore(articleRecommendationsElement, detailedAnswer.nextSibling);
+
+    let nextQuestionButton = questionElement.querySelector('button.q-quiz-button.q-quiz-button--horizontal.q-quiz-button--right');
+    nextQuestionButton.classList.remove('state-hidden');
+  }

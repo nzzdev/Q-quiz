@@ -1,7 +1,8 @@
 SystemJS.config({
   paths: {
     "npm:": "jspm_packages/npm/",
-    "q-quiz/": "script_src/"
+    "q-quiz/": "script_src/",
+    "github:": "jspm_packages/github/"
   },
   browserConfig: {
     "baseURL": "/"
@@ -27,8 +28,12 @@ SystemJS.config({
 SystemJS.config({
   packageConfigPaths: [
     "npm:@*/*.json",
-    "npm:*.json"
+    "npm:*.json",
+    "github:*/*.json"
   ],
-  map: {},
+  map: {
+    "leaflet": "github:Leaflet/Leaflet@1.0.3",
+    "text": "github:systemjs/plugin-text@0.0.9"
+  },
   packages: {}
 });

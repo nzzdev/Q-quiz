@@ -1,11 +1,11 @@
 <div class="q-quiz-input">
   <div class="s-input-range-container">
     <div class="s-input-range-position-label-container">
-      <div class="s-input-range-position-label s-font-title-xs s-color-primary-6">
-        <!-- value and position has to be set later on -->
+      <div class="s-input-range-position-label s-font-title-xs s-color-primary-6" style="left: {{labelPosition}}%;">
+        {{initialValue}}
       </div>
     </div>
-    <input type="range" class="s-input-range s-input-range--large" min="{{question.min}}" max="{{question.max}}" step="{{question.step}}" value="{{intialValue}}" />
+    <input type="range" class="s-input-range s-input-range--large" min="{{question.min}}" max="{{question.max}}" step="{{question.step}}" value="{{initialValue}}" />
     <div class="s-input-range-min s-font-note-s s-font-note-s--light">
       {{labelMin}}  
     </div>
@@ -17,13 +17,19 @@
     <span class="s-color-gray-1">Antworten</span>
   </button>
 </div>
-<div class="q-quiz-result"></div>
+<div class="q-quiz-result state-hidden">
+  <div class="q-quiz-result__number-guess-visual" unit="{{question.unit}}" unit-singular="{{question.unit_singular}}"></div>
+  <p class="s-font-text-s"></p>
+</div>
 
 <script>
   export default {
     computed: {
       initialValue: (question) => {
         return (parseFloat(question.max) - parseFloat(question.min)) / 2 + parseFloat(question.min);
+      },
+      labelPosition: (initialValue, question) => {
+        return (initialValue - question.min) / (question.max - question.min) * 100;
       },
       labelMin: (question) => {
         let min = question.min !== undefined ? question.min : '';

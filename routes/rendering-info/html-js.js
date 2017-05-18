@@ -57,18 +57,23 @@ module.exports = {
       return coverElements.indexOf(element) === -1 && lastCardElements.indexOf(element) === -1;
     });
 
-    const correctAnswers = questionElements.map(element => {
-        return {
+    const quizElementData = questionElements.map(element => {
+        let data = {
           id: element.id,
           type: element.type,
-          answer: element.answer,
+          correctAnswer: element.answer,
           answerText: element.answerText,
           articleRecommendations: element.articleRecommendations
         }
+        if (element.type === 'mapPointGuess') {
+          data.bbox = element.bbox,
+          data.pointLabel = element.pointLabel
+        }
+        return data;
       });
 
     let data = {
-      correctAnswers: correctAnswers,
+      quizElementData: quizElementData,
       hasCover: coverElements.length > 0,
       hasLastCard: lastCardElements.length > 0,
       numberElements: item.elements.length,
