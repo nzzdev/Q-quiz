@@ -10,19 +10,32 @@ function getUnit(value, data) {
 
 export default class NumberGuessHandler {
 
-  constructor(inputElement, quizElementData) {
-    this.inputElement = inputElement;
-    this.min = parseFloat(inputElement.getAttribute('min'));
-    this.max = parseFloat(inputElement.getAttribute('max'));
-    this.step = parseFloat(inputElement.getAttribute('step'));
+  constructor(questionElement, data) {
+    this.questionElement = questionElement;
+    this.inputElement = this.questionElement.querySelector('.q-quiz-input input');
+    this.min = parseFloat(this.inputElement.getAttribute('min'));
+    this.max = parseFloat(this.inputElement.getAttribute('max'));
+    this.step = parseFloat(this.inputElement.getAttribute('step'));
     this.defaultInputValue = ((parseFloat(this.max) - parseFloat(this.min)) / 2) + parseFloat(this.min);
-    this.correctAnswer = quizElementData.correctAnswer;
+    this.correctAnswer = data.correctAnswer;
   }
 
-  renderResultVisual(answer, resultElement) {
+  renderInput() {}
+
+  renderResult(event) {
+    if (this.isAnswerValid()) {
+      this.resultElement = this.questionElement.querySelector('.q-quiz-result__number-guess-visual');
+      this.renderValidResult();
+    } else {
+      this.handleInvalidAnswer();
+    }
+  }
+
+  renderValidResult() {
+    const answer = this.inputElement.value;
     const unitData = {
-      unit: resultElement.getAttribute('unit'),
-      unitSingular: resultElement.getAttribute('unit-singular')
+      unit: this.resultElement.getAttribute('unit'),
+      unitSingular: this.resultElement.getAttribute('unit-singular')
     };
 
     let steppedValues = [];
@@ -35,7 +48,7 @@ export default class NumberGuessHandler {
     }
     let xScale = new Scale([this.min, this.max], range);
 
-    let stepWidth = resultElement.getBoundingClientRect().width/steppedValues.length;
+    let stepWidth = this.resultElement.getBoundingClientRect().width/steppedValues.length;
 
     let additionalMarkerClass = '';
     let additionalMarkerAttributes = '';
@@ -67,7 +80,7 @@ export default class NumberGuessHandler {
       let leftPos = (((xScale.getIndexOnScale(this.correctAnswer) + 1) * stepWidth) - stepWidth / 2 + 1).toFixed(1);
       correctAnswerElement.style.left = `${leftPos}px`;
     }
-    resultElement.appendChild(correctAnswerElement);
+    this.resultElement.appendChild(correctAnswerElement);
 
 
     // show the users answer
@@ -95,7 +108,7 @@ export default class NumberGuessHandler {
       let leftPos = (((xScale.getIndexOnScale(answer) + 1) * stepWidth) - stepWidth / 2 + 1).toFixed(1);
       answerElement.style.left = `${leftPos}px`;
     }
-    resultElement.appendChild(answerElement);
+    this.resultElement.appendChild(answerElement);
   }
 
   isAnswerValid() {

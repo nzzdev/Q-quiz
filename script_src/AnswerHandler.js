@@ -21,14 +21,17 @@ export default class AnswerHandler {
       let numberGuessHandler = new NumberGuessHandler(inputElement, this.quizElementData);
       if (numberGuessHandler.isAnswerValid()) {
         let resultVisualElement = this.quizContainerElement.querySelector('.q-quiz-result__number-guess-visual');
-        numberGuessHandler.renderResultVisual(inputElement.value, resultVisualElement);
+        numberGuessHandler.renderResult(inputElement.value, resultVisualElement);
         this.renderVisualResult();
       } else {
         numberGuessHandler.handleInvalidAnswer();
       }
     }
     if (this.quizElementData.type === 'mapPointGuess') {
-      
+      let resultContainer = this.questionElement.querySelector('.q-quiz-result');
+      let mapPointGuessHandler = new MapPointGuessHandler(resultContainer.querySelector('.q-quiz-map-container'), this.quizElementData);
+      mapPointGuessHandler.renderResult(..., resultContainer);
+      this.renderVisualResult();
     }
     
   }
@@ -40,11 +43,9 @@ export default class AnswerHandler {
   }
 
   disableInput() {
-    this.questionElement.querySelector('.q-quiz-input').classList.add('state-hidden');
   }
 
   enableResult() {
-    this.questionElement.querySelector('.q-quiz-result').classList.remove('state-hidden');
-    this.questionElement.querySelector('.q-quiz-result').classList.add('state-visible');
+    
   }
 }

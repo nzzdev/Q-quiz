@@ -13,6 +13,10 @@ export default class MultiQuizPositionHandler {
     this.hasCover = data.hasCover;
   }
 
+  getQuizElement() {
+    return this.quizElements.item(this.position);
+  }
+
   getPosition() {
     return this.position;
   }
@@ -31,14 +35,6 @@ export default class MultiQuizPositionHandler {
       if (i === this.position) {
         this.quizElements.item(i).classList.remove('q-quiz-element-container--is-inactive');
         this.quizElements.item(i).classList.add('q-quiz-element-container--is-active');
-        const questionPosition = this.getQuestionNumber() - 1;
-        if (this.quizElementData[questionPosition] && this.quizElementData[questionPosition].type === 'mapPointGuess') {
-          console.log(this.quizElements.item(i));
-          let mapInputContainer = this.quizElements.item(i).querySelector('.q-quiz-input');
-          console.log(mapInputContainer);
-          let mapPointGuessHandler = new MapPointGuessHandler(mapInputContainer, this.quizElementData[questionPosition])
-          mapPointGuessHandler.renderInput(mapInputContainer.querySelector('.q-quiz-map-container'));
-        }
       } else {
         this.quizElements.item(i).classList.remove('q-quiz-element-container--is-active');
         this.quizElements.item(i).classList.add('q-quiz-element-container--is-inactive');
