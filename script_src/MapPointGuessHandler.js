@@ -1,5 +1,6 @@
 import Leaflet from 'leaflet';
-import iconPinSvg from './resources/icon-pin.svg!text'
+import iconPinSvg from './resources/icon-pin.svg!text';
+import { getAnswerTextElement } from './answerHelpers.js';
 
 Leaflet.Icon.Default.imagePath = 'jspm_packages/npm/leaflet@1.0.0-rc.1/dist/images'
 
@@ -30,13 +31,15 @@ function mapFitBbox(map, bbox) {
 
 export default class MapPointGuessHandler {
 
-  constructor(questionContainer, data) {
-    this.questionContainer = questionContainer;
+  constructor(questionElement, data, quizId, origin) {
+    this.questionElement = questionElement;
     this.data = data;
+    this.quizId = quizId;
+    this.origin = origin;
   }
 
   renderInput() {
-    this.inputElement = this.questionContainer.querySelector('.q-quiz-input');
+    this.inputElement = this.questionElement.querySelector('.q-quiz-input');
     let mapContainer = this.inputElement.querySelector('.q-quiz-map-container');
     let map = L.map(mapContainer, mapOptions);
     mapFitBbox(map, this.data.bbox);
@@ -83,7 +86,7 @@ export default class MapPointGuessHandler {
     map.invalidateSize();
   }
 
-  getValue() {
+  getValue(event) {
     let correctLatLng = new L.latLng(this.data.correctAnswer.lat, this.data.correctAnswer.lng)
     return {
       latLng: this.marker.getLatLng(),
@@ -91,12 +94,9 @@ export default class MapPointGuessHandler {
     } 
   }
 
-  renderResult() {
-    // answer -- getValue
-    this.resultElement = this.questionContainer.querySelector('.q-quiz-result');
+  renderResult(answer) {
+    this.resultElement = this.questionElement.querySelector('.q-quiz-result');
     let mapContainer = this.resultElement.querySelector('.q-quiz-map-container');
-    const answer = this.getValue();
-    console.log('answer: ', answer);
 
     let map = L.map(mapContainer, mapOptions);
     map.attributionControl.setPrefix('');
@@ -164,7 +164,53 @@ export default class MapPointGuessHandler {
       map.addLayer(answerMarker);
     }
 
-    //this.addHeatmapOverlayToMap(map)
+    this.addHeatmapOverlayToMap(map)
+  }
+
+  renderResultStats(answer, answersStats) {
+    let isCorrectAnswer = answer === this.data.correcAnswer;
+    let resultTextElement = this.questionElement.querySelector('.q-quiz-result .q-quiz-result-answer-text');
+
+    let textElement = getAnswerTextElement(answersStats, isCorrectAnswer, () => {
+      let text = '';
+      if (answer.distance !== undefined) {
+        let distanceText;
+        if (answer.distance > 1000) {
+          distanceText = `${(answer.distance / 1000).toFixed(1)} km`;
+        } else {
+          distanceText = `${answer.distance} m`;
+        }
+        text = ` Ihre Schätzung liegt um ${distanceText} daneben.`;
+      }
+      return text;
+    })
+    
+    resultTextElement.appendChild(textElement);
+  }
+
+  addHeatmapOverlayToMap(map) {
+    let heatmapImg = document.createElement('img')
+    heatmapImg.setAttribute('style', 'position: absolute; top: 0; z-index: 1000;')
+
+    let heatmapImgOverlay = L.imageOverlay('', map.getBounds(), {
+      opacity: 0.4
+    }).addTo(map)
+
+    this.setHeatmapSrc(heatmapImgOverlay, map)
+
+    map.on('resize', () => {
+      this.setMapSize(map)
+      heatmapImgOverlay.setUrl('')
+      this.setHeatmapSrc(heatmapImgOverlay, map)
+    })
+  }
+
+  setHeatmapSrc(heatmapImgOverlay, map) {
+    let mapBounds = map.getBounds()
+    let southWest = mapBounds.getSouthWest()
+    let northEast = mapBounds.getNorthEast()
+    let heatmapBounds = `${southWest.lng}, ${southWest.lat}, ${northEast.lng}, ${northEast.lat}`
+    heatmapImgOverlay.setUrl(`${this.origin}/map/${this.data.id}/heatmap/${map.getSize().x}/${map.getSize().y}/${heatmapBounds}`)
   }
 
 }

@@ -1,4 +1,5 @@
 import Scale from './Scale.js';
+import { getAnswerTextElement } from './answerHelpers.js';
 
 function getUnit(value, data) {
   let unit = data.unit;
@@ -10,29 +11,49 @@ function getUnit(value, data) {
 
 export default class NumberGuessHandler {
 
-  constructor(questionElement, data) {
+  constructor(questionElement, data, quizId, origin) {
     this.questionElement = questionElement;
     this.inputElement = this.questionElement.querySelector('.q-quiz-input input');
     this.min = parseFloat(this.inputElement.getAttribute('min'));
     this.max = parseFloat(this.inputElement.getAttribute('max'));
     this.step = parseFloat(this.inputElement.getAttribute('step'));
     this.defaultInputValue = ((parseFloat(this.max) - parseFloat(this.min)) / 2) + parseFloat(this.min);
+    this.data = data;
+    this.quizId = quizId;
+    this.origin = origin;
     this.correctAnswer = data.correctAnswer;
   }
 
-  renderInput() {}
+  getValue(event) {
+    return this.inputElement.value;
+  }
+  
+  isAnswerValid() {
+    let element = this.inputElement.parentNode.nextElementSibling;
+    return element.classList.contains('q-quiz-invalid-input-message') 
+      || (parseFloat(this.defaultInputValue) !== parseFloat(this.inputElement.value));
+  }
 
-  renderResult(event) {
+  handleInvalidAnswer() {
+    let answerButton = this.inputElement.parentNode.nextSibling;
+    let defaultInputValueMessageElement = document.createElement('div')
+    defaultInputValueMessageElement.classList.add('q-quiz-invalid-input-message')
+    defaultInputValueMessageElement.classList.add('s-font-text-s')
+    defaultInputValueMessageElement.classList.add('s-font-text-s--strong')
+    defaultInputValueMessageElement.innerHTML = 'Sie haben den Schieberegeler nicht bewegt, trotzdem die Position speichern?'
+    answerButton.parentNode.insertBefore(defaultInputValueMessageElement, answerButton)
+  }
+
+  renderResult(answer) {
     if (this.isAnswerValid()) {
       this.resultElement = this.questionElement.querySelector('.q-quiz-result__number-guess-visual');
-      this.renderValidResult();
+      this.renderValidResult(answer);
     } else {
       this.handleInvalidAnswer();
     }
   }
 
-  renderValidResult() {
-    const answer = this.inputElement.value;
+  renderValidResult(answer) {
     const unitData = {
       unit: this.resultElement.getAttribute('unit'),
       unitSingular: this.resultElement.getAttribute('unit-singular')
@@ -111,20 +132,38 @@ export default class NumberGuessHandler {
     this.resultElement.appendChild(answerElement);
   }
 
-  isAnswerValid() {
-    let element = this.inputElement.parentNode.nextElementSibling;
-    return element.classList.contains('q-quiz-invalid-input-message') 
-      || (parseFloat(this.defaultInputValue) !== parseFloat(this.inputElement.value));
+  renderResultStats(answer, answersStats) {
+    let isCorrectAnswer = answer === this.correctAnswer;
+    let resultVisualElement = this.questionElement.querySelector('.q-quiz-result .q-quiz-result__number-guess-visual');
+    let resultTextElement = this.questionElement.querySelector('.q-quiz-result .q-quiz-result-answer-text');
+
+    if (answersStats !== undefined && answersStats.diffPercentage !== undefined && answersStats.diffPercentage !== null) {
+      let textElement = getAnswerTextElement(answersStats, isCorrectAnswer, () => {
+        return `Ihre Schätzung liegt um ${answersStats.diffPercentage} Prozent zu ${answer > this.correctAnswer ? 'hoch' : 'tief'}.`
+      });
+      resultTextElement.appendChild(textElement);
+    }
+    
+    this.renderStatsVisual(resultVisualElement);
   }
 
-  handleInvalidAnswer() {
-    let answerButton = this.inputElement.parentNode.nextSibling;
-    let defaultInputValueMessageElement = document.createElement('div')
-    defaultInputValueMessageElement.classList.add('q-quiz-invalid-input-message')
-    defaultInputValueMessageElement.classList.add('s-font-text-s')
-    defaultInputValueMessageElement.classList.add('s-font-text-s--strong')
-    defaultInputValueMessageElement.innerHTML = 'Sie haben den Schieberegeler nicht bewegt, trotzdem die Position speichern?'
-    answerButton.parentNode.insertBefore(defaultInputValueMessageElement, answerButton)
+  getStatsPlot(width) {
+    return fetch(`${this.origin}/number-guess/${this.quizId}/${this.data.id}/plot/${width}`)
+      .then(response => {
+        if (response.ok) {
+          return response.text()
+        }
+        return ''
+      })
   }
 
+  renderStatsVisual(element) {
+    this.getStatsPlot(element.getBoundingClientRect().width)
+      .then(svgString => {
+        let statsVisualContainerElement = document.createElement('div')
+        statsVisualContainerElement.classList.add('q-quiz-result__number-guess-visual__stats-graphic-container')
+        statsVisualContainerElement.innerHTML = svgString
+        element.appendChild(statsVisualContainerElement)
+      });
+  }
 }

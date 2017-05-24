@@ -41,10 +41,14 @@ module.exports = {
         });
     `;
 
-    const id = request.payload.item._id || (Math.random() * 10000).toFixed();
+    const item = request.payload.item;
+
+    const elementId = item.elements[0].id;
+    const itemId = elementId.split('-')[0];
+
+    const id = request.payload.item._id || itemId;
     const quizContainerId = `q-quiz-${id}`;
 
-    const item = request.payload.item;
     const coverElements = item.elements.filter(element => {
       return element.type === 'cover';
     });
@@ -72,11 +76,19 @@ module.exports = {
         return data;
       });
 
+    let saveAnswer = request.payload.toolRuntimeConfig.saveAnswer;
+    if (saveAnswer === undefined) {
+      saveAnswer = false;
+    }
+
     let data = {
+      itemId: itemId,
       quizElementData: quizElementData,
       hasCover: coverElements.length > 0,
       hasLastCard: lastCardElements.length > 0,
       numberElements: item.elements.length,
+      origin: 'http://localhost:3000',
+      saveAnswer: saveAnswer
     }
 
     let loaderScript = `

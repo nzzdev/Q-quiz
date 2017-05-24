@@ -12,11 +12,7 @@ export default class MultiQuizPositionHandler {
     this.numberQuestions = data.quizElementData.length;
     this.hasCover = data.hasCover;
   }
-
-  getQuizElement() {
-    return this.quizElements.item(this.position);
-  }
-
+  
   getPosition() {
     return this.position;
   }
@@ -25,6 +21,10 @@ export default class MultiQuizPositionHandler {
     this.position = position;
     this.setHeader();
     this.setQuizElement();
+  }
+
+  getQuizElement() {
+    return this.quizElements.item(this.position);
   }
 
   setQuizElement() {

@@ -33,15 +33,21 @@
   "dependencies": {
     "autoprefixer": "^6.7.7",
     "chai": "^3.5.0",
+    "d3-array": "^1.2.0",
+    "d3-scale": "^1.0.6",
+    "d3-selection": "^1.1.0",
     "enjoi": "^2.1.0",
     "forever": "^0.15.3",
     "hapi": "^16.1.0",
     "hoek": "^4.1.0",
     "inert": "^4.1.0",
+    "jsdom": "9.5.0",
     "json-schema-faker": "^0.4.0",
     "jspm": "^0.17.0-beta.41",
     "mocha": "^3.2.0",
     "node-sass": "^4.3.0",
+    "pouchdb": "^6.2.0",
+    "sparseheatmap": "^1.1.1",
     "svelte": "1.6.3"
   },
   "jspm": {

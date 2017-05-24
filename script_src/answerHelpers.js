@@ -1,6 +1,6 @@
 import * as helpers from './helpers.js'
 
-export function getAnswerTextElement(data, answer, stats, isCorrectAnswer, getDiffText) {
+export function getAnswerTextElement(stats, isCorrectAnswer, getDiffText) {
   let statsTextHtml = '<span class="q-quiz-answer-stats">'
 
   if (isCorrectAnswer) {
@@ -95,8 +95,11 @@ function getRecommendationsElement(articleRecommendations) {
 }
 
 export function renderAdditionalInformation(questionElement, correctAnswer) {
-    let detailedAnswer = questionElement.querySelector('.q-quiz-result p');
-    detailedAnswer.innerText = correctAnswer.answerText;
+    let detailedAnswer = questionElement.querySelector('.q-quiz-result .q-quiz-result-answer-text');
+    let detailedAnswerSpan = document.createElement('span');
+    detailedAnswerSpan.classList.add('s-font-text-s');
+    detailedAnswerSpan.innerText = correctAnswer.answerText;
+    detailedAnswer.appendChild(detailedAnswerSpan);
 
     let articleRecommendationsElement = getRecommendationsElement(correctAnswer.articleRecommendations);
     detailedAnswer.parentNode.insertBefore(articleRecommendationsElement, detailedAnswer.nextSibling);
