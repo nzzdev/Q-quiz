@@ -13,6 +13,8 @@ const schema = Enjoi(schemaString);
 
 const hashMap = require(`${scriptsDir}/hashMap.json`);
 
+const questionTypes = ['multipleChoice', 'numberGuess', 'mapPointGuess'];
+
 require('svelte/ssr/register');
 const staticTemplate = require(viewsDir + 'html-js.html');
 
@@ -42,11 +44,11 @@ module.exports = {
     `;
 
     const item = request.payload.item;
+    let id = item._id;
+    if (!id && item.elements && item.elements.length > 0) {
+      id = item.elements[0].id.split('-')[0] || (Math.random() * 10000).toFixed();
+    }
 
-    const elementId = item.elements[0].id;
-    const itemId = elementId.split('-')[0];
-
-    const id = request.payload.item._id || itemId;
     const quizContainerId = `q-quiz-${id}`;
 
     const coverElements = item.elements.filter(element => {
@@ -58,10 +60,10 @@ module.exports = {
     });
 
     const questionElements = item.elements.filter(element => {
-      return coverElements.indexOf(element) === -1 && lastCardElements.indexOf(element) === -1;
-    });
+      return questionTypes.includes(element.type);
+    })
 
-    const quizElementData = questionElements.map(element => {
+    const questionElementData = questionElements.map(element => {
         let data = {
           id: element.id,
           type: element.type,
@@ -76,14 +78,11 @@ module.exports = {
         return data;
       });
 
-    let saveAnswer = request.payload.toolRuntimeConfig.saveAnswer;
-    if (saveAnswer === undefined) {
-      saveAnswer = false;
-    }
-
-    let data = {
-      itemId: itemId,
-      quizElementData: quizElementData,
+    let saveAnswer = request.payload.toolRuntimeConfig.saveAnswer || false;
+    
+    let scriptData = {
+      itemId: id,
+      questionElementData: questionElementData,
       hasCover: coverElements.length > 0,
       hasLastCard: lastCardElements.length > 0,
       numberElements: item.elements.length,
@@ -91,10 +90,16 @@ module.exports = {
       saveAnswer: saveAnswer
     }
 
+    if (lastCardElements.length > 0) {
+      scriptData.lastCardData = {
+        articleRecommendations: lastCardElements[0].articleRecommendations
+      }
+    }
+
     let loaderScript = `
         System.import('q-quiz/quiz.js')
           .then(function(module) {
-            return module.display(${JSON.stringify(data)}, document.querySelector('#${quizContainerId}'))
+            return module.display(${JSON.stringify(scriptData)}, document.querySelector('#${quizContainerId}'))
           })
           .catch(function(error) {
             console.log(error)

@@ -2,15 +2,16 @@ import MapPointGuessHandler from './MapPointGuessHandler.js';
 
 export default class MultiQuizPositionHandler {
 
-  constructor(quizHeaderElement, quizContainerElement, data) {
-    this.quizContainerElement = quizContainerElement;
+  constructor(quizRootElement, data) {
+    this.quizContainerElement = quizRootElement.querySelector('.q-quiz-multi-container');
+    this.headerElement = quizRootElement.querySelector('.q-quiz-multi-header');
     this.quizElements = this.quizContainerElement.querySelectorAll('.q-quiz-element-container');
-    this.headerElement = quizHeaderElement;
 
-    this.quizElementData = data.quizElementData;
+    this.questionElementData = data.questionElementData;
     this.numberElements = data.numberElements;
-    this.numberQuestions = data.quizElementData.length;
+    this.numberQuestions = data.questionElementData.length;
     this.hasCover = data.hasCover;
+    this.position = 0;
   }
   
   getPosition() {

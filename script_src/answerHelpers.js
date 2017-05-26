@@ -94,8 +94,14 @@ function getRecommendationsElement(articleRecommendations) {
   return recommendationsElement
 }
 
-export function renderAdditionalInformation(questionElement, correctAnswer) {
-    let detailedAnswer = questionElement.querySelector('.q-quiz-result .q-quiz-result-answer-text');
+export function renderAdditionalInformationForLastCard(element, articleRecommendations) {
+  let articleRecommendationsContainer = element.querySelector('.q-quiz-article-recommendations');
+  let articleRecommendationsElement = getRecommendationsElement(articleRecommendations);
+  articleRecommendationsContainer.appendChild(articleRecommendationsElement);
+}
+
+export function renderAdditionalInformationForQuestion(element, correctAnswer) {
+    let detailedAnswer = element.querySelector('.q-quiz-result .q-quiz-result-answer-text');
     let detailedAnswerSpan = document.createElement('span');
     detailedAnswerSpan.classList.add('s-font-text-s');
     detailedAnswerSpan.innerText = correctAnswer.answerText;
@@ -104,6 +110,6 @@ export function renderAdditionalInformation(questionElement, correctAnswer) {
     let articleRecommendationsElement = getRecommendationsElement(correctAnswer.articleRecommendations);
     detailedAnswer.parentNode.insertBefore(articleRecommendationsElement, detailedAnswer.nextSibling);
 
-    let nextQuestionButton = questionElement.querySelector('button.q-quiz-button.q-quiz-button--horizontal.q-quiz-button--right');
+    let nextQuestionButton = element.querySelector('button.q-quiz-button.q-quiz-button--horizontal.q-quiz-button--right');
     nextQuestionButton.classList.remove('state-hidden');
   }
