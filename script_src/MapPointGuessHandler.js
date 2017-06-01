@@ -31,11 +31,11 @@ function mapFitBbox(map, bbox) {
 
 export default class MapPointGuessHandler {
 
-  constructor(questionElement, data, quizId, origin) {
+  constructor(questionElement, data, quizId, toolBaseUrl) {
     this.questionElement = questionElement;
     this.data = data;
     this.quizId = quizId;
-    this.origin = origin;
+    this.toolBaseUrl = toolBaseUrl;
   }
 
   renderInput() {
@@ -210,7 +210,7 @@ export default class MapPointGuessHandler {
     let southWest = mapBounds.getSouthWest()
     let northEast = mapBounds.getNorthEast()
     let heatmapBounds = `${southWest.lng}, ${southWest.lat}, ${northEast.lng}, ${northEast.lat}`
-    heatmapImgOverlay.setUrl(`${this.origin}/map/${this.data.id}/heatmap/${map.getSize().x}/${map.getSize().y}/${heatmapBounds}`)
+    heatmapImgOverlay.setUrl(`${this.toolBaseUrl}/map/${this.data.id}/heatmap/${map.getSize().x}/${map.getSize().y}/${heatmapBounds}`)
   }
 
 }

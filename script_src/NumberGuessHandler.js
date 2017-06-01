@@ -11,7 +11,7 @@ function getUnit(value, data) {
 
 export default class NumberGuessHandler {
 
-  constructor(questionElement, data, quizId, origin) {
+  constructor(questionElement, data, quizId, toolBaseUrl) {
     this.questionElement = questionElement;
     this.inputElement = this.questionElement.querySelector('.q-quiz-input input');
     this.min = parseFloat(this.inputElement.getAttribute('min'));
@@ -20,7 +20,7 @@ export default class NumberGuessHandler {
     this.defaultInputValue = ((parseFloat(this.max) - parseFloat(this.min)) / 2) + parseFloat(this.min);
     this.data = data;
     this.quizId = quizId;
-    this.origin = origin;
+    this.toolBaseUrl = toolBaseUrl;
     this.correctAnswer = data.correctAnswer;
   }
 
@@ -148,7 +148,7 @@ export default class NumberGuessHandler {
   }
 
   getStatsPlot(width) {
-    return fetch(`${this.origin}/number-guess/${this.quizId}/${this.data.id}/plot/${width}`)
+    return fetch(`${this.toolBaseUrl}/number-guess/${this.quizId}/${this.data.id}/plot/${width}`)
       .then(response => {
         if (response.ok) {
           return response.text()

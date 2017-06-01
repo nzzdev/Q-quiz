@@ -19,7 +19,7 @@ export default class QuestionHandler {
     if (!this.isSingleQuestionQuiz) {
       this.multiQuizPositionHandler = new MultiQuizPositionHandler(quizRootElement, data);
     }
-    this.answerStore = new AnswerStore(this.data.origin);
+    this.answerStore = new AnswerStore(this.data.toolBaseUrl);
   }
 
   renderInputElement(position) {
@@ -35,7 +35,7 @@ export default class QuestionHandler {
     // in case we have a last card, we don't have to render anything on client side
     if (this.questionPosition < this.data.questionElementData.length) {
       this.questionType = this.data.questionElementData[this.questionPosition].type;
-      this.questionRenderer = new questionTypes[this.questionType](this.quizElement, this.data.questionElementData[this.questionPosition], this.data.itemId, this.data.origin);
+      this.questionRenderer = new questionTypes[this.questionType](this.quizElement, this.data.questionElementData[this.questionPosition], this.data.itemId, this.data.toolBaseUrl);
       if (typeof this.questionRenderer.renderInput === 'function') {
         this.questionRenderer.renderInput();
       }
@@ -74,7 +74,7 @@ export default class QuestionHandler {
       value: answerValue
     }
     
-    if (this.data.saveAnswer) {
+    if (!this.data.isPure) {
       return this.answerStore.saveAnswer(answerData);
     } else {
       return Promise.resolve();

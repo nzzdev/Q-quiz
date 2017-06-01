@@ -2,11 +2,11 @@ import * as answerHelpers from './answerHelpers.js';
 
 export default class MultipleChoiceHandler {
   
-  constructor (questionElement, data, quizId, origin) {
+  constructor (questionElement, data, quizId, toolBaseUrl) {
     this.questionElement = questionElement;
     this.data = data;
     this.quizId = quizId;
-    this.origin = origin;
+    this.toolBaseUrl = toolBaseUrl;
   }
 
   getValue(event) {

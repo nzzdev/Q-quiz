@@ -78,7 +78,7 @@ module.exports = {
         return data;
       });
 
-    let saveAnswer = request.payload.toolRuntimeConfig.saveAnswer || false;
+    let isPure = request.payload.toolRuntimeConfig.isPure || false;
     
     let scriptData = {
       itemId: id,
@@ -86,8 +86,8 @@ module.exports = {
       hasCover: coverElements.length > 0,
       hasLastCard: lastCardElements.length > 0,
       numberElements: item.elements.length,
-      origin: 'http://localhost:3000',
-      saveAnswer: saveAnswer
+      toolBaseUrl: request.payload.toolRuntimeConfig.toolBaseUrl,
+      isPure: isPure
     }
 
     if (lastCardElements.length > 0) {

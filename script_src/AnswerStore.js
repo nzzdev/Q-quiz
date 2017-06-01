@@ -1,11 +1,11 @@
 export default class AnswerStore {
 
-  constructor(qServerOrigin) {
-    this.qServerOrigin = qServerOrigin;
+  constructor(toolBaseUrl) {
+    this.toolBaseUrl = toolBaseUrl;
   }
 
   saveAnswer(answer) {
-    return fetch(`${this.qServerOrigin}/answer`, {
+    return fetch(`${this.toolBaseUrl}/answer`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json'
@@ -24,7 +24,7 @@ export default class AnswerStore {
 
   getStats(itemId, questionData, answerId = undefined) {
     if (questionData.type === 'numberGuess' || questionData.type === 'mapPointGuess' || questionData.type === 'multipleChoice') {
-      let statsServiceUrl = `${this.qServerOrigin}/stats/answers/${questionData.type}/${itemId}/${questionData.id}`
+      let statsServiceUrl = `${this.toolBaseUrl}/stats/answers/${questionData.type}/${itemId}/${questionData.id}`
       if (answerId !== undefined) {
         statsServiceUrl += `/${answerId}`
       }
