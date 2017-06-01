@@ -18,7 +18,6 @@ module.exports = [
       },
       cors: true,
       handler: function(request, reply) {
-        console.log('accessed');
         var doc = request.payload;
         if (typeof request.payload !== 'object') {
           doc = JSON.parse(request.payload);
@@ -26,11 +25,9 @@ module.exports = [
 
         // we want some properties on every document that goes into user-store
         doc.created_at = new Date().toISOString();
-        console.log(doc.created_at);
         
         return quizDb.post(doc)
           .then(function(response) {
-            console.log(response);
             if (response.ok) {
               return reply(response);
             } else {

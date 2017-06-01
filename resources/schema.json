@@ -39,6 +39,7 @@
           "default": "cover",
           "enum": ["cover"],
           "Q:options": {
+            "enum_titles": ["Cover"],
             "hideInEditor": true
           }
         },
@@ -58,6 +59,7 @@
           "default": "multipleChoice",
           "enum": ["multipleChoice"],
           "Q:options": {
+            "enum_titles": ["Multiple Choice"],
             "hideInEditor": true
           }
         },
@@ -99,6 +101,7 @@
           "default": "numberGuess",
           "enum": ["numberGuess"],
           "Q:options": {
+            "enum_titles": ["Zahl schätzen"], 
             "hideInEditor": true
           }
         },
@@ -152,6 +155,7 @@
           "default": "mapPointGuess",
           "enum": ["mapPointGuess"],
           "Q:options": {
+            "enum_titles": ["Ort schätzen"],
             "hideInEditor": true
           }
         },
@@ -196,6 +200,7 @@
           "default": "lastCard",
           "enum": ["lastCard"],
           "Q:options": {
+            "enum_titles": ["letzte Seite"],
             "hideInEditor": true
           }
         },
@@ -221,6 +226,7 @@
     "elementId": {
       "type": "string",
       "title": "ID",
+      "Q:type": "generatedId",
       "Q:options": {
         "hideInEditor": true
       }
