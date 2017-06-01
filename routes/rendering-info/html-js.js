@@ -35,15 +35,9 @@ module.exports = {
 	},
 	handler: function(request, reply) {
 
-    let systemConfigScript = `
-        System.config({
-          map: {
-            "q-quiz/quiz.js": "${request.payload.toolRuntimeConfig.toolBaseUrl}/script/${hashMap['quiz.js']}"
-          }
-        });
-    `;
+    let item = request.payload.item;
 
-    const item = request.payload.item;
+    // get id of quiz item
     let id = item._id;
     if (!id && item.elements && item.elements.length > 0) {
       id = item.elements[0].id.split('-')[0] || (Math.random() * 10000).toFixed();
@@ -51,18 +45,26 @@ module.exports = {
 
     const quizContainerId = `q-quiz-${id}`;
 
-    const coverElements = item.elements.filter(element => {
+    // extract only one of the possibly existing cover elements, undefined otherwise
+    const coverElement = item.elements.filter(element => {
       return element.type === 'cover';
-    });
+    })[0];
 
-    const lastCardElements = item.elements.filter(element => {
+    const hasCover = coverElement !== undefined;
+
+    // extract only one of the possibly existing last card elements, undefined otherwise
+    const lastCardElement = item.elements.filter(element => {
       return element.type === 'lastCard';
-    });
+    })[0];
 
+    const hasLastCard = lastCardElement !== undefined;
+    
+    // extract question elements
     const questionElements = item.elements.filter(element => {
       return questionTypes.includes(element.type);
     })
 
+    // prepare data for client side script
     const questionElementData = questionElements.map(element => {
         let data = {
           id: element.id,
@@ -78,39 +80,66 @@ module.exports = {
         return data;
       });
 
-    let isPure = request.payload.toolRuntimeConfig.isPure || false;
-    
+    // if isPure is set to true no side effects will be caused, in this 
+    // special case no answers will get stored
+    const isPure = request.payload.toolRuntimeConfig.isPure || false;
+
     let scriptData = {
       itemId: id,
       questionElementData: questionElementData,
-      hasCover: coverElements.length > 0,
-      hasLastCard: lastCardElements.length > 0,
-      numberElements: item.elements.length,
+      hasCover: hasCover,
+      hasLastCard: hasLastCard,
       toolBaseUrl: request.payload.toolRuntimeConfig.toolBaseUrl,
       isPure: isPure
     }
 
-    if (lastCardElements.length > 0) {
+    let numberElements = questionElements.length;
+    if (hasCover) {
+      numberElements++;
+    }
+
+    if (hasLastCard) {
+      numberElements++;
       scriptData.lastCardData = {
-        articleRecommendations: lastCardElements[0].articleRecommendations
+        articleRecommendations: lastCardElement.articleRecommendations
       }
     }
 
-    let loaderScript = `
-        System.import('q-quiz/quiz.js')
-          .then(function(module) {
-            return module.display(${JSON.stringify(scriptData)}, document.querySelector('#${quizContainerId}'))
-          })
-          .catch(function(error) {
-            console.log(error)
-          });
-      `;
+    scriptData.numberElements = numberElements;
 
-    let renderingData = {
+    // prepare data for server side rendering
+    item.questions = questionElements;
+    item.cover = coverElement;
+    item.lastCard = lastCardElement;
+    item.hasCover = hasCover;
+    item.hasLastCard = hasLastCard;
+    item.elementCount = numberElements;
+    delete item.elements;
+
+    const renderingData = {
       item: item,
       quizContainerId: quizContainerId
     }
-    let renderingInfo = {
+
+    const systemConfigScript = `
+      System.config({
+        map: {
+          "q-quiz/quiz.js": "${request.payload.toolRuntimeConfig.toolBaseUrl}/script/${hashMap['quiz.js']}"
+        }
+      });
+    `;
+
+    const loaderScript = `
+      System.import('q-quiz/quiz.js')
+        .then(function(module) {
+          return module.display(${JSON.stringify(scriptData)}, document.querySelector('#${quizContainerId}'))
+        })
+        .catch(function(error) {
+          console.log(error)
+        });
+    `;
+
+    const renderingInfo = {
       loaderConfig: {
         polyfills: ['Promise'],
         loadSystemJs: 'full'

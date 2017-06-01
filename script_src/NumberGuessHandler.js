@@ -13,7 +13,7 @@ export default class NumberGuessHandler {
 
   constructor(questionElement, data, quizId, toolBaseUrl) {
     this.questionElement = questionElement;
-    this.inputElement = this.questionElement.querySelector('.q-quiz-input input');
+    this.inputElement = this.questionElement.querySelector('.q-quiz-input input[type="range"]');
     this.min = parseFloat(this.inputElement.getAttribute('min'));
     this.max = parseFloat(this.inputElement.getAttribute('max'));
     this.step = parseFloat(this.inputElement.getAttribute('step'));
@@ -22,6 +22,19 @@ export default class NumberGuessHandler {
     this.quizId = quizId;
     this.toolBaseUrl = toolBaseUrl;
     this.correctAnswer = data.correctAnswer;
+  }
+
+  renderInput() {
+    const labelContainer = this.inputElement.parentNode.firstChild;
+    let label = labelContainer.querySelector('.s-input-range-position-label');
+    this.inputElement.addEventListener('input', () => {
+      label.textContent = this.inputElement.value;
+      label.setAttribute('style', `left: ${(this.inputElement.value - this.min) / (this.max - this.min) * 100}%;`);
+    });
+    this.inputElement.addEventListener('change', () => {
+      label.textContent = this.inputElement.value;
+      label.setAttribute('style', `left: ${(this.inputElement.value - this.min) / (this.max - this.min) * 100}%;`);
+    });
   }
 
   getValue(event) {

@@ -25,21 +25,5 @@ export function display(data, quizRootElement) {
       questionHandler.handleAnswer(event);
     })
   });
-
-  let inputElements = quizRootElement.querySelectorAll('.q-quiz-input input[type="range"]');
-  inputElements.forEach(inputElement => {
-    const labelContainer = inputElement.parentNode.firstChild;
-    let label = labelContainer.querySelector('.s-input-range-position-label');
-    const min = inputElement.getAttribute('min');
-    const max = inputElement.getAttribute('max');
-    inputElement.addEventListener('input', () => {
-      label.textContent = inputElement.value;
-      label.setAttribute('style', `left: ${(inputElement.value - min) / (max - min) * 100}%;`);
-    });
-    inputElement.addEventListener('change', () => {
-      label.textContent = inputElement.value;
-      label.setAttribute('style', `left: ${(inputElement.value - min) / (max - min) * 100}%;`);
-    })
-  });
 }
 

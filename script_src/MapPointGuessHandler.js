@@ -2,9 +2,9 @@ import Leaflet from 'leaflet';
 import iconPinSvg from './resources/icon-pin.svg!text';
 import { getAnswerTextElement } from './answerHelpers.js';
 
-Leaflet.Icon.Default.imagePath = 'jspm_packages/npm/leaflet@1.0.0-rc.1/dist/images'
+Leaflet.Icon.Default.imagePath = 'jspm_packages/github/Leaflet/Leaflet@1.0.3/dist/images';
 
-const tileUrl = 'https://api.mapbox.com/styles/v1/neuezuercherzeitung/ciqkqfx6g002rc5m9obtblxlk/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibmV1ZXp1ZXJjaGVyemVpdHVuZyIsImEiOiJjaXFnbWpvbmMwMDk4aHptY2RiYjM0dHc2In0.Y3HeaE0zhj9OaFEoDIrxRA'
+const tileUrl = 'https://api.mapbox.com/styles/v1/neuezuercherzeitung/ciqkqfx6g002rc5m9obtblxlk/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibmV1ZXp1ZXJjaGVyemVpdHVuZyIsImEiOiJjaXFnbWpvbmMwMDk4aHptY2RiYjM0dHc2In0.Y3HeaE0zhj9OaFEoDIrxRA';
 
 const mapOptions = {
   boxZoom: false,

@@ -1,11 +1,3 @@
-export function wrapEmojisInSpan(text) {
-  text = text.replace(
-    /([\ud800-\udbff])([\udc00-\udfff])/g,
-    '<span class="emoji">$&</span>')
-  return text
-}
-
-
 export function loadAdditionalArticles(articleIds) {
   let loadPromises = [];
   let apiUrl = 'https://headlines.nzz.ch/api/articles';
@@ -22,7 +14,7 @@ export function loadAdditionalArticles(articleIds) {
     loadPromises.push(
       fetch(`${apiUrl}/${articleId}`)
         .then(response => {
-          if ((response.status >= 200 && response.status < 300) || window.XDomainRequest === window.XMLHttpRequest) {
+          if (response.status >= 200 && response.status < 300) {
             return response.json();
           } else if (response.status === 404) {
             return undefined;

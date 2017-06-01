@@ -49,7 +49,7 @@ export default class MultiQuizPositionHandler {
     this.changeButtonText(questionNumber);
     this.setButtonVisibility();
 
-    if (this.headerElement.querySelector('.q-quiz-header__title').textContent === '' && isHeaderButtonHidden()) {
+    if (this.headerElement.querySelector('.q-quiz-header__title').textContent === '' && this.isHeaderButtonHidden()) {
       this.headerElement.classList.add('q-quiz-header--is-empty');
     } else {
       this.headerElement.classList.remove('q-quiz-header--is-empty');
