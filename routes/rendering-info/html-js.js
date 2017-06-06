@@ -6,7 +6,7 @@ const viewsDir = __dirname + '/../../views/';
 const scriptsDir  = __dirname + '/../../scripts/';
 
 const schemaString = JSON.parse(fs.readFileSync(resourcesDir + 'schema.json', {
-	encoding: 'utf-8'
+  encoding: 'utf-8'
 }));
 
 const schema = Enjoi(schemaString);
@@ -19,21 +19,21 @@ require('svelte/ssr/register');
 const staticTemplate = require(viewsDir + 'html-js.html');
 
 module.exports = {
-	method: 'POST',
-	path: '/rendering-info/html-js',
-	config: {
-		validate: {
+  method: 'POST',
+  path: '/rendering-info/html-js',
+  config: {
+    validate: {
       options: {
         allowUnknown: true
       },
-			payload: {
-				item: schema,
+      payload: {
+        item: schema,
         toolRuntimeConfig: Joi.object()
-			}
-		},
+      }
+    },
     cors: true
-	},
-	handler: function(request, reply) {
+  },
+  handler: function(request, reply) {
 
     let item = request.payload.item;
 
@@ -144,13 +144,13 @@ module.exports = {
         polyfills: ['Promise'],
         loadSystemJs: 'full'
       },
-			stylesheets: [
-				{
-					name: 'default'
-				}
-			], 
+      stylesheets: [
+        {
+          name: 'default'
+        }
+      ], 
       scripts: [
-				{
+        {
           content: systemConfigScript,
           loadOnce: true
         },
@@ -158,8 +158,8 @@ module.exports = {
           content: loaderScript
         }
       ],
-			markup: staticTemplate.render(renderingData)
-		}
-		return reply(renderingInfo);
-	}
+      markup: staticTemplate.render(renderingData)
+    }
+    return reply(renderingInfo);
+  }
 }

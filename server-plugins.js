@@ -1,5 +1,5 @@
 module.exports = [
-	require('inert'),
+  require('inert'),
   {
     register: require('yaral'),
     options: {
