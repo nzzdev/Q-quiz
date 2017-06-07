@@ -1,0 +1,28 @@
+.q-quiz-multi-container {
+  position: relative;
+  display: block;
+  white-space: nowrap;
+
+  transition: transform 0.2s ease-in;
+
+  display: flex;
+  flex-direction: row;
+  row-wrap: nowrap;
+  align-items: flex-start;
+
+
+  .q-quiz-element-container {
+    display: block;
+    white-space: normal;
+    flex-grow: 0;
+
+
+    &--is-active {
+      height: auto;
+    }
+
+    &--is-inactive {
+      height: 0;
+    }
+  }
+}

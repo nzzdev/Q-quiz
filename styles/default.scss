@@ -1,0 +1,166 @@
+.q-quiz {
+  box-sizing: border-box;
+  *, *::after, *::before {
+    box-sizing: inherit;
+  }
+
+  opacity: 1 !important;
+
+  position: relative;
+
+  margin-top: 16px;
+  padding-top: 16px;
+
+  margin-bottom: 48px;
+
+  svg {
+    overflow: visible;
+  }
+  line-height: 1;
+
+  p {
+    margin-top: 0;
+    margin-bottom: 8px;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    margin: 0 0 8px 0;
+  }
+
+  overflow: hidden;
+}
+
+.q-quiz-header {
+  border-bottom: 1px solid currentColor;
+  margin-bottom: 16px;
+  opacity: 1;
+  transition: opacity 0.2s ease-in;
+}
+.q-quiz-header.q-quiz-header--is-empty {
+  border-bottom-color: transparent;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+}
+
+.q-quiz-input,
+.q-quiz-result {
+  &.state-hidden {
+    visibility: hidden;
+    overflow: hidden;
+    height: 0;
+  }
+}
+
+.q-quiz-invalid-input-message {
+  text-align: center;
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+.q-quiz-result {
+  position: relative;
+  opacity: 0;
+  transition: opacity .3s ease-in;
+  &.state-visible {
+    opacity: 1;
+  }
+  svg {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+
+.q-quiz-answer-stats {
+  margin-bottom: 8px;
+}
+
+.s-input-range-container {
+  position: relative;
+  padding-top: 1em;
+}
+
+.s-input-range.disabled {
+  opacity: 0.2;
+}
+
+.s-input-range-container::after {
+  content: '';
+  display: table;
+  clear: left;
+}
+
+.s-input-range-min {
+  float: left;
+  padding-top: 8px;
+}
+
+.s-input-range-max {
+  float: right;
+  padding-top: 8px;
+}
+
+.s-input-range-position-label-container {
+  position: relative;
+  margin: 0 14px 9px 14px;
+  height: 1em;
+}
+
+.s-input-range-position-label {
+  position: absolute;
+  width: 200px;
+  text-align: center;
+  transform: translateX(-50%);
+}
+
+.q-quiz-answer-button {
+  background-color: currentColor;
+  border: none;
+  outline: none;
+  border-radius: 3px;
+  width: 100%;
+  padding: 9px;
+  position: relative;
+  cursor: pointer;
+  margin-top: 10px;
+  opacity: 1;
+
+  transition: opacity 0.1s ease-out;
+
+  &[disabled] {
+    background: none;
+    border: 1px solid #d6d6d6;
+    cursor: default;
+    span {
+      color: #d6d6d6;
+    }
+  }
+
+  &.state-clicked {
+    opacity: 0;
+  }
+}
+
+.q-quiz-answer-button--soft {
+  background-color: transparent;
+  border: 1px solid currentColor;
+}
+
+.q-quiz-element-container {
+  img {
+    display: block;
+    margin: 10px auto;
+  }
+}
+
+@import "./numberGuess";
+@import "./mapPointGuess";
+@import "./multipleChoice";
+@import "./q-quiz-multi-header";
+@import "./q-quiz-multi-container";
+@import "./cover";
+@import "./q-quiz-button";
