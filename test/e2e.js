@@ -1,12 +1,12 @@
-'use strict';
+/*'use strict';
 
 const Hoek = require('hoek');
 const expect = require('chai').expect;
 const server = require('../server.js');
 const plugins = require('../server-plugins.js');
-const routes = require('../routes/routes.js');
+const routes = require('../routes/routes.js');*/
 
-server.register(plugins, err => {
+/*server.register(plugins, err => {
   Hoek.assert(!err, err);
 
   server.route(routes);
@@ -48,9 +48,12 @@ const mockData = JSON.parse(JSON.stringify(require('./resources/mock-data.js')))
 describe('rendering-info endpoints', () => {
 
   it('should return 200 for /rendering-info/html-static', function(done) {
+    console.log('test');
+    console.log(JSON.stringify({ item: mockData }));
+
     const request = {
       method: 'POST',
-      url: '/rendering-info/html-static',
+      url: '/rendering-info/html-js',
       payload: JSON.stringify({ item: mockData })
     };
     server.inject(request, (res) => {
@@ -60,3 +63,4 @@ describe('rendering-info endpoints', () => {
   })
 
 });
+*/

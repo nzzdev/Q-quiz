@@ -1,10 +1,14 @@
 const JsDom = require('jsdom');
 const expect = require('chai').expect;
 
-const mockData = require('./resources/mock-data');
+const transform = require('../resources/helpers/itemTransformer.js');
+let mockData = require('./resources/mock-data');
+mockData = transform(mockData);
 require('svelte/ssr/register');
-const staticTpl = require('../views/html-static.html');
-var markup = staticTpl.render(JSON.parse(JSON.stringify(mockData)));
+const staticTpl = require('../views/html-js.html');
+
+const quizId = (Math.random() * 10000).toFixed();
+var markup = staticTpl.render(JSON.parse(JSON.stringify({item: mockData, quizContainerId: `q-quiz-${quizId}`})));
 
 
 function element(selector) {
@@ -28,8 +32,12 @@ function elementCount(selector) {
 }
 
 // some basic dom tests with mock data
-describe('Q election votes dom tests', function() {
-  it('should pass if sum of values is found', function() {
+describe('Q quiz dom tests', function() {
+
+  // Header elements
+  // Question element (input/result/answer button)
+
+  /*it('should pass if sum of values is found', function() {
     return elementCount('div.renderer-sum').then(value => {
         expect(value).to.be.equal(1);
     })
@@ -39,5 +47,6 @@ describe('Q election votes dom tests', function() {
     return elementCount('div.renderer-data-entry').then(value => {
       expect(value).to.be.equal(mockData.sampleData.length);
     })
-  })
+  })*/
 })
+

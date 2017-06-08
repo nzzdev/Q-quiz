@@ -26,14 +26,20 @@
   export default {
     computed: {
       initialValue: (question) => {
+        if (!question.max || !question.min) {
+          return '';
+        }
         return (parseFloat(question.max) - parseFloat(question.min)) / 2 + parseFloat(question.min);
       },
       labelPosition: (initialValue, question) => {
+        if (!initialValue) {
+          return 50;
+        }
         return (initialValue - question.min) / (question.max - question.min) * 100;
       },
       labelMin: (question) => {
         let min = question.min !== undefined ? question.min : '';
-        let unit = question.unit;
+        let unit = question.unit || '';
         if (parseFloat(min) === 1 && question.unit_singular) {
           unit = question.unit_singular;
         }
@@ -41,7 +47,7 @@
       },
       labelMax: (question) => {
         let max = question.max !== undefined ? question.max : '';
-        let unit = question.unit;
+        let unit = question.unit || '';
         if (parseFloat(max) === 1 && question.unit_singular) {
           unit = question.unit_singular;
         }

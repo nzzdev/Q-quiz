@@ -172,11 +172,15 @@
             },
             "lng": {
               "type": "number"
+            },
+            "bbox": {
+              "type": "string"
+            },
+            "pointLabel": {
+              "type": "string",
+              "title": "Beschriftung Punkt"
             }
           }
-        },
-        "bbox": {
-          "type": "string"
         },
         "answerText": {
           "type": "string",
@@ -226,7 +230,7 @@
     "elementId": {
       "type": "string",
       "title": "ID",
-      "Q:type": "generatedId",
+      "Q:default": "generatedId",
       "Q:options": {
         "hideInEditor": true
       }

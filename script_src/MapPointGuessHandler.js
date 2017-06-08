@@ -42,7 +42,7 @@ export default class MapPointGuessHandler {
     this.inputElement = this.questionElement.querySelector('.q-quiz-input');
     let mapContainer = this.inputElement.querySelector('.q-quiz-map-container');
     let map = L.map(mapContainer, mapOptions);
-    mapFitBbox(map, this.data.bbox);
+    mapFitBbox(map, this.data.correctAnswer.bbox);
 
     this.setMapSize(map);
     window.addEventListener('resize', () => {
@@ -95,13 +95,14 @@ export default class MapPointGuessHandler {
   }
 
   renderResult(answer) {
+    const correctAnswer = this.data.correctAnswer;
     this.resultElement = this.questionElement.querySelector('.q-quiz-result');
     let mapContainer = this.resultElement.querySelector('.q-quiz-map-container');
 
     let map = L.map(mapContainer, mapOptions);
     map.attributionControl.setPrefix('');
 
-    mapFitBbox(map, this.data.bbox);
+    mapFitBbox(map, correctAnswer.bbox);
 
     this.setMapSize(map);
 
@@ -118,14 +119,14 @@ export default class MapPointGuessHandler {
 
       let correctAnswerLabelPosition;
       let answerLabelPosition;
-      if (this.data.correctAnswer.lat > answer.latLng.lat) {
+      if (correctAnswer.lat > answer.latLng.lat) {
         correctAnswerLabelPosition = 'top';
         answerLabelPosition = 'bottom';
       } else {
         correctAnswerLabelPosition = 'bottom';
         answerLabelPosition = 'top';
       }
-      if (this.data.correctAnswer.lng < west + ((east - west) / 2)) {
+      if (correctAnswer.lng < west + ((east - west) / 2)) {
         correctAnswerLabelPosition += 'right';
       } else {
         correctAnswerLabelPosition += 'left';
@@ -137,11 +138,11 @@ export default class MapPointGuessHandler {
       }
 
       let correctAnswerLabel = '';
-      if (this.data.pointLabel && this.data.pointLabel.length && this.data.pointLabel.length > 0) {
-        correctAnswerLabel = this.data.pointLabel;
+      if (correctAnswer.pointLabel && correctAnswer.pointLabel.length && correctAnswer.pointLabel.length > 0) {
+        correctAnswerLabel = correctAnswer.pointLabel;
       }
       let correctAnswerMarker = Leaflet
-        .marker([this.data.correctAnswer.lat, this.data.correctAnswer.lng], {
+        .marker([correctAnswer.lat, correctAnswer.lng], {
           icon: Leaflet
             .divIcon({
               className: 'q-quiz-map-marker s-font-note-s s-color-grey-8',

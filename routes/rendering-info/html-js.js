@@ -4,6 +4,7 @@ const Joi = require('joi');
 const resourcesDir = __dirname + '/../../resources/';
 const viewsDir = __dirname + '/../../views/';
 const scriptsDir  = __dirname + '/../../scripts/';
+const transform = require(resourcesDir + 'helpers/itemTransformer.js');
 
 const schemaString = JSON.parse(fs.readFileSync(resourcesDir + 'schema.json', {
   encoding: 'utf-8'
@@ -12,8 +13,6 @@ const schemaString = JSON.parse(fs.readFileSync(resourcesDir + 'schema.json', {
 const schema = Enjoi(schemaString);
 
 const hashMap = require(`${scriptsDir}/hashMap.json`);
-
-const questionTypes = ['multipleChoice', 'numberGuess', 'mapPointGuess'];
 
 require('svelte/ssr/register');
 const staticTemplate = require(viewsDir + 'html-js.html');
@@ -35,7 +34,7 @@ module.exports = {
   },
   handler: function(request, reply) {
 
-    let item = request.payload.item;
+    let item = transform(request.payload.item);
 
     // get id of quiz item
     let id = item._id;
@@ -45,39 +44,15 @@ module.exports = {
 
     const quizContainerId = `q-quiz-${id}`;
 
-    // extract only one of the possibly existing cover elements, undefined otherwise
-    const coverElement = item.elements.filter(element => {
-      return element.type === 'cover';
-    })[0];
-
-    const hasCover = coverElement !== undefined;
-
-    // extract only one of the possibly existing last card elements, undefined otherwise
-    const lastCardElement = item.elements.filter(element => {
-      return element.type === 'lastCard';
-    })[0];
-
-    const hasLastCard = lastCardElement !== undefined;
-    
-    // extract question elements
-    const questionElements = item.elements.filter(element => {
-      return questionTypes.includes(element.type);
-    })
-
     // prepare data for client side script
-    const questionElementData = questionElements.map(element => {
-        let data = {
+    const questionElementData = item.questions.map(element => {
+        return {
           id: element.id,
           type: element.type,
           correctAnswer: element.answer,
           answerText: element.answerText,
           articleRecommendations: element.articleRecommendations
         }
-        if (element.type === 'mapPointGuess') {
-          data.bbox = element.bbox,
-          data.pointLabel = element.pointLabel
-        }
-        return data;
       });
 
     // if isPure is set to true no side effects will be caused, in this 
@@ -87,34 +62,25 @@ module.exports = {
     let scriptData = {
       itemId: id,
       questionElementData: questionElementData,
-      hasCover: hasCover,
-      hasLastCard: hasLastCard,
+      hasCover: item.hasCover,
+      hasLastCard: item.hasLastCard,
+      numberElements: item.elementCount,
       toolBaseUrl: request.payload.toolRuntimeConfig.toolBaseUrl,
       isPure: isPure
     }
 
-    let numberElements = questionElements.length;
-    if (hasCover) {
-      numberElements++;
-    }
-
-    if (hasLastCard) {
-      numberElements++;
+    if (item.hasLastCard) {
       scriptData.lastCardData = {
-        articleRecommendations: lastCardElement.articleRecommendations
+        articleRecommendations: item.lastCard.articleRecommendations
       }
     }
 
-    scriptData.numberElements = numberElements;
-
-    // prepare data for server side rendering
-    item.questions = questionElements;
-    item.cover = coverElement;
-    item.lastCard = lastCardElement;
-    item.hasCover = hasCover;
-    item.hasLastCard = hasLastCard;
-    item.elementCount = numberElements;
+    console.log('item ' + JSON.stringify(item));
+    // elements are already split into cover, last card and questions
+    // so we don't need it here anymore
     delete item.elements;
+
+    console.log('item ' + JSON.stringify(item));
 
     const renderingData = {
       item: item,
