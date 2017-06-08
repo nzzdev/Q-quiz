@@ -22,10 +22,9 @@ function mapFitBbox(map, bbox) {
   if (!bbox) {
     return;
   }
-  let bboxParts = bbox.split(',')
   map.fitBounds([
-    [bboxParts[1], bboxParts[0]],
-    [bboxParts[3], bboxParts[2]]
+    [bbox[1], bbox[0]],
+    [bbox[3], bbox[2]]
   ]);
 }
 
@@ -87,7 +86,7 @@ export default class MapPointGuessHandler {
   }
 
   getValue(event) {
-    let correctLatLng = new L.latLng(this.data.correctAnswer.lat, this.data.correctAnswer.lng)
+    let correctLatLng = new L.latLng([this.data.correctAnswer.geometry.coordinates[1], this.data.correctAnswer.geometry.coordinates[0]])
     return {
       latLng: this.marker.getLatLng(),
       distance: Math.floor(this.marker.getLatLng().distanceTo(correctLatLng))
@@ -119,14 +118,14 @@ export default class MapPointGuessHandler {
 
       let correctAnswerLabelPosition;
       let answerLabelPosition;
-      if (correctAnswer.lat > answer.latLng.lat) {
+      if (correctAnswer.geometry.coordinates[1] > answer.latLng.lat) {
         correctAnswerLabelPosition = 'top';
         answerLabelPosition = 'bottom';
       } else {
         correctAnswerLabelPosition = 'bottom';
         answerLabelPosition = 'top';
       }
-      if (correctAnswer.lng < west + ((east - west) / 2)) {
+      if (correctAnswer.geometry.coordinates[0] < west + ((east - west) / 2)) {
         correctAnswerLabelPosition += 'right';
       } else {
         correctAnswerLabelPosition += 'left';
@@ -138,11 +137,11 @@ export default class MapPointGuessHandler {
       }
 
       let correctAnswerLabel = '';
-      if (correctAnswer.pointLabel && correctAnswer.pointLabel.length && correctAnswer.pointLabel.length > 0) {
-        correctAnswerLabel = correctAnswer.pointLabel;
+      if (correctAnswer.properties.pointLabel && correctAnswer.properties.pointLabel.length && correctAnswer.properties.pointLabel.length > 0) {
+        correctAnswerLabel = correctAnswer.properties.pointLabel;
       }
       let correctAnswerMarker = Leaflet
-        .marker([correctAnswer.lat, correctAnswer.lng], {
+        .marker([correctAnswer.geometry.coordinates[1], correctAnswer.geometry.coordinates[0]], {
           icon: Leaflet
             .divIcon({
               className: 'q-quiz-map-marker s-font-note-s s-color-grey-8',
