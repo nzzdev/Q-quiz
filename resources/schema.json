@@ -12,7 +12,12 @@
       "Q:options": {
         "expandable": {
           "itemLabelProperty": "type"
-        }
+        },
+        "availabilityChecks": [
+          {
+            "type": "ItemHasId"
+          }
+        ]
       },
       "items": {
         "oneOf": [
