@@ -1,9 +1,9 @@
-<div class="q-quiz s-color-gray-4" id="{{ quizContainerId }}" style="opacity: 0;">
+<div class="q-quiz s-color-gray-4" id="{{ quizContainerId }}" style="opacity: 0;" data-track-id="quiz" data-track-component-id="{{ item._id }}">
   <Header isMultiQuiz="{{isMultiQuiz}}" hasCover="{{hasCover}}" numberQuestions="{{numberQuestions}}"/>
   <div class="{{quizContainerClassAttribute}}" style="width:{{elementCount * 100}}%;">
     {{#if hasCover}}
       <div class="q-quiz-element-container q-quiz__cover s-color-primary-1 q-quiz-element-container--is-active" style="width: {{elementWidth}}%;">
-        <h3 class="q-quiz__cover-title s-font-title">{{cover.title}}</h3>
+        <h3 class="q-quiz__cover-title s-font-title">{{#if cover.title}}{{cover.title}}{{/if}}</h3>
         <button class="q-quiz-button">
           <div class="q-quiz-button__icon q-quiz-button__icon--large s-color-primary-6">
             <svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg">

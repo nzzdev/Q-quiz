@@ -22,7 +22,15 @@
   export default {
     computed: {
       answers: (question) => {
-        let answers = question.choices.concat(question.answer);
+        if (question.choices === undefined) {
+          question.choices = [];
+        }
+
+        let answers = question.choices;
+        if (question.answer) {
+          answers = answers.concat(question.answer);
+        } 
+
         for (let i = answers.length; i; i--) {
           const randomIndex = Math.floor(Math.random() * i);
           const element = answers[i - 1];

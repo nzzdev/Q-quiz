@@ -16,6 +16,16 @@ export function display(data, quizRootElement) {
     quizButton.addEventListener('click', () => {
       position++;
       questionHandler.renderInputElement(position);
+
+      // dispatch CustomEvent for next-screen for tracking
+      // or anyone else interested in it
+      let quizControlEvent = new CustomEvent('q-quiz-next-screen', {
+        bubbles: true,
+        detail: {
+          id: data.itemId
+        }
+      });
+      quizRootElement.dispatchEvent(quizControlEvent);
     })
   }); 
   

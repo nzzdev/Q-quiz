@@ -12,7 +12,12 @@
       "Q:options": {
         "expandable": {
           "itemLabelProperty": "type"
-        }
+        },
+        "availabilityChecks": [
+          {
+            "type": "ItemHasId"
+          }
+        ]
       },
       "items": {
         "oneOf": [
@@ -89,7 +94,11 @@
         },
         "image": {"$ref": "#/definitions/image"},
         "articleRecommendations": {"$ref": "#/definitions/articleRecommendations"}
-      }
+      },
+      "required":[
+        "question",
+        "answer"
+      ]
     },
     "numberGuess": {
       "type": "object",
@@ -143,7 +152,14 @@
         },
         "image": {"$ref": "#/definitions/image"},
         "articleRecommendations": {"$ref": "#/definitions/articleRecommendations"}
-      }
+      },
+      "required": [
+        "question",
+        "answer",
+        "min", 
+        "max", 
+        "step"
+      ]
     },
     "mapPointGuess": {
       "type": "object",
@@ -164,19 +180,7 @@
           "title": "Frage"
         },
         "answer": {
-          "type": "object",
-          "title": "Korrekte Antwort",
-          "properties": {
-            "lat": {
-              "type": "number"
-            },
-            "lng": {
-              "type": "number"
-            }
-          }
-        },
-        "bbox": {
-          "type": "string"
+          "$ref": "#/definitions/geojson-point"
         },
         "answerText": {
           "type": "string",
@@ -188,7 +192,8 @@
         },
         "image": {"$ref": "#/definitions/image"},
         "articleRecommendations": {"$ref": "#/definitions/articleRecommendations"}
-      }
+      },
+      "required":[ "question" ]
     },
     "lastCard": {
       "type": "object",
@@ -226,7 +231,7 @@
     "elementId": {
       "type": "string",
       "title": "ID",
-      "Q:type": "generatedId",
+      "Q:default": "generatedId",
       "Q:options": {
         "hideInEditor": true
       }
@@ -258,6 +263,75 @@
           "title": "URL zum Bild"
         }
       }
+    },
+    "geojson-point": {
+      "type": "object",
+      "title": "Punkt",
+      "Q:type": "geojsonPoint",
+      "Q:options": {
+        "bbox": "manual"
+      },
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "default": "Feature",
+          "enum": ["Feature"]
+        },
+        "geometry": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "default": "Point",
+              "enum": ["Point"]
+            },
+            "coordinates": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/position"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        },
+        "bbox": { 
+          "oneOf": [
+            {
+              "$ref": "#/definitions/bbox"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "properties": {
+          "type": "object",
+          "properties": {
+            "pointLabel": {
+              "type": "string",
+              "title": "Beschriftung Punkt"
+            }
+          }
+        }
+      }
+    },
+    "position": {
+      "description": "A single position",
+      "type": "array",
+      "minItems": 2,
+      "items": [ { "type": "number" }, { "type": "number" } ],
+      "additionalItems": false
+    },
+    "bbox": {
+      "description": "A bounding box",
+      "type": "array",
+      "minItems": 4,
+      "items": [ { "type": "number" }, { "type": "number" }, { "type": "number" }, { "type": "number" } ],
+      "additionalItems": false
     }
   }
 }

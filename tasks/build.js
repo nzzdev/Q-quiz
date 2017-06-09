@@ -13,7 +13,7 @@ builder.config({
 let hashMap = {};
 
 return builder
-  .bundle('q-quiz/quiz.js', { normalize: true, runtime: false, minify: false })
+  .bundle('q-quiz/quiz.js', { normalize: true, runtime: false, minify: true, mangle: false })
   .then(bundle => {
     const hash = crypto.createHash('md5');
     hash.update(bundle.source);

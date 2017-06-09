@@ -1,5 +1,5 @@
-<h3 class="s-q-item__title">{{question.question}}</h3>
-{{#if question.image}}
+<h3 class="s-q-item__title">{{#if question.question}}{{question.question}}{{/if}}</h3>
+{{#if question.image && question.image.url}}
   <img src="{{question.image.url}}" />
 {{/if}}
 <div>
