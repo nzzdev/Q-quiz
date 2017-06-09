@@ -18,7 +18,7 @@
   </button>
 </div>
 <div class="q-quiz-result state-hidden">
-  <div class="q-quiz-result__number-guess-visual" unit="{{question.unit}}" unit-singular="{{question.unit_singular}}"></div>
+  <div class="q-quiz-result__number-guess-visual" unit="{{question.unit || ''}}" unit-singular="{{question.unit_singular || ''}}"></div>
   <p class="q-quiz-result-answer-text s-font-text-s"></p>
 </div>
 

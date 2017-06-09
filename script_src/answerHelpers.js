@@ -104,7 +104,9 @@ export function renderAdditionalInformationForQuestion(element, correctAnswer) {
     let detailedAnswer = element.querySelector('.q-quiz-result .q-quiz-result-answer-text');
     let detailedAnswerSpan = document.createElement('span');
     detailedAnswerSpan.classList.add('s-font-text-s');
-    detailedAnswerSpan.innerText = correctAnswer.answerText;
+    if (correctAnswer.answerText) {
+      detailedAnswerSpan.innerText = correctAnswer.answerText;
+    }
     detailedAnswer.appendChild(detailedAnswerSpan);
 
     let articleRecommendationsElement = getRecommendationsElement(correctAnswer.articleRecommendations);

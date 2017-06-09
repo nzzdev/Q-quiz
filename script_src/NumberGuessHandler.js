@@ -95,7 +95,7 @@ export default class NumberGuessHandler {
     let correctAnswerHtml = `
       <div class="q-quiz-result__number-guess-visual__text__label s-font-note s-color-gray-8">
         Korrekte Antwort
-        <div class="s-font-note--strong">${this.correctAnswer} ${getUnit(this.correctAnswer, unitData)}</div>
+        <div class="s-font-note--strong">${this.correctAnswer || ''} ${getUnit(this.correctAnswer, unitData)}</div>
       </div>
       <div class="q-quiz-result__number-guess-visual__text__marker ${additionalMarkerClass}" ${additionalMarkerAttributes}></div>
     `;

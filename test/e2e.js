@@ -48,9 +48,6 @@ const mockData = JSON.parse(JSON.stringify(require('./resources/mock-data.js')))
 describe('rendering-info endpoints', () => {
 
   it('should return 200 for /rendering-info/html-static', function(done) {
-    console.log('test');
-    console.log(JSON.stringify({ item: mockData }));
-
     const request = {
       method: 'POST',
       url: '/rendering-info/html-js',
