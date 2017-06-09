@@ -41,6 +41,7 @@ module.exports = {
     if (!id && item.elements && item.elements.length > 0) {
       id = item.elements[0].id.split('-')[0] || (Math.random() * 10000).toFixed();
     }
+    item._id = id;
 
     const quizContainerId = `q-quiz-${id}`;
 
@@ -60,7 +61,7 @@ module.exports = {
     const isPure = request.payload.toolRuntimeConfig.isPure || false;
 
     let scriptData = {
-      itemId: id,
+      itemId: item._id,
       questionElementData: questionElementData,
       hasCover: item.hasCover,
       hasLastCard: item.hasLastCard,
@@ -104,7 +105,7 @@ module.exports = {
 
     const renderingInfo = {
       loaderConfig: {
-        polyfills: ['Promise'],
+        polyfills: ['Promise', 'CustomEvent'],
         loadSystemJs: 'full'
       },
       stylesheets: [
@@ -119,6 +120,10 @@ module.exports = {
         },
         {
           content: loaderScript
+        },
+        {
+          url: 'https://storytelling.nzz.ch/track-manager/v0/track.js',
+          loadOnce: true
         }
       ],
       markup: staticTemplate.render(renderingData)

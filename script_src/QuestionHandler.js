@@ -62,6 +62,16 @@ export default class QuestionHandler {
           })
       });
 
+    // dispatch a custom event for tracking system to track the answer
+    // and others if they are interested
+    let answerEvent = new CustomEvent('q-quiz-answer', {
+      bubbles: true,
+      detail: {
+        id: this.data.questionElementData[this.questionPosition].id
+      }
+    });
+    this.quizRootElement.dispatchEvent(answerEvent);
+
     this.renderAdditionalInformation();
     this.displayResult();
   }
