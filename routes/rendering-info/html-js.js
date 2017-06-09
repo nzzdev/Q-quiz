@@ -75,12 +75,9 @@ module.exports = {
       }
     }
 
-    console.log('item ' + JSON.stringify(item));
     // elements are already split into cover, last card and questions
     // so we don't need it here anymore
     delete item.elements;
-
-    console.log('item ' + JSON.stringify(item));
 
     const renderingData = {
       item: item,

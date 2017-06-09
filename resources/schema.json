@@ -94,7 +94,11 @@
         },
         "image": {"$ref": "#/definitions/image"},
         "articleRecommendations": {"$ref": "#/definitions/articleRecommendations"}
-      }
+      },
+      "required":[
+        "question",
+        "answer"
+      ]
     },
     "numberGuess": {
       "type": "object",
@@ -149,7 +153,13 @@
         "image": {"$ref": "#/definitions/image"},
         "articleRecommendations": {"$ref": "#/definitions/articleRecommendations"}
       },
-      "required": ["min", "max", "step"]
+      "required": [
+        "question",
+        "answer",
+        "min", 
+        "max", 
+        "step"
+      ]
     },
     "mapPointGuess": {
       "type": "object",
@@ -182,7 +192,8 @@
         },
         "image": {"$ref": "#/definitions/image"},
         "articleRecommendations": {"$ref": "#/definitions/articleRecommendations"}
-      }
+      },
+      "required":[ "question" ]
     },
     "lastCard": {
       "type": "object",
