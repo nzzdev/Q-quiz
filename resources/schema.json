@@ -1,6 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
+  "title": "Quiz",
   "properties": {
     "title": {
       "title": "Titel",
@@ -15,7 +16,8 @@
         },
         "availabilityChecks": [
           {
-            "type": "ItemHasId"
+            "type": "ItemHasId",
+            "unavailableMessage": "Zuerst Titel erfassen und speichern um Fragen hinzuzufügen"
           }
         ]
       },
