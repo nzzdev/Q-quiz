@@ -1,6 +1,6 @@
 {
   "name": "@nzz/q-quiz",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Q quiz",
   "keywords": [
     "storytelling",
@@ -46,6 +46,7 @@
     "json-schema-faker": "^0.4.0",
     "jspm": "^0.17.0-beta.41",
     "mocha": "^3.2.0",
+    "node-fetch": "^1.7.1",
     "node-sass": "^4.3.0",
     "pouchdb": "^6.2.0",
     "sparseheatmap": "^1.1.1",
