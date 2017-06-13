@@ -123,7 +123,7 @@
         },
         "image": {"$ref": "#/definitions/image"},
         "answer": {
-          "type": "string",
+          "type": "number",
           "title": "Korrekte Antwort"
         },
         "unit": {
