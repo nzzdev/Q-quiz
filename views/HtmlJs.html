@@ -28,7 +28,7 @@
       {{/if}}
     {{/each}}
     {{#if hasLastCard}}
-      <div class="q-quiz-element-container q-quiz__last-card s-color-primary-1 q-quiz-element-container--is-inactive" style="width: {{elementWidth}}%;">
+      <div class="q-quiz-element-container q-quiz__last-card s-color-primary-1 {{lastCardActiveStateAttribute}}" style="width: {{elementWidth}}%;">
         {{#if lastCard.title}}
           <h3 class="s-q-item__title">{{lastCard.title}}</h3>
         {{/if}}
@@ -95,6 +95,13 @@
           return 'q-quiz-multi-container';
         }
         return 'q-quiz-single-container';
+      },
+      lastCardActiveStateAttribute: (isMultiQuiz, hasLastCard) => {
+        if (!isMultiQuiz && hasLastCard) {
+          return 'q-quiz-element-container--is-active';
+        } else {
+          return 'q-quiz-element-container--is-inactive';
+        }
       }
     },
     components: {

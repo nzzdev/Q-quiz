@@ -1,6 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
+  "title": "Quiz",
   "properties": {
     "title": {
       "title": "Titel",
@@ -11,11 +12,12 @@
       "type": "array",
       "Q:options": {
         "expandable": {
-          "itemLabelProperty": "type"
+          "itemLabelProperty": ["title", "question"]
         },
         "availabilityChecks": [
           {
-            "type": "ItemHasId"
+            "type": "ItemHasId",
+            "unavailableMessage": "Zuerst Titel erfassen und speichern um Fragen hinzuzufügen"
           }
         ]
       },
@@ -64,7 +66,6 @@
           "default": "multipleChoice",
           "enum": ["multipleChoice"],
           "Q:options": {
-            "enum_titles": ["Multiple Choice"],
             "hideInEditor": true
           }
         },
@@ -72,17 +73,21 @@
           "type": "string",
           "title": "Frage"
         },
+        "image": {"$ref": "#/definitions/image"},
+        "answer": {
+          "type": "string",
+          "title": "Korrekte Antwort"
+        },
         "choices": {
           "type": "array",
           "title": "Antwortmöglichkeiten",
+          "Q:options": {
+            "compact": true
+          },
           "items": {
             "type": "string",
             "title": "Antwortmöglichkeit"
           }
-        },
-        "answer": {
-          "type": "string",
-          "title": "Korrekte Antwort"
         },
         "answerText": {
           "type": "string",
@@ -92,7 +97,6 @@
           "type": "string",
           "title": "Anmerkungen"
         },
-        "image": {"$ref": "#/definitions/image"},
         "articleRecommendations": {"$ref": "#/definitions/articleRecommendations"}
       },
       "required":[
@@ -110,13 +114,17 @@
           "default": "numberGuess",
           "enum": ["numberGuess"],
           "Q:options": {
-            "enum_titles": ["Zahl schätzen"], 
             "hideInEditor": true
           }
         },
         "question": {
           "type": "string",
           "title": "Frage"
+        },
+        "image": {"$ref": "#/definitions/image"},
+        "answer": {
+          "type": "string",
+          "title": "Korrekte Antwort"
         },
         "unit": {
           "type": "string",
@@ -138,10 +146,6 @@
           "type": "number",
           "title": "Grösse der Zwischenschritte"
         },
-        "answer": {
-          "type": "string",
-          "title": "Korrekte Antwort"
-        },
         "answerText": {
           "type": "string",
           "title": "Ausformulierte Antwort"
@@ -150,7 +154,6 @@
           "type": "string",
           "title": "Anmerkungen"
         },
-        "image": {"$ref": "#/definitions/image"},
         "articleRecommendations": {"$ref": "#/definitions/articleRecommendations"}
       },
       "required": [
@@ -171,7 +174,6 @@
           "default": "mapPointGuess",
           "enum": ["mapPointGuess"],
           "Q:options": {
-            "enum_titles": ["Ort schätzen"],
             "hideInEditor": true
           }
         },
@@ -239,6 +241,9 @@
     "articleRecommendations": {
       "type": "array",
       "title": "Artikelempfehlungen",
+      "Q:options": {
+        "compact": true
+      },
       "items": {
         "type": "object",
         "title": "Artikelempfehlung",
@@ -257,6 +262,9 @@
     "image": {
       "type": "object",
       "title": "Bild",
+      "Q:options": {
+        "compact": true
+      },
       "properties": {
         "url": {
           "type": "string",

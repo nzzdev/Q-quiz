@@ -5,7 +5,7 @@ const transform = require('../resources/helpers/itemTransformer.js');
 let mockData = require('./resources/mock-data');
 mockData = transform(mockData);
 require('svelte/ssr/register');
-const staticTpl = require('../views/html-js.html');
+const staticTpl = require('../views/HtmlJs.html');
 
 const quizId = (Math.random() * 10000).toFixed();
 var markup = staticTpl.render(JSON.parse(JSON.stringify({item: mockData, quizContainerId: `q-quiz-${quizId}`})));
