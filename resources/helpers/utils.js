@@ -22,7 +22,7 @@ function getAnswer(id) {
 }
 
 function getItem(itemId) {
-  return fetch(`${process.env.COUCH_DB_URL_Q_QUIZ}/${itemId}`)
+  return fetch(`${process.env.COUCH_DB_URL_Q_ITEMS}/${itemId}`)
     .then(response => {
       if (response.ok && response.status < 400) {
         return response.json();
