@@ -49,7 +49,7 @@
     "node-sass": "^4.3.0",
     "pouchdb": "^6.2.0",
     "sparseheatmap": "^1.1.1",
-    "svelte": "1.6.3",
+    "svelte": "1.22.3",
     "yaral": "^1.5.0"
   },
   "jspm": {
