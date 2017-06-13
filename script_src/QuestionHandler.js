@@ -45,7 +45,14 @@ export default class QuestionHandler {
   }
 
   handleAnswer(event) {
-    const answerValue = this.questionRenderer.getValue(event); // async??
+    const answerValue = this.questionRenderer.getValue(event); 
+
+    if (typeof this.questionRenderer.isAnswerValid === 'function') {
+      if (!this.questionRenderer.isAnswerValid()) {
+        this.questionRenderer.handleInvalidAnswer();
+        return;
+      }
+    }
 
     this.questionRenderer.renderResult(answerValue);
     this.storeAnswer(answerValue)
@@ -74,6 +81,7 @@ export default class QuestionHandler {
 
     this.renderAdditionalInformation();
     this.displayResult();
+    
   }
 
   storeAnswer(answerValue) {

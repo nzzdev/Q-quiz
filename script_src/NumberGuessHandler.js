@@ -27,6 +27,10 @@ export default class NumberGuessHandler {
   renderInput() {
     const labelContainer = this.inputElement.parentNode.firstChild;
     let label = labelContainer.querySelector('.s-input-range-position-label');
+    this.inputElement.setAttribute('value', this.defaultInputValue);
+    this.defaultInputValue = this.inputElement.value;
+    label.textContent = this.defaultInputValue;
+
     this.inputElement.addEventListener('input', () => {
       label.textContent = this.inputElement.value;
       label.setAttribute('style', `left: ${(this.inputElement.value - this.min) / (this.max - this.min) * 100}%;`);
@@ -58,15 +62,7 @@ export default class NumberGuessHandler {
   }
 
   renderResult(answer) {
-    if (this.isAnswerValid()) {
-      this.resultElement = this.questionElement.querySelector('.q-quiz-result__number-guess-visual');
-      this.renderValidResult(answer);
-    } else {
-      this.handleInvalidAnswer();
-    }
-  }
-
-  renderValidResult(answer) {
+    this.resultElement = this.questionElement.querySelector('.q-quiz-result__number-guess-visual');
     const unitData = {
       unit: this.resultElement.getAttribute('unit'),
       unitSingular: this.resultElement.getAttribute('unit-singular')
