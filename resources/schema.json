@@ -1,97 +1,345 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
+  "title": "Quiz",
   "properties": {
     "title": {
       "title": "Titel",
       "type": "string"
     },
-    "subtitle": {
-      "title": "Untertitel",
-      "type": "string"
-    },
-    "sampleData": {
-      "title": "Beispiele",
+    "elements": {
+      "title": "Elemente",
       "type": "array",
       "Q:options": {
         "expandable": {
-          "itemLabelProperty": "name"
+          "itemLabelProperty": ["title", "question"]
+        },
+        "availabilityChecks": [
+          {
+            "type": "ItemHasId",
+            "unavailableMessage": "Zuerst Titel erfassen und speichern um Fragen hinzuzufügen"
+          }
+        ]
+      },
+      "items": {
+        "oneOf": [
+          {"$ref": "#/definitions/cover"},
+          {"$ref": "#/definitions/multipleChoice"},
+          {"$ref": "#/definitions/numberGuess"},
+          {"$ref": "#/definitions/mapPointGuess"},
+          {"$ref": "#/definitions/lastCard"}
+        ]
+      }
+    }
+  },   
+  "required": [
+    "title"
+  ],
+  "definitions": {
+    "cover": {
+      "type": "object",
+      "title": "Cover",
+      "properties": {
+        "id": {"$ref": "#/definitions/elementId"},
+        "type": {
+          "type": "string",
+          "default": "cover",
+          "enum": ["cover"],
+          "Q:options": {
+            "enum_titles": ["Cover"],
+            "hideInEditor": true
+          }
+        },
+        "title": {
+          "type": "string",
+          "title": "Titel"
         }
+      }
+    },
+    "multipleChoice": {
+      "type": "object",
+      "title": "Multiple Choice",
+      "properties": {
+        "id": {"$ref": "#/definitions/elementId"},
+        "type": {
+          "type": "string",
+          "default": "multipleChoice",
+          "enum": ["multipleChoice"],
+          "Q:options": {
+            "hideInEditor": true
+          }
+        },
+        "question": {
+          "type": "string",
+          "title": "Frage"
+        },
+        "image": {"$ref": "#/definitions/image"},
+        "answer": {
+          "type": "string",
+          "title": "Korrekte Antwort"
+        },
+        "choices": {
+          "type": "array",
+          "title": "Antwortmöglichkeiten",
+          "Q:options": {
+            "compact": true
+          },
+          "items": {
+            "type": "string",
+            "title": "Antwortmöglichkeit"
+          }
+        },
+        "answerText": {
+          "type": "string",
+          "title": "Ausformulierte Antwort"
+        },
+        "notes": {
+          "type": "string",
+          "title": "Anmerkungen"
+        },
+        "articleRecommendations": {"$ref": "#/definitions/articleRecommendations"}
+      },
+      "required":[
+        "question",
+        "answer"
+      ]
+    },
+    "numberGuess": {
+      "type": "object",
+      "title": "Zahl schätzen",
+      "properties": {
+        "id": {"$ref": "#/definitions/elementId"},
+        "type": {
+          "type": "string",
+          "default": "numberGuess",
+          "enum": ["numberGuess"],
+          "Q:options": {
+            "hideInEditor": true
+          }
+        },
+        "question": {
+          "type": "string",
+          "title": "Frage"
+        },
+        "image": {"$ref": "#/definitions/image"},
+        "answer": {
+          "type": "string",
+          "title": "Korrekte Antwort"
+        },
+        "unit": {
+          "type": "string",
+          "title": "Einheit Plural"
+        },
+        "unit_singular": {
+          "type": "string",
+          "title": "Einheit Singular (nur falls abweichend von Einheit Plural)"
+        },
+        "min": {
+          "type": "number",
+          "title": "Minimalwert"
+        },
+        "max": {
+          "type": "number",
+          "title": "Maximalwert"
+        },
+        "step": {
+          "type": "number",
+          "title": "Grösse der Zwischenschritte"
+        },
+        "answerText": {
+          "type": "string",
+          "title": "Ausformulierte Antwort"
+        },
+        "notes": {
+          "type": "string",
+          "title": "Anmerkungen"
+        },
+        "articleRecommendations": {"$ref": "#/definitions/articleRecommendations"}
+      },
+      "required": [
+        "question",
+        "answer",
+        "min", 
+        "max", 
+        "step"
+      ]
+    },
+    "mapPointGuess": {
+      "type": "object",
+      "title": "Ort schätzen",
+      "properties": {
+        "id": {"$ref": "#/definitions/elementId"},
+        "type": {
+          "type": "string",
+          "default": "mapPointGuess",
+          "enum": ["mapPointGuess"],
+          "Q:options": {
+            "hideInEditor": true
+          }
+        },
+        "question": {
+          "type": "string",
+          "title": "Frage"
+        },
+        "answer": {
+          "$ref": "#/definitions/geojson-point"
+        },
+        "answerText": {
+          "type": "string",
+          "title": "Ausformulierte Antwort"
+        },
+        "notes": {
+          "type": "string",
+          "title": "Anmerkungen"
+        },
+        "image": {"$ref": "#/definitions/image"},
+        "articleRecommendations": {"$ref": "#/definitions/articleRecommendations"}
+      },
+      "required":[ "question" ]
+    },
+    "lastCard": {
+      "type": "object",
+      "title": "letzte Seite",
+      "properties": {
+        "id": {"$ref": "#/definitions/elementId"},
+        "type": {
+          "type": "string",
+          "default": "lastCard",
+          "enum": ["lastCard"],
+          "Q:options": {
+            "enum_titles": ["letzte Seite"],
+            "hideInEditor": true
+          }
+        },
+        "title": {
+          "type": "string",
+          "title": "Titel"
+        },
+        "text": {
+          "type": "string",
+          "title": "Text"
+        },
+        "quizLink": {
+          "type": "string",
+          "title": "Link zu Anschlussquiz"
+        },
+        "quizTitle": {
+          "type": "string",
+          "title": "Titel Anschlussquiz"
+        },
+        "articleRecommendations": {"$ref": "#/definitions/articleRecommendations"}
+      }
+    },
+    "elementId": {
+      "type": "string",
+      "title": "ID",
+      "Q:default": "generatedId",
+      "Q:options": {
+        "hideInEditor": true
+      }
+    },
+    "articleRecommendations": {
+      "type": "array",
+      "title": "Artikelempfehlungen",
+      "Q:options": {
+        "compact": true
       },
       "items": {
         "type": "object",
-        "title": "Beispiel",
+        "title": "Artikelempfehlung",
         "properties": {
-          "name": {
-            "title": "Name",
-            "type": "string"
-          },
-          "value": {
-            "title": "Wert",
-            "type": "number",
-            "Q:options": {
-              "step": "0.1"
-            }
-          },
-          "compactObject": {
-            "title": "kompaktes Objekt",
-            "type": "object",
-            "Q:options": {
-              "compact": true
-            },
-            "properties": {
-              "url": {
-                "title": "Url",
-                "type": "string"
-              }
-            }
-          },
-          "status": {
-            "title": "Status",
+          "text": {
             "type": "string",
-            "default": "open",
-            "enum": [
-              "open",
-              "in progress",
-              "done"
-            ],
-            "Q:options": {
-              "enum_titles": [
-                "offen",
-                "in Bearbeitung",
-                "erledigt"
+            "title": "Anmoderation"
+          },
+          "articleId": {
+            "type": "string",
+            "title": "Artikel ID"
+          }
+        }
+      }
+    },
+    "image": {
+      "type": "object",
+      "title": "Bild",
+      "Q:options": {
+        "compact": true
+      },
+      "properties": {
+        "url": {
+          "type": "string",
+          "title": "URL zum Bild"
+        }
+      }
+    },
+    "geojson-point": {
+      "type": "object",
+      "title": "Punkt",
+      "Q:type": "geojsonPoint",
+      "Q:options": {
+        "bbox": "manual"
+      },
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "default": "Feature",
+          "enum": ["Feature"]
+        },
+        "geometry": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "default": "Point",
+              "enum": ["Point"]
+            },
+            "coordinates": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/position"
+                },
+                {
+                  "type": "null"
+                }
               ]
+            }
+          }
+        },
+        "bbox": { 
+          "oneOf": [
+            {
+              "$ref": "#/definitions/bbox"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "properties": {
+          "type": "object",
+          "properties": {
+            "pointLabel": {
+              "type": "string",
+              "title": "Beschriftung Punkt"
             }
           }
         }
       }
     },
-    "source": {
-      "title": "Quelle",
-      "type": "object",
-      "properties": {
-        "text": {
-          "title": "Text",
-          "type": "string"
-        },
-        "link": {
-          "Q:type": "link",
-          "title": "Link",
-          "type": "object",
-          "properties": {
-            "url": {
-              "title": "Url",
-              "type": "string"
-            },
-            "isValid": {
-              "type": "boolean"
-            }
-          }
-        }
-      }
+    "position": {
+      "description": "A single position",
+      "type": "array",
+      "minItems": 2,
+      "items": [ { "type": "number" }, { "type": "number" } ],
+      "additionalItems": false
+    },
+    "bbox": {
+      "description": "A bounding box",
+      "type": "array",
+      "minItems": 4,
+      "items": [ { "type": "number" }, { "type": "number" }, { "type": "number" }, { "type": "number" } ],
+      "additionalItems": false
     }
-  },
-  "required": [
-    "title"
-  ]
+  }
 }
