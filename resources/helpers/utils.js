@@ -1,5 +1,5 @@
 const quizDb = require('./db.js').quizDb;
-const itemDb = require('./db.js').itemDb;
+const fetch = require('node-fetch');
 
 function getAnswers(type, questionId, options) {
   if (typeof options === 'undefined') {
@@ -22,7 +22,13 @@ function getAnswer(id) {
 }
 
 function getItem(itemId) {
-  return itemDb.get(itemId)
+  return fetch(`${process.env.COUCH_DB_URL_Q_QUIZ}/${itemId}`)
+    .then(response => {
+      if (response.ok && response.status < 400) {
+        return response.json();
+      }
+      throw(new Error(response));
+    })
     .then(item => {
       // if the type is set directly on the top level, we have a legacy datastructure
       // and transform it here, so we can handle legacy and new datastructure
