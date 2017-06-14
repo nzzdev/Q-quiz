@@ -97,6 +97,7 @@
         return 'q-quiz-single-container';
       },
       lastCardActiveStateAttribute: (isMultiQuiz, hasLastCard) => {
+        // if last card is the only element make it active
         if (!isMultiQuiz && hasLastCard) {
           return 'q-quiz-element-container--is-active';
         } else {
@@ -104,6 +105,8 @@
         }
       },
       lastCardDisplay: (lastCardActiveStateAttribute) => {
+        // if last card is not active add "display: none" so that it does not increase 
+        // height until styles are loaded
         if (lastCardActiveStateAttribute === 'q-quiz-element-container--is-inactive') {
           return 'display: none;';
         }
