@@ -22,13 +22,13 @@
           <Question question="{{question}}" />
         </div>
       {{else}}
-        <div class="q-quiz-element-container q-quiz-element-container--is-inactive" style="width: {{elementWidth}}%;">
+        <div class="q-quiz-element-container q-quiz-element-container--is-inactive" style="width: {{elementWidth}}%; display: none;">
           <Question question="{{question}}" />
         </div>
       {{/if}}
     {{/each}}
     {{#if hasLastCard}}
-      <div class="q-quiz-element-container q-quiz__last-card s-color-primary-1 {{lastCardActiveStateAttribute}}" style="width: {{elementWidth}}%;">
+      <div class="q-quiz-element-container q-quiz__last-card s-color-primary-1 {{lastCardActiveStateAttribute}}" style="width: {{elementWidth}}%; {{lastCardDisplay}}">
         {{#if lastCard.title}}
           <h3 class="s-q-item__title">{{lastCard.title}}</h3>
         {{/if}}
@@ -97,11 +97,20 @@
         return 'q-quiz-single-container';
       },
       lastCardActiveStateAttribute: (isMultiQuiz, hasLastCard) => {
+        // if last card is the only element make it active
         if (!isMultiQuiz && hasLastCard) {
           return 'q-quiz-element-container--is-active';
         } else {
           return 'q-quiz-element-container--is-inactive';
         }
+      },
+      lastCardDisplay: (lastCardActiveStateAttribute) => {
+        // if last card is not active add "display: none" so that it does not increase 
+        // height until styles are loaded
+        if (lastCardActiveStateAttribute === 'q-quiz-element-container--is-inactive') {
+          return 'display: none;';
+        }
+        return '';
       }
     },
     components: {
