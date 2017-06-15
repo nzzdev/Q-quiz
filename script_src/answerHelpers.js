@@ -105,7 +105,7 @@ export function renderAdditionalInformationForQuestion(element, correctAnswer) {
     let detailedAnswerSpan = document.createElement('span');
     detailedAnswerSpan.classList.add('s-font-text-s');
     if (correctAnswer.answerText) {
-      detailedAnswerSpan.innerText = correctAnswer.answerText;
+      detailedAnswerSpan.innerHTML = correctAnswer.answerText;
     }
     detailedAnswer.appendChild(detailedAnswerSpan);
 
