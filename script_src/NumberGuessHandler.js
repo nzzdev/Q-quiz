@@ -29,7 +29,6 @@ export default class NumberGuessHandler {
     let label = labelContainer.querySelector('.s-input-range-position-label');
     this.inputElement.setAttribute('value', this.defaultInputValue);
     this.defaultInputValue = this.inputElement.value;
-    label.textContent = this.defaultInputValue;
 
     this.inputElement.addEventListener('input', () => {
       label.textContent = this.inputElement.value;
@@ -39,10 +38,13 @@ export default class NumberGuessHandler {
       label.textContent = this.inputElement.value;
       label.setAttribute('style', `left: ${(this.inputElement.value - this.min) / (this.max - this.min) * 100}%;`);
     });
+
+    label.innerHTML = this.defaultInputValue;
+    label.setAttribute('style', `left: ${(this.inputElement.value - this.min) / (this.max - this.min) * 100}%;`);
   }
 
   getValue(event) {
-    return this.inputElement.value;
+    return parseFloat(this.inputElement.value);
   }
   
   isAnswerValid() {
