@@ -21,7 +21,7 @@ export default class NumberGuessHandler {
     this.data = data;
     this.quizId = quizId;
     this.toolBaseUrl = toolBaseUrl;
-    this.correctAnswer = data.correctAnswer;
+    this.correctAnswer = parseFloat(data.correctAnswer);
   }
 
   renderInput() {
