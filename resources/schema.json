@@ -215,7 +215,7 @@
         "title": {
           "type": "string",
           "title": "Titel",
-          "default": "Geschafft. Danke fürs Mitspielen",
+          "default": "Geschafft. Danke fürs Mitspielen.",
           "Q:options": {
             "hideInEditor": true
           }
@@ -227,7 +227,7 @@
         },
         "text": {
           "type": "string",
-          "title": "Text"
+          "title": "Abmoderation"
         },
         "quizLink": {
           "type": "string",

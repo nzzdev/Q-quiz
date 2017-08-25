@@ -62,8 +62,9 @@ export default class QuestionHandler {
     } 
   }
 
-  handleAnswer(event) {
+  async handleAnswer(event) {
     const answerValue = this.questionRenderer.getValue(event); 
+    const correctAnswer = this.data.questionElementData[this.questionPosition].correctAnswer;
 
     if (typeof this.questionRenderer.isAnswerValid === 'function') {
       if (!this.questionRenderer.isAnswerValid()) {
@@ -73,28 +74,31 @@ export default class QuestionHandler {
     }
 
     this.questionRenderer.renderResult(answerValue);
-    this.storeAnswer(answerValue)
-      .then(response => {
-        let answerId;
-        if (response && response.id) {
-          answerId = response.id;
+    const responseStoreAnswer = await this.storeAnswer(answerValue);
+    let answerId;
+    if (responseStoreAnswer && responseStoreAnswer.id) {
+      answerId = responseStoreAnswer.id;
+    }
+    let stats = await this.answerStore.getStats(this.data.itemId, this.data.questionElementData[this.questionPosition], answerId);  
+    if (typeof this.questionRenderer.renderResultStats === 'function') {
+      if (this.questionType === 'multipleChoice' && answerValue === correctAnswer) {
+        this.finalScore.multipleChoice.sumCorrect++;
+      } else if (this.questionType === 'numberGuess') {
+        this.finalScore.numberGuess.numberAnswers++;
+        if (stats.diffPercentage) {
+          this.finalScore.numberGuess.sumDiffPercentage += stats.diffPercentage;
+        } else {
+          const diffPercentage = Math.abs(Math.round(Math.abs(correctAnswer - answerValue) / correctAnswer * 100));
+          this.finalScore.numberGuess.sumDiffPercentage += diffPercentage;
         }
-        this.answerStore.getStats(this.data.itemId, this.data.questionElementData[this.questionPosition], answerId)
-          .then(stats => {
-            if (typeof this.questionRenderer.renderResultStats === 'function') {
-              if (this.questionType === 'multipleChoice' && answerValue === this.data.questionElementData[this.questionPosition].correctAnswer) {
-                this.finalScore.multipleChoice.sumCorrect++;
-              } else if (this.questionType === 'numberGuess') {
-                this.finalScore.numberGuess.numberAnswers++;
-                this.finalScore.numberGuess.sumDiffPercentage += stats.diffPercentage;
-              } else if (this.questionType === 'mapPointGuess') {
-                this.finalScore.mapPointGuess.numberAnswers++;
-                this.finalScore.mapPointGuess.sumDistance += answerValue.distance;
-              }
-              this.questionRenderer.renderResultStats(answerValue, stats);
-            }
-          })
-      });
+      } else if (this.questionType === 'mapPointGuess') {
+        this.finalScore.mapPointGuess.numberAnswers++;
+        this.finalScore.mapPointGuess.sumDistance += answerValue.distance;
+      }
+      this.questionRenderer.renderResultStats(answerValue, stats);
+    }
+  
+      
     // dispatch a custom event for tracking system to track the answer
     // and others if they are interested
     let answerEvent = new CustomEvent('q-quiz-answer', {
@@ -136,7 +140,11 @@ export default class QuestionHandler {
     if (this.hasNoFurtherQuizElements()) {
       this.quizElement.querySelector('.q-quiz-button').classList.add('state-hidden');
     } else if (this.isNextQuizElementLastCard()) {
-      this.quizElement.querySelector('.q-quiz-button__content span').textContent = 'Thema vertiefen'; 
+      if (this.data.isFinalScoreShown) {
+        this.quizElement.querySelector('.q-quiz-button__content span').textContent = 'zur Auswertung'; 
+      } else {
+        this.quizElement.querySelector('.q-quiz-button__content span').textContent = 'Thema vertiefen'; 
+      }
     }
   }
 

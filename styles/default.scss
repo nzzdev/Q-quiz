@@ -170,13 +170,17 @@
 
   & .q-quiz-play-another-title {
     margin-top: 3px;
-    margin-bottom: 12px;
   }
 
   &.q-quiz-play-another-container--separator {
     border-top: 1px solid currentColor;
   }
 }
+
+.q-quiz__last-card .q-quiz-button__icon {
+  margin-top: 12px;
+}
+
 
 @import "./numberGuess";
 @import "./mapPointGuess";

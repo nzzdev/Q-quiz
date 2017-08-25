@@ -75,7 +75,11 @@ export default class MultiQuizPositionHandler {
         title = `Frage ${questionNumber}/${this.numberQuestions}`;
       }
     } else if (this.position === this.numberElements - 1) {
-      title = 'Fertig!';
+      if (this.isFinalScoreShown) {
+        title = 'Auswertung';
+      } else {
+        title = 'Fertig!';
+      }
     }
     this.headerElement.querySelector('.q-quiz-header__title').textContent = title;
 
@@ -83,7 +87,11 @@ export default class MultiQuizPositionHandler {
 
   changeButtonText(questionNumber) {
     if (questionNumber === this.numberQuestions) {
-      this.headerElement.querySelector('.q-quiz-button__content span').textContent = 'Thema vertiefen';
+      if (this.isFinalScoreShown) {
+        this.headerElement.querySelector('.q-quiz-button__content span').textContent = 'zur Auswertung';  
+      } else {
+        this.headerElement.querySelector('.q-quiz-button__content span').textContent = 'Thema vertiefen';
+      }
     } 
   }
 
