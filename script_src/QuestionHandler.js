@@ -20,6 +20,23 @@ export default class QuestionHandler {
       this.multiQuizPositionHandler = new MultiQuizPositionHandler(quizRootElement, data);
     }
     this.answerStore = new AnswerStore(this.data.toolBaseUrl);
+
+    this.finalScore = {
+      multipleChoice: {
+        numberQuestions: 0,
+        sumCorrect: 0
+      },
+      numberGuess: {
+        numberQuestions: 0,
+        numberAnswers: 0, 
+        sumDiffPercentage: 0
+      },
+      mapPointGuess: {
+        numberQuestions: 0,
+        numberAnswers: 0,
+        sumDistance: 0
+      }
+    }
   }
 
   renderInputElement(position) {
@@ -32,15 +49,16 @@ export default class QuestionHandler {
       this.quizElement = this.multiQuizPositionHandler.getQuizElement();
     }
 
-    // in case we have a last card, we don't have to render anything on client side
     if (this.questionPosition < this.data.questionElementData.length) {
       this.questionType = this.data.questionElementData[this.questionPosition].type;
+      this.finalScore[this.questionType].numberQuestions++;
       this.questionRenderer = new questionTypes[this.questionType](this.quizElement, this.data.questionElementData[this.questionPosition], this.data.itemId, this.data.toolBaseUrl);
       if (typeof this.questionRenderer.renderInput === 'function') {
         this.questionRenderer.renderInput();
       }
-    } else if (this.data.hasLastCard && this.data.lastCardData && this.data.lastCardData.articleRecommendations) {
-      answerHelpers.renderAdditionalInformationForLastCard(this.quizElement, this.data.lastCardData.articleRecommendations);
+    } else if (this.data.hasLastCard && this.data.lastCardData && (this.data.lastCardData.articleRecommendations || this.data.isFinalScoreShown)) {
+      this.finalScore.isFinalScoreShown = this.data.isFinalScoreShown;
+      answerHelpers.renderAdditionalInformationForLastCard(this.quizElement, this.finalScore, this.data.lastCardData.articleRecommendations);
     } 
   }
 
@@ -64,11 +82,19 @@ export default class QuestionHandler {
         this.answerStore.getStats(this.data.itemId, this.data.questionElementData[this.questionPosition], answerId)
           .then(stats => {
             if (typeof this.questionRenderer.renderResultStats === 'function') {
+              if (this.questionType === 'multipleChoice' && answerValue === this.data.questionElementData[this.questionPosition].correctAnswer) {
+                this.finalScore.multipleChoice.sumCorrect++;
+              } else if (this.questionType === 'numberGuess') {
+                this.finalScore.numberGuess.numberAnswers++;
+                this.finalScore.numberGuess.sumDiffPercentage += stats.diffPercentage;
+              } else if (this.questionType === 'mapPointGuess') {
+                this.finalScore.mapPointGuess.numberAnswers++;
+                this.finalScore.mapPointGuess.sumDistance += answerValue.distance;
+              }
               this.questionRenderer.renderResultStats(answerValue, stats);
             }
           })
       });
-
     // dispatch a custom event for tracking system to track the answer
     // and others if they are interested
     let answerEvent = new CustomEvent('q-quiz-answer', {

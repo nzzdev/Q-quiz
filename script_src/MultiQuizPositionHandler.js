@@ -11,6 +11,7 @@ export default class MultiQuizPositionHandler {
     this.numberElements = data.numberElements;
     this.numberQuestions = data.questionElementData.length;
     this.hasCover = data.hasCover;
+    this.isFinalScoreShown = data.isFinalScoreShown;
     this.position = 0;
   }
   

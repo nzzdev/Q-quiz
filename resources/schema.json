@@ -214,7 +214,16 @@
         },
         "title": {
           "type": "string",
-          "title": "Titel"
+          "title": "Titel",
+          "default": "Geschafft. Danke fürs Mitspielen",
+          "Q:options": {
+            "hideInEditor": true
+          }
+        },
+        "isFinalScoreShown": {
+          "type": "boolean",
+          "title": "Auswertung anzeigen",
+          "default": true
         },
         "text": {
           "type": "string",

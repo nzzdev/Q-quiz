@@ -157,6 +157,27 @@
   }
 }
 
+.q-quiz-play-another-container {
+  border-bottom: 1px solid currentColor;
+  margin-top: 32px;
+  padding: 14px;
+
+  & .q-quiz-play-another-teaser,
+  & .q-quiz-play-another-title {
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  & .q-quiz-play-another-title {
+    margin-top: 3px;
+    margin-bottom: 12px;
+  }
+
+  &.q-quiz-play-another-container--separator {
+    border-top: 1px solid currentColor;
+  }
+}
+
 @import "./numberGuess";
 @import "./mapPointGuess";
 @import "./multipleChoice";

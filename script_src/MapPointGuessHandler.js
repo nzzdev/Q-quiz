@@ -1,6 +1,6 @@
 import Leaflet from 'leaflet';
 import iconPinSvg from './resources/icon-pin.svg!text';
-import { getAnswerTextElement } from './answerHelpers.js';
+import { getAnswerTextElement, getDistanceText } from './answerHelpers.js';
 
 Leaflet.Icon.Default.imagePath = 'jspm_packages/github/Leaflet/Leaflet@1.0.3/dist/images';
 
@@ -174,12 +174,7 @@ export default class MapPointGuessHandler {
     let textElement = getAnswerTextElement(answersStats, isCorrectAnswer, () => {
       let text = '';
       if (answer.distance !== undefined) {
-        let distanceText;
-        if (answer.distance > 1000) {
-          distanceText = `${(answer.distance / 1000).toFixed(1)} km`;
-        } else {
-          distanceText = `${answer.distance} m`;
-        }
+        let distanceText = getDistanceText(answer.distance);
         text = ` Ihre Schätzung liegt um ${distanceText} daneben.`;
       }
       return text;
