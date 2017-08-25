@@ -119,7 +119,7 @@
         return '';
       },
       quizLinkClass: (item, hasLastCard, lastCard) => {
-        if (hasLastCard && item.isFinalScoreShown && lastCard.text) {
+        if (hasLastCard && (item.isFinalScoreShown || lastCard.text)) {
           return 'q-quiz-play-another-container q-quiz-play-another-container--separator'
         } else {
           return 'q-quiz-play-another-container'
