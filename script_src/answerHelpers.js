@@ -84,7 +84,7 @@ function getRecommendationsElement(articleRecommendations) {
             recommendationText = articleRecommendations[index].text + ' ';
           }
           recommendationsHtml += `
-            <span>${recommendationText}<a href="${article.webUrl}">${article.title}</a>${punctuation.indexOf(article.title.slice(-1)) === -1 ? '.' : ''} </span>
+            <span>${recommendationText}<a href="${article.webUrl}" target="_blank">${article.title}</a>${punctuation.indexOf(article.title.slice(-1)) === -1 ? '.' : ''} </span>
           `;
         })
       })
