@@ -229,6 +229,7 @@
           "type": "string",
           "title": "Abmoderation"
         },
+        "articleRecommendations": {"$ref": "#/definitions/articleRecommendations"},
         "quizLink": {
           "type": "string",
           "title": "Link zu Anschlussquiz"
@@ -236,8 +237,7 @@
         "quizTitle": {
           "type": "string",
           "title": "Titel Anschlussquiz"
-        },
-        "articleRecommendations": {"$ref": "#/definitions/articleRecommendations"}
+        }
       }
     },
     "elementId": {
