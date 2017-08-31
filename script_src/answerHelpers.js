@@ -95,24 +95,6 @@ function getRecommendationsElement(articleRecommendations) {
   return recommendationsElement
 }
 
-function getFinalScoreElement(finalScore) {
-  let finalScoreElement = document.createElement('div');
-  let finalScoreHTML = '';
-  if (finalScore.multipleChoice.numberQuestions > 0) {
-    finalScoreHTML += `<span>Sie haben ${finalScore.multipleChoice.sumCorrect} von ${finalScore.multipleChoice.numberQuestions} Fragen richtig beantwortet. </span>`;
-  }
-  if (finalScore.numberGuess.numberAnswers > 0) {
-    finalScoreHTML += `<span>Bei den Schätzfragen lagen Sie durchschnittlich um ${finalScore.numberGuess.sumDiffPercentage / finalScore.numberGuess.numberAnswers}% daneben. </span>`;
-  } 
-  if (finalScore.mapPointGuess.numberAnswers > 0) {
-    let avgDistance = finalScore.mapPointGuess.sumDistance / finalScore.mapPointGuess.numberAnswers;
-    let distanceText = getDistanceText(avgDistance);
-    finalScoreHTML += `<span>Bei den Ortsschätzfragen lagen Sie durchschnittlich um ${distanceText} daneben.</span>`;
-  } 
-  finalScoreElement.innerHTML = finalScoreHTML;
-  return finalScoreElement;
-}
-
 export function getDistanceText(distance) {
   if (distance > 1000) {
     return `${(distance / 1000).toFixed(1)} km`;
@@ -121,16 +103,10 @@ export function getDistanceText(distance) {
   }
 }
 
-export function renderAdditionalInformationForLastCard(element, finalScore, articleRecommendations) {
+export function renderAdditionalInformationForLastCard(element, articleRecommendations) {
   let articleRecommendationsContainer = element.querySelector('.q-quiz-article-recommendations');
   let articleRecommendationsElement = getRecommendationsElement(articleRecommendations);
   articleRecommendationsContainer.appendChild(articleRecommendationsElement);
-
-  if (finalScore.isFinalScoreShown) {
-    let finalScoreContainer = element.querySelector('.q-quiz-final-score');
-    let finalScoreElement = getFinalScoreElement(finalScore);
-    finalScoreContainer.appendChild(finalScoreElement);
-  }
 }
 
 export function renderAdditionalInformationForQuestion(element, correctAnswer) {

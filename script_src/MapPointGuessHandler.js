@@ -93,6 +93,22 @@ export default class MapPointGuessHandler {
     } 
   }
 
+  getWorstAnswer() {
+/*    let mapContainer = this.inputElement.querySelector('.q-quiz-map-container');
+    L.getBounds
+    let map = L.map(mapContainer, mapOptions);
+    mapFitBbox(map, correctAnswer.bbox);
+    console.log('bounds: ' + map.getBounds()); */
+
+    let correctLatLng = new L.latLng([this.data.correctAnswer.geometry.coordinates[1], this.data.correctAnswer.geometry.coordinates[0]]);
+    let bbox = this.data.correctAnswer.bbox;
+    let upperLeft = new L.latLng([bbox[3], bbox[0]]);
+    let upperRight = new L.latLng([bbox[3], bbox[2]]);
+    let lowerLeft = new L.latLng([bbox[1], bbox[0]]);
+    let lowerRight = new L.latLng([bbox[1], bbox[2]]);
+    return Math.floor(Math.max(upperLeft.distanceTo(correctLatLng), upperRight.distanceTo(correctLatLng), lowerLeft.distanceTo(correctLatLng), lowerRight.distanceTo(correctLatLng)));
+  }
+
   renderResult(answer) {
     const correctAnswer = this.data.correctAnswer;
     this.resultElement = this.questionElement.querySelector('.q-quiz-result');

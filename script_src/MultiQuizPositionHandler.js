@@ -1,4 +1,5 @@
 import MapPointGuessHandler from './MapPointGuessHandler.js';
+import {getFinalScoreTitle} from './scoreHelpers.js';
 
 export default class MultiQuizPositionHandler {
 
@@ -19,8 +20,9 @@ export default class MultiQuizPositionHandler {
     return this.position;
   }
 
-  setPosition(position) {
+  setPosition(position, finalScore) {
     this.position = position;
+    this.finalScore = finalScore;
     this.setHeader();
     this.setQuizElement();
   }
@@ -77,6 +79,9 @@ export default class MultiQuizPositionHandler {
     } else if (this.position === this.numberElements - 1) {
       if (this.isFinalScoreShown) {
         title = 'Auswertung';
+        if (this.finalScore) {
+          title = getFinalScoreTitle(this.finalScore);
+        }
       } else {
         title = 'Fertig!';
       }
