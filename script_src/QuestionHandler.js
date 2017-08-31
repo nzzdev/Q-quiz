@@ -81,16 +81,17 @@ export default class QuestionHandler {
       }
     }
 
-    if (typeof this.questionRenderer.getWorstAnswer === 'function') {
-      worstAnswer = this.questionRenderer.getWorstAnswer();    
-    } 
-
     this.questionRenderer.renderResult(answerValue);
     const responseStoreAnswer = await this.storeAnswer(answerValue);
     let answerId;
     if (responseStoreAnswer && responseStoreAnswer.id) {
       answerId = responseStoreAnswer.id;
     }
+
+    if (typeof this.questionRenderer.getWorstAnswer === 'function') {
+      worstAnswer = this.questionRenderer.getWorstAnswer();    
+    } 
+
     let stats = await this.answerStore.getStats(this.data.itemId, this.data.questionElementData[this.questionPosition], answerId);  
     if (typeof this.questionRenderer.renderResultStats === 'function') {
       if (this.questionType === 'multipleChoice' && answerValue === correctAnswer) {

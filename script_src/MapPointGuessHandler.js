@@ -46,6 +46,7 @@ export default class MapPointGuessHandler {
     this.setMapSize(map);
     window.addEventListener('resize', () => {
       try {
+        this.mapBounds = map.getBounds();
         this.setMapSize(map)
       } catch (e) {
 
@@ -58,6 +59,8 @@ export default class MapPointGuessHandler {
         maxZoom: 18,
         attribution: '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> &amp; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
       }).addTo(map);
+
+    this.mapBounds = map.getBounds();
 
     let markerPinIcon = Leaflet.divIcon({
       className: 'q-quiz-map-pin',
@@ -94,18 +97,23 @@ export default class MapPointGuessHandler {
   }
 
   getWorstAnswer() {
-/*    let mapContainer = this.inputElement.querySelector('.q-quiz-map-container');
-    L.getBounds
-    let map = L.map(mapContainer, mapOptions);
-    mapFitBbox(map, correctAnswer.bbox);
-    console.log('bounds: ' + map.getBounds()); */
+    return this.worstAnswer;
+  }
+
+  setWorstAnswer() {
+    let mapBoundings = [
+      this.mapBounds['_southWest'].lng,
+      this.mapBounds['_southWest'].lat,
+      this.mapBounds['_northEast'].lng,
+      this.mapBounds['_northEast'].lat,
+    ];
 
     let correctLatLng = new L.latLng([this.data.correctAnswer.geometry.coordinates[1], this.data.correctAnswer.geometry.coordinates[0]]);
-    let bbox = this.data.correctAnswer.bbox;
-    let upperLeft = new L.latLng([bbox[3], bbox[0]]);
-    let upperRight = new L.latLng([bbox[3], bbox[2]]);
-    let lowerLeft = new L.latLng([bbox[1], bbox[0]]);
-    let lowerRight = new L.latLng([bbox[1], bbox[2]]);
+    let upperLeft = new L.latLng([mapBoundings[3], mapBoundings[0]]);
+    let upperRight = new L.latLng([mapBoundings[3], mapBoundings[2]]);
+    let lowerLeft = new L.latLng([mapBoundings[1], mapBoundings[0]]);
+    let lowerRight = new L.latLng([mapBoundings[1], mapBoundings[2]]);
+    
     return Math.floor(Math.max(upperLeft.distanceTo(correctLatLng), upperRight.distanceTo(correctLatLng), lowerLeft.distanceTo(correctLatLng), lowerRight.distanceTo(correctLatLng)));
   }
 
@@ -126,9 +134,12 @@ export default class MapPointGuessHandler {
         attribution: '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> &amp; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
 
+    let bounds = map.getBounds();
+
+    this.worstAnswer = this.setWorstAnswer();
+
     if (answer && answer.latLng) {
       // add the correct point and the users input point
-      let bounds = map.getBounds();
       let west = bounds.getWest();
       let east = bounds.getEast();
 
