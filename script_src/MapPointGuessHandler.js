@@ -134,14 +134,14 @@ export default class MapPointGuessHandler {
         attribution: '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> &amp; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
 
-    let bounds = map.getBounds();
+    this.bounds = map.getBounds();
 
     this.worstAnswer = this.setWorstAnswer();
 
     if (answer && answer.latLng) {
       // add the correct point and the users input point
-      let west = bounds.getWest();
-      let east = bounds.getEast();
+      let west = this.bounds.getWest();
+      let east = this.bounds.getEast();
 
       let correctAnswerLabelPosition;
       let answerLabelPosition;

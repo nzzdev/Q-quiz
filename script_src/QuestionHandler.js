@@ -100,14 +100,9 @@ export default class QuestionHandler {
         let guessQuality = 1 - (Math.abs(answerValue - correctAnswer) / worstAnswer);
         this.finalScore.numberGuess.sumPoints += getScorePerQuestion(guessQuality, this.finalScore.numberGuess.multiplicator);
       } else if (this.questionType === 'mapPointGuess' && worstAnswer !== undefined) {
-        console.log('worst answer: ' + worstAnswer);
-        console.log('distance: ' + answerValue.distance);
         let guessQuality = 1 - (answerValue.distance / worstAnswer);
-        console.log('guessQuality: ', guessQuality);
-        console.log('points: ' + getScorePerQuestion(guessQuality, this.finalScore.mapPointGuess.multiplicator));
         this.finalScore.mapPointGuess.sumPoints += getScorePerQuestion(guessQuality, this.finalScore.mapPointGuess.multiplicator);
       }
-      console.log(this.finalScore[this.questionType].sumPoints);
       this.questionRenderer.renderResultStats(answerValue, stats);
     }
       
