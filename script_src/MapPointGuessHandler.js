@@ -1,6 +1,6 @@
 import Leaflet from 'leaflet';
 import iconPinSvg from './resources/icon-pin.svg!text';
-import { getAnswerTextElement } from './answerHelpers.js';
+import { getAnswerTextElement, getDistanceText } from './answerHelpers.js';
 
 Leaflet.Icon.Default.imagePath = 'jspm_packages/github/Leaflet/Leaflet@1.0.3/dist/images';
 
@@ -46,6 +46,7 @@ export default class MapPointGuessHandler {
     this.setMapSize(map);
     window.addEventListener('resize', () => {
       try {
+        this.mapBounds = map.getBounds();
         this.setMapSize(map)
       } catch (e) {
 
@@ -58,6 +59,8 @@ export default class MapPointGuessHandler {
         maxZoom: 18,
         attribution: '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> &amp; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
       }).addTo(map);
+
+    this.mapBounds = map.getBounds();
 
     let markerPinIcon = Leaflet.divIcon({
       className: 'q-quiz-map-pin',
@@ -93,6 +96,27 @@ export default class MapPointGuessHandler {
     } 
   }
 
+  getWorstAnswer() {
+    return this.worstAnswer;
+  }
+
+  setWorstAnswer() {
+    let mapBoundings = [
+      this.mapBounds['_southWest'].lng,
+      this.mapBounds['_southWest'].lat,
+      this.mapBounds['_northEast'].lng,
+      this.mapBounds['_northEast'].lat,
+    ];
+
+    let correctLatLng = new L.latLng([this.data.correctAnswer.geometry.coordinates[1], this.data.correctAnswer.geometry.coordinates[0]]);
+    let upperLeft = new L.latLng([mapBoundings[3], mapBoundings[0]]);
+    let upperRight = new L.latLng([mapBoundings[3], mapBoundings[2]]);
+    let lowerLeft = new L.latLng([mapBoundings[1], mapBoundings[0]]);
+    let lowerRight = new L.latLng([mapBoundings[1], mapBoundings[2]]);
+    
+    return Math.floor(Math.max(upperLeft.distanceTo(correctLatLng), upperRight.distanceTo(correctLatLng), lowerLeft.distanceTo(correctLatLng), lowerRight.distanceTo(correctLatLng)));
+  }
+
   renderResult(answer) {
     const correctAnswer = this.data.correctAnswer;
     this.resultElement = this.questionElement.querySelector('.q-quiz-result');
@@ -110,11 +134,14 @@ export default class MapPointGuessHandler {
         attribution: '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> &amp; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
 
+    this.bounds = map.getBounds();
+
+    this.worstAnswer = this.setWorstAnswer();
+
     if (answer && answer.latLng) {
       // add the correct point and the users input point
-      let bounds = map.getBounds();
-      let west = bounds.getWest();
-      let east = bounds.getEast();
+      let west = this.bounds.getWest();
+      let east = this.bounds.getEast();
 
       let correctAnswerLabelPosition;
       let answerLabelPosition;
@@ -174,12 +201,7 @@ export default class MapPointGuessHandler {
     let textElement = getAnswerTextElement(answersStats, isCorrectAnswer, () => {
       let text = '';
       if (answer.distance !== undefined) {
-        let distanceText;
-        if (answer.distance > 1000) {
-          distanceText = `${(answer.distance / 1000).toFixed(1)} km`;
-        } else {
-          distanceText = `${answer.distance} m`;
-        }
+        let distanceText = getDistanceText(answer.distance);
         text = ` Ihre Schätzung liegt um ${distanceText} daneben.`;
       }
       return text;

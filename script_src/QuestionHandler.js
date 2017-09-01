@@ -2,6 +2,7 @@ import NumberGuess from './NumberGuessHandler.js';
 import MultipleChoice from './MultipleChoiceHandler.js';
 import MapPointGuess from './MapPointGuessHandler.js';
 import * as answerHelpers from './answerHelpers.js';
+import {getScorePerQuestion, renderFinalScoreText} from './scoreHelpers.js';
 import MultiQuizPositionHandler from './MultiQuizPositionHandler.js';
 import AnswerStore from './AnswerStore.js';
 
@@ -20,6 +21,24 @@ export default class QuestionHandler {
       this.multiQuizPositionHandler = new MultiQuizPositionHandler(quizRootElement, data);
     }
     this.answerStore = new AnswerStore(this.data.toolBaseUrl);
+
+    this.finalScore = {
+      multipleChoice: {
+        multiplicator: 5,
+        numberQuestions: 0,
+        sumPoints: 0
+      },
+      numberGuess: {
+        multiplicator: 10,
+        numberQuestions: 0,
+        sumPoints: 0
+      },
+      mapPointGuess: {
+        multiplicator: 10,
+        numberQuestions: 0,
+        sumPoints: 0
+      }
+    }
   }
 
   renderInputElement(position) {
@@ -27,25 +46,33 @@ export default class QuestionHandler {
       this.questionPosition = 0;
       this.quizElement = this.quizRootElement.querySelector('.q-quiz-element-container--is-active');
     } else {
-      this.multiQuizPositionHandler.setPosition(position);
+      this.multiQuizPositionHandler.setPosition(position, this.finalScore);
       this.questionPosition = this.multiQuizPositionHandler.getQuestionNumber() - 1;
       this.quizElement = this.multiQuizPositionHandler.getQuizElement();
     }
 
-    // in case we have a last card, we don't have to render anything on client side
     if (this.questionPosition < this.data.questionElementData.length) {
       this.questionType = this.data.questionElementData[this.questionPosition].type;
+      this.finalScore[this.questionType].numberQuestions++;
+
       this.questionRenderer = new questionTypes[this.questionType](this.quizElement, this.data.questionElementData[this.questionPosition], this.data.itemId, this.data.toolBaseUrl);
       if (typeof this.questionRenderer.renderInput === 'function') {
         this.questionRenderer.renderInput();
       }
-    } else if (this.data.hasLastCard && this.data.lastCardData && this.data.lastCardData.articleRecommendations) {
-      answerHelpers.renderAdditionalInformationForLastCard(this.quizElement, this.data.lastCardData.articleRecommendations);
-    } 
+    } else if (this.data.hasLastCard) {
+      if (this.data.lastCardData && this.data.lastCardData.articleRecommendations) {
+        answerHelpers.renderAdditionalInformationForLastCard(this.quizElement, this.data.lastCardData.articleRecommendations);
+      }
+      if (this.data.isFinalScoreShown) {
+        renderFinalScoreText(this.finalScore, this.quizElement);
+      }
+    }
   }
 
-  handleAnswer(event) {
+  async handleAnswer(event) {
     const answerValue = this.questionRenderer.getValue(event); 
+    const correctAnswer = this.data.questionElementData[this.questionPosition].correctAnswer;
+    let worstAnswer;
 
     if (typeof this.questionRenderer.isAnswerValid === 'function') {
       if (!this.questionRenderer.isAnswerValid()) {
@@ -55,20 +82,30 @@ export default class QuestionHandler {
     }
 
     this.questionRenderer.renderResult(answerValue);
-    this.storeAnswer(answerValue)
-      .then(response => {
-        let answerId;
-        if (response && response.id) {
-          answerId = response.id;
-        }
-        this.answerStore.getStats(this.data.itemId, this.data.questionElementData[this.questionPosition], answerId)
-          .then(stats => {
-            if (typeof this.questionRenderer.renderResultStats === 'function') {
-              this.questionRenderer.renderResultStats(answerValue, stats);
-            }
-          })
-      });
+    const responseStoreAnswer = await this.storeAnswer(answerValue);
+    let answerId;
+    if (responseStoreAnswer && responseStoreAnswer.id) {
+      answerId = responseStoreAnswer.id;
+    }
 
+    if (typeof this.questionRenderer.getWorstAnswer === 'function') {
+      worstAnswer = this.questionRenderer.getWorstAnswer();    
+    } 
+
+    let stats = await this.answerStore.getStats(this.data.itemId, this.data.questionElementData[this.questionPosition], answerId);  
+    if (typeof this.questionRenderer.renderResultStats === 'function') {
+      if (this.questionType === 'multipleChoice' && answerValue === correctAnswer) {
+        this.finalScore.multipleChoice.sumPoints += 5;
+      } else if (this.questionType === 'numberGuess' && worstAnswer !== undefined) {
+        let guessQuality = 1 - (Math.abs(answerValue - correctAnswer) / worstAnswer);
+        this.finalScore.numberGuess.sumPoints += getScorePerQuestion(guessQuality, this.finalScore.numberGuess.multiplicator);
+      } else if (this.questionType === 'mapPointGuess' && worstAnswer !== undefined) {
+        let guessQuality = 1 - (answerValue.distance / worstAnswer);
+        this.finalScore.mapPointGuess.sumPoints += getScorePerQuestion(guessQuality, this.finalScore.mapPointGuess.multiplicator);
+      }
+      this.questionRenderer.renderResultStats(answerValue, stats);
+    }
+      
     // dispatch a custom event for tracking system to track the answer
     // and others if they are interested
     let answerEvent = new CustomEvent('q-quiz-answer', {
@@ -110,7 +147,11 @@ export default class QuestionHandler {
     if (this.hasNoFurtherQuizElements()) {
       this.quizElement.querySelector('.q-quiz-button').classList.add('state-hidden');
     } else if (this.isNextQuizElementLastCard()) {
-      this.quizElement.querySelector('.q-quiz-button__content span').textContent = 'Thema vertiefen'; 
+      if (this.data.isFinalScoreShown) {
+        this.quizElement.querySelector('.q-quiz-button__content span').textContent = 'zur Auswertung'; 
+      } else {
+        this.quizElement.querySelector('.q-quiz-button__content span').textContent = 'Thema vertiefen'; 
+      }
     }
   }
 

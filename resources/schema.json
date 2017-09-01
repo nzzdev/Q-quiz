@@ -214,12 +214,22 @@
         },
         "title": {
           "type": "string",
-          "title": "Titel"
+          "title": "Titel",
+          "default": "Geschafft. Danke fürs Mitspielen.",
+          "Q:options": {
+            "hideInEditor": true
+          }
+        },
+        "isFinalScoreShown": {
+          "type": "boolean",
+          "title": "Auswertung anzeigen",
+          "default": true
         },
         "text": {
           "type": "string",
-          "title": "Text"
+          "title": "Abmoderation"
         },
+        "articleRecommendations": {"$ref": "#/definitions/articleRecommendations"},
         "quizLink": {
           "type": "string",
           "title": "Link zu Anschlussquiz"
@@ -227,8 +237,7 @@
         "quizTitle": {
           "type": "string",
           "title": "Titel Anschlussquiz"
-        },
-        "articleRecommendations": {"$ref": "#/definitions/articleRecommendations"}
+        }
       }
     },
     "elementId": {
