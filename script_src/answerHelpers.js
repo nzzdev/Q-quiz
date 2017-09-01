@@ -47,7 +47,6 @@ export function getAnswerTextElement(stats, isCorrectAnswer, getDiffText) {
     </span>`
 
   } else if (stats.betterThanPercentage !==  undefined && stats.betterThanPercentage !== null) {
-    console.log('better than percentage: ' + stats.betterThanPercentage);
     statsTextHtml += `<span class="s-font-text-s">
       Nur ${stats.betterThanPercentage} Prozent aller anderen lagen noch weiter daneben als Sie.
     </span>`

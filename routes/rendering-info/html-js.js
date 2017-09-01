@@ -74,12 +74,9 @@ module.exports = {
       scriptData.lastCardData = {
         articleRecommendations: item.lastCard.articleRecommendations,
       }
-      console.log(item.lastCard.isFinalScoreShown);
-      console.log(JSON.stringify(item.lastCard))
       scriptData.isFinalScoreShown = item.lastCard.isFinalScoreShown || false;
       item.isFinalScoreShown = scriptData.isFinalScoreShown;
     }
-    console.log(scriptData.isFinalScoreShown);
     // elements are already split into cover, last card and questions
     // so we don't need it here anymore
     delete item.elements;
