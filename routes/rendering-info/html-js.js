@@ -72,10 +72,11 @@ module.exports = {
 
     if (item.hasLastCard) {
       scriptData.lastCardData = {
-        articleRecommendations: item.lastCard.articleRecommendations
+        articleRecommendations: item.lastCard.articleRecommendations,
       }
+      scriptData.isFinalScoreShown = item.lastCard.isFinalScoreShown || false;
+      item.isFinalScoreShown = scriptData.isFinalScoreShown;
     }
-
     // elements are already split into cover, last card and questions
     // so we don't need it here anymore
     delete item.elements;

@@ -46,7 +46,7 @@ export function getAnswerTextElement(stats, isCorrectAnswer, getDiffText) {
       Schlechter hat bisher noch niemand geschätzt.
     </span>`
 
-  } else if (stats.betterThanPercentage !==  undefined) {
+  } else if (stats.betterThanPercentage !==  undefined && stats.betterThanPercentage !== null) {
     statsTextHtml += `<span class="s-font-text-s">
       Nur ${stats.betterThanPercentage} Prozent aller anderen lagen noch weiter daneben als Sie.
     </span>`
@@ -83,7 +83,7 @@ function getRecommendationsElement(articleRecommendations) {
             recommendationText = articleRecommendations[index].text + ' ';
           }
           recommendationsHtml += `
-            <span>${recommendationText}<a href="${article.webUrl}">${article.title}</a>${punctuation.indexOf(article.title.slice(-1)) === -1 ? '.' : ''} </span>
+            <span>${recommendationText}<a href="${article.webUrl}" target="_blank">${article.title}</a>${punctuation.indexOf(article.title.slice(-1)) === -1 ? '.' : ''} </span>
           `;
         })
       })
@@ -92,6 +92,14 @@ function getRecommendationsElement(articleRecommendations) {
       })
   }
   return recommendationsElement
+}
+
+export function getDistanceText(distance) {
+  if (distance > 1000) {
+    return `${(distance / 1000).toFixed(1)} km`;
+  } else {
+    return `${distance} m`;
+  }
 }
 
 export function renderAdditionalInformationForLastCard(element, articleRecommendations) {

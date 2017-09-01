@@ -46,6 +46,10 @@ export default class NumberGuessHandler {
   getValue(event) {
     return parseFloat(this.inputElement.value);
   }
+
+  getWorstAnswer() {
+    return Math.max((this.correctAnswer - this.min), (this.max - this.correctAnswer));
+  }
   
   isAnswerValid() {
     let element = this.inputElement.parentNode.nextElementSibling;
