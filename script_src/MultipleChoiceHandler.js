@@ -14,8 +14,8 @@ export default class MultipleChoiceHandler {
   }
 
   renderResult(answer) {
-    const checkmark = '<svg class="q-quiz-result__answer__checkmark s-viz-color-three-5" width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path fill="none" d="M0 12V0h16v16H0z"/><path d="M0 9l5 5L16 3l-2-2-9 9-3-3-2 2z" fill="currentColor"/></g></svg>';
-    const crossmark = '<svg class="q-quiz-result__answer__checkmark s-viz-color-six-5" width="16" height="16" viewBox="0 0 16 16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path fill="none" d="M0 12V0h16v16H0z"/><path fill="currentColor" d="M8 10l-5 5-2-2 5-5-5-5 2-2 5 5 5-5 2 2-5 5 5 5-2 2-5-5z"/></g></svg>';
+    const checkmark = '<svg class="q-quiz-result__answer__checkmark s-color-positive" width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path fill="none" d="M0 12V0h16v16H0z"/><path d="M0 9l5 5L16 3l-2-2-9 9-3-3-2 2z" fill="currentColor"/></g></svg>';
+    const crossmark = '<svg class="q-quiz-result__answer__checkmark s-color-negative" width="16" height="16" viewBox="0 0 16 16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path fill="none" d="M0 12V0h16v16H0z"/><path fill="currentColor" d="M8 10l-5 5-2-2 5-5-5-5 2-2 5 5 5-5 2 2-5 5 5 5-2 2-5-5z"/></g></svg>';
 
     this.choices = [];
     this.questionElement.querySelectorAll('.q-quiz-result__answer > span').forEach(element => {
@@ -25,14 +25,14 @@ export default class MultipleChoiceHandler {
 
       // is answer element the correct answer
       if (element.textContent === this.data.correctAnswer) {
-        element.classList.add('s-font-note--strong', 's-viz-color-three-5');
+        element.classList.add('s-font-note--strong', 's-color-positive');
 
         let correctAnswerElement = document.createElement('span');
-        correctAnswerElement.classList.add('s-viz-color-three-5');
+        correctAnswerElement.classList.add('s-color-positive');
         correctAnswerElement.innerText = 'korrekte Antwort';
         parentNode.insertBefore(correctAnswerElement, element.nextSibling);
 
-        bar.classList.add('s-font-note-s--strong', 's-viz-color-three-5');
+        bar.classList.add('s-font-note-s--strong', 's-color-positive');
 
         // is user input correct
         if (this.data.correctAnswer === answer) {
@@ -46,14 +46,14 @@ export default class MultipleChoiceHandler {
           let crossmarkElement = document.createElement('span');
           crossmarkElement.innerHTML = crossmark;
           parentNode.insertBefore(crossmarkElement, element);
-          element.classList.add('s-font-note--strong', 's-viz-color-six-5');
+          element.classList.add('s-font-note--strong', 's-color-negative');
 
           let wrongAnswerElement = document.createElement('span');
-          wrongAnswerElement.classList.add('s-viz-color-six-5');
+          wrongAnswerElement.classList.add('s-color-negative');
           wrongAnswerElement.innerText = 'falsche Antwort';
           parentNode.insertBefore(wrongAnswerElement, element.nextSibling);
 
-          bar.classList.add('s-font-note-s--strong', 's-viz-color-six-5');
+          bar.classList.add('s-font-note-s--strong', 's-color-negative');
         } else {
           // all other answer elements
           element.classList.add('s-font-note--light');
