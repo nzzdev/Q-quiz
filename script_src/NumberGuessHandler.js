@@ -32,15 +32,15 @@ export default class NumberGuessHandler {
 
     this.inputElement.addEventListener('input', () => {
       label.textContent = this.inputElement.value;
-      label.setAttribute('style', `left: ${(this.inputElement.value - this.min) / (this.max - this.min) * 100}%;`);
+      label.setAttribute('style', `left: calc(${(this.inputElement.value - this.min) / (this.max - this.min) * 100}% - 1px);`);
     });
     this.inputElement.addEventListener('change', () => {
       label.textContent = this.inputElement.value;
-      label.setAttribute('style', `left: ${(this.inputElement.value - this.min) / (this.max - this.min) * 100}%;`);
+      label.setAttribute('style', `left: calc(${(this.inputElement.value - this.min) / (this.max - this.min) * 100}% - 1px);`);
     });
 
     label.innerHTML = this.defaultInputValue;
-    label.setAttribute('style', `left: ${(this.inputElement.value - this.min) / (this.max - this.min) * 100}%;`);
+    label.setAttribute('style', `left: calc(${(this.inputElement.value - this.min) / (this.max - this.min) * 100}% - 1px);`);
   }
 
   getValue(event) {
