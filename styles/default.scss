@@ -124,26 +124,9 @@
 
   transition: opacity 0.1s ease-out;
 
-  /* &[disabled] {
-    background: none;
-    border: 1px solid #d6d6d6;
-    cursor: default;
-    span {
-      color: #d6d6d6;
-    }
-  } */
-
   &.state-clicked {
     opacity: 0;
   }
-}
-
-.q-quiz-answer-button--soft {
-  padding: 9px;
-  outline: none;
-  cursor: pointer;
-  background-color: transparent;
-  border: 1px solid currentColor;
 }
 
 .q-quiz-element-container {
