@@ -46,6 +46,10 @@
   opacity: 0;
 }
 
+.q-quiz-input {
+  margin-top: 16px;
+}
+
 .q-quiz-input,
 .q-quiz-result {
   &.state-hidden {
@@ -118,36 +122,15 @@
 }
 
 .q-quiz-answer-button {
-  background-color: currentColor;
-  border: none;
-  outline: none;
-  border-radius: 3px;
   width: 100%;
-  padding: 9px;
-  position: relative;
-  cursor: pointer;
   margin-top: 10px;
   opacity: 1;
 
   transition: opacity 0.1s ease-out;
 
-  &[disabled] {
-    background: none;
-    border: 1px solid #d6d6d6;
-    cursor: default;
-    span {
-      color: #d6d6d6;
-    }
-  }
-
   &.state-clicked {
     opacity: 0;
   }
-}
-
-.q-quiz-answer-button--soft {
-  background-color: transparent;
-  border: 1px solid currentColor;
 }
 
 .q-quiz-element-container {
