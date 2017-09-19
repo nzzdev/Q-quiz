@@ -25,6 +25,10 @@ export function getScorePerQuestion(guessQuality, multiplicator) {
 
 export function renderFinalScoreText(finalScore, element) {
   let lastCardTitleElement = element.querySelector('.q-quiz-last-card-title');
+  if (lastCardTitleElement === undefined || lastCardTitleElement === null) {
+    lastCardTitleElement = document.createElement('h3');
+    lastCardTitleElement.classList.add('s-q-item__title', 'q-quiz-last-card-title');
+  }
   let multipleChoice = finalScore.multipleChoice;
   let numberGuess = finalScore.numberGuess;
   let mapPointGuess = finalScore.mapPointGuess;
