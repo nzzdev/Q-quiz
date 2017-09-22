@@ -29,9 +29,7 @@
     {{/each}}
     {{#if hasLastCard}}
       <div class="q-quiz-element-container q-quiz__last-card s-color-primary-1 {{lastCardActiveStateAttribute}}" style="width: {{elementWidth}}%; {{lastCardDisplay}}">
-        {{#if lastCard.title}}
-          <h3 class="s-q-item__title q-quiz-last-card-title">{{lastCard.title}}</h3>
-        {{/if}}
+        <h3 class="s-q-item__title q-quiz-last-card-title">{{lastCard.title || ''}}</h3>
         {{#if item.isFinalScoreShown}}
           <p class="s-font-text-s q-quiz-final-score"></p>
         {{/if}}
