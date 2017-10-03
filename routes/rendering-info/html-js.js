@@ -59,6 +59,7 @@ module.exports = {
     // if isPure is set to true no side effects will be caused, in this 
     // special case no answers will get stored
     const isPure = request.payload.toolRuntimeConfig.isPure || false;
+    const enricoApiUrl = process.env.ENRICO_API_URL || 'https://enrico.nzz-tech.ch/v1/article'
 
     let scriptData = {
       itemId: item._id,
@@ -67,7 +68,8 @@ module.exports = {
       hasLastCard: item.hasLastCard,
       numberElements: item.elementCount,
       toolBaseUrl: request.payload.toolRuntimeConfig.toolBaseUrl,
-      isPure: isPure
+      isPure: isPure,
+      enricoApiUrl: enricoApiUrl
     }
 
     if (item.hasLastCard) {

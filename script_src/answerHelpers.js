@@ -67,7 +67,7 @@ export function getAnswerTextElement(stats, isCorrectAnswer, getDiffText) {
   return element
 }
 
-function getRecommendationsElement(articleRecommendations) {
+function getRecommendationsElement(enricoApiUrl, articleRecommendations) {
   let recommendationsElement = document.createElement('p');
   recommendationsElement.classList.add('s-font-text-s');
   let recommendationsHtml = '';
@@ -75,7 +75,7 @@ function getRecommendationsElement(articleRecommendations) {
     
     let punctuation = ['!', '?', '.'];
     
-    helpers.loadAdditionalArticles(articleRecommendations.map(r => r.articleId))
+    helpers.loadAdditionalArticles(enricoApiUrl, articleRecommendations.map(r => r.articleId))
       .then(articles => {
         articles
           .filter(article => {
@@ -106,13 +106,13 @@ export function getDistanceText(distance) {
   }
 }
 
-export function renderAdditionalInformationForLastCard(element, articleRecommendations) {
+export function renderAdditionalInformationForLastCard(element, enricoApiUrl, articleRecommendations) {
   let articleRecommendationsContainer = element.querySelector('.q-quiz-article-recommendations');
-  let articleRecommendationsElement = getRecommendationsElement(articleRecommendations);
+  let articleRecommendationsElement = getRecommendationsElement(enricoApiUrl, articleRecommendations);
   articleRecommendationsContainer.appendChild(articleRecommendationsElement);
 }
 
-export function renderAdditionalInformationForQuestion(element, correctAnswer) {
+export function renderAdditionalInformationForQuestion(element, enricoApiUrl, correctAnswer) {
     let detailedAnswer = element.querySelector('.q-quiz-result .q-quiz-result-answer-text');
     let detailedAnswerSpan = document.createElement('span');
     detailedAnswerSpan.classList.add('s-font-text-s');
@@ -121,7 +121,7 @@ export function renderAdditionalInformationForQuestion(element, correctAnswer) {
     }
     detailedAnswer.appendChild(detailedAnswerSpan);
 
-    let articleRecommendationsElement = getRecommendationsElement(correctAnswer.articleRecommendations);
+    let articleRecommendationsElement = getRecommendationsElement(enricoApiUrl, correctAnswer.articleRecommendations);
     detailedAnswer.parentNode.insertBefore(articleRecommendationsElement, detailedAnswer.nextSibling);
 
     let nextQuestionButton = element.querySelector('button.q-quiz-button.q-quiz-button--horizontal.q-quiz-button--right');
