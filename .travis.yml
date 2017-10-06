@@ -8,6 +8,7 @@ node_js:
 install:
 - npm install -g jspm
 - npm install
+- jspm -v
 - jspm install
 before_script:
 - DOCKER_IMAGE_NAME="q-quiz"
