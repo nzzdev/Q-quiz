@@ -11,6 +11,20 @@ const upperConstant = -(upperSlope * turningPoint) + turningPoint; // y = ax + b
 const lowerBoundX = (0 - lowerConstant) / lowerSlope; // 0 = ax + b, for a = lowerSlope, b = lowerConstant and y = 0 -> no negative values
 const upperBoundX = (1 - upperConstant) / upperSlope; // 0 = ax + b, for a = upperSlope, b = upperConstant and y = 1 -> no values over 1
 
+export function getTotalScore(finalScore) {
+  let multipleChoice = finalScore.multipleChoice;
+  let numberGuess = finalScore.numberGuess;
+  let mapPointGuess = finalScore.mapPointGuess;
+  let totalScore = (multipleChoice.numberQuestions * multipleChoice.multiplicator) 
+      + (numberGuess.numberQuestions * numberGuess.multiplicator)
+      + (mapPointGuess.numberQuestions * mapPointGuess.multiplicator);
+  return totalScore;
+}
+
+export function getAchievedScore(finalScore) {
+  return Math.round(finalScore.multipleChoice.sumPoints + finalScore.numberGuess.sumPoints + finalScore.mapPointGuess.sumPoints);
+}
+
 export function getScorePerQuestion(guessQuality, multiplicator) {
   if (guessQuality < lowerBoundX) {
     return 0;
@@ -25,26 +39,15 @@ export function getScorePerQuestion(guessQuality, multiplicator) {
 
 export function renderFinalScoreText(finalScore, element) {
   let lastCardTitleElement = element.querySelector('.q-quiz-last-card-title');
-  let multipleChoice = finalScore.multipleChoice;
-  let numberGuess = finalScore.numberGuess;
-  let mapPointGuess = finalScore.mapPointGuess;
-  let totalScore = (multipleChoice.numberQuestions * multipleChoice.multiplicator) 
-      + (numberGuess.numberQuestions * numberGuess.multiplicator)
-      + (mapPointGuess.numberQuestions * mapPointGuess.multiplicator);
-  let achievedScore = Math.round(multipleChoice.sumPoints + numberGuess.sumPoints + mapPointGuess.sumPoints);
+  let totalScore = getTotalScore(finalScore);
+  let achievedScore = getAchievedScore(finalScore);
   lastCardTitleElement.innerHTML = `Sie haben ${achievedScore} von ${totalScore} möglichen Punkten erzielt.` 
 }
 
 export function getFinalScoreTitle(finalScore) {
-  let multipleChoice = finalScore.multipleChoice;
-  let numberGuess = finalScore.numberGuess;
-  let mapPointGuess = finalScore.mapPointGuess;
-  let totalScore = (multipleChoice.numberQuestions * multipleChoice.multiplicator) 
-      + (numberGuess.numberQuestions * numberGuess.multiplicator)
-      + (mapPointGuess.numberQuestions * mapPointGuess.multiplicator);
-  let achievedScore = Math.round(multipleChoice.sumPoints + numberGuess.sumPoints + mapPointGuess.sumPoints);
+  let totalScore = getTotalScore(finalScore);
+  let achievedScore = getAchievedScore(finalScore);
   let percentageScore = achievedScore / totalScore;
-  console.log(percentageScore);
   if (percentageScore < 0.2) {
     return '😱';
   } else if (percentageScore < 0.5) {
@@ -58,6 +61,7 @@ export function getFinalScoreTitle(finalScore) {
   }
 }
 
+// this is not used anywhere right? should we delete it?
 function getFinalScoreElement(finalScore) {
   let finalScoreElement = document.createElement('div');
   let finalScoreHTML = '';
