@@ -81,31 +81,6 @@ export default class QuestionHandler {
       }
     }
 
-    this.questionRenderer.renderResult(answerValue);
-    const responseStoreAnswer = await this.storeAnswer(answerValue);
-    let answerId;
-    if (responseStoreAnswer && responseStoreAnswer.id) {
-      answerId = responseStoreAnswer.id;
-    }
-
-    if (typeof this.questionRenderer.getWorstAnswer === 'function') {
-      worstAnswer = this.questionRenderer.getWorstAnswer();    
-    } 
-
-    let stats = await this.answerStore.getStats(this.data.itemId, this.data.questionElementData[this.questionPosition], answerId);  
-    if (typeof this.questionRenderer.renderResultStats === 'function') {
-      if (this.questionType === 'multipleChoice' && answerValue === correctAnswer) {
-        this.finalScore.multipleChoice.sumPoints += 5;
-      } else if (this.questionType === 'numberGuess' && worstAnswer !== undefined) {
-        let guessQuality = 1 - (Math.abs(answerValue - correctAnswer) / worstAnswer);
-        this.finalScore.numberGuess.sumPoints += getScorePerQuestion(guessQuality, this.finalScore.numberGuess.multiplicator);
-      } else if (this.questionType === 'mapPointGuess' && worstAnswer !== undefined) {
-        let guessQuality = 1 - (answerValue.distance / worstAnswer);
-        this.finalScore.mapPointGuess.sumPoints += getScorePerQuestion(guessQuality, this.finalScore.mapPointGuess.multiplicator);
-      }
-      this.questionRenderer.renderResultStats(answerValue, stats);
-    }
-      
     // dispatch a custom event for tracking system to track the answer
     // and others if they are interested
     let answerEvent = new CustomEvent('q-quiz-answer', {
@@ -116,9 +91,45 @@ export default class QuestionHandler {
     });
     this.quizRootElement.dispatchEvent(answerEvent);
 
+    this.questionRenderer.renderResult(answerValue);
+
+    const responseStoreAnswer = await
+    
+    this.storeAnswer(answerValue)
+      .then(responseStoreAnswer => {
+        let answerId;
+        if (responseStoreAnswer && responseStoreAnswer.id) {
+          answerId = responseStoreAnswer.id;
+        }
+        return answerId;
+      })
+      .then(answerId => {
+        return this.answerStore.getStats(this.data.itemId, this.data.questionElementData[this.questionPosition], answerId);
+      })
+      .then(stats => {
+        if (typeof this.questionRenderer.getWorstAnswer === 'function') {
+          worstAnswer = this.questionRenderer.getWorstAnswer();    
+        }
+
+        if (typeof this.questionRenderer.renderResultStats === 'function') {
+          if (this.questionType === 'multipleChoice' && answerValue === correctAnswer) {
+            this.finalScore.multipleChoice.sumPoints += 5;
+          } else if (this.questionType === 'numberGuess' && worstAnswer !== undefined) {
+            let guessQuality = 1 - (Math.abs(answerValue - correctAnswer) / worstAnswer);
+            this.finalScore.numberGuess.sumPoints += getScorePerQuestion(guessQuality, this.finalScore.numberGuess.multiplicator);
+          } else if (this.questionType === 'mapPointGuess' && worstAnswer !== undefined) {
+            let guessQuality = 1 - (answerValue.distance / worstAnswer);
+            this.finalScore.mapPointGuess.sumPoints += getScorePerQuestion(guessQuality, this.finalScore.mapPointGuess.multiplicator);
+          }
+          this.questionRenderer.renderResultStats(answerValue, stats);
+        }
+      })
+      .catch(e => {
+        // nevermind errors in storing the answer, we move on without displaying stats in this case
+      });
+
     this.renderAdditionalInformation();
     this.displayResult();
-    
   }
 
   storeAnswer(answerValue) {
