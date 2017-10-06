@@ -24,7 +24,7 @@
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha",
-    "build": "node tasks/build.js"
+    "build": "rm -rf scripts && mkdir scripts && rm -rf styles && mkdir styles && node tasks/build.js"
   },
   "repository": {
     "type": "git",
@@ -34,6 +34,7 @@
     "autoprefixer": "^7.1.1",
     "catbox-memory": "^2.0.4",
     "chai": "^4.0.2",
+    "cssnano": "^3.10.0",
     "d3-array": "^1.2.0",
     "d3-scale": "^1.0.6",
     "d3-selection": "^1.1.0",
@@ -48,6 +49,7 @@
     "mocha": "^3.2.0",
     "node-fetch": "^1.7.1",
     "node-sass": "^4.3.0",
+    "postcss-import": "^11.0.0",
     "pouchdb": "^6.2.0",
     "sparseheatmap": "^1.1.1",
     "svelte": "1.22.3",
