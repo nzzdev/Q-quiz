@@ -1,4 +1,4 @@
-export async function loadAdditionalArticles(articleIds) {
+export function loadAdditionalArticles(articleIds) {
   let loadPromises = [];
   const apiUrl = 'https://enrico.nzz-tech.ch/v1/article';
   
