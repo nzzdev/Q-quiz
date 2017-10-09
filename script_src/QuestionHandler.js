@@ -61,7 +61,7 @@ export default class QuestionHandler {
       }
     } else if (this.data.hasLastCard) {
       if (this.data.lastCardData && this.data.lastCardData.articleRecommendations) {
-        answerHelpers.renderAdditionalInformationForLastCard(this.quizElement, this.data.enricoApiUrl, this.data.lastCardData.articleRecommendations);
+        answerHelpers.renderAdditionalInformationForLastCard(this.quizElement, this.data.lastCardData.articleRecommendations);
       }
       if (this.data.isFinalScoreShown) {
         renderFinalScoreText(this.finalScore, this.quizElement);
@@ -137,7 +137,7 @@ export default class QuestionHandler {
   }
 
   renderAdditionalInformation() {
-    answerHelpers.renderAdditionalInformationForQuestion(this.quizElement, this.data.enricoApiUrl, this.data.questionElementData[this.questionPosition]);
+    answerHelpers.renderAdditionalInformationForQuestion(this.quizElement, this.data.questionElementData[this.questionPosition]);
   }
 
   displayResult() {
