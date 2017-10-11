@@ -121,7 +121,7 @@ export default class NumberGuessHandler {
 
     // show the users answer
     let answerHtml = `
-      <div class="q-quiz-result__number-guess-visual__text__label s-font-note s-color-primary-5">
+      <div class="q-quiz-result__number-guess-visual__text__label s-font-note s-color-primary-7">
         Ihre Schätzung
         <div class="s-font-note--strong">${answer} ${getUnit(answer, unitData)}</div>
       </div>
@@ -131,7 +131,7 @@ export default class NumberGuessHandler {
     let answerElement = document.createElement('div');
     answerElement.classList.add('q-quiz-result__number-guess-visual__text');
     answerElement.classList.add('q-quiz-result__number-guess-visual__text--top');
-    answerElement.classList.add('s-color-primary-5');
+    answerElement.classList.add('s-color-primary-7');
     answerElement.innerHTML = answerHtml;
 
     answerElement.style.position = 'absolute';

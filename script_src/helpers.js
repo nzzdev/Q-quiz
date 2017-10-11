@@ -1,33 +1,33 @@
 export function loadAdditionalArticles(articleIds) {
   let loadPromises = [];
-  let apiUrl = 'https://headlines.nzz.ch/api/articles';
-  if (articleIds.length > 0) {
-    let relatedTitle = document.querySelector('.nzz-st-1602-related__title');
-    if (relatedTitle) {
-      relatedTitle.style.opacity = "1";
-    }
-  }
+  const apiUrl = 'https://enrico.nzz-tech.ch/v1/article';
+  
+  const enricoProducts = ['nzz', 'nzzas'];
+
   articleIds.forEach(articleId => {
     if (!articleId || articleId.length === 0) {
       return
     }
-    loadPromises.push(
-      fetch(`${apiUrl}/${articleId}`)
-        .then(response => {
-          if (response.status >= 200 && response.status < 300) {
-            return response.json();
-          } else if (response.status === 404) {
-            return undefined;
-          } else {
-            var error = new Error(response.statusText);
-            error.response = response;
-            throw error;
-          }
-        })
-        .catch(e => {
-          // console.log(e);
-        })
-    );
+
+    for (let product of enricoProducts) {
+      loadPromises.push(
+        fetch(`${apiUrl}?product=${product}&articleid=${articleId}`)
+          .then(response => {
+            if (response.status >= 200 && response.status < 300) {
+              return response.json();
+            } else if (response.status === 404) {
+              return undefined;
+            } else {
+              var error = new Error(response.statusText);
+              error.response = response;
+              throw error;
+            }
+          })
+          .catch(e => {
+            // console.log(e);
+          })
+      );
+    }    
   });
   return Promise.all(loadPromises);
 }
