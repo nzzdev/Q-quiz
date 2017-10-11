@@ -41,6 +41,10 @@ export function renderFinalScoreText(finalScore, element) {
   let lastCardTitleElement = element.querySelector('.q-quiz-last-card-title');
   let totalScore = getTotalScore(finalScore);
   let achievedScore = getAchievedScore(finalScore);
+  // this is a hack, we will fix it properly with resolving issue 29 https://github.com/nzzdev/Q-quiz/issues/29
+  if (achievedScore > totalScore) {
+    achievedScore = totalScore;
+  }
   lastCardTitleElement.innerHTML = `Sie haben ${achievedScore} von ${totalScore} möglichen Punkten erzielt.` 
 }
 

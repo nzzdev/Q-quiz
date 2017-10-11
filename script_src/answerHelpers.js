@@ -74,18 +74,22 @@ function getRecommendationsElement(articleRecommendations) {
   if (articleRecommendations && articleRecommendations.length) {
     
     let punctuation = ['!', '?', '.'];
-
+    
     helpers.loadAdditionalArticles(articleRecommendations.map(r => r.articleId))
       .then(articles => {
-        articles.forEach((article, index) => {
-          let recommendationText = '';
-          if (articleRecommendations[index].text && articleRecommendations[index].text.length && articleRecommendations[index].text.length > 0) {
-            recommendationText = articleRecommendations[index].text + ' ';
-          }
-          recommendationsHtml += `
-            <span>${recommendationText}<a href="${article.webUrl}" target="_blank">${article.title}</a>${punctuation.indexOf(article.title.slice(-1)) === -1 ? '.' : ''} </span>
-          `;
-        })
+        articles
+          .filter(article => {
+            return article !== undefined;
+          })
+          .forEach((article, index) => {
+            let recommendationText = '';
+            if (articleRecommendations[index].text && articleRecommendations[index].text.length && articleRecommendations[index].text.length > 0) {
+              recommendationText = articleRecommendations[index].text + ' ';
+            }
+            recommendationsHtml += `
+              <span>${recommendationText}<a href="${article.metadata.url}" target="_blank">${article.metadata.title}</a>${punctuation.indexOf(article.metadata.title.slice(-1)) === -1 ? '.' : ''} </span>
+            `;
+          })
       })
       .then(() => {
         recommendationsElement.innerHTML = recommendationsHtml

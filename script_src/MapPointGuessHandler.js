@@ -181,9 +181,9 @@ export default class MapPointGuessHandler {
         .marker([answer.latLng.lat, answer.latLng.lng], {
           icon: Leaflet
             .divIcon({
-              className: 'q-quiz-map-marker s-font-note-s s-color-primary-5',
+              className: 'q-quiz-map-marker s-font-note-s s-color-primary-7',
               iconSize: [8,8],
-              html: `<div class="q-quiz-map-marker__label q-quiz-map-marker__label--${answerLabelPosition} s-font-note s-font-note--strong s-color-primary-5">Ihre Schätzung</div>`
+              html: `<div class="q-quiz-map-marker__label q-quiz-map-marker__label--${answerLabelPosition} s-font-note s-font-note--strong s-color-primary-7">Ihre Schätzung</div>`
             })
         });
 
