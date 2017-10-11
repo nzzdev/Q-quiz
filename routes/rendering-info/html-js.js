@@ -4,6 +4,7 @@ const Joi = require('joi');
 const resourcesDir = __dirname + '/../../resources/';
 const viewsDir = __dirname + '/../../views/';
 const scriptsDir  = __dirname + '/../../scripts/';
+const stylesDir  = __dirname + '/../../styles/';
 const transform = require(resourcesDir + 'helpers/itemTransformer.js');
 
 const schemaString = JSON.parse(fs.readFileSync(resourcesDir + 'schema.json', {
@@ -12,7 +13,8 @@ const schemaString = JSON.parse(fs.readFileSync(resourcesDir + 'schema.json', {
 
 const schema = Enjoi(schemaString);
 
-const hashMap = require(`${scriptsDir}hashMap.json`);
+const scriptHashMap = require(`${scriptsDir}/hashMap.json`);
+const styleHashMap = require(`${stylesDir}/hashMap.json`);
 
 require('svelte/ssr/register');
 const staticTemplate = require(viewsDir + 'HtmlJs.html');
@@ -30,6 +32,7 @@ module.exports = {
         toolRuntimeConfig: Joi.object()
       }
     },
+    cache: false,
     cors: true
   },
   handler: function(request, reply) {
@@ -89,7 +92,7 @@ module.exports = {
     const systemConfigScript = `
       System.config({
         map: {
-          "q-quiz/quiz.js": "${request.payload.toolRuntimeConfig.toolBaseUrl}/script/${hashMap['quiz.js']}"
+          "q-quiz/quiz.js": "${request.payload.toolRuntimeConfig.toolBaseUrl}/script/${scriptHashMap['quiz']}"
         }
       });
     `;
@@ -111,7 +114,7 @@ module.exports = {
       },
       stylesheets: [
         {
-          name: 'default'
+          name: styleHashMap['default']
         }
       ], 
       scripts: [

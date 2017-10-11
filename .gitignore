@@ -1,5 +1,5 @@
 node_modules
 jspm_packages
-scripts/*.js
-scripts/*.json
+scripts
+styles
 .DS_STORE
