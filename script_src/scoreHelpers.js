@@ -32,6 +32,10 @@ export function renderFinalScoreText(finalScore, element) {
       + (numberGuess.numberQuestions * numberGuess.multiplicator)
       + (mapPointGuess.numberQuestions * mapPointGuess.multiplicator);
   let achievedScore = Math.round(multipleChoice.sumPoints + numberGuess.sumPoints + mapPointGuess.sumPoints);
+  // this is a hack, we will fix it properly with resolving issue 29 https://github.com/nzzdev/Q-quiz/issues/29
+  if (achievedScore > totalScore) {
+    achievedScore = totalScore;
+  }
   lastCardTitleElement.innerHTML = `Sie haben ${achievedScore} von ${totalScore} möglichen Punkten erzielt.` 
 }
 
