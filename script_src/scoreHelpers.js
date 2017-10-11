@@ -60,23 +60,3 @@ export function getFinalScoreTitle(finalScore) {
     return '👏👏👏👏👏';
   }
 }
-
-// this is not used anywhere right? should we delete it?
-function getFinalScoreElement(finalScore) {
-  let finalScoreElement = document.createElement('div');
-  let finalScoreHTML = '';
-  if (finalScore.multipleChoice.numberQuestions > 0) {
-    finalScoreHTML += `<span>Sie haben ${finalScore.multipleChoice.sumCorrect} von ${finalScore.multipleChoice.numberQuestions} Fragen richtig beantwortet. </span>`;
-  }
-  if (finalScore.numberGuess.numberAnswers > 0) {
-    finalScoreHTML += `<span>Bei den Schätzfragen lagen Sie durchschnittlich um ${finalScore.numberGuess.sumDiffPercentage / finalScore.numberGuess.numberAnswers}% daneben. </span>`;
-  } 
-  if (finalScore.mapPointGuess.numberAnswers > 0) {
-    let avgDistance = finalScore.mapPointGuess.sumDistance / finalScore.mapPointGuess.numberAnswers;
-    let distanceText = getDistanceText(avgDistance);
-    finalScoreHTML += `<span>Bei den Ortsschätzfragen lagen Sie durchschnittlich um ${distanceText} daneben.</span>`;
-  } 
-  finalScoreElement.innerHTML = finalScoreHTML;
-  return finalScoreElement;
-}
-
