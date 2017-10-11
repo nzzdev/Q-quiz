@@ -69,7 +69,7 @@ export default class QuestionHandler {
     }
   }
 
-  async handleAnswer(event) {
+  handleAnswer(event) {
     const answerValue = this.questionRenderer.getValue(event); 
     const correctAnswer = this.data.questionElementData[this.questionPosition].correctAnswer;
     let worstAnswer;
@@ -93,8 +93,6 @@ export default class QuestionHandler {
 
     this.questionRenderer.renderResult(answerValue);
 
-    const responseStoreAnswer = await
-    
     this.storeAnswer(answerValue)
       .then(responseStoreAnswer => {
         let answerId;
