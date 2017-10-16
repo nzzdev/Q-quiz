@@ -124,10 +124,6 @@ module.exports = {
         },
         {
           content: loaderScript
-        },
-        {
-          url: 'https://storytelling.nzz.ch/track-manager/v0/track.js',
-          loadOnce: true
         }
       ],
       markup: staticTemplate.render(renderingData)
