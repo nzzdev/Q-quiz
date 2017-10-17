@@ -1,0 +1,6 @@
+node_modules
+jspm_packages
+script_src
+styles_src
+tasks
+test
