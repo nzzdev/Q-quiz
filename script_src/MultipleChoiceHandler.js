@@ -25,14 +25,16 @@ export default class MultipleChoiceHandler {
 
       // is answer element the correct answer
       if (element.textContent === this.data.correctAnswer) {
-        element.classList.add('s-font-note--strong', 's-color-positive');
+        element.classList.add('s-font-note--strong');
+        element.classList.add('s-color-positive');
 
         let correctAnswerElement = document.createElement('span');
         correctAnswerElement.classList.add('s-color-positive');
         correctAnswerElement.innerText = 'korrekte Antwort';
         parentNode.insertBefore(correctAnswerElement, element.nextSibling);
 
-        bar.classList.add('s-font-note-s--strong', 's-color-positive');
+        bar.classList.add('s-font-note-s--strong');
+        bar.classList.add('s-color-positive');
 
         // is user input correct
         if (this.data.correctAnswer === answer) {
@@ -46,14 +48,16 @@ export default class MultipleChoiceHandler {
           let crossmarkElement = document.createElement('span');
           crossmarkElement.innerHTML = crossmark;
           parentNode.insertBefore(crossmarkElement, element);
-          element.classList.add('s-font-note--strong', 's-color-negative');
+          element.classList.add('s-font-note--strong');
+          element.classList.add('s-color-negative');
 
           let wrongAnswerElement = document.createElement('span');
           wrongAnswerElement.classList.add('s-color-negative');
           wrongAnswerElement.innerText = 'falsche Antwort';
           parentNode.insertBefore(wrongAnswerElement, element.nextSibling);
 
-          bar.classList.add('s-font-note-s--strong', 's-color-negative');
+          bar.classList.add('s-font-note-s--strong');
+          bar.classList.add('s-color-negative');
         } else {
           // all other answer elements
           element.classList.add('s-font-note--light');
