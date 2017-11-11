@@ -2,7 +2,7 @@ export function loadAdditionalArticles(articleIds) {
   let loadPromises = [];
   const apiUrl = 'https://enrico.nzz-tech.ch/v1/article';
   
-  const enricoProducts = ['nzz', 'nzzas'];
+  const enricoProducts = ['nzz'];
 
   articleIds.forEach(articleId => {
     if (!articleId || articleId.length === 0) {
@@ -15,8 +15,6 @@ export function loadAdditionalArticles(articleIds) {
           .then(response => {
             if (response.status >= 200 && response.status < 300) {
               return response.json();
-            } else if (response.status === 404) {
-              return undefined;
             } else {
               var error = new Error(response.statusText);
               error.response = response;

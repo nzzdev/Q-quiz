@@ -78,9 +78,6 @@ function getRecommendationsElement(articleRecommendations) {
     helpers.loadAdditionalArticles(articleRecommendations.map(r => r.articleId))
       .then(articles => {
         articles
-          .filter(article => {
-            return article !== undefined;
-          })
           .forEach((article, index) => {
             let recommendationText = '';
             if (articleRecommendations[index].text && articleRecommendations[index].text.length && articleRecommendations[index].text.length > 0) {
@@ -94,6 +91,9 @@ function getRecommendationsElement(articleRecommendations) {
       .then(() => {
         recommendationsElement.innerHTML = recommendationsHtml
       })
+      .catch(e => {
+        // nevermind
+      }) 
   }
   return recommendationsElement
 }
