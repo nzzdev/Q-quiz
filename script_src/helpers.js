@@ -10,7 +10,7 @@ export function loadAdditionalArticles(articleIds) {
       return
     }
 
-    for (let product of enricoProducts) {
+    enricoProducts.forEach(product => {
       debugger;
       loadPromises.push(
         fetch(`${apiUrl}?product=${product}&articleid=${articleId}`)
@@ -26,7 +26,7 @@ export function loadAdditionalArticles(articleIds) {
             // console.log(e);
           })
       );
-    }    
+    });    
   });
   return Promise.all(loadPromises);
 }
