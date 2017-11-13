@@ -9,25 +9,20 @@ export function loadAdditionalArticles(articleIds) {
       return
     }
 
-    for (let product of enricoProducts) {
+    enricoProducts.forEach(product => {
       loadPromises.push(
         fetch(`${apiUrl}?product=${product}&articleid=${articleId}`)
           .then(response => {
             if (response.status >= 200 && response.status < 300) {
               return response.json();
-            } else if (response.status === 404) {
-              return undefined;
-            } else {
-              var error = new Error(response.statusText);
-              error.response = response;
-              throw error;
-            }
+            } 
+            return undefined;
           })
           .catch(e => {
             // console.log(e);
           })
       );
-    }    
+    });    
   });
   return Promise.all(loadPromises);
 }

@@ -93,7 +93,7 @@ function getRecommendationsElement(articleRecommendations) {
       })
       .then(() => {
         recommendationsElement.innerHTML = recommendationsHtml
-      })
+      });
   }
   return recommendationsElement
 }
