@@ -2,24 +2,20 @@ export function loadAdditionalArticles(articleIds) {
   let loadPromises = [];
   const apiUrl = 'https://enrico.nzz-tech.ch/v1/article';
   
-  const enricoProducts = ['nzz'];
+  const enricoProducts = ['nzz', 'nzzas'];
 
   articleIds.forEach(articleId => {
     if (!articleId || articleId.length === 0) {
-      debugger;
       return
     }
 
     enricoProducts.forEach(product => {
-      debugger;
       loadPromises.push(
         fetch(`${apiUrl}?product=${product}&articleid=${articleId}`)
           .then(response => {
-            debugger;
             if (response.status >= 200 && response.status < 300) {
               return response.json();
             } 
-            debugger;
             return undefined;
           })
           .catch(e => {
