@@ -109,7 +109,7 @@ module.exports = {
 
     const renderingInfo = {
       loaderConfig: {
-        polyfills: ['Promise', , 'Symbol', 'CustomEvent'],
+        polyfills: ['Promise', 'CustomEvent'],
         loadSystemJs: 'full'
       },
       stylesheets: [

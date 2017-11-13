@@ -39,7 +39,7 @@ function writeHashmap(hashmapPath, files, fileext) {
 
 async function buildScripts() {
   return builder
-    .bundle('q-quiz/quiz.js', { normalize: true, runtime: false, minify: false, mangle: false })
+    .bundle('q-quiz/quiz.js', { normalize: true, runtime: false, minify: true, mangle: false })
     .then(bundle => {
       const fileName = 'quiz';
       fs.writeFileSync(`scripts/${fileName}.js`, bundle.source);
