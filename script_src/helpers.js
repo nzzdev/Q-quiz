@@ -6,16 +6,20 @@ export function loadAdditionalArticles(articleIds) {
 
   articleIds.forEach(articleId => {
     if (!articleId || articleId.length === 0) {
+      debugger;
       return
     }
 
     for (let product of enricoProducts) {
+      debugger;
       loadPromises.push(
         fetch(`${apiUrl}?product=${product}&articleid=${articleId}`)
           .then(response => {
+            debugger;
             if (response.status >= 200 && response.status < 300) {
               return response.json();
             } 
+            debugger;
             return undefined;
           })
           .catch(e => {

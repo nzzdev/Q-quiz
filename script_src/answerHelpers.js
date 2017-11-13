@@ -77,11 +77,13 @@ function getRecommendationsElement(articleRecommendations) {
     
     helpers.loadAdditionalArticles(articleRecommendations.map(r => r.articleId))
       .then(articles => {
+        debugger;
         articles
           .filter(article => {
             return article !== undefined;
           })
           .forEach((article, index) => {
+            debugger;
             let recommendationText = '';
             if (articleRecommendations[index].text && articleRecommendations[index].text.length && articleRecommendations[index].text.length > 0) {
               recommendationText = articleRecommendations[index].text + ' ';
