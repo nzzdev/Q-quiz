@@ -42,15 +42,21 @@ export function renderFinalScoreText(finalScore, element) {
   let totalScore = getTotalScore(finalScore);
   let achievedScore = getAchievedScore(finalScore);
   // this is a hack, we will fix it properly with resolving issue 29 https://github.com/nzzdev/Q-quiz/issues/29
-  if (achievedScore > totalScore) {
-    achievedScore = totalScore;
+  if (!isNaN(achievedScore) && achievedScore !== undefined) {    
+    if (achievedScore > totalScore) {
+      achievedScore = totalScore;
+    }
+    lastCardTitleElement.innerHTML = `Sie haben ${achievedScore} von ${totalScore} möglichen Punkten erzielt.` 
   }
-  lastCardTitleElement.innerHTML = `Sie haben ${achievedScore} von ${totalScore} möglichen Punkten erzielt.` 
 }
 
 export function getFinalScoreTitle(finalScore) {
   let totalScore = getTotalScore(finalScore);
   let achievedScore = getAchievedScore(finalScore);
+  if (isNaN(achievedScore) || achievedScore === undefined) {
+    return 'Fertig!';
+  }
+  
   let percentageScore = achievedScore / totalScore;
   if (percentageScore < 0.2) {
     return '😱';
