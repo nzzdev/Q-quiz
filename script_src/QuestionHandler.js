@@ -70,9 +70,7 @@ export default class QuestionHandler {
   }
 
   handleAnswer(event) {
-    const answerValue = this.questionRenderer.getValue(event); 
-    const correctAnswer = this.data.questionElementData[this.questionPosition].correctAnswer;
-    let worstAnswer;
+    const answerValue = this.questionRenderer.getValue(event);     
 
     if (typeof this.questionRenderer.isAnswerValid === 'function') {
       if (!this.questionRenderer.isAnswerValid()) {
@@ -105,27 +103,16 @@ export default class QuestionHandler {
         return this.answerStore.getStats(this.data.itemId, this.data.questionElementData[this.questionPosition], answerId);
       })
       .then(stats => {
-        if (typeof this.questionRenderer.getWorstAnswer === 'function') {
-          worstAnswer = this.questionRenderer.getWorstAnswer();    
-        }
-
         if (typeof this.questionRenderer.renderResultStats === 'function') {
-          if (this.questionType === 'multipleChoice' && answerValue === correctAnswer) {
-            this.finalScore.multipleChoice.sumPoints += 5;
-          } else if (this.questionType === 'numberGuess' && worstAnswer !== undefined) {
-            let guessQuality = 1 - (Math.abs(answerValue - correctAnswer) / worstAnswer);
-            this.finalScore.numberGuess.sumPoints += getScorePerQuestion(guessQuality, this.finalScore.numberGuess.multiplicator);
-          } else if (this.questionType === 'mapPointGuess' && worstAnswer !== undefined) {
-            let guessQuality = 1 - (answerValue.distance / worstAnswer);
-            this.finalScore.mapPointGuess.sumPoints += getScorePerQuestion(guessQuality, this.finalScore.mapPointGuess.multiplicator);
-          }
           this.questionRenderer.renderResultStats(answerValue, stats);
         }
       })
       .catch(e => {
+        console.log(e)
         // nevermind errors in storing the answer, we move on without displaying stats in this case
       });
 
+    this.calculateScore(answerValue);
     this.renderAdditionalInformation();
     this.displayResult();
   }
@@ -142,6 +129,25 @@ export default class QuestionHandler {
       return this.answerStore.saveAnswer(answerData);
     } else {
       return Promise.resolve();
+    }
+  }
+
+  calculateScore(answerValue) {
+    const correctAnswer = this.data.questionElementData[this.questionPosition].correctAnswer;
+    
+    let worstAnswer;
+    if (typeof this.questionRenderer.getWorstAnswer === 'function') {
+      worstAnswer = this.questionRenderer.getWorstAnswer();    
+    }
+
+    if (this.questionType === 'multipleChoice' && answerValue === correctAnswer) {
+      this.finalScore.multipleChoice.sumPoints += 5;
+    } else if (this.questionType === 'numberGuess' && worstAnswer !== undefined) {
+      let guessQuality = 1 - (Math.abs(answerValue - correctAnswer) / worstAnswer);
+      this.finalScore.numberGuess.sumPoints += getScorePerQuestion(guessQuality, this.finalScore.numberGuess.multiplicator);
+    } else if (this.questionType === 'mapPointGuess' && worstAnswer !== undefined) {
+      let guessQuality = 1 - (answerValue.distance / worstAnswer);
+      this.finalScore.mapPointGuess.sumPoints += getScorePerQuestion(guessQuality, this.finalScore.mapPointGuess.multiplicator);
     }
   }
 

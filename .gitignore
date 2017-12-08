@@ -3,3 +3,4 @@ jspm_packages
 scripts
 styles
 .DS_STORE
+dev.js
