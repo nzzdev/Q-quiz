@@ -6,12 +6,8 @@ const hapiOptions = {
       name: 'memoryCache',
       engine: require('catbox-memory')
     }
-  ]
+  ],
+  port: process.env.PORT || 3000
 }
 
-const server = new Hapi.Server(hapiOptions);
-server.connection({
-  port: process.env.PORT || 3000
-});
-
-module.exports = server;
+module.exports = new Hapi.Server(hapiOptions);

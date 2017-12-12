@@ -22,7 +22,7 @@ const staticTemplate = require(viewsDir + 'HtmlJs.html');
 module.exports = {
   method: 'POST',
   path: '/rendering-info/html-js',
-  config: {
+  options: {
     validate: {
       options: {
         allowUnknown: true
@@ -35,7 +35,7 @@ module.exports = {
     cache: false,
     cors: true
   },
-  handler: function(request, reply) {
+  handler: function(request, h) {
 
     let item = transform(request.payload.item);
 
@@ -128,6 +128,6 @@ module.exports = {
       ],
       markup: staticTemplate.render(renderingData)
     }
-    return reply(renderingInfo);
+    return renderingInfo;
   }
 }

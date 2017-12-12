@@ -1,6 +1,6 @@
 module.exports = [
   require('inert'),
-  {
+  /* {
     register: require('yaral'),
     options: {
       cache: 'memoryCache',
@@ -17,5 +17,5 @@ module.exports = [
       ],
       default: []
     }
-  },
+  }, */
 ]
