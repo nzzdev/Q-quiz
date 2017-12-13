@@ -2,7 +2,6 @@ import NumberGuess from './NumberGuessHandler.js';
 import MultipleChoice from './MultipleChoiceHandler.js';
 import MapPointGuess from './MapPointGuessHandler.js';
 import * as answerHelpers from './answerHelpers.js';
-import {getScorePerQuestion, renderFinalScoreText} from './scoreHelpers.js';
 import MultiQuizPositionHandler from './MultiQuizPositionHandler.js';
 import AnswerStore from './AnswerStore.js';
 
@@ -16,29 +15,12 @@ export default class QuestionHandler {
   constructor(quizRootElement, data) {
     this.quizRootElement = quizRootElement;
     this.data = data;
+    this.scoreInfo = this.data.scoreInfo;
     this.isSingleQuestionQuiz = data.numberElements === 1;
     if (!this.isSingleQuestionQuiz) {
       this.multiQuizPositionHandler = new MultiQuizPositionHandler(quizRootElement, data);
     }
     this.answerStore = new AnswerStore(this.data.toolBaseUrl);
-
-    this.finalScore = {
-      multipleChoice: {
-        multiplicator: 5,
-        numberQuestions: 0,
-        sumPoints: 0
-      },
-      numberGuess: {
-        multiplicator: 10,
-        numberQuestions: 0,
-        sumPoints: 0
-      },
-      mapPointGuess: {
-        multiplicator: 10,
-        numberQuestions: 0,
-        sumPoints: 0
-      }
-    }
   }
 
   renderInputElement(position) {
@@ -46,15 +28,13 @@ export default class QuestionHandler {
       this.questionPosition = 0;
       this.quizElement = this.quizRootElement.querySelector('.q-quiz-element-container--is-active');
     } else {
-      this.multiQuizPositionHandler.setPosition(position, this.finalScore);
+      this.multiQuizPositionHandler.setPosition(position, this.scoreInfo);
       this.questionPosition = this.multiQuizPositionHandler.getQuestionNumber() - 1;
       this.quizElement = this.multiQuizPositionHandler.getQuizElement();
     }
 
     if (this.questionPosition < this.data.questionElementData.length) {
       this.questionType = this.data.questionElementData[this.questionPosition].type;
-      this.finalScore[this.questionType].numberQuestions++;
-
       this.questionRenderer = new questionTypes[this.questionType](this.quizElement, this.data.questionElementData[this.questionPosition], this.data.itemId, this.data.toolBaseUrl);
       if (typeof this.questionRenderer.renderInput === 'function') {
         this.questionRenderer.renderInput();
@@ -64,8 +44,34 @@ export default class QuestionHandler {
         answerHelpers.renderAdditionalInformationForLastCard(this.quizElement, this.data.lastCardData.articleRecommendations);
       }
       if (this.data.isFinalScoreShown) {
-        renderFinalScoreText(this.finalScore, this.quizElement);
+        let achievedScore = this.scoreInfo.questions
+          .map(question => question.achievedScore)
+          .reduce((previous, current) => {
+            return previous + current;
+          }, 0);
+        if (achievedScore > this.scoreInfo.maxScore) {
+          achievedScore = this.scoreInfo.maxScore;
+        }
+        this.scoreInfo.achievedScore = Math.round(achievedScore);
+        let lastCardTitleElement = this.quizElement.querySelector('.q-quiz-last-card-title');
+        lastCardTitleElement.innerHTML = `Sie haben ${this.scoreInfo.achievedScore} von ${this.scoreInfo.maxScore} möglichen Punkten erzielt.`
+        this.quizRootElement.querySelector('.q-quiz-header__title').textContent = this.getFinalScoreTitle();
       }
+    }
+  }
+
+  getFinalScoreTitle() {
+    let percentageScore = this.scoreInfo.achievedScore / this.scoreInfo.maxScore;
+    if (percentageScore < 0.2) {
+      return '😱';
+    } else if (percentageScore < 0.5) {
+      return '😕';
+    } else if (percentageScore < 0.8) {
+      return '🙂';
+    } else if (percentageScore < 1.0) {
+      return '👏👏👏';
+    } else {
+      return '👏👏👏👏👏';
     }
   }
 
@@ -133,22 +139,26 @@ export default class QuestionHandler {
   }
 
   calculateScore(answerValue) {
-    const correctAnswer = this.data.questionElementData[this.questionPosition].correctAnswer;
-    
-    let worstAnswer;
-    if (typeof this.questionRenderer.getWorstAnswer === 'function') {
-      worstAnswer = this.questionRenderer.getWorstAnswer();    
-    }
-
-    if (this.questionType === 'multipleChoice' && answerValue === correctAnswer) {
-      this.finalScore.multipleChoice.sumPoints += 5;
-    } else if (this.questionType === 'numberGuess' && worstAnswer !== undefined) {
-      let guessQuality = 1 - (Math.abs(answerValue - correctAnswer) / worstAnswer);
-      this.finalScore.numberGuess.sumPoints += getScorePerQuestion(guessQuality, this.finalScore.numberGuess.multiplicator);
-    } else if (this.questionType === 'mapPointGuess' && worstAnswer !== undefined) {
-      let guessQuality = 1 - (answerValue.distance / worstAnswer);
-      this.finalScore.mapPointGuess.sumPoints += getScorePerQuestion(guessQuality, this.finalScore.mapPointGuess.multiplicator);
-    }
+    // send score and answer value to score endpoint
+    return fetch(`${this.data.toolBaseUrl}/score/${this.questionPosition}`, {
+      method: 'POST',
+      body: JSON.stringify({
+        score: this.scoreInfo,
+        answerValue: answerValue
+      })
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+    })
+    .then(scoreInfo => {
+      this.scoreInfo = scoreInfo;
+    })
+    .catch(e => {
+      console.log(e);
+      // nevermind just don't update score info
+    })
   }
 
   renderAdditionalInformation() {

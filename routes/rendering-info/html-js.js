@@ -6,6 +6,7 @@ const viewsDir = __dirname + '/../../views/';
 const scriptsDir  = __dirname + '/../../scripts/';
 const stylesDir  = __dirname + '/../../styles/';
 const transform = require(resourcesDir + 'helpers/itemTransformer.js');
+const initializeScoreInfo = require(`${resourcesDir}helpers/scoreHelpers.js`).initializeScoreInfo;
 
 const schemaString = JSON.parse(fs.readFileSync(resourcesDir + 'schema.json', {
   encoding: 'utf-8'
@@ -18,6 +19,37 @@ const styleHashMap = require(`${stylesDir}/hashMap.json`);
 
 require('svelte/ssr/register');
 const staticTemplate = require(viewsDir + 'HtmlJs.html');
+
+function transformItemForClientSideScript(item, toolRuntimeConfig) {
+  const questionElementData = item.questions.map(element => {
+    return {
+      id: element.id,
+      type: element.type,
+      correctAnswer: element.answer,
+      answerText: element.answerText,
+      articleRecommendations: element.articleRecommendations
+    }
+  });
+
+  let scriptData = {
+    itemId: item._id,
+    questionElementData: questionElementData,
+    hasCover: item.hasCover,
+    hasLastCard: item.hasLastCard,
+    numberElements: item.elementCount,
+    scoreInfo: item.scoreInfo,
+    toolBaseUrl: toolRuntimeConfig.toolBaseUrl,
+    isPure: toolRuntimeConfig.isPure || false
+  }
+
+  if (item.lastCard) {
+    scriptData.lastCardData = {
+      articleRecommendations: item.lastCard.articleRecommendations,
+    }
+    scriptData.isFinalScoreShown = item.isFinalScoreShown;
+  }
+  return scriptData;
+}
 
 module.exports = {
   method: 'POST',
@@ -37,7 +69,10 @@ module.exports = {
   },
   handler: function(request, h) {
 
+    // item.elements will be split into cover, last card and questions during transformation step
+    // after that we don't need item.elements anymore
     let item = transform(request.payload.item);
+    delete item.elements;
 
     // get id of quiz item
     let id = item._id;
@@ -45,50 +80,13 @@ module.exports = {
       id = item.elements[0].id.split('-')[0] || (Math.random() * 10000).toFixed();
     }
     item._id = id;
-
     const quizContainerId = `q-quiz-${id}`;
 
-    // prepare data for client side script
-    const questionElementData = item.questions.map(element => {
-        return {
-          id: element.id,
-          type: element.type,
-          correctAnswer: element.answer,
-          answerText: element.answerText,
-          articleRecommendations: element.articleRecommendations
-        }
-      });
-
-    // if isPure is set to true no side effects will be caused, in this 
-    // special case no answers will get stored
-    const isPure = request.payload.toolRuntimeConfig.isPure || false;
-
-    let scriptData = {
-      itemId: item._id,
-      questionElementData: questionElementData,
-      hasCover: item.hasCover,
-      hasLastCard: item.hasLastCard,
-      numberElements: item.elementCount,
-      toolBaseUrl: request.payload.toolRuntimeConfig.toolBaseUrl,
-      isPure: isPure
+    item.scoreInfo = initializeScoreInfo(item.questions);
+    if (item.lastCard) {
+      item.isFinalScoreShown = item.lastCard.isFinalScoreShown || false;
     }
-
-    if (item.hasLastCard) {
-      scriptData.lastCardData = {
-        articleRecommendations: item.lastCard.articleRecommendations,
-      }
-      scriptData.isFinalScoreShown = item.lastCard.isFinalScoreShown || false;
-      item.isFinalScoreShown = scriptData.isFinalScoreShown;
-    }
-    // elements are already split into cover, last card and questions
-    // so we don't need it here anymore
-    delete item.elements;
-
-    const renderingData = {
-      item: item,
-      quizContainerId: quizContainerId
-    }
-
+    
     const systemConfigScript = `
       System.config({
         map: {
@@ -97,6 +95,7 @@ module.exports = {
       });
     `;
 
+    const scriptData = transformItemForClientSideScript(item, request.payload.toolRuntimeConfig);
     const loaderScript = `
       System.import('q-quiz/quiz.js')
         .then(function(module) {
@@ -106,6 +105,11 @@ module.exports = {
           console.log(error)
         });
     `;
+
+    const renderingData = {
+      item: item,
+      quizContainerId: quizContainerId
+    }
 
     const renderingInfo = {
       loaderConfig: {
