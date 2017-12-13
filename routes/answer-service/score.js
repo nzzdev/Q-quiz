@@ -1,6 +1,5 @@
 const Joi = require('joi');
 const getAchievedScore = require('../../resources/helpers/scoreHelpers.js').getAchievedScore;
-const scoreConstants = require('../../resources/helpers/scoreConstants.js');
 
 module.exports = {
   method: 'POST',
@@ -22,15 +21,16 @@ module.exports = {
     let score = request.payload.score;
     const currentQuestion = score.questions[request.params.index]
     if (currentQuestion.type === 'multipleChoice' && request.payload.answerValue === currentQuestion.correctAnswer) {
-      score.questions[request.params.index].achievedScore = scoreConstants.multiplicator[currentQuestion.type];
+      // answer quality is set to best value of 1 for multiple choice questions
+      score.questions[request.params.index].achievedScore = getAchievedScore(1, currentQuestion.type);
     }
     if (currentQuestion.type === 'numberGuess' && currentQuestion.worstAnswerDifference !== undefined) {
-      const guessQuality = 1 - (Math.abs(request.payload.answerValue - currentQuestion.correctAnswer) / currentQuestion.worstAnswerDifference);
-      score.questions[request.params.index].achievedScore = getAchievedScore(guessQuality, currentQuestion.type);
+      const answerQuality = 1 - (Math.abs(request.payload.answerValue - currentQuestion.correctAnswer) / currentQuestion.worstAnswerDifference);
+      score.questions[request.params.index].achievedScore = getAchievedScore(answerQuality, currentQuestion.type);
     }
     if (currentQuestion.type === 'mapPointGuess' && currentQuestion.worstAnswerDifference !== undefined) {
-      const guessQuality = 1 - (request.payload.answerValue.distance / currentQuestion.worstAnswerDifference);
-      score.questions[request.params.index].achievedScore = getAchievedScore(guessQuality, currentQuestion.type);
+      const answerQuality = 1 - (request.payload.answerValue.distance / currentQuestion.worstAnswerDifference);
+      score.questions[request.params.index].achievedScore = getAchievedScore(answerQuality, currentQuestion.type);
     }
     return score;
   }

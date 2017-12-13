@@ -14,6 +14,9 @@ function calculateWorstAnswerDifference(question) {
     const pointNorthEast = turf.point([bbox[3], bbox[2]]);
     const pointSouthEast = turf.point([bbox[1], bbox[2]]);
     const correctAnswer = turf.point([correctAnswerCoord[1], correctAnswerCoord[0]]);
+    
+    // there is no meter unit in turf, we use kilometers and multiply with 
+    // 1000 afterwards to get the needed meters
     const distanceOptions = {
       units: 'kilometers'
     }
@@ -44,7 +47,7 @@ function initializeScoreInfo(questions) {
   return score;
 }
 
-function calculateAchievedScore(guessQuality, questionType) {
+function calculateAchievedScore(answerQuality, questionType) {
   const turningPoint = 0.6; // x=y
   // slope was pre-calculated with a defined point of worst estimation quality of (0.08, 0)
   const lowerSlope = 0.6 / 0.52;
@@ -59,14 +62,14 @@ function calculateAchievedScore(guessQuality, questionType) {
 
   const multiplicator = scoreConstants.multiplicator[questionType];
 
-  if (guessQuality < lowerBoundX) {
+  if (answerQuality < lowerBoundX) {
     return 0;
-  } else if (lowerBoundX <= guessQuality && guessQuality <= turningPoint) {
-    return multiplicator * (lowerSlope * guessQuality - ((lowerSlope * turningPoint) - turningPoint));
-  } else if (turningPoint < guessQuality && guessQuality <= upperBoundX) {
-    return multiplicator * (upperSlope * guessQuality - ((upperSlope * turningPoint) - turningPoint));
-  } else if (guessQuality > upperBoundX) {
-    return 10;
+  } else if (lowerBoundX <= answerQuality && answerQuality <= turningPoint) {
+    return multiplicator * (lowerSlope * answerQuality - ((lowerSlope * turningPoint) - turningPoint));
+  } else if (turningPoint < answerQuality && answerQuality <= upperBoundX) {
+    return multiplicator * (upperSlope * answerQuality - ((upperSlope * turningPoint) - turningPoint));
+  } else if (answerQuality > upperBoundX) {
+    return multiplicator;
   }
 }
 
