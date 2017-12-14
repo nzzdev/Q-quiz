@@ -6,7 +6,6 @@ const viewsDir = __dirname + '/../../views/';
 const scriptsDir  = __dirname + '/../../scripts/';
 const stylesDir  = __dirname + '/../../styles/';
 const transform = require(resourcesDir + 'helpers/itemTransformer.js');
-const initializeScoreInfo = require(`${resourcesDir}helpers/scoreHelpers.js`).initializeScoreInfo;
 
 const schemaString = JSON.parse(fs.readFileSync(resourcesDir + 'schema.json', {
   encoding: 'utf-8'
@@ -37,7 +36,6 @@ function transformItemForClientSideScript(item, toolRuntimeConfig) {
     hasCover: item.hasCover,
     hasLastCard: item.hasLastCard,
     numberElements: item.elementCount,
-    scoreInfo: item.scoreInfo,
     toolBaseUrl: toolRuntimeConfig.toolBaseUrl,
     isPure: toolRuntimeConfig.isPure || false
   }
@@ -82,7 +80,6 @@ module.exports = {
     item._id = id;
     const quizContainerId = `q-quiz-${id}`;
 
-    item.scoreInfo = initializeScoreInfo(item.questions);
     if (item.lastCard) {
       item.isFinalScoreShown = item.lastCard.isFinalScoreShown || false;
     }

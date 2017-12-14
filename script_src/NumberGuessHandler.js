@@ -25,7 +25,6 @@ export default class NumberGuessHandler {
   }
 
   renderInput() {
-    console.log(this.inputElement.parentNode.firstChild)
     const labelContainer = this.inputElement.parentNode.firstChild;
     let label = labelContainer.querySelector('.s-input-range-position-label');
     this.inputElement.setAttribute('value', this.defaultInputValue);

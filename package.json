@@ -23,7 +23,7 @@
   ],
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha",
+    "test": "lab -a code -P tests -m 3000 --verbose --leaks",
     "build": "rm -rf scripts && mkdir scripts && rm -rf styles && mkdir styles && node tasks/build.js"
   },
   "repository": {
@@ -34,7 +34,7 @@
     "@turf/turf": "^5.1.6",
     "autoprefixer": "^7.2.2",
     "catbox-memory": "^3.1.1",
-    "chai": "^4.0.2",
+    "code": "^5.1.2",
     "cssnano": "^3.10.0",
     "d3-array": "^1.2.1",
     "d3-scale": "^1.0.7",
@@ -45,7 +45,7 @@
     "inert": "^5.0.1",
     "jsdom": "9.5.0",
     "jspm": "0.17.0-beta.41",
-    "mocha": "^3.2.0",
+    "lab": "^15.1.2",
     "node-fetch": "^1.7.3",
     "node-sass": "^4.7.2",
     "postcss-import": "^11.0.0",

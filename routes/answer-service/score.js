@@ -1,37 +1,41 @@
+const fs = require('fs');
+const Enjoi = require('enjoi');
 const Joi = require('joi');
-const getAchievedScore = require('../../resources/helpers/scoreHelpers.js').getAchievedScore;
+const resourcesDir = __dirname + '/../../resources/';
+const scoreHelpers = require(`${resourcesDir}helpers/scoreHelpers.js`);
+const questionTypes = require(`${resourcesDir}helpers/constants.js`).questionTypes;
+const answerDb = require('../../resources/helpers/db.js').quizDb;
+
+const schemaString = JSON.parse(fs.readFileSync(`${resourcesDir}schema.json`, {
+  encoding: 'utf-8'
+}));
+
+const schema = Enjoi(schemaString);
 
 module.exports = {
   method: 'POST',
-  path: '/score/{index}',
+  path: '/score',
   options: {
     validate: {
       payload: {
-        score: Joi.object().required(),
-        answerValue: Joi.required()
+        item: schema,
+        answerValues: Joi.array().required()
       },
-      params: {
-        index: Joi.number().required()
+      options: {
+        allowUnknown: true
       }
     },
     cors: true
   },
-  handler: function(request, h){
-    // TODO rename worst answer because it's more a worst distance
-    let score = request.payload.score;
-    const currentQuestion = score.questions[request.params.index]
-    if (currentQuestion.type === 'multipleChoice' && request.payload.answerValue === currentQuestion.correctAnswer) {
-      // answer quality is set to best value of 1 for multiple choice questions
-      score.questions[request.params.index].achievedScore = getAchievedScore(1, currentQuestion.type);
-    }
-    if (currentQuestion.type === 'numberGuess' && currentQuestion.worstAnswerDifference !== undefined) {
-      const answerQuality = 1 - (Math.abs(request.payload.answerValue - currentQuestion.correctAnswer) / currentQuestion.worstAnswerDifference);
-      score.questions[request.params.index].achievedScore = getAchievedScore(answerQuality, currentQuestion.type);
-    }
-    if (currentQuestion.type === 'mapPointGuess' && currentQuestion.worstAnswerDifference !== undefined) {
-      const answerQuality = 1 - (request.payload.answerValue.distance / currentQuestion.worstAnswerDifference);
-      score.questions[request.params.index].achievedScore = getAchievedScore(answerQuality, currentQuestion.type);
-    }
-    return score;
+  handler: async function(request, h){
+    const questions = request.payload.item.elements.filter(element => {
+      return questionTypes.include(element.type);
+    });
+
+    questions.forEach((question, index) => {
+      question.answerValue = answerValues[index];
+    })
+
+    return scoreHelpers.calculateScore(questions);
   }
 }

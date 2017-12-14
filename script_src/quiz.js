@@ -32,7 +32,6 @@ export function display(data, quizRootElement) {
   let answerButtons = quizRootElement.querySelectorAll('.q-quiz-answer-button');
   answerButtons.forEach(answerButton => {
     answerButton.addEventListener('click', event => {
-      console.log(event)
       questionHandler.handleAnswer(event);
     })
   });

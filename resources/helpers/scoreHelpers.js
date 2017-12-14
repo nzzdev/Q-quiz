@@ -1,5 +1,5 @@
 const turf = require('@turf/turf');
-const scoreConstants = require('./scoreConstants.js');
+const constants = require('./constants.js');
 
 function calculateWorstAnswerDifference(question) {
   if (question.type === 'numberGuess') {
@@ -30,23 +30,6 @@ function calculateWorstAnswerDifference(question) {
   return undefined;
 }
 
-function initializeScoreInfo(questions) {
-  const score = {
-    maxScore: 0,
-    questions: [] 
-  };
-  for (const question of questions) {
-    score.questions.push({
-      type: question.type,
-      correctAnswer: question.answer,
-      worstAnswerDifference: calculateWorstAnswerDifference(question),
-      achievedScore: 0
-    })
-    score.maxScore += scoreConstants.multiplicator[question.type]
-  }
-  return score;
-}
-
 function calculateAchievedScore(answerQuality, questionType) {
   const turningPoint = 0.6; // x=y
   // slope was pre-calculated with a defined point of worst estimation quality of (0.08, 0)
@@ -60,7 +43,7 @@ function calculateAchievedScore(answerQuality, questionType) {
   const lowerBoundX = (0 - lowerConstant) / lowerSlope; // 0 = ax + b, for a = lowerSlope, b = lowerConstant and y = 0 -> no negative values
   const upperBoundX = (1 - upperConstant) / upperSlope; // 0 = ax + b, for a = upperSlope, b = upperConstant and y = 1 -> no values over 1
 
-  const multiplicator = scoreConstants.multiplicator[questionType];
+  const multiplicator = constants.multiplicator[questionType];
 
   if (answerQuality < lowerBoundX) {
     return 0;
@@ -73,7 +56,55 @@ function calculateAchievedScore(answerQuality, questionType) {
   }
 }
 
+function getAnswerQuality(question) {
+  let worstAnswerDifference = calculateWorstAnswerDifference(question);
+  if (question.type === 'multipleChoise' && question.answerValue === question.answer) {
+    return 1;
+  }
+  if (question.type === 'numberGuess' && worstAnswerDifference !== undefined) {
+    return 1 - (Math.abs(question.answerValue - question.answer) / question.worstAnswerDifference);
+  }
+  if (question.type === 'mapPointGuess' && worstAnswerDifference !== undefined) {
+    return 1 - (question.answerValue.distance / question.worstAnswerDifference);
+  }
+  return 0;
+}
+
+function getFinalScoreTitle(scorePercentage) {
+  if (scorePercentage < 0.2) {
+    return '😱';
+  } else if (scorePercentage < 0.5) {
+    return '😕';
+  } else if (scorePercentage < 0.8) {
+    return '🙂';
+  } else if (scorePercentage < 1.0) {
+    return '👏👏👏';
+  } else {
+    return '👏👏👏👏👏';
+  }
+}
+
+function calculateScore(questions) {
+  let score = {
+    maxScore: 0,
+    achievedScore: 0
+  }
+
+  questions.forEach(question => {
+    score.maxScore += constants.multiplicator[question.type];
+    score.achievedScore += calculateAchievedScore(getAnswerQuality(question), question.type)
+  })
+
+  score.achievedScore = Math.round(score.achievedScore);
+  if (score.achievedScore > score.maxScore) {
+    score.achievedScore = score.maxScore;
+  }
+  
+  let scorePercentage = score.achievedScore / score.maxScore;
+  score.lastCardTitle = getScoreTitle(scorePercentage);
+  return score;
+}
+
 module.exports = {
-  initializeScoreInfo: initializeScoreInfo,
-  getAchievedScore: calculateAchievedScore
+  calculateScore: calculateScore
 };

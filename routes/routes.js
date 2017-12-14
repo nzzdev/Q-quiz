@@ -3,7 +3,8 @@ module.exports = [
   require('./stylesheet.js'),
   require('./schema.js'),
   require('./locales.js'),
-  require('./health.js')
+  require('./health.js'),
+  require('./fixtures/data.js')
 ]
 .concat(
   require('./scripts.js'), 
