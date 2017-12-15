@@ -34,6 +34,7 @@
     "@turf/turf": "^5.1.6",
     "autoprefixer": "^7.2.2",
     "catbox-memory": "^3.1.1",
+    "child-process": "^1.0.2",
     "code": "^5.1.2",
     "cssnano": "^3.10.0",
     "d3-array": "^1.2.1",
@@ -50,6 +51,7 @@
     "node-sass": "^4.7.2",
     "postcss-import": "^11.0.0",
     "pouchdb": "^6.3.4",
+    "pouchdb-server": "^2.3.7",
     "sparseheatmap": "^1.1.1",
     "svelte": "1.22.3",
     "yaral": "^2.0.1"
