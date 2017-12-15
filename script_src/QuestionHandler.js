@@ -15,7 +15,7 @@ export default class QuestionHandler {
   constructor(quizRootElement, data) {
     this.quizRootElement = quizRootElement;
     this.data = data;
-    this.answerValues = [];
+    this.userAnswers = [];
     this.isSingleQuestionQuiz = data.numberElements === 1;
     if (!this.isSingleQuestionQuiz) {
       this.multiQuizPositionHandler = new MultiQuizPositionHandler(quizRootElement, data);
@@ -68,7 +68,10 @@ export default class QuestionHandler {
     });
     this.quizRootElement.dispatchEvent(answerEvent);
     this.questionRenderer.renderResult(answerValue);
-    this.answerValues.push(answerValue);
+    this.userAnswers.push({
+      questionId: this.data.questionElementData[this.questionPosition].id,
+      value: answerValue
+    });
 
     this.storeAnswer(answerValue)
       .then(responseStoreAnswer => {
@@ -145,7 +148,7 @@ export default class QuestionHandler {
       fetch(`${this.data.toolBaseUrl}/score?appendItemToPayload=${this.data.itemId}`, {
         method: 'POST',
         body: JSON.stringify({
-          answerValues: this.answerValues,
+          userAnswers: this.userAnswers,
         })
       })
       .then(response => {

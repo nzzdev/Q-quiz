@@ -58,19 +58,19 @@ function calculateAchievedScore(answerQuality, questionType) {
 
 function getAnswerQuality(question) {
   let worstAnswerDifference = calculateWorstAnswerDifference(question);
-  if (question.type === 'multipleChoise' && question.answerValue === question.answer) {
+  if (question.type === 'multipleChoice' && question.userAnswer === question.answer) {
     return 1;
   }
   if (question.type === 'numberGuess' && worstAnswerDifference !== undefined) {
-    return 1 - (Math.abs(question.answerValue - question.answer) / question.worstAnswerDifference);
+    return 1 - (Math.abs(question.userAnswer - question.answer) / worstAnswerDifference);
   }
   if (question.type === 'mapPointGuess' && worstAnswerDifference !== undefined) {
-    return 1 - (question.answerValue.distance / question.worstAnswerDifference);
+    return 1 - (question.userAnswer.distance / worstAnswerDifference);
   }
   return 0;
 }
 
-function getFinalScoreTitle(scorePercentage) {
+function getScoreTitle(scorePercentage) {
   if (scorePercentage < 0.2) {
     return '😱';
   } else if (scorePercentage < 0.5) {
@@ -92,14 +92,16 @@ function calculateScore(questions) {
 
   questions.forEach(question => {
     score.maxScore += constants.multiplicator[question.type];
-    score.achievedScore += calculateAchievedScore(getAnswerQuality(question), question.type)
+    if (question.userAnswer !== undefined) {
+      score.achievedScore += calculateAchievedScore(getAnswerQuality(question), question.type)
+    }
   })
 
   score.achievedScore = Math.round(score.achievedScore);
   if (score.achievedScore > score.maxScore) {
     score.achievedScore = score.maxScore;
   }
-  
+
   let scorePercentage = score.achievedScore / score.maxScore;
   score.lastCardTitle = getScoreTitle(scorePercentage);
   return score;

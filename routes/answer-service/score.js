@@ -19,7 +19,10 @@ module.exports = {
     validate: {
       payload: {
         item: schema,
-        answerValues: Joi.array().required()
+        userAnswers: Joi.array().items(Joi.object({
+          questionId: Joi.string().required(),
+          value: Joi.required()
+        }))
       },
       options: {
         allowUnknown: true
@@ -29,11 +32,15 @@ module.exports = {
   },
   handler: async function(request, h){
     const questions = request.payload.item.elements.filter(element => {
-      return questionTypes.include(element.type);
+      return questionTypes.includes(element.type);
     });
 
-    questions.forEach((question, index) => {
-      question.answerValue = answerValues[index];
+    const userAnswers = request.payload.userAnswers;
+    questions.forEach(question => {
+      const relevantAnswers = userAnswers.filter(userAnswer => userAnswer.questionId === question.id);
+      if (relevantAnswers.length > 0) {
+        question.userAnswer = relevantAnswers[0].value;
+      }
     })
 
     return scoreHelpers.calculateScore(questions);

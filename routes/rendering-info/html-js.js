@@ -66,7 +66,6 @@ module.exports = {
     cors: true
   },
   handler: function(request, h) {
-
     // item.elements will be split into cover, last card and questions during transformation step
     // after that we don't need item.elements anymore
     let item = transform(request.payload.item);
