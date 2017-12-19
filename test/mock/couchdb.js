@@ -1,25 +1,61 @@
 const wreck = require('wreck');
 
-/* const items = require('./items.js'); */
+const views = require('./views.js');
+const answers = require('./answers.js');
+const fixtureData = [
+  require('../../resources/fixtures/data/quiz1.json'),
+  require('../../resources/fixtures/data/quiz2.json')
+];
 
 module.exports = {
   setupCouch: async function() {
     try {
       await wreck.put('http://localhost:5984/answer-store');
     } catch (err) {
-      console.log('failed to create database', err);
+      console.log('failed to create database answer-store', err);
       process.exit(1);
     }
-    /* try {
-      for (let item of items) {
-        const createItemResponse = await wreck.post('http://localhost:5984/q-items', {
-          payload: item
+    try {
+      for (const view of views) {
+        const viewsResponse = await wreck.post('http://localhost:5984/answer-store', {
+          payload: view
+        });
+        console.log(`all ${views.length} views successfully saved`);
+      }
+    } catch (err) {
+      console.log('failed to add views to answer-store', err);
+      process.exit(1);
+    }
+    try {
+      for (const answer of answers) {
+        const createAnswerResponse = await wreck.post('http://localhost:5984/answer-store', {
+          payload: answer
         });
       }
-      return;
+      console.log(`all ${answers.length} answers successfully saved`);
     } catch (err) {
-      console.log('failed to add documents to database', err);
+      console.log('failed to add documents to answer-store', err);
       process.exit(1);
-    } */
+    }
+    try {
+      await wreck.put('http://localhost:5984/q-items');
+      console.log('q items created');
+    } catch (err) {
+      console.log('failed to create database q-items', err);
+      process.exit(1);
+    }
+    try {
+      for (const quiz of fixtureData) {
+        console.log(fixtureData[0]);
+        const createQuizResponse = await wreck.post('http://localhost:5984/q-items', {
+          payload: quiz
+        })
+      }
+      console.log(`all ${fixtureData.length} quizzes successfully saved`);
+      return;      
+    } catch (err) {
+      console.log('failed to add fixture quizzes to q-items', err);
+      process.exit(1);
+    }
   }
 }

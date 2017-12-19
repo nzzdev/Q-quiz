@@ -27,61 +27,65 @@ module.exports = [
       cors: true
     },
     handler: async function(request, h) {
-      let options = {};
+      try {
+        let options = {};
 
-      let validQueryOptions = Object.keys(request.query).filter(function(optionName) {
-        return validCouchDBViewOptions.indexOf(optionName) >= 0;
-      })
+        let validQueryOptions = Object.keys(request.query).filter(function(optionName) {
+          return validCouchDBViewOptions.indexOf(optionName) >= 0;
+        })
 
-      validQueryOptions.forEach(function(optionName) {
-        options[optionName] = request.query[optionName];
-      });
+        validQueryOptions.forEach(function(optionName) {
+          options[optionName] = request.query[optionName];
+        });
 
-      let dataPromises = [
-        await getAnswers(request.params.type, request.params.questionId, options),
-        await getItem(request.params.itemId),
-      ]
+        let dataPromises = [
+          await getAnswers(request.params.type, request.params.questionId, options),
+          await getItem(request.params.itemId),
+        ]
 
-      if (request.params.answerId !== undefined) {
-        dataPromises.push(await getAnswer(request.params.answerId))
+        if (request.params.answerId !== undefined) {
+          dataPromises.push(await getAnswer(request.params.answerId))
+        }
+
+        return await Promise.all(dataPromises)
+          .then(data => {
+            let answers = data[0];
+            let item = data[1];
+            let userAnswer;
+            if (data[2]) {
+              userAnswer = data[2];
+            }
+
+            let answersStats = [];
+            if (answers.rows && answers.rows.length > 0) {
+              answersStats = answers.rows
+                .map(row => {
+                  return {
+                    value: row.key[1],
+                    count: row.value
+                  }
+                })
+            }
+
+            let question = item.elements
+              .filter(quizElement => {
+                return quizElement.id === request.params.questionId
+              })[0]
+
+            let statsCalculator = new statsCalculators[request.params.type](answersStats, question.answer, userAnswer);
+
+            let stats = statsCalculator.getStats();
+
+            return stats;
+          })
+          .catch(couchError => {
+            console.log('error', couchError)
+            return Boom.badRequest(couchError.message);
+          })
+      } catch(e) {
+        console.log('error in stats route: ' + e);
+        return Boom.badRequest(e);
       }
-
-      return await Promise.all(dataPromises)
-        .then(data => {
-          let answers = data[0];
-          let item = data[1];
-          let userAnswer;
-          if (data[2]) {
-            userAnswer = data[2];
-          }
-
-          let answersStats = [];
-          if (answers.rows && answers.rows.length > 0) {
-            answersStats = answers.rows
-              .map(row => {
-                return {
-                  value: row.key[1],
-                  count: row.value
-                }
-              })
-          }
-
-          let question = item.elements
-            .filter(quizElement => {
-              return quizElement.id === request.params.questionId
-            })[0]
-
-          let statsCalculator = new statsCalculators[request.params.type](answersStats, question.answer, userAnswer);
-
-          let stats = statsCalculator.getStats();
-
-          return stats;
-        })
-        .catch(couchError => {
-          console.log('error', couchError)
-          return Boom.badRequest(couchError.message);
-        })
-
     }
   }
 ]

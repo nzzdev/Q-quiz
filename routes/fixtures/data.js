@@ -3,6 +3,7 @@ const fixtureDataDirectory = '../../resources/fixtures/data';
 // provide every fixture data file present in ../../resources/fixtures/data
 const fixtureData = [
   require(`${fixtureDataDirectory}/quiz1.json`),
+  require(`${fixtureDataDirectory}/quiz2.json`)
 ];
 
 module.exports = {

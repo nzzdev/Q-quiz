@@ -11,7 +11,7 @@ const schemaString = JSON.parse(fs.readFileSync(resourcesDir + 'schema.json', {
   encoding: 'utf-8'
 }));
 
-const schema = Enjoi(schemaString);
+const schema = Enjoi(schemaString).required();
 
 const scriptHashMap = require(`${scriptsDir}/hashMap.json`);
 const styleHashMap = require(`${stylesDir}/hashMap.json`);
@@ -59,7 +59,9 @@ module.exports = {
       },
       payload: {
         item: schema,
-        toolRuntimeConfig: Joi.object()
+        toolRuntimeConfig: Joi.object({
+          toolBaseUrl: Joi.string().required()
+        }).required()
       }
     },
     cache: false,
