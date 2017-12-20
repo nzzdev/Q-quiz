@@ -3,8 +3,8 @@ const wreck = require('wreck');
 const views = require('./views.js');
 const answers = require('./answers.js');
 const fixtureData = [
-  require('../../resources/fixtures/data/quiz1.json'),
-  require('../../resources/fixtures/data/quiz2.json')
+  require('../../resources/fixtures/data/all.json'),
+  require('../../resources/fixtures/data/cover-all-question-types-no-last-card.json')
 ];
 
 module.exports = {

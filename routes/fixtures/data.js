@@ -2,8 +2,8 @@ const fixtureDataDirectory = '../../resources/fixtures/data';
 
 // provide every fixture data file present in ../../resources/fixtures/data
 const fixtureData = [
-  require(`${fixtureDataDirectory}/quiz1.json`),
-  require(`${fixtureDataDirectory}/quiz2.json`)
+  require(`${fixtureDataDirectory}/all.json`),
+  require(`${fixtureDataDirectory}/cover-all-question-types-no-last-card.json`)
 ];
 
 module.exports = {

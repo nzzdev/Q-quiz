@@ -1033,3 +1033,100 @@
 [Wed, 20 Dec 2017 14:30:53 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /answer-store/_design/stats/_view/answers-multipleChoice?group=true&start_key=%5B%22quiz-0-1503673205043-233776299%22%5D&end_key=%5B%22quiz-0-1503673205043-233776299%22%2C%7B%7D%5D 200
 [Wed, 20 Dec 2017 14:30:53 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /q-items/ 200
 [Wed, 20 Dec 2017 14:30:53 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /q-items/quiz-0? 200
+[Wed, 20 Dec 2017 15:59:54 GMT] [info] [<0.000.0>] pouchdb-server has started on http://127.0.0.1:5984/
+[Wed, 20 Dec 2017 15:59:54 GMT] [info] [<0.000.0>] database is in-memory; no changes will be saved.
+[Wed, 20 Dec 2017 15:59:54 GMT] [info] [<0.000.0>] navigate to http://127.0.0.1:5984/_utils for the Fauxton UI.
+[Wed, 20 Dec 2017 15:59:55 GMT] [info] [<0.000.0>] 127.0.0.1 - - PUT /answer-store 201
+[Wed, 20 Dec 2017 15:59:55 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 15:59:55 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 15:59:55 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 15:59:55 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 15:59:55 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 15:59:55 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 15:59:55 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 15:59:55 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 15:59:55 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 15:59:55 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 15:59:55 GMT] [info] [<0.000.0>] 127.0.0.1 - - PUT /q-items 201
+[Wed, 20 Dec 2017 15:59:55 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /q-items 201
+[Wed, 20 Dec 2017 15:59:55 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /q-items 201
+[Wed, 20 Dec 2017 15:59:55 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /answer-store/ 200
+[Wed, 20 Dec 2017 15:59:55 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store/_bulk_docs 201
+[Wed, 20 Dec 2017 15:59:55 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /answer-store/_design/stats/_view/answers-multipleChoice?group=true&start_key=%5B%22quiz-0-1503673205043-233776299%22%5D&end_key=%5B%22quiz-0-1503673205043-233776299%22%2C%7B%7D%5D 200
+[Wed, 20 Dec 2017 15:59:55 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /q-items/ 200
+[Wed, 20 Dec 2017 15:59:55 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /q-items/quiz-0? 200
+[Wed, 20 Dec 2017 16:00:32 GMT] [info] [<0.000.0>] pouchdb-server has started on http://127.0.0.1:5984/
+[Wed, 20 Dec 2017 16:00:32 GMT] [info] [<0.000.0>] database is in-memory; no changes will be saved.
+[Wed, 20 Dec 2017 16:00:32 GMT] [info] [<0.000.0>] navigate to http://127.0.0.1:5984/_utils for the Fauxton UI.
+[Wed, 20 Dec 2017 16:00:32 GMT] [info] [<0.000.0>] 127.0.0.1 - - PUT /answer-store 201
+[Wed, 20 Dec 2017 16:00:32 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 16:00:32 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 16:00:32 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 16:00:32 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 16:00:32 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 16:00:32 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 16:00:32 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 16:00:32 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 16:00:32 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 16:00:32 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 16:00:32 GMT] [info] [<0.000.0>] 127.0.0.1 - - PUT /q-items 201
+[Wed, 20 Dec 2017 16:00:32 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /q-items 201
+[Wed, 20 Dec 2017 16:00:32 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /q-items 201
+[Wed, 20 Dec 2017 16:00:32 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /answer-store/ 200
+[Wed, 20 Dec 2017 16:00:32 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store/_bulk_docs 201
+[Wed, 20 Dec 2017 16:00:32 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /answer-store/_design/stats/_view/answers-multipleChoice?group=true&start_key=%5B%22quiz-0-1503673205043-233776299%22%5D&end_key=%5B%22quiz-0-1503673205043-233776299%22%2C%7B%7D%5D 200
+[Wed, 20 Dec 2017 16:00:32 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /q-items/ 200
+[Wed, 20 Dec 2017 16:00:32 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /q-items/quiz-0? 200
+[Wed, 20 Dec 2017 16:00:32 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /q-items/ 200
+[Wed, 20 Dec 2017 16:00:32 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /answer-store/_design/stats/_view/answers-numberGuess?group=true&start_key=%5B%22quiz-0-1503673205043-233776299%22%5D&end_key=%5B%22quiz-0-1503673205043-233776299%22%2C%7B%7D%5D 200
+[Wed, 20 Dec 2017 16:00:32 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /q-items/quiz-0? 200
+[Wed, 20 Dec 2017 16:00:50 GMT] [info] [<0.000.0>] pouchdb-server has started on http://127.0.0.1:5984/
+[Wed, 20 Dec 2017 16:00:50 GMT] [info] [<0.000.0>] database is in-memory; no changes will be saved.
+[Wed, 20 Dec 2017 16:00:50 GMT] [info] [<0.000.0>] navigate to http://127.0.0.1:5984/_utils for the Fauxton UI.
+[Wed, 20 Dec 2017 16:00:51 GMT] [info] [<0.000.0>] 127.0.0.1 - - PUT /answer-store 201
+[Wed, 20 Dec 2017 16:00:51 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 16:00:51 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 16:00:51 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 16:00:51 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 16:00:51 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 16:00:51 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 16:00:51 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 16:00:51 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 16:00:51 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 16:00:51 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 16:00:51 GMT] [info] [<0.000.0>] 127.0.0.1 - - PUT /q-items 201
+[Wed, 20 Dec 2017 16:00:51 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /q-items 201
+[Wed, 20 Dec 2017 16:00:51 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /q-items 201
+[Wed, 20 Dec 2017 16:00:51 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /answer-store/ 200
+[Wed, 20 Dec 2017 16:00:51 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store/_bulk_docs 201
+[Wed, 20 Dec 2017 16:00:51 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /answer-store/_design/stats/_view/answers-multipleChoice?group=true&start_key=%5B%22quiz-0-1503673205043-233776299%22%5D&end_key=%5B%22quiz-0-1503673205043-233776299%22%2C%7B%7D%5D 200
+[Wed, 20 Dec 2017 16:00:51 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /q-items/ 200
+[Wed, 20 Dec 2017 16:00:51 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /q-items/quiz-0? 200
+[Wed, 20 Dec 2017 16:00:51 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /q-items/ 200
+[Wed, 20 Dec 2017 16:00:51 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /q-items/quiz-0? 200
+[Wed, 20 Dec 2017 16:00:51 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /answer-store/_design/stats/_view/answers-numberGuess?group=true&start_key=%5B%22quiz-0-1503673205043-233776299%22%5D&end_key=%5B%22quiz-0-1503673205043-233776299%22%2C%7B%7D%5D 200
+[Wed, 20 Dec 2017 16:04:47 GMT] [info] [<0.000.0>] pouchdb-server has started on http://127.0.0.1:5984/
+[Wed, 20 Dec 2017 16:04:47 GMT] [info] [<0.000.0>] database is in-memory; no changes will be saved.
+[Wed, 20 Dec 2017 16:04:47 GMT] [info] [<0.000.0>] navigate to http://127.0.0.1:5984/_utils for the Fauxton UI.
+[Wed, 20 Dec 2017 16:04:48 GMT] [info] [<0.000.0>] 127.0.0.1 - - PUT /answer-store 201
+[Wed, 20 Dec 2017 16:04:48 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 16:04:48 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 16:04:48 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 16:04:48 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 16:04:48 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 16:04:48 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 16:04:48 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 16:04:48 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 16:04:48 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 16:04:48 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store 201
+[Wed, 20 Dec 2017 16:04:48 GMT] [info] [<0.000.0>] 127.0.0.1 - - PUT /q-items 201
+[Wed, 20 Dec 2017 16:04:48 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /q-items 201
+[Wed, 20 Dec 2017 16:04:48 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /q-items 201
+[Wed, 20 Dec 2017 16:04:48 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /answer-store/ 200
+[Wed, 20 Dec 2017 16:04:48 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /answer-store/_bulk_docs 201
+[Wed, 20 Dec 2017 16:04:48 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /answer-store/_design/stats/_view/answers-multipleChoice?group=true&start_key=%5B%22quiz-0-1503673205043-233776299%22%5D&end_key=%5B%22quiz-0-1503673205043-233776299%22%2C%7B%7D%5D 200
+[Wed, 20 Dec 2017 16:04:48 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /q-items/ 200
+[Wed, 20 Dec 2017 16:04:48 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /q-items/quiz-0? 200
+[Wed, 20 Dec 2017 16:04:48 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /q-items/ 200
+[Wed, 20 Dec 2017 16:04:48 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /q-items/quiz-0? 200
+[Wed, 20 Dec 2017 16:04:48 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /answer-store/_design/stats/_view/answers-numberGuess?group=true&start_key=%5B%22quiz-0-1503673205043-233776299%22%5D&end_key=%5B%22quiz-0-1503673205043-233776299%22%2C%7B%7D%5D 200
