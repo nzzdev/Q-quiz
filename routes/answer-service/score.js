@@ -1,6 +1,7 @@
 const fs = require('fs');
 const Enjoi = require('enjoi');
 const Joi = require('joi');
+const Boom = require('boom');
 const resourcesDir = __dirname + '/../../resources/';
 const scoreHelpers = require(`${resourcesDir}helpers/scoreHelpers.js`);
 const questionTypes = require(`${resourcesDir}helpers/constants.js`).questionTypes;
@@ -10,7 +11,7 @@ const schemaString = JSON.parse(fs.readFileSync(`${resourcesDir}schema.json`, {
   encoding: 'utf-8'
 }));
 
-const schema = Enjoi(schemaString);
+const schema = Enjoi(schemaString).required();
 
 module.exports = {
   method: 'POST',
@@ -31,6 +32,7 @@ module.exports = {
     cors: true
   },
   handler: async function(request, h){
+    try {
     const questions = request.payload.item.elements.filter(element => {
       return questionTypes.includes(element.type);
     });
@@ -44,5 +46,8 @@ module.exports = {
     })
 
     return scoreHelpers.calculateScore(questions);
+    } catch (e) {
+      return Boom.internal(e);
+    }
   }
 }

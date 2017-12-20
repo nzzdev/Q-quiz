@@ -108,5 +108,6 @@ function calculateScore(questions) {
 }
 
 module.exports = {
-  calculateScore: calculateScore
+  calculateScore: calculateScore,
+  worstAnswerDifference: calculateWorstAnswerDifference
 };
