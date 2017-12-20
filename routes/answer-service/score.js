@@ -23,7 +23,7 @@ module.exports = {
         userAnswers: Joi.array().items(Joi.object({
           questionId: Joi.string().required(),
           value: Joi.required()
-        }))
+        }).required()).required()
       },
       options: {
         allowUnknown: true
