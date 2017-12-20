@@ -46,7 +46,6 @@ module.exports = {
     }
     try {
       for (const quiz of fixtureData) {
-        console.log(fixtureData[0]);
         const createQuizResponse = await wreck.post('http://localhost:5984/q-items', {
           payload: quiz
         })

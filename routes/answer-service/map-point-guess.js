@@ -82,6 +82,7 @@ module.exports = [
         }));
         return h.response(heatmapStream).type('image/png');
       } catch (e) {
+        console.log(e)
         return Boom.badRequest(e)
       }
     }

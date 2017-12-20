@@ -16,5 +16,14 @@ module.exports = [
       }
     },
     "language": "javascript"
+  },
+  {
+    "_id": "_design/mapPointGuess",
+    "views": {
+      "points": {
+        "map": "function (doc) {\n  if (doc.data && doc.data.type === 'mapPointGuess' && typeof doc.data.value.latLng !== 'undefined') {\n    var questionId;\n    if (doc.data.questionId) {\n      questionId = doc.data.questionId;\n    } else if (doc.data.itemId) {\n      questionId = doc.data.itemId;\n    }\n    if (questionId) {\n      emit(questionId, doc.data.value.latLng);\n    }\n  }\n}"
+      }
+    },
+    "language": "javascript"
   }
 ]

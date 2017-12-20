@@ -439,5 +439,42 @@ lab.experiment('score route', () => {
   });
 });
 
+lab.experiment('number guess plot route', () => {
+  it('returns number guess plot', async () => {
+    const fixtureResponse = await server.inject('/fixtures/data');
+    const quiz = fixtureResponse.result[0];
+    const response = await server.inject(`/number-guess/${quiz._id}/${quiz.elements[2].id}/plot/${560}`);
+    expect(response.statusCode).to.be.equal(200);
+    expect(response.result).startsWith('<svg');
+  })
+
+  it('returns 400 for requesting number guess plot with multiple choice question', async () => {
+    const fixtureResponse = await server.inject('/fixtures/data');
+    const quiz = fixtureResponse.result[0];
+    const response = await server.inject(`/number-guess/${quiz._id}/${quiz.elements[1].id}/plot/${560}`);
+    expect(response.statusCode).to.be.equal(400);
+    expect(response.result.message).to.be.equal('stats is undefined');
+  })
+})
+
+lab.experiment('map point guess plot route', () => {
+  it('returns heatmap for map point guess', async () => {
+    const fixtureResponse = await server.inject('/fixtures/data');
+    const quiz = fixtureResponse.result[0];
+    const mapPointQuestion = quiz.elements[4];
+    const bboxString = `${mapPointQuestion.answer.bbox[0]}, ${mapPointQuestion.answer.bbox[1]}, ${mapPointQuestion.answer.bbox[3]}, ${mapPointQuestion.answer.bbox[4]}`
+    const response = await server.inject(`/map/${mapPointQuestion.id}/heatmap/${560}/${500}/${bboxString}`);
+    expect(response.statusCode).to.be.equal(200);
+    expect(response.headers['content-type']).to.be.equal('image/png');
+  })
+
+  it('returns 400 for requesting number guess plot with multiple choice question', async () => {
+    const fixtureResponse = await server.inject('/fixtures/data');
+    const quiz = fixtureResponse.result[0];
+    const response = await server.inject(`/map/${quiz.elements[1].id}/heatmap/${560}/${500}/1, 2, 3, 4`);
+    expect(response.statusCode).to.be.equal(400);
+    expect(response.result.message).to.be.equal('invalid answer');
+  })
+})
+
 // check further very specific points in code (see coverage result) if they should/can be tested, maybe also with unit tests
-// check number guess plot and map guess heatmap
