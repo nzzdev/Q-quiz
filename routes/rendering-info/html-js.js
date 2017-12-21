@@ -73,9 +73,9 @@ module.exports = {
     let item = transform(request.payload.item);
     delete item.elements;
 
-    // get id of quiz item
-    let id = item._id;
-    if (!id && item.elements && item.elements.length > 0) {
+    // get id of quiz item out of query string
+    let id = request.query._id;
+    if (id === undefined && item.elements && item.elements.length > 0) {
       id = item.elements[0].id.split('-')[0] || (Math.random() * 10000).toFixed();
     }
     item._id = id;

@@ -1,7 +1,13 @@
 const Hapi = require('hapi');
 const Boom = require('boom');
 const Joi = require('joi');
-const PouchDB = require('pouchdb');
+
+// provide every fixture data file present in ../../resources/fixtures/data
+const fixtureDataDirectory = '../../resources/fixtures/data';
+const fixtureData = [
+  require(`${fixtureDataDirectory}/all.json`),
+  require(`${fixtureDataDirectory}/cover-all-question-types-no-last-card.json`)
+];
 
 const server = Hapi.server({
   port: 9999,
@@ -21,9 +27,8 @@ server.route({
     }
   },
   handler: async function(request, h) {
-    const db = new PouchDB('http://localhost:5984/q-items');
     try {
-      return await db.get(request.params.id);
+      return fixtureData[request.params.id];
     } catch (e) {
       return Boom.internal(e);
     }

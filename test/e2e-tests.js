@@ -128,7 +128,7 @@ lab.experiment('rendering info route', async () => {
       }
     })
     expect(response.statusCode).to.be.equal(200);
-    expect(response.result.markup).startsWith(`<div class="q-quiz s-color-gray-4" id="q-quiz-${fixtureData[0]._id}" style="opacity: 0;" data-track-id="quiz" data-track-component-id="${fixtureData[0]._id}">`);
+    expect(response.result.markup).startsWith(`<div class="q-quiz s-color-gray-4" id="q-quiz-`);
     expect(response.result.stylesheets[0].name).startsWith('default.');
     expect(response.result.scripts.length).to.be.equal(2);
   });
@@ -196,10 +196,11 @@ lab.experiment('answer store route', () => {
     // only quick test at the moment with fixed value, should be random values in possible domain (min, max, max distance..) and should be done several times, maybe also use for testing stats route
     const fixtureResponse = await server.inject('/fixtures/data');
     const fixtureData = fixtureResponse.result;
+    const fixtureIndex = 0;
     const data = {
-      itemId: fixtureData[0]._id,
-      questionId: fixtureData[0].elements[2].id,
-      type: fixtureData[0].elements[2].type,
+      itemId: fixtureIndex,
+      questionId: fixtureData[fixtureIndex].elements[2].id,
+      type: fixtureData[fixtureIndex].elements[2].type,
       value: 7
     }
     const answerStoreResponse = await server.inject({
@@ -227,8 +228,9 @@ lab.experiment('answer stats route', () => {
   it('returns stats for a multiple choice question of first fixture quiz', {plan: 3}, async () => {
     const fixtureResponse = await server.inject('/fixtures/data');
     const fixtureData = fixtureResponse.result;
-    const mcQuestion = fixtureData[0].elements[1];
-    const statsReponse = await server.inject(`/stats/answers/${mcQuestion.type}/${fixtureData[0]._id}/${mcQuestion.id}`);
+    const fixtureIndex = 0;
+    const mcQuestion = fixtureData[fixtureIndex].elements[1];
+    const statsReponse = await server.inject(`/stats/answers/${mcQuestion.type}/${fixtureIndex}/${mcQuestion.id}`);
     expect(statsReponse.statusCode).to.be.equal(200);
     expect(statsReponse.result.totalAnswers).to.be.equal(5);
     expect(statsReponse.result.numberOfAnswersPerChoice['richtig']).to.be.equal(3);
@@ -237,8 +239,9 @@ lab.experiment('answer stats route', () => {
   it('returns 400 if question type is not valid', async () => {
     const fixtureResponse = await server.inject('/fixtures/data');
     const fixtureData = fixtureResponse.result;
-    const mcQuestion = fixtureData[0].elements[1];
-    const response = await server.inject(`/stats/answers/singleChoice/${fixtureData[0]._id}/${mcQuestion.id}`);
+    const fixtureIndex = 0;
+    const mcQuestion = fixtureData[fixtureIndex].elements[1];
+    const response = await server.inject(`/stats/answers/singleChoice/${fixtureIndex}/${mcQuestion.id}`);
     expect(response.statusCode).to.be.equal(400);
   });
 });
@@ -446,16 +449,18 @@ lab.experiment('score route', () => {
 lab.experiment('number guess plot route', () => {
   it('returns number guess plot', {plan: 2}, async () => {
     const fixtureResponse = await server.inject('/fixtures/data');
-    const quiz = fixtureResponse.result[0];
-    const response = await server.inject(`/number-guess/${quiz._id}/${quiz.elements[2].id}/plot/${560}`);
+    const fixtureIndex = 0;
+    const quiz = fixtureResponse.result[fixtureIndex];
+    const response = await server.inject(`/number-guess/${fixtureIndex}/${quiz.elements[2].id}/plot/${560}`);
     expect(response.statusCode).to.be.equal(200);
     expect(response.result).startsWith('<svg');
   })
 
   it('returns 400 for requesting number guess plot with multiple choice question', {plan: 2}, async () => {
     const fixtureResponse = await server.inject('/fixtures/data');
-    const quiz = fixtureResponse.result[0];
-    const response = await server.inject(`/number-guess/${quiz._id}/${quiz.elements[1].id}/plot/${560}`);
+    const fixtureIndex = 0;
+    const quiz = fixtureResponse.result[fixtureIndex];
+    const response = await server.inject(`/number-guess/${fixtureIndex}/${quiz.elements[1].id}/plot/${560}`);
     expect(response.statusCode).to.be.equal(400);
     expect(response.result.message).to.be.equal('stats is undefined');
   })
