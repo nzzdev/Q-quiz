@@ -93,9 +93,9 @@ export default class QuestionHandler {
         // nevermind errors in storing the answer, we move on without displaying stats in this case
       });
 
-    // if this was the last question, fetch score result
+    // if this was the last question, get score result promise
     if (this.questionPosition === this.data.questionElementData.length - 1 && this.data.hasLastCard) {
-      this.scorePromise = this.getScore();
+      this.getScore();
     }
     this.renderAdditionalInformation();
     this.displayResult();
@@ -117,17 +117,21 @@ export default class QuestionHandler {
   }
 
   getScore() {
-    return fetch(`${this.data.toolBaseUrl}/score?appendItemToPayload=${this.data.itemId}`, {
-      method: 'POST',
-      body: JSON.stringify({
-        userAnswers: this.userAnswers,
+    // either scorePromise is already set with answering the last question or it will be set whenever needed e.g. when rendering last card
+    if (this.scorePromise === undefined) {
+      this.scorePromise = fetch(`${this.data.toolBaseUrl}/score?appendItemToPayload=${this.data.itemId}`, {
+        method: 'POST',
+        body: JSON.stringify({
+          userAnswers: this.userAnswers,
+        })
       })
-    })
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-    })
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+      })
+    }
+    return this.scorePromise;
   }
 
   renderAdditionalInformation() {
@@ -162,11 +166,7 @@ export default class QuestionHandler {
       answerHelpers.renderAdditionalInformationForLastCard(this.quizElement, this.data.lastCardData.articleRecommendations);
     }
     if (this.data.isFinalScoreShown) {
-      // if the last question was not answered we have to load score promise first
-      if (this.scorePromise === undefined) {
-        this.scorePromise = this.getScore();
-      }
-      this.scorePromise
+      this.getScore()
         .then(score => {
           let lastCardTitleElement = this.quizElement.querySelector('.q-quiz-last-card-title');
           lastCardTitleElement.innerHTML = `Sie haben ${score.achievedScore} von ${score.maxScore} möglichen Punkten erzielt.`
