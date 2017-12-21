@@ -28,8 +28,9 @@ module.exports = [
       ]
     }
   }
+  // should be added again as soon as yaral and hapi 17 are compatible
   /* {
-    register: require('yaral'),
+    plugin: require('yaral'),
     options: {
       cache: 'memoryCache',
       buckets: [
