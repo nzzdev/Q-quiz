@@ -93,6 +93,10 @@ export default class QuestionHandler {
         // nevermind errors in storing the answer, we move on without displaying stats in this case
       });
 
+    // if this was the last question, fetch score result
+    if (this.questionPosition === this.data.questionElementData.length - 1 && this.data.hasLastCard) {
+      this.scorePromise = this.getScore();
+    }
     this.renderAdditionalInformation();
     this.displayResult();
   }
@@ -110,6 +114,20 @@ export default class QuestionHandler {
     } else {
       return Promise.resolve();
     }
+  }
+
+  getScore() {
+    return fetch(`${this.data.toolBaseUrl}/score?appendItemToPayload=${this.data.itemId}`, {
+      method: 'POST',
+      body: JSON.stringify({
+        userAnswers: this.userAnswers,
+      })
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+    })
   }
 
   renderAdditionalInformation() {
@@ -139,27 +157,21 @@ export default class QuestionHandler {
     return this.multiQuizPositionHandler.getQuestionNumber() === this.data.questionElementData.length && this.data.hasLastCard
   }
 
-  renderLastCard() {
+  renderLastCard() { 
     if (this.data.lastCardData && this.data.lastCardData.articleRecommendations) {
       answerHelpers.renderAdditionalInformationForLastCard(this.quizElement, this.data.lastCardData.articleRecommendations);
     }
     if (this.data.isFinalScoreShown) {
-      fetch(`${this.data.toolBaseUrl}/score?appendItemToPayload=${this.data.itemId}`, {
-        method: 'POST',
-        body: JSON.stringify({
-          userAnswers: this.userAnswers,
+      // if the last question was not answered we have to load score promise first
+      if (this.scorePromise === undefined) {
+        this.scorePromise = this.getScore();
+      }
+      this.scorePromise
+        .then(score => {
+          let lastCardTitleElement = this.quizElement.querySelector('.q-quiz-last-card-title');
+          lastCardTitleElement.innerHTML = `Sie haben ${score.achievedScore} von ${score.maxScore} möglichen Punkten erzielt.`
+          this.quizRootElement.querySelector('.q-quiz-header__title').textContent = score.lastCardTitle;
         })
-      })
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        }
-      })
-      .then(score => {
-        let lastCardTitleElement = this.quizElement.querySelector('.q-quiz-last-card-title');
-        lastCardTitleElement.innerHTML = `Sie haben ${score.achievedScore} von ${score.maxScore} möglichen Punkten erzielt.`
-        this.quizRootElement.querySelector('.q-quiz-header__title').textContent = score.lastCardTitle;
-      })
     }
   }
 }
