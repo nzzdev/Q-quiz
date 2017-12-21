@@ -33,19 +33,19 @@ module.exports = {
   },
   handler: async function(request, h){
     try {
-    const questions = request.payload.item.elements.filter(element => {
-      return questionTypes.includes(element.type);
-    });
+      const questions = request.payload.item.elements.filter(element => {
+        return questionTypes.includes(element.type);
+      });
 
-    const userAnswers = request.payload.userAnswers;
-    questions.forEach(question => {
-      const relevantAnswers = userAnswers.filter(userAnswer => userAnswer.questionId === question.id);
-      if (relevantAnswers.length > 0) {
-        question.userAnswer = relevantAnswers[0].value;
-      }
-    })
+      const userAnswers = request.payload.userAnswers;
+      questions.forEach(question => {
+        const relevantAnswers = userAnswers.filter(userAnswer => userAnswer.questionId === question.id);
+        if (relevantAnswers.length > 0) {
+          question.userAnswer = relevantAnswers[0].value;
+        }
+      })
 
-    return scoreHelpers.calculateScore(questions);
+      return scoreHelpers.calculateScore(questions);
     } catch (e) {
       return Boom.internal(e);
     }

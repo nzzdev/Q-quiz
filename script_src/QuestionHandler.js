@@ -90,7 +90,6 @@ export default class QuestionHandler {
         }
       })
       .catch(e => {
-        console.log(e)
         // nevermind errors in storing the answer, we move on without displaying stats in this case
       });
 

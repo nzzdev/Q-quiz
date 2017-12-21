@@ -19,7 +19,7 @@ const styleHashMap = require(`${stylesDir}/hashMap.json`);
 require('svelte/ssr/register');
 const staticTemplate = require(viewsDir + 'HtmlJs.html');
 
-function transformItemForClientSideScript(item, toolRuntimeConfig) {
+function getTransformedItemForClientSideScript(item, toolRuntimeConfig) {
   const questionElementData = item.questions.map(element => {
     return {
       id: element.id,
@@ -93,7 +93,7 @@ module.exports = {
       });
     `;
 
-    const scriptData = transformItemForClientSideScript(item, request.payload.toolRuntimeConfig);
+    const scriptData = getTransformedItemForClientSideScript(item, request.payload.toolRuntimeConfig);
     const loaderScript = `
       System.import('q-quiz/quiz.js')
         .then(function(module) {

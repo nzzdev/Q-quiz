@@ -39,12 +39,12 @@ module.exports = [
         });
 
         let dataPromises = [
-          await getAnswers(request.params.type, request.params.questionId, options),
-          await getItem(request.params.itemId),
+          getAnswers(request.params.type, request.params.questionId, options),
+          getItem(request.params.itemId),
         ]
 
         if (request.params.answerId !== undefined) {
-          dataPromises.push(await getAnswer(request.params.answerId))
+          dataPromises.push(getAnswer(request.params.answerId))
         }
 
         return await Promise.all(dataPromises)
