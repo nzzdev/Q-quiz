@@ -1,0 +1,98 @@
+{
+  "title": "FIXTURE: Ein Quiz mit Cover, alle Fragetypen, ohne letzte Seite",
+  "elements": [
+    {
+      "id": "86a6d3bc3be11a1cf51f7c12bd10858c-1503673199200-897399321",
+      "type": "cover"
+    },
+    {
+      "id": "86a6d3bc3be11a1cf51f7c12bd10858c-1503673205043-233776299",
+      "type": "multipleChoice",
+      "image": {},
+      "choices": [
+        "vielleicht",
+        "falsch",
+        "absolut falsch"
+      ],
+      "articleRecommendations": [],
+      "question": "Was ist die richtige Antwort?",
+      "answer": "richtig"
+    },
+    {
+      "id": "86a6d3bc3be11a1cf51f7c12bd10858c-1503673244888-827300797",
+      "type": "numberGuess",
+      "image": {},
+      "articleRecommendations": [],
+      "question": "Hausnummer der NZZ",
+      "answer": 11,
+      "min": 1,
+      "max": 20,
+      "step": 1
+    },
+    {
+      "id": "86a6d3bc3be11a1cf51f7c12bd10858c-1503673375520-572013568",
+      "type": "numberGuess",
+      "image": {},
+      "articleRecommendations": [],
+      "question": "Temperatur",
+      "answer": 25,
+      "min": 1,
+      "max": 35,
+      "step": 1
+    },
+    {
+      "id": "86a6d3bc3be11a1cf51f7c12bd10858c-1503673602641-999859280",
+      "type": "mapPointGuess",
+      "answer": {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            8.548714,
+            47.3664
+          ]
+        },
+        "properties": {
+          "pointLabel": "NZZ Red",
+          "label": "11 Falkenstrasse"
+        },
+        "bbox": [
+          8.50547790527344,
+          47.347779215247144,
+          8.591995239257814,
+          47.38498483918202
+        ]
+      },
+      "image": {},
+      "articleRecommendations": [],
+      "question": "wo ist die nzz?"
+    },
+    {
+      "id": "86a6d3bc3be11a1cf51f7c12bd10858c-1503673653497-139543834",
+      "type": "mapPointGuess",
+      "answer": {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            13.42632293701172,
+            51.456574106519724
+          ]
+        },
+        "properties": {
+          "pointLabel": "Kuhkaff",
+          "label": "Röderland"
+        },
+        "bbox": [
+          2.4169921875000004,
+          46.830133640447414,
+          24.565429687500004,
+          55.60317816902704
+        ]
+      },
+      "image": {},
+      "articleRecommendations": [],
+      "question": "wo kommt sharon her?"
+    }
+  ]
+}

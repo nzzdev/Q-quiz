@@ -14,7 +14,7 @@ module.exports = [
   {
     method: 'GET',
     path: '/stats/answers/{type}/{itemId}/{questionId}/{answerId?}',
-    config: {
+    options: {
       tags: ['api'],
       validate: {
         params: {
@@ -24,8 +24,10 @@ module.exports = [
           answerId: Joi.string().optional(),
         }
       },
-      cors: true,
-      handler: function(request, reply) {
+      cors: true
+    },
+    handler: async function(request, h) {
+      try {
         let options = {};
 
         let validQueryOptions = Object.keys(request.query).filter(function(optionName) {
@@ -45,7 +47,7 @@ module.exports = [
           dataPromises.push(getAnswer(request.params.answerId))
         }
 
-        Promise.all(dataPromises)
+        return await Promise.all(dataPromises)
           .then(data => {
             let answers = data[0];
             let item = data[1];
@@ -74,16 +76,15 @@ module.exports = [
 
             let stats = statsCalculator.getStats();
 
-            reply(stats);
+            return stats;
           })
-          .catch(function(couchError) {
+          .catch(couchError => {
             console.log('error', couchError)
-            const error = Boom.badRequest(couchError.message);
-            error.output.statusCode = couchError.status;
-            error.reformat();
-            return reply(error);
+            return Boom.badRequest(couchError.message);
           })
-
+      } catch(e) {
+        console.log('error in stats route: ' + e);
+        return Boom.badRequest(e);
       }
     }
   }

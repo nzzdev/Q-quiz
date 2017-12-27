@@ -10,7 +10,7 @@ export default class MultipleChoiceHandler {
   }
 
   getValue(event) {
-    return event.target.textContent;
+    return event.target.value;
   }
 
   renderResult(answer) {

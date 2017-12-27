@@ -47,10 +47,6 @@ export default class NumberGuessHandler {
     return parseFloat(this.inputElement.value);
   }
 
-  getWorstAnswer() {
-    return Math.max((this.correctAnswer - this.min), (this.max - this.correctAnswer));
-  }
-  
   isAnswerValid() {
     let element = this.inputElement.parentNode.nextElementSibling;
     return element.classList.contains('q-quiz-invalid-input-message') 

@@ -17,6 +17,8 @@ let d3 = {
 
 function getStripplotSvg(data, stats, plotWidth) {
   return new Promise((resolve, reject) => {
+    // in order to work with jsdom like that let jsdom version at 9.5
+    // should be rebuilt and upgraded in the future
     jsdom.env({
       html: '',
       features: { QuerySelector:true }, //you need query selector for D3 to work
@@ -226,7 +228,7 @@ module.exports = [
   {
     method: 'GET',
     path: '/number-guess/{itemId}/{questionId}/plot/{width}',
-    config: {
+    options: {
       tags: ['api'],
       validate: {
         params: {
@@ -235,81 +237,68 @@ module.exports = [
           width: Joi.number().required(),
         }
       },
-      cors: true,
-      handler: function(request, reply) {
-        var data = [];
+      cors: true
+    },
+    handler: async function(request, h) {
+      return await Promise.all([getItem(request.params.itemId), getAnswers('numberGuess', request.params.questionId)])
+        .then(data => {
+          let item = data[0];
+          let answers = data[1];
+          let stats;
 
-        Promise.all([getItem(request.params.itemId), getAnswers('numberGuess', request.params.questionId)])
-          .then(data => {
-            let item = data[0];
-            let answers = data[1];
-            let stats;
+          if (answers.rows && answers.rows.length > 0) {
+            stats = answers.rows
+              .map(row => {
+                return {
+                  value: row.key[1],
+                  count: row.value
+                }
+              })
+          }
+          let question = item.elements
+            .filter(element => {
+              return element.id === request.params.questionId
+            })[0]
 
-            if (answers.rows && answers.rows.length > 0) {
-              stats = answers.rows
-                .map(row => {
-                  return {
-                    value: row.key[1],
-                    count: row.value
-                  }
-                })
+          return {
+            stats: stats,
+            question: question
+          }
+        })
+        .then(async data => {
+          let stats = data.stats;
+          let question = data.question;
+
+          question.min = parseFloat(question.min);
+          question.max = parseFloat(question.max);
+          question.step = parseFloat(question.step);
+
+          let numberOfPossibleAnswers = 0;
+          for (let i = question.min; i <= question.max; i = i + question.step) {
+            numberOfPossibleAnswers++
+          }
+
+          if (numberOfPossibleAnswers <= 100) {
+            try {
+              return await getBarchartSvg(question, stats, request.params.width);
+            } catch (errMessage) {
+              console.log(errMessage)
+              return Boom.badRequest(errMessage);
             }
-            let question = item.elements
-              .filter(element => {
-                return element.id === request.params.questionId
-              })[0]
-
-            return {
-              stats: stats,
-              question: question
+          } else {
+            try {
+              return await getStripplotSvg(question, stats, request.params.width);
+            } catch (errMessage) {
+              console.log(errMessage)
+              return Boom.badRequest(errMessage);
             }
-          })
-          .then(data => {
-            let stats = data.stats;
-            let question = data.question;
+          }
 
-            question.min = parseFloat(question.min);
-            question.max = parseFloat(question.max);
-            question.step = parseFloat(question.step);
-
-            let numberOfPossibleAnswers = 0;
-            for (let i = question.min; i <= question.max; i = i + question.step) {
-              numberOfPossibleAnswers++
-            }
-
-            if (numberOfPossibleAnswers <= 100) {
-              getBarchartSvg(question, stats, request.params.width)
-                .then(svgString => {
-                  reply(svgString)
-                })
-                .catch(errMessage => {
-                  console.log(errMessage)
-                  const error = Boom.badRequest(errMessage);
-                  error.reformat();
-                  return reply(error);
-                })
-            } else {
-              getStripplotSvg(question, stats, request.params.width)
-                .then(svgString => {
-                  reply(svgString)
-                })
-                .catch(errMessage => {
-                  console.log(errMessage)
-                  const error = Boom.badRequest(errMessage);
-                  error.reformat();
-                  return reply(error);
-                })
-            }
-
-          })
-          .catch(function(couchError) {
-            console.log(couchError)
-            const error = Boom.badRequest(couchError.message);
-            error.output.statusCode = parseInt(couchError.status);
-            error.reformat();
-            return reply(error);
-          })
-      }
+        })
+        .catch(couchError => {
+          console.log(couchError)
+          return Boom.badRequest(couchError.message);
+        })
     }
   }
 ]
