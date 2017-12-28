@@ -6,7 +6,7 @@ module.exports = [
   {
     method: 'POST',
     path: '/answer',
-    config: {
+    options: {
       tags: ['api'],
       payload: {
         allow: ['application/json']
@@ -16,39 +16,34 @@ module.exports = [
           data: Joi.object().required(),
         }
       },
-      cors: true,
-      handler: function(request, reply) {
-        var doc = request.payload;
-        if (typeof request.payload !== 'object') {
-          doc = JSON.parse(request.payload);
-        }
+      cors: true
+    },
+    handler: function(request, h) {
+      var doc = request.payload;
+      if (typeof request.payload !== 'object') {
+        doc = JSON.parse(request.payload);
+      }
 
-        // we want some properties on every document that goes into user-store
-        doc.created_at = new Date().toISOString();
-        
-        return quizDb.post(doc)
-          .then(function(response) {
-            if (response.ok) {
-              return reply(response);
-            } else {
-              const error = Boom.create(response.status);
-              error.reformat();
-              return reply(error);
-            }
-          })
-          .catch(function(couchError) {
-            console.log(couchError);
-            const error = Boom.badRequest(couchError.message);
-            error.output.statusCode = couchError.status;
-            error.reformat();
-            return reply(error);
-          })
-      },
-      /*plugins: {
-        yaral: {
-          buckets: ['maxPerIp']
-        }
-      }*/
-    }
+      // we want some properties on every document that goes into user-store
+      doc.created_at = new Date().toISOString();
+      
+      return quizDb.post(doc)
+        .then(function(response) {
+          if (response.ok) {
+            return response;
+          } else {
+            return new Boom(response.status);
+          }
+        })
+        .catch(function(couchError) {
+          console.log(couchError);
+          return Boom.badRequest(couchError.message);
+        })
+    },
+    /* plugins: {
+      yaral: {
+        buckets: ['maxPerIp']
+      }
+    } */
   }
 ]

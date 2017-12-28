@@ -96,27 +96,6 @@ export default class MapPointGuessHandler {
     } 
   }
 
-  getWorstAnswer() {
-    return this.worstAnswer;
-  }
-
-  setWorstAnswer() {
-    let mapBoundings = [
-      this.mapBounds['_southWest'].lng,
-      this.mapBounds['_southWest'].lat,
-      this.mapBounds['_northEast'].lng,
-      this.mapBounds['_northEast'].lat,
-    ];
-
-    let correctLatLng = new L.latLng([this.data.correctAnswer.geometry.coordinates[1], this.data.correctAnswer.geometry.coordinates[0]]);
-    let upperLeft = new L.latLng([mapBoundings[3], mapBoundings[0]]);
-    let upperRight = new L.latLng([mapBoundings[3], mapBoundings[2]]);
-    let lowerLeft = new L.latLng([mapBoundings[1], mapBoundings[0]]);
-    let lowerRight = new L.latLng([mapBoundings[1], mapBoundings[2]]);
-    
-    return Math.floor(Math.max(upperLeft.distanceTo(correctLatLng), upperRight.distanceTo(correctLatLng), lowerLeft.distanceTo(correctLatLng), lowerRight.distanceTo(correctLatLng)));
-  }
-
   renderResult(answer) {
     const correctAnswer = this.data.correctAnswer;
     this.resultElement = this.questionElement.querySelector('.q-quiz-result');
@@ -135,8 +114,6 @@ export default class MapPointGuessHandler {
     }).addTo(map);
 
     this.bounds = map.getBounds();
-
-    this.worstAnswer = this.setWorstAnswer();
 
     if (answer && answer.latLng) {
       // add the correct point and the users input point

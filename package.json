@@ -1,6 +1,6 @@
 {
   "name": "@nzz/q-quiz",
-  "version": "1.4.4",
+  "version": "1.5.0",
   "description": "Q quiz",
   "keywords": [
     "storytelling",
@@ -23,7 +23,7 @@
   ],
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha",
+    "test": "lab -a code -t 85 -P tests -m 3000 --verbose --leaks",
     "build": "rm -rf scripts && mkdir scripts && rm -rf styles && mkdir styles && node tasks/build.js"
   },
   "repository": {
@@ -31,29 +31,32 @@
     "url": "git+https://github.com/nzzdev/Q-quiz.git"
   },
   "dependencies": {
-    "autoprefixer": "^7.1.1",
-    "catbox-memory": "^2.0.4",
-    "chai": "^4.0.2",
+    "@turf/turf": "^5.1.6",
+    "autoprefixer": "^7.2.2",
+    "catbox-memory": "^3.1.1",
+    "child-process": "^1.0.2",
+    "code": "^5.1.2",
     "cssnano": "^3.10.0",
-    "d3-array": "^1.2.0",
-    "d3-scale": "^1.0.6",
-    "d3-selection": "^1.1.0",
+    "d3-array": "^1.2.1",
+    "d3-scale": "^1.0.7",
+    "d3-selection": "^1.2.0",
     "enjoi": "^2.1.0",
     "forever": "^0.15.3",
-    "hapi": "^16.1.0",
-    "hoek": "^4.1.0",
-    "inert": "^4.1.0",
+    "hapi": "^17.1.1",
+    "hapi-pino": "^3.4.0",
+    "inert": "^5.0.1",
     "jsdom": "9.5.0",
-    "json-schema-faker": "^0.4.0",
     "jspm": "0.17.0-beta.41",
-    "mocha": "^3.2.0",
-    "node-fetch": "^1.7.1",
-    "node-sass": "^4.3.0",
+    "lab": "^15.1.2",
+    "node-fetch": "^1.7.3",
+    "node-sass": "^4.7.2",
+    "pino-noir": "^2.0.0",
     "postcss-import": "^11.0.0",
-    "pouchdb": "^6.2.0",
+    "pouchdb": "^6.3.4",
+    "pouchdb-server": "^2.3.7",
     "sparseheatmap": "^1.1.1",
     "svelte": "1.22.3",
-    "yaral": "^1.5.0"
+    "yaral": "^2.0.1"
   },
   "jspm": {
     "name": "@nzz/q-quiz",

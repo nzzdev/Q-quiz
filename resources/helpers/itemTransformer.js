@@ -1,4 +1,4 @@
-const questionTypes = ['multipleChoice', 'numberGuess', 'mapPointGuess'];
+const questionTypes = require('./constants.js').questionTypes;
 
 function transform(item) {
   // extract only one of the possibly existing cover elements, undefined otherwise
