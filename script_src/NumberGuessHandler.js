@@ -4,7 +4,7 @@ import { getAnswerTextElement } from './answerHelpers.js';
 function getUnit(value, data) {
   let unit = data.unit;
   if (parseFloat(value) === 1 && data.unitSingular && data.unitSingular !== '') {
-    unit = data.unit_singular;
+    unit = data.unitSingular;
   }
   return unit;
 }
@@ -69,6 +69,7 @@ export default class NumberGuessHandler {
 
   renderResult(answer) {
     this.resultElement = this.questionElement.querySelector('.q-quiz-result__number-guess-visual');
+    console.log(this.resultElement.getAttribute('unit-singular'))
     const unitData = {
       unit: this.resultElement.getAttribute('unit'),
       unitSingular: this.resultElement.getAttribute('unit-singular')
