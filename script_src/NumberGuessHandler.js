@@ -4,7 +4,7 @@ import { getAnswerTextElement } from './answerHelpers.js';
 function getUnit(value, data) {
   let unit = data.unit;
   if (parseFloat(value) === 1 && data.unitSingular && data.unitSingular !== '') {
-    unit = data.unit_singular;
+    unit = data.unitSingular;
   }
   return unit;
 }
