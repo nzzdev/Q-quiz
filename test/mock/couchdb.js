@@ -4,7 +4,7 @@ const views = require('./views.js');
 const answers = require('./answers.js');
 const fixtureData = [
   require('../../resources/fixtures/data/all.json'),
-  require('../../resources/fixtures/data/cover-all-question-types-no-last-card.json')
+  require('../../resources/fixtures/data/cover-with-title-no-last-card.json')
 ];
 
 module.exports = {

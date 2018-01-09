@@ -6,7 +6,7 @@ const Joi = require('joi');
 const fixtureDataDirectory = '../../resources/fixtures/data';
 const fixtureData = [
   require(`${fixtureDataDirectory}/all.json`),
-  require(`${fixtureDataDirectory}/cover-all-question-types-no-last-card.json`)
+  require(`${fixtureDataDirectory}/cover-with-title-no-last-card.json`)
 ];
 
 const server = Hapi.server({
