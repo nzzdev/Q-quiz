@@ -4,4 +4,4 @@ scripts
 styles
 .DS_STORE
 dev.js
-test/logs
+test/logs/pouchdb.log
