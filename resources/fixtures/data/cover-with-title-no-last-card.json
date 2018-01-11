@@ -1,0 +1,61 @@
+{
+  "title": "FIXTURE: Ein Quiz mit Cover mit Titel, alle Fragetypen, ohne letzte Seite",
+  "elements": [
+    {
+      "id": "quiz-1-1503673199200-897399321",
+      "title": "Ein tolles Quiz",
+      "type": "cover"
+    },
+    {
+      "id": "quiz-1-1503673205043-233776299",
+      "type": "multipleChoice",
+      "image": {},
+      "choices": [
+        "vielleicht",
+        "falsch",
+        "absolut falsch"
+      ],
+      "articleRecommendations": [],
+      "question": "Was ist die richtige Antwort?",
+      "answer": "richtig"
+    },
+    {
+      "id": "quiz-1-1503673244888-827300797",
+      "type": "numberGuess",
+      "image": {},
+      "articleRecommendations": [],
+      "question": "Hausnummer der NZZ",
+      "answer": 11,
+      "min": 1,
+      "max": 20,
+      "step": 1
+    },
+    {
+      "id": "quiz-1-1503673602641-999859280",
+      "type": "mapPointGuess",
+      "answer": {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            8.548714,
+            47.3664
+          ]
+        },
+        "properties": {
+          "pointLabel": "NZZ Red",
+          "label": "11 Falkenstrasse"
+        },
+        "bbox": [
+          8.50547790527344,
+          47.347779215247144,
+          8.591995239257814,
+          47.38498483918202
+        ]
+      },
+      "image": {},
+      "articleRecommendations": [],
+      "question": "wo ist die nzz?"
+    }
+  ]
+}

@@ -1,13 +1,4 @@
 .q-quiz-button {
-  cursor: pointer;
-  text-align: center;
-  background: none;
-  border: none;
-  border-spacing: 0;
-  margin: 0;
-  padding: 0;
-  outline: none;
-
   .q-quiz-button__icon {
     margin-bottom: 7px;
   }
@@ -48,24 +39,4 @@
 .q-quiz-button--hidden {
   visibility: hidden;
   pointer-events: none;
-}
-
-.q-quiz-button__icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  margin: 0 auto;
-
-  svg {
-    height: 16px;
-    position: relative;
-  }
-}
-
-.q-quiz-button__icon--large {
-  width: 64px;
-  height: 64px;
-  svg {
-    height: 30px;
-  }
 }

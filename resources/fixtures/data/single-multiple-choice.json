@@ -1,0 +1,18 @@
+{
+  "title": "FIXTURE: Multiple choice - single question quiz",
+  "elements": [
+    {
+      "id": "quiz-2-1503673205043-233776299",
+      "type": "multipleChoice",
+      "image": {},
+      "choices": [
+        "vielleicht",
+        "falsch",
+        "mal noch ein längere Antwort: Der Teamwettbewerb für Männer und Frauen im Ski Alpin, das Mixed-Doppel im Curling, der Massenstart im Eisschnelllaufen und der Big-Air-Wettbewerb im Snowboarden"
+      ],
+      "articleRecommendations": [],
+      "question": "Was ist die richtige Antwort?",
+      "answer": "richtig"
+    }
+  ]
+}
