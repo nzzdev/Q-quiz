@@ -121,18 +121,6 @@
   transform: translateX(-50%);
 }
 
-.q-quiz-answer-button {
-  width: 100%;
-  margin-top: 10px;
-  opacity: 1;
-
-  transition: opacity 0.1s ease-out;
-
-  &.state-clicked {
-    opacity: 0;
-  }
-}
-
 .q-quiz-element-container {
   img {
     display: block;
@@ -159,11 +147,6 @@
     border-top: 1px solid currentColor;
   }
 }
-
-.q-quiz__last-card .q-quiz-button__icon {
-  margin-top: 12px;
-}
-
 
 @import "./numberGuess";
 @import "./mapPointGuess";

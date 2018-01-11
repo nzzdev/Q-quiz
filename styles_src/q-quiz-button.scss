@@ -1,6 +1,19 @@
+.q-quiz-answer-button {
+  width: 100%;
+  margin-top: 10px;
+  opacity: 1;
+
+  transition: opacity 0.1s ease-out;
+
+  &.state-clicked {
+    opacity: 0;
+  }
+}
+
 .q-quiz-button {
-  .q-quiz-button__icon {
-    margin-bottom: 7px;
+
+  &.q-quiz-button__icon {
+    margin: 0 auto;
   }
 
   &:hover {
@@ -39,4 +52,12 @@
 .q-quiz-button--hidden {
   visibility: hidden;
   pointer-events: none;
+}
+
+.q-quiz__cover .q-quiz-button__icon {
+  margin-bottom: 7px;
+}
+
+.q-quiz__last-card .q-quiz-button__icon {
+  margin-top: 12px;
 }
