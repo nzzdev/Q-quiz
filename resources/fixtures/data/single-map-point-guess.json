@@ -1,0 +1,32 @@
+{
+  "title": "FIXTURE: Map point guess - single question quiz",
+  "elements": [
+    {
+      "id": "quiz-4-1503673602641-999859280",
+      "type": "mapPointGuess",
+      "answer": {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            8.548714,
+            47.3664
+          ]
+        },
+        "properties": {
+          "pointLabel": "NZZ Red",
+          "label": "11 Falkenstrasse"
+        },
+        "bbox": [
+          8.50547790527344,
+          47.347779215247144,
+          8.591995239257814,
+          47.38498483918202
+        ]
+      },
+      "image": {},
+      "articleRecommendations": [],
+      "question": "wo ist die nzz?"
+    }
+  ]
+}

@@ -83,54 +83,42 @@
   margin-bottom: 8px;
 }
 
-.s-input-range-container {
+.q-quiz-input-range-container {
   position: relative;
   padding-top: 1em;
 }
 
-.s-input-range.disabled {
+.q-quiz-input-range.disabled {
   opacity: 0.2;
 }
 
-.s-input-range-container::after {
+.q-quiz-input-range-container::after {
   content: '';
   display: table;
   clear: left;
 }
 
-.s-input-range-min {
+.q-quiz-input-range-min {
   float: left;
   padding-top: 8px;
 }
 
-.s-input-range-max {
+.q-quiz-input-range-max {
   float: right;
   padding-top: 8px;
 }
 
-.s-input-range-position-label-container {
+.q-quiz-input-range-position-label-container {
   position: relative;
   margin: 0 14px 9px 14px;
   height: 1em;
 }
 
-.s-input-range-position-label {
+.q-quiz-input-range-position-label {
   position: absolute;
   width: 200px;
   text-align: center;
   transform: translateX(-50%);
-}
-
-.q-quiz-answer-button {
-  width: 100%;
-  margin-top: 10px;
-  opacity: 1;
-
-  transition: opacity 0.1s ease-out;
-
-  &.state-clicked {
-    opacity: 0;
-  }
 }
 
 .q-quiz-element-container {
@@ -144,11 +132,11 @@
   border-bottom: 1px solid currentColor;
   margin-top: 32px;
   padding: 14px;
+  text-align: center;
 
   & .q-quiz-play-another-teaser,
   & .q-quiz-play-another-title {
     margin: 0 auto;
-    text-align: center;
   }
 
   & .q-quiz-play-another-title {
@@ -159,11 +147,6 @@
     border-top: 1px solid currentColor;
   }
 }
-
-.q-quiz__last-card .q-quiz-button__icon {
-  margin-top: 12px;
-}
-
 
 @import "./numberGuess";
 @import "./mapPointGuess";
