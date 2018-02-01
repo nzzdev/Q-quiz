@@ -163,6 +163,7 @@ export default class MapPointGuessHandler {
           icon: Leaflet.divIcon({
             className: "q-quiz-map-marker s-font-note-s s-color-grey-8",
             iconSize: [8, 8],
+            iconAnchor: [4, -4],
             html: `<div class="q-quiz-map-marker__label q-quiz-map-marker__label--${correctAnswerLabelPosition} s-font-note s-font-note--strong s-color-grey-8">${correctAnswerLabel}</div>`
           })
         }
