@@ -86,6 +86,8 @@ module.exports = [
                   2 *
                   Math.log((1 + Math.sin(lat * d)) / (1 - Math.sin(lat * d))) -
                   mapOffsetY);
+              // Fix for heatmap offset bug
+              y = y - 10;
 
               points = points.concat([1, x, y]);
             }
