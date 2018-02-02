@@ -1,0 +1,34 @@
+{
+  "title": "FIXTURE: Map point guess - single question quiz - high zoomlevel",
+  "elements": [
+    {
+      "id": "quiz-4-1503673602641-999859481",
+      "type": "mapPointGuess",
+      "answer": {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -5.3541295,
+            36.140807
+          ]
+        },
+        "properties": {
+          "pointLabel": "Gibraltar",
+          "label": "Gibraltar"
+        },
+        "bbox": [
+          -5.775815499946477,
+          35.853446294384455,
+          -5.429746164008977,
+          36.03133843611641
+        ]
+      },
+      "image": {
+        "url": "https://www.malagameetings.com/images/hotels/gibraltar.jpg"
+      },
+      "articleRecommendations": [],
+      "question": "Wo ist Gibraltar?"
+    }
+  ]
+}
