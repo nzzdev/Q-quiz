@@ -2,7 +2,7 @@
   "title": "FIXTURE: Map point guess - single question quiz - high zoomlevel",
   "elements": [
     {
-      "id": "quiz-4-1503673602641-999859420",
+      "id": "quiz-4-1503673602641-999859481",
       "type": "mapPointGuess",
       "answer": {
         "type": "Feature",
@@ -24,7 +24,9 @@
           36.03133843611641
         ]
       },
-      "image": {},
+      "image": {
+        "url": "https://www.malagameetings.com/images/hotels/gibraltar.jpg"
+      },
       "articleRecommendations": [],
       "question": "Wo ist Gibraltar?"
     }
