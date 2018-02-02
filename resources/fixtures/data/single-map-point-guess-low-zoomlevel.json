@@ -1,0 +1,32 @@
+{
+  "title": "FIXTURE: Map point guess - single question quiz - low zoomlevel",
+  "elements": [
+    {
+      "id": "quiz-4-1503673602641-999859430",
+      "type": "mapPointGuess",
+      "answer": {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -5.3541295,
+            36.140807
+          ]
+        },
+        "properties": {
+          "pointLabel": "Gibraltar",
+          "label": "Gibraltar"
+        },
+        "bbox": [
+          -13.999572694301607,
+          32.17330357945741,
+          30.2973023056984,
+          52.64140823072469
+        ]
+      },
+      "image": {},
+      "articleRecommendations": [],
+      "question": "Wo ist Gibraltar?"
+    }
+  ]
+}
