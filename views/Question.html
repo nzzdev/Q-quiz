@@ -1,8 +1,16 @@
 <h3 class="s-q-item__title">{{#if question.question}}{{question.question}}{{/if}}</h3>
 {{#if question.image && question.image.url}}
   <img class="q-quiz-question-image" src="{{question.image.url}}"/>
-{{elseif question.image && question.image.file && question.image.file.url}}
-  <img class="q-quiz-question-image" src="{{question.image.file.url}}"/>
+{{elseif question.image && question.image.file}}
+  {{#if width }}
+    <picture>
+        <source type="image/webp" srcset="{{ question.image.urls.webp1x }} 1x, {{ question.image.urls.webp2x }} 2x">
+        <source srcset="{{ question.image.urls.png1x }} 1x, {{ question.image.urls.png2x }} 2x">
+        <img class="q-quiz-question-image" src="{{ question.image.urls.png1x }}">
+    </picture>
+  {{ else }}
+    <picture class="q-quiz-question-image" data-imageServiceUrl="{{imageServiceUrl}}" data-imageKey="{{question.image.file.key}}"></picture>
+  {{/if}}
 {{/if}}
 <div>
   {{#if isMultipleChoice}}

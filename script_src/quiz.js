@@ -1,5 +1,6 @@
-import MultiQuizPositionHandler from './MultiQuizPositionHandler.js';
-import QuestionHandler from './QuestionHandler.js';
+import MultiQuizPositionHandler from "./MultiQuizPositionHandler.js";
+import QuestionHandler from "./QuestionHandler.js";
+import * as helpers from "./helpers.js";
 
 export function display(data, quizRootElement) {
   let questionHandler = new QuestionHandler(quizRootElement, data);
@@ -11,29 +12,38 @@ export function display(data, quizRootElement) {
   }
 
   // add event listeners for switching to next question, answer buttons and input elements (number guess)
-  let quizButtons = quizRootElement.querySelectorAll('.q-quiz-button');
+  let quizButtons = quizRootElement.querySelectorAll(".q-quiz-button");
   quizButtons.forEach(quizButton => {
-    quizButton.addEventListener('click', () => {
+    quizButton.addEventListener("click", () => {
       position++;
       questionHandler.renderInputElement(position);
 
       // dispatch CustomEvent for next-screen for tracking
       // or anyone else interested in it
-      let quizControlEvent = new CustomEvent('q-quiz-next-screen', {
+      let quizControlEvent = new CustomEvent("q-quiz-next-screen", {
         bubbles: true,
         detail: {
           id: data.itemId
         }
       });
       quizRootElement.dispatchEvent(quizControlEvent);
-    })
-  }); 
-  
-  let answerButtons = quizRootElement.querySelectorAll('.q-quiz-answer-button');
-  answerButtons.forEach(answerButton => {
-    answerButton.addEventListener('click', event => {
-      questionHandler.handleAnswer(event);
-    })
+    });
   });
-}
 
+  let answerButtons = quizRootElement.querySelectorAll(".q-quiz-answer-button");
+  answerButtons.forEach(answerButton => {
+    answerButton.addEventListener("click", event => {
+      questionHandler.handleAnswer(event);
+    });
+  });
+
+  if (quizRootElement.querySelectorAll(".q-quiz-question-image").length > 0) {
+    let quizQuestionImages = Array.prototype.slice.call(
+      quizRootElement.querySelectorAll(".q-quiz-question-image")
+    );
+    // construct picture element on client side if not already done on server-side
+    if (quizQuestionImages[0].tagName !== "IMG") {
+      helpers.constructPictureElement(quizRootElement, quizQuestionImages);
+    }
+  }
+}
