@@ -41,7 +41,7 @@ export function isQuestionType(type) {
 
 export function constructPictureElement(quizRootElement, quizQuestionImages) {
   const elementMarkup =
-    '<source type="image/webp" srcset="webp1x 1x, webp2x 2x"><source srcset="png1x 1x, png2x 2x"><img class="q-quiz-question-image" src="png1x">';
+    '<source type="image/webp" srcset="webp1x 1x, webp2x 2x"><source srcset="png1x 1x, png2x 2x"><img class="q-quiz-question-image q-quiz-question-image--responsive" src="png1x">';
   const rootElementWidth = quizRootElement.getBoundingClientRect().width;
   quizQuestionImages.forEach(function(quizImage) {
     const imageKey = quizImage.getAttribute("data-imageKey");
