@@ -54,7 +54,9 @@ export default class MapPointGuessHandler {
     L.tileLayer(tileUrl, {
       maxZoom: 18,
       attribution:
-        '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> &amp; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> &amp; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      bounds: [[90, -180], [-90, 180]],
+      noWrap: true
     }).addTo(map);
 
     this.mapBounds = map.getBounds();
