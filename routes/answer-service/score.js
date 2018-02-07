@@ -20,7 +20,9 @@ module.exports = {
     validate: {
       payload: {
         item: schema,
-        userAnswers: Joi.array()
+        userAnswers: Joi.array().items(Joi.object({
+          questionId: Joi.string()
+        }))
       },
       options: {
         allowUnknown: true
