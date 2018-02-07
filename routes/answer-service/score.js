@@ -31,7 +31,7 @@ module.exports = {
     },
     cors: true
   },
-  handler: async function(request, h){
+  handler: async function(request, h) {
     try {
       const questions = request.payload.item.elements.filter(element => {
         return questionTypes.includes(element.type);
@@ -39,9 +39,11 @@ module.exports = {
 
       const userAnswers = request.payload.userAnswers;
       questions.forEach(question => {
-        const relevantAnswers = userAnswers.filter(userAnswer => userAnswer.questionId === question.id);
-        if (relevantAnswers.length > 0) {
-          question.userAnswer = relevantAnswers[0].value;
+        if (userAnswers) {
+          const relevantAnswers = userAnswers.filter(userAnswer => userAnswer.questionId === question.id);
+          if (relevantAnswers.length > 0) {
+            question.userAnswer = relevantAnswers[0].value;
+          }
         }
       })
 
