@@ -271,25 +271,16 @@
     },
     "image": {
       "type": "object",
-      "title": "Bild zur Frage",
+      "Q:type": "files",
       "Q:options": {
-        "compact": true
-      },
-      "properties": {
-        "file": {
-          "type": "object",
-          "Q:type": "files",
-          "Q:options": {
-            "maxFiles": 1,
-            "acceptedFiles": "image/*",
-            "fileProperties": {
-              "url": "url",
-              "key": "key",
-              "size": "size",
-              "width": "width",
-              "height": "height"
-            }
-          }
+        "maxFiles": 1,
+        "acceptedFiles": "image/*",
+        "fileProperties": {
+          "url": "url",
+          "key": "key",
+          "size": "size",
+          "width": "width",
+          "height": "height"
         }
       }
     },

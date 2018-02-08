@@ -135,7 +135,7 @@ module.exports = {
       context.item.questions.map(question => {
         if (question.image.file) {
           question.image.urls = getUrlsForImageAndWidth(
-            question.image.file.key,
+            question.image.key,
             context.width,
             context.imageServiceUrl
           );
