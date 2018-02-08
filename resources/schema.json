@@ -271,14 +271,25 @@
     },
     "image": {
       "type": "object",
-      "title": "Bild",
+      "title": "Bild zur Frage",
       "Q:options": {
         "compact": true
       },
       "properties": {
-        "url": {
-          "type": "string",
-          "title": "URL zum Bild"
+        "file": {
+          "type": "object",
+          "Q:type": "files",
+          "Q:options": {
+            "maxFiles": 1,
+            "acceptedFiles": "image/*",
+            "fileProperties": {
+              "url": "url",
+              "key": "key",
+              "size": "size",
+              "width": "width",
+              "height": "height"
+            }
+          }
         }
       }
     },

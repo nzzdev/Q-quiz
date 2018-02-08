@@ -19,7 +19,7 @@
     {{#each questions as question, index}}
       {{#if !isMultiQuiz || !hasCover && index === 0}}
         <div class="q-quiz-element-container q-quiz-element-container--is-active" style="width: {{elementWidth}}%;">
-          <Question question="{{question}}" />
+          <Question question="{{question}}" width="{{width}}" imageServiceUrl="{{imageServiceUrl}}" />
         </div>
       {{else}}
         <div class="q-quiz-element-container q-quiz-element-container--is-inactive" style="width: {{elementWidth}}%; display: none;">
