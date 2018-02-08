@@ -19,13 +19,13 @@ const routes = require('../routes/routes.js');
 
 before(async () => {
   const { spawn } = require('child_process');
-  pouchdbServer = spawn('./node_modules/pouchdb-server/bin/pouchdb-server', ['-c','test/pouchdb-server-config.json', '--in-memory']);
-  
+  pouchdbServer = spawn('./node_modules/pouchdb-server/bin/pouchdb-server', ['-c', 'test/pouchdb-server-config.json', '--in-memory']);
+
   // wait a second to give pouchdbServer time to boot
   await new Promise(resolve => {
     setTimeout(resolve, 1000);
   });
-  
+
   console.log('started pouchdb server with pid', pouchdbServer.pid);
   const setupCouch = await require('./mock/couchdb.js').setupCouch;
 
@@ -45,7 +45,7 @@ after(async () => {
   if (!pouchdbServer.killed) {
     console.log('somehow i could not kill your pouchdb server. maybe another one is still running. check with "lsof -i :5984" and kill it yourself');
   }
-  await server.stop({timeout: 2000});
+  await server.stop({ timeout: 2000 });
   server = null;
   return;
 });
@@ -74,7 +74,7 @@ lab.experiment('schema route', () => {
 });
 
 lab.experiment('stylesheets route', () => {
-  it('returns existing stylesheet with right cache control header', {plan: 2}, async () => {
+  it('returns existing stylesheet with right cache control header', { plan: 2 }, async () => {
     const filename = require('../styles/hashMap.json').default;
     const response = await server.inject(`/stylesheet/${filename}`);
     expect(response.statusCode).to.be.equal(200);
@@ -88,7 +88,7 @@ lab.experiment('stylesheets route', () => {
 });
 
 lab.experiment('scripts route', () => {
-  it('returns existing script with right cache control header', {plan: 2}, async () => {
+  it('returns existing script with right cache control header', { plan: 2 }, async () => {
     const filename = require('../scripts/hashMap.json').quiz;
     const response = await server.inject(`/script/${filename}`);
     expect(response.statusCode).to.be.equal(200);
@@ -114,7 +114,7 @@ lab.experiment('locales route', () => {
 });
 
 lab.experiment('rendering info route', async () => {
-  it('renders a quiz', {plan: 4}, async () => {
+  it('renders a quiz', { plan: 4 }, async () => {
     const fixtureResponse = await server.inject('/fixtures/data');
     const fixtureData = fixtureResponse.result;
     const response = await server.inject({
@@ -133,7 +133,7 @@ lab.experiment('rendering info route', async () => {
     expect(response.result.scripts.length).to.be.equal(2);
   });
 
-  it('renders quiz for which answers will not be saved (= is pure)', {plan: 3}, async () => {
+  it('renders quiz for which answers will not be saved (= is pure)', { plan: 3 }, async () => {
     const fixtureResponse = await server.inject('/fixtures/data');
     const fixtureData = fixtureResponse.result;
     const response = await server.inject({
@@ -148,8 +148,8 @@ lab.experiment('rendering info route', async () => {
       }
     })
     expect(response.statusCode).to.be.equal(200);
-    expect(response.result.scripts.length).to.be.equal(2);    
-    expect(response.result.scripts[1].content).contains('"isPure":true');    
+    expect(response.result.scripts.length).to.be.equal(2);
+    expect(response.result.scripts[1].content).contains('"isPure":true');
   });
 
   // id from answer and random id? 
@@ -192,7 +192,7 @@ lab.experiment('rendering info route', async () => {
 });
 
 lab.experiment('answer store route', () => {
-  it('returns id for stored answer', {plan: 2}, async () => {
+  it('returns id for stored answer', { plan: 2 }, async () => {
     // only quick test at the moment with fixed value, should be random values in possible domain (min, max, max distance..) and should be done several times, maybe also use for testing stats route
     const fixtureResponse = await server.inject('/fixtures/data');
     const fixtureData = fixtureResponse.result;
@@ -225,7 +225,7 @@ lab.experiment('answer store route', () => {
 });
 
 lab.experiment('answer stats route', () => {
-  it('returns stats for a multiple choice question of first fixture quiz', {plan: 3}, async () => {
+  it('returns stats for a multiple choice question of first fixture quiz', { plan: 3 }, async () => {
     const fixtureResponse = await server.inject('/fixtures/data');
     const fixtureData = fixtureResponse.result;
     const fixtureIndex = 0;
@@ -249,8 +249,8 @@ lab.experiment('answer stats route', () => {
 lab.experiment('score route', () => {
   const questionTypes = require('../resources/helpers/constants.js').questionTypes;
   const worstAnswerDifference = require('../resources/helpers/scoreHelpers.js').worstAnswerDifference;
-  
-  it('returns 100% score for right answers only', {plan: 2}, async () => {
+
+  it('returns 100% score for right answers only', { plan: 2 }, async () => {
     const fixtureResponse = await server.inject('/fixtures/data');
     const quiz = fixtureResponse.result[0];
     const questions = quiz.elements.filter(element => {
@@ -284,7 +284,7 @@ lab.experiment('score route', () => {
     expect(response.result.maxScore).to.be.equal(response.result.achievedScore);
   });
 
-  it('returns score for mixed answers', {plan: 2}, async () => {
+  it('returns score for mixed answers', { plan: 2 }, async () => {
     const fixtureResponse = await server.inject('/fixtures/data');
     const quiz = fixtureResponse.result[0];
     const questions = quiz.elements.filter(element => {
@@ -323,7 +323,7 @@ lab.experiment('score route', () => {
     expect(response.result.maxScore).to.be.greaterThan(response.result.achievedScore);
   });
 
-  it('returns score for partially answered questions', {plan: 2}, async () => {
+  it('returns score for partially answered questions', { plan: 2 }, async () => {
     const fixtureResponse = await server.inject('/fixtures/data');
     const quiz = fixtureResponse.result[0];
     const questions = quiz.elements.filter(element => {
@@ -364,7 +364,7 @@ lab.experiment('score route', () => {
     expect(response.result.maxScore).to.be.greaterThan(response.result.achievedScore);
   })
 
-  it('returns 0 score for wrong/worst answers only', {plan: 2}, async () => {
+  it('returns 0 score for wrong/worst answers only', { plan: 2 }, async () => {
     const fixtureResponse = await server.inject('/fixtures/data');
     const quiz = fixtureResponse.result[0];
     const questions = quiz.elements.filter(element => {
@@ -430,7 +430,7 @@ lab.experiment('score route', () => {
     expect(response.statusCode).to.be.equal(400);
   });
 
-  it('returns 400 if user answers are missing in payload', async () => {
+  it('returns 400 if user answers is of wrong type in payload', async () => {
     const fixtureResponse = await server.inject('/fixtures/data');
     const quiz = fixtureResponse.result[0];
 
@@ -438,7 +438,8 @@ lab.experiment('score route', () => {
       method: 'POST',
       url: '/score',
       payload: {
-        item: JSON.stringify(quiz)
+        item: JSON.stringify(quiz),
+        userAnswers: {}
       }
     });
 
@@ -447,7 +448,7 @@ lab.experiment('score route', () => {
 });
 
 lab.experiment('number guess plot route', () => {
-  it('returns number guess plot', {plan: 2}, async () => {
+  it('returns number guess plot', { plan: 2 }, async () => {
     const fixtureResponse = await server.inject('/fixtures/data');
     const fixtureIndex = 0;
     const quiz = fixtureResponse.result[fixtureIndex];
@@ -456,7 +457,7 @@ lab.experiment('number guess plot route', () => {
     expect(response.result).startsWith('<svg');
   })
 
-  it('returns 400 for requesting number guess plot with multiple choice question', {plan: 2}, async () => {
+  it('returns 400 for requesting number guess plot with multiple choice question', { plan: 2 }, async () => {
     const fixtureResponse = await server.inject('/fixtures/data');
     const fixtureIndex = 0;
     const quiz = fixtureResponse.result[fixtureIndex];
@@ -467,7 +468,7 @@ lab.experiment('number guess plot route', () => {
 })
 
 lab.experiment('map point guess plot route', () => {
-  it('returns heatmap for map point guess', {plan: 2}, async () => {
+  it('returns heatmap for map point guess', { plan: 2 }, async () => {
     const fixtureResponse = await server.inject('/fixtures/data');
     const quiz = fixtureResponse.result[0];
     const mapPointQuestion = quiz.elements[4];
@@ -477,7 +478,7 @@ lab.experiment('map point guess plot route', () => {
     expect(response.headers['content-type']).to.be.equal('image/png');
   })
 
-  it('returns 400 for requesting number guess plot with multiple choice question', {plan: 2}, async () => {
+  it('returns 400 for requesting number guess plot with multiple choice question', { plan: 2 }, async () => {
     const fixtureResponse = await server.inject('/fixtures/data');
     const quiz = fixtureResponse.result[0];
     const response = await server.inject(`/map/${quiz.elements[1].id}/heatmap/${560}/${500}/1, 2, 3, 4`);
