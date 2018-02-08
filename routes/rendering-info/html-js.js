@@ -133,7 +133,7 @@ module.exports = {
     if (Number.isInteger(exactPixelWidth)) {
       context.width = exactPixelWidth;
       context.item.questions.map(question => {
-        if (question.image.file) {
+        if (question.image.key) {
           question.image.urls = getUrlsForImageAndWidth(
             question.image.key,
             context.width,
