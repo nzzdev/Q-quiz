@@ -37,11 +37,11 @@ export function display(data, quizRootElement) {
     });
   });
 
-  if (quizRootElement.querySelectorAll(".q-quiz-question-image").length > 0) {
-    let quizQuestionImages = Array.prototype.slice.call(
-      quizRootElement.querySelectorAll(".q-quiz-question-image")
-    );
-    // construct picture element on client side if not already done on server-side
+  // construct picture element on client side if not already done on server-side
+  let quizQuestionImages = Array.prototype.slice.call(
+    quizRootElement.querySelectorAll(".q-quiz-question-image")
+  );
+  if (quizQuestionImages.length > 0) {
     if (quizQuestionImages[0].tagName !== "IMG") {
       helpers.constructPictureElement(quizRootElement, quizQuestionImages);
     }
