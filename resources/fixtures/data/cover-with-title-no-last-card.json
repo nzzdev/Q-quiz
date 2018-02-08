@@ -9,7 +9,13 @@
     {
       "id": "quiz-1-1503673205043-233776299",
       "type": "multipleChoice",
-      "image": {},
+      "image": {
+        "url": "https://nzz-q-assets-stage.s3.eu-west-1.amazonaws.com/2018/02/05/ea4995ff-38d9-4ba2-a6b4-f8707f98b57c.png",
+        "key": "2018/02/05/ea4995ff-38d9-4ba2-a6b4-f8707f98b57c.png",
+        "size": 14577,
+        "width": 902,
+        "height": 168
+      },
       "choices": [
         "vielleicht",
         "falsch",
