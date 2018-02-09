@@ -121,7 +121,8 @@ module.exports = {
     const context = {
       item: item,
       quizContainerId: quizContainerId,
-      imageServiceUrl: process.env.IMAGE_SERVICE_URL
+      imageServiceUrl: process.env.IMAGE_SERVICE_URL,
+      enricoAPIUrl: process.env.ENRICO_API_URL
     };
 
     // if we have the width in toolRuntimeConfig.size
