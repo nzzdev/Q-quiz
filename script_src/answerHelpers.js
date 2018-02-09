@@ -78,7 +78,7 @@ export function getAnswerTextElement(stats, isCorrectAnswer, getDiffText) {
   return element;
 }
 
-function getRecommendationsElement(articleRecommendations) {
+function getRecommendationsElement(articleRecommendations, enricoAPIUrl) {
   let recommendationsElement = document.createElement("p");
   recommendationsElement.classList.add("s-font-text-s");
   let recommendationsHtml = "";
@@ -86,7 +86,10 @@ function getRecommendationsElement(articleRecommendations) {
     let punctuation = ["!", "?", "."];
 
     helpers
-      .loadAdditionalArticles(articleRecommendations.map(r => r.articleId))
+      .loadAdditionalArticles(
+        articleRecommendations.map(r => r.articleId),
+        enricoAPIUrl
+      )
       .then(articles => {
         articles
           .filter(article => {
@@ -129,18 +132,24 @@ export function getDistanceText(distance) {
 
 export function renderAdditionalInformationForLastCard(
   element,
-  articleRecommendations
+  articleRecommendations,
+  enricoAPIUrl
 ) {
   let articleRecommendationsContainer = element.querySelector(
     ".q-quiz-article-recommendations"
   );
   let articleRecommendationsElement = getRecommendationsElement(
-    articleRecommendations
+    articleRecommendations,
+    enricoAPIUrl
   );
   articleRecommendationsContainer.appendChild(articleRecommendationsElement);
 }
 
-export function renderAdditionalInformationForQuestion(element, correctAnswer) {
+export function renderAdditionalInformationForQuestion(
+  element,
+  correctAnswer,
+  enricoAPIUrl
+) {
   let detailedAnswer = element.querySelector(
     ".q-quiz-result .q-quiz-result-answer-text"
   );
@@ -152,7 +161,8 @@ export function renderAdditionalInformationForQuestion(element, correctAnswer) {
   detailedAnswer.appendChild(detailedAnswerSpan);
 
   let articleRecommendationsElement = getRecommendationsElement(
-    correctAnswer.articleRecommendations
+    correctAnswer.articleRecommendations,
+    enricoAPIUrl
   );
   detailedAnswer.parentNode.insertBefore(
     articleRecommendationsElement,
