@@ -25,7 +25,11 @@ const styleHashMap = require(`${stylesDir}/hashMap.json`);
 require("svelte/ssr/register");
 const staticTemplate = require(viewsDir + "HtmlJs.html");
 
-function getTransformedItemForClientSideScript(item, toolRuntimeConfig) {
+function getTransformedItemForClientSideScript(
+  item,
+  toolRuntimeConfig,
+  enricoAPIUrl
+) {
   const questionElementData = item.questions.map(element => {
     return {
       id: element.id,
@@ -43,7 +47,8 @@ function getTransformedItemForClientSideScript(item, toolRuntimeConfig) {
     hasLastCard: item.hasLastCard,
     numberElements: item.elementCount,
     toolBaseUrl: toolRuntimeConfig.toolBaseUrl,
-    isPure: toolRuntimeConfig.isPure || false
+    isPure: toolRuntimeConfig.isPure || false,
+    enricoAPIUrl: enricoAPIUrl
   };
 
   if (item.lastCard) {
@@ -104,7 +109,8 @@ module.exports = {
 
     const scriptData = getTransformedItemForClientSideScript(
       item,
-      request.payload.toolRuntimeConfig
+      request.payload.toolRuntimeConfig,
+      process.env.ENRICO_API_URL
     );
     const loaderScript = `
       System.import('q-quiz/quiz.js')
@@ -121,8 +127,7 @@ module.exports = {
     const context = {
       item: item,
       quizContainerId: quizContainerId,
-      imageServiceUrl: process.env.IMAGE_SERVICE_URL,
-      enricoAPIUrl: process.env.ENRICO_API_URL
+      imageServiceUrl: process.env.IMAGE_SERVICE_URL
     };
 
     // if we have the width in toolRuntimeConfig.size

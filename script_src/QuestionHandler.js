@@ -24,9 +24,6 @@ export default class QuestionHandler {
       );
     }
     this.answerStore = new AnswerStore(this.data.toolBaseUrl);
-    this.enricoAPIUrl = this.quizRootElement.getAttribute(
-      "data-enrico-api-url"
-    );
   }
 
   renderInputElement(position) {
@@ -165,7 +162,7 @@ export default class QuestionHandler {
     answerHelpers.renderAdditionalInformationForQuestion(
       this.quizElement,
       this.data.questionElementData[this.questionPosition],
-      this.enricoAPIUrl
+      this.data.enricoAPIUrl
     );
   }
 
@@ -221,7 +218,7 @@ export default class QuestionHandler {
       answerHelpers.renderAdditionalInformationForLastCard(
         this.quizElement,
         this.data.lastCardData.articleRecommendations,
-        this.enricoAPIUrl
+        this.data.enricoAPIUrl
       );
     }
     if (this.data.isFinalScoreShown) {
