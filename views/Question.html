@@ -1,7 +1,5 @@
 <h3 class="s-q-item__title">{{#if question.question}}{{question.question}}{{/if}}</h3>
-{{#if question.image && question.image.url && !question.image.key}}
-  <img class="q-quiz-question-image" src="{{question.image.url}}"/>
-{{elseif question.image && question.image.key}}
+{{#if question.image && question.image.key}}
   {{#if width }}
     <picture style="position:relative; display:block; padding-bottom:{{ question.image.height / question.image.width * 100 }}%;">
         <source type="image/webp" srcset="{{ question.image.urls.webp1x }} 1x, {{ question.image.urls.webp2x }} 2x">
