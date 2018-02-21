@@ -8,10 +8,7 @@
         "type": "Feature",
         "geometry": {
           "type": "Point",
-          "coordinates": [
-            -5.3541295,
-            36.140807
-          ]
+          "coordinates": [-5.3541295, 36.140807]
         },
         "properties": {
           "pointLabel": "Gibraltar",
@@ -25,7 +22,12 @@
         ]
       },
       "image": {
-        "url": "https://www.malagameetings.com/images/hotels/gibraltar.jpg"
+        "url":
+          "https://nzz-q-assets-stage.s3.eu-west-1.amazonaws.com/2018/02/05/d93b5299-a21f-4bb0-bc9d-cd08b61674a9.jpeg",
+        "key": "2018/02/05/d93b5299-a21f-4bb0-bc9d-cd08b61674a9.jpeg",
+        "size": 24361,
+        "width": 380,
+        "height": 230
       },
       "articleRecommendations": [],
       "question": "Wo ist Gibraltar?"
