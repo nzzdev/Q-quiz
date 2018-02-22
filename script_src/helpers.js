@@ -41,62 +41,52 @@ export function isQuestionType(type) {
 
 export function constructPictureElement(quizRootElement, quizQuestionImages) {
   const elementMarkup =
-    '<source type="image/webp" srcset="webp1x 1x, webp2x 2x"><source srcset="png1x 1x, png2x 2x"><img class="q-quiz-question-image q-quiz-question-image--responsive" src="png1x">';
+    '<source type="image/webp" srcset="{webp1x} 1x, {webp2x} 2x"><source srcset="{image1x} 1x, {image2x} 2x"><img class="q-quiz-question-image q-quiz-question-image--responsive" src="{image1x}">';
   const rootElementWidth = quizRootElement.getBoundingClientRect().width;
   quizQuestionImages.forEach(function(quizImage) {
     const imageKey = quizImage.getAttribute("data-imageKey");
     const imageServiceUrl = quizImage.getAttribute("data-imageServiceUrl");
-    const urls = getUrlsForImageAndWidth(
-      imageServiceUrl,
-      imageKey,
-      rootElementWidth
-    );
+    const urls = getImageUrls(imageServiceUrl, imageKey, rootElementWidth);
     const innerHTMLPictureElement = elementMarkup
-      .replace(/png1x/g, urls.png1x)
-      .replace(/png2x/g, urls.png2x)
-      .replace(/webp1x/g, urls.webp1x)
-      .replace(/webp2x/g, urls.webp2x);
+      .replace(/{image1x}/g, urls.image1x)
+      .replace(/{image2x}/g, urls.image2x)
+      .replace(/{webp1x}/g, urls.webp1x)
+      .replace(/{webp2x}/g, urls.webp2x);
     quizImage.innerHTML = innerHTMLPictureElement;
   });
 }
 
-function getImageUrlForWidthAndFormat(
-  imageServiceUrl,
-  imageKey,
-  width,
-  format
-) {
+function getImageUrls(imageServiceUrl, imageKey, width) {
+  return {
+    image1x: getImageUrl(
+      imageServiceUrl,
+      imageKey,
+      width,
+      getFileExtension(imageKey)
+    ),
+    image2x: getImageUrl(
+      imageServiceUrl,
+      imageKey,
+      width * 2,
+      getFileExtension(imageKey)
+    ),
+    webp1x: getImageUrl(imageServiceUrl, imageKey, width, "webply"),
+    webp2x: getImageUrl(imageServiceUrl, imageKey, width * 2, "webply")
+  };
+}
+
+function getImageUrl(imageServiceUrl, imageKey, width, format) {
   return imageServiceUrl
     .replace(/{key}/g, imageKey)
     .replace(/{width}/g, width)
     .replace(/{format}/g, format);
 }
 
-function getUrlsForImageAndWidth(imageServiceUrl, imageKey, width) {
-  return {
-    png1x: getImageUrlForWidthAndFormat(
-      imageServiceUrl,
-      imageKey,
-      width,
-      "png"
-    ),
-    png2x: getImageUrlForWidthAndFormat(
-      imageServiceUrl,
-      imageKey,
-      width * 2,
-      "png"
-    ),
-    webp1x: getImageUrlForWidthAndFormat(
-      imageServiceUrl,
-      imageKey,
-      width,
-      "webpll"
-    ),
-    webp2x: getImageUrlForWidthAndFormat(
-      imageServiceUrl,
-      imageKey,
-      width * 2,
-      "webpll"
-    )
-  };
+function getFileExtension(imageKey) {
+  const fileExtensionPattern = /\.([0-9a-z]+$)/i;
+  const fileExtension = imageKey.match(fileExtensionPattern)[1];
+  if (fileExtension === "png") {
+    return "png";
+  }
+  return "pjpg";
 }
