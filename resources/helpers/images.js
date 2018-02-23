@@ -16,7 +16,7 @@ function getImageUrls(imageKey, width) {
 function getFileExtension(imageKey) {
   const fileExtensionPattern = /\.([0-9a-z]+$)/i;
   const fileExtension = imageKey.match(fileExtensionPattern);
-  if (fileExtension[1] === "png") {
+  if (fileExtension && fileExtension[1] === "png") {
     return "png";
   }
   return "pjpg";
