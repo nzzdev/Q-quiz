@@ -8,8 +8,7 @@ const stylesDir = __dirname + "/../../styles/";
 const transform = require(resourcesDir + "helpers/itemTransformer.js");
 const getExactPixelWidth = require(resourcesDir +
   "helpers/toolRuntimeConfig.js").getExactPixelWidth;
-const getUrlsForImageAndWidth = require(resourcesDir + "helpers/images.js")
-  .getUrlsForImageAndWidth;
+const getImageUrls = require(resourcesDir + "helpers/images.js").getImageUrls;
 
 const schemaString = JSON.parse(
   fs.readFileSync(resourcesDir + "schema.json", {
@@ -134,7 +133,7 @@ module.exports = {
       context.width = exactPixelWidth;
       context.item.questions.map(question => {
         if (question.image && question.image.key) {
-          question.image.urls = getUrlsForImageAndWidth(
+          question.image.urls = getImageUrls(
             question.image.key,
             context.width,
             context.imageServiceUrl
