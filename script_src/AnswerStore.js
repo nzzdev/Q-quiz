@@ -1,40 +1,43 @@
 export default class AnswerStore {
-
   constructor(toolBaseUrl) {
     this.toolBaseUrl = toolBaseUrl;
   }
 
   saveAnswer(answer) {
     return fetch(`${this.toolBaseUrl}/answer`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'content-type': 'application/json'
+        "content-type": "application/json"
       },
       body: JSON.stringify({
         data: answer
       })
     })
-    .then(response => {
-      return response.json()
-    })
-    .then(data => {
-      return data;
-    })
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        return data;
+      });
   }
 
   getStats(itemId, questionData, answerId = undefined) {
-    if (questionData.type === 'numberGuess' || questionData.type === 'mapPointGuess' || questionData.type === 'multipleChoice') {
-      let statsServiceUrl = `${this.toolBaseUrl}/stats/answers/${questionData.type}/${itemId}/${questionData.id}`
+    if (
+      questionData.type === "numberGuess" ||
+      questionData.type === "mapPointGuess" ||
+      questionData.type === "multipleChoice"
+    ) {
+      let statsServiceUrl = `${this.toolBaseUrl}/stats/answers/${
+        questionData.type
+      }/${itemId}/${questionData.id}`;
       if (answerId !== undefined) {
-        statsServiceUrl += `/${answerId}`
+        statsServiceUrl += `/${answerId}`;
       }
-      return fetch(statsServiceUrl)
-        .then(response => {
-          return response.json()
-        })
+      return fetch(statsServiceUrl).then(response => {
+        return response.json();
+      });
     } else {
-      return Promise.resolve(undefined)
+      return Promise.resolve(undefined);
     }
   }
-
 }

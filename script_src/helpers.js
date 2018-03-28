@@ -1,7 +1,5 @@
-export function loadAdditionalArticles(articleIds) {
+export function loadAdditionalArticles(articleIds, enricoAPIUrl) {
   let loadPromises = [];
-  const apiUrl = "https://enrico.nzz-tech.ch/v1/article";
-
   const enricoProducts = ["nzz", "nzzas"];
 
   articleIds.forEach(articleId => {
@@ -11,7 +9,7 @@ export function loadAdditionalArticles(articleIds) {
 
     enricoProducts.forEach(product => {
       loadPromises.push(
-        fetch(`${apiUrl}?product=${product}&articleid=${articleId}`)
+        fetch(`${enricoAPIUrl}?product=${product}&articleid=${articleId}`)
           .then(response => {
             if (response.status >= 200 && response.status < 300) {
               return response.json();
