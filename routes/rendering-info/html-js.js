@@ -105,12 +105,24 @@ module.exports = {
       item,
       request.payload.toolRuntimeConfig
     );
+
+    if (!process.env.ENRICO_PRODUCTS) {
+      process.env.ENRICO_PRODUCTS = `[]`;
+    }
+
+    const clientEnv = {
+      ENRICO_API_URL: process.env.ENRICO_API_URL,
+      ENRICO_PRODUCTS: JSON.parse(process.env.ENRICO_PRODUCTS)
+    };
+
     const loaderScript = `
       System.import('q-quiz/quiz.js')
         .then(function(module) {
           return module.display(${JSON.stringify(
             scriptData
-          )}, document.querySelector('#${quizContainerId}'))
+          )}, document.querySelector('#${quizContainerId}'), ${JSON.stringify(
+      clientEnv
+    )})
         })
         .catch(function(error) {
           console.log(error)
