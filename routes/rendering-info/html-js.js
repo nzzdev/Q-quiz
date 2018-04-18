@@ -106,6 +106,10 @@ module.exports = {
       request.payload.toolRuntimeConfig
     );
 
+    if (!process.env.ENRICO_PRODUCTS) {
+      process.env.ENRICO_PRODUCTS = `[]`;
+    }
+
     const clientEnv = {
       ENRICO_API_URL: process.env.ENRICO_API_URL,
       ENRICO_PRODUCTS: JSON.parse(process.env.ENRICO_PRODUCTS)
