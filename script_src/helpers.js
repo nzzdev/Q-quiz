@@ -1,8 +1,9 @@
+import env from "./env.js";
+
 export function loadAdditionalArticles(articleIds) {
   let loadPromises = [];
-  const apiUrl = "https://enrico.nzz-tech.ch/v1/article";
-
-  const enricoProducts = ["nzz", "nzzas"];
+  const apiUrl = env.ENRICO_API_URL;
+  const enricoProducts = env.ENRICO_PRODUCTS;
 
   articleIds.forEach(articleId => {
     if (!articleId || articleId.length === 0) {
