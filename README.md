@@ -1,5 +1,7 @@
 # Q Quiz
 
+**Maintainer**: [manuelroth](https://github.com/manuelroth)
+
 Q quiz is one tool of the Q toolbox to render quizzes containing questions of type multiple choice, number guess and map point guess. It also includes the rendering of answer statistics for each question type.
 
 ## Implementation details
