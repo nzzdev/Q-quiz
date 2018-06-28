@@ -8,7 +8,7 @@
       "type": "string"
     },
     "elements": {
-      "title": "Elemente",
+      "title": "Quiz-Elemente",
       "type": "array",
       "Q:options": {
         "expandable": {
@@ -17,7 +17,7 @@
         "availabilityChecks": [
           {
             "type": "ItemHasId",
-            "unavailableMessage": "Zuerst Titel erfassen und speichern um Fragen hinzuzufügen"
+            "unavailableMessage": "Bitte speichere deinen Titel um fortzufahren."
           }
         ]
       },
@@ -52,7 +52,7 @@
         },
         "title": {
           "type": "string",
-          "title": "Titel"
+          "title": "Titel des Quiz"
         }
       }
     },
@@ -80,19 +80,22 @@
         },
         "choices": {
           "type": "array",
-          "title": "Antwortmöglichkeiten",
+          "title": "Falsche Antworten",
           "Q:options": {
             "compact": true
           },
           "items": {
             "type": "string",
             "default": "",
-            "title": "Antwortmöglichkeit"
+            "title": "Falsche Antwort"
           }
         },
         "answerText": {
           "type": "string",
-          "title": "Ausformulierte Antwort"
+          "title": "Ausformulierte Antwort",
+          "Q:options": {
+            "placeholder": "Sagt dem Nutzer in Prosa, welche Antwort richtig ist und liefert idealerweise noch etwas Erklärung dazu."
+          }
         },
         "notes": {
           "type": "string",
@@ -129,27 +132,39 @@
         },
         "unit": {
           "type": "string",
-          "title": "Einheit Plural"
+          "title": "Einheit Plural",
+          "Q:options": {
+            "placeholder": "Was für eine Zahl ist zu schätzen? Meter? Personen? Franken? etc."
+          }
         },
         "unit_singular": {
           "type": "string",
-          "title": "Einheit Singular (nur falls abweichend von Einheit Plural)"
+          "title": "Einheit Singular",
+          "Q:options": {
+            "placeholder": "Nur nötig, falls abweichend von Einheit Plural."
+          }
         },
         "min": {
           "type": "number",
-          "title": "Minimalwert"
+          "title": "Minimalwert auf der Schätzskala"
         },
         "max": {
           "type": "number",
-          "title": "Maximalwert"
+          "title": "Maximalwert auf der Schätzskala"
         },
         "step": {
           "type": "number",
-          "title": "Grösse der Zwischenschritte"
+          "title": "Grösse der Zwischenschritte beim Verschieben des Sliders",
+          "Q:options": {
+            "placeholder": "Sollte so gewählt sein, dass sich zwischen Minimal- und Maximalwert etwa 100-500 Zwischenschritte ergeben."
+          }
         },
         "answerText": {
           "type": "string",
-          "title": "Ausformulierte Antwort"
+          "title": "Ausformulierte Antwort",
+          "Q:options": {
+            "placeholder": "Sagt dem Nutzer in Prosa, welche Antwort richtig ist und liefert idealerweise noch etwas Erklärung dazu."
+          }
         },
         "notes": {
           "type": "string",
@@ -200,7 +215,7 @@
     },
     "lastCard": {
       "type": "object",
-      "title": "letzte Seite",
+      "title": "Letzte Seite",
       "properties": {
         "id": {"$ref": "#/definitions/elementId"},
         "type": {
@@ -232,7 +247,10 @@
         "articleRecommendations": {"$ref": "#/definitions/articleRecommendations"},
         "quizLink": {
           "type": "string",
-          "title": "Link zu Anschlussquiz"
+          "title": "Link zu Anschlussquiz",
+          "Q:options": {
+            "placeholder": "https://www.nzz.ch/... (am besten ein thematisch ähnliches Quiz, das ein ähnliches Zielpublikum ansprechen dürfte)"
+          }
         },
         "quizTitle": {
           "type": "string",
@@ -264,7 +282,10 @@
           },
           "articleId": {
             "type": "string",
-            "title": "Artikel ID"
+            "title": "Artikel ID",
+            "Q:options": {
+              "placeholder": "ld.123456"
+          }
           }
         }
       }
@@ -333,7 +354,7 @@
           "properties": {
             "pointLabel": {
               "type": "string",
-              "title": "Beschriftung Punkt"
+              "title": "Beschriftung Punkt bei der Auflösung"
             }
           }
         }
