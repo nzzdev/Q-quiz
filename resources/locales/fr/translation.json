@@ -1,0 +1,46 @@
+{
+  "Title": "Titre",
+  "Quiz-Elemente": "Quiz-Elements",
+  "Bitte speichere deinen Titel um fortzufahren.":
+    "Veuillez sauvegarder votre titre pour continuer.",
+  "Titel des Quiz": "Titre du quiz",
+  "Cover": "Couverture",
+  "Multiple Choice": "Multiple choice",
+  "Frage": "Question",
+  "Falsche Antworten": "Mauvaises réponses",
+  "Falsche Antwort": "Mauvaise réponse",
+  "Korrekte Antwort": "Bonne réponse",
+  "Ausformulierte Antwort": "Réponse formulée",
+  "Sagt dem Nutzer in Prosa, welche Antwort richtig ist und liefert idealerweise noch etwas Erklärung dazu.":
+    "Dites à l'utilisateur en prose, quelle est la réponse correcte et idéalement fournit toujours quelques explications.",
+  "Anmerkungen": "Remarques",
+  "Zahl schätzen": "Numéro d'estimation",
+  "Einheit Plural": "Unité pluriel",
+  "Was für eine Zahl ist zu schätzen? Meter? Personen? Franken? etc.":
+    "Quelle est l'unité de nombre? Mètre? Les gens? Franken? etc.",
+  "Einheit Singular": "Unité singulière",
+  "Nur nötig, falls abweichend von Einheit Plural.":
+    "Seulement nécessaire, si différent de l'unité plurielle.",
+  "Minimalwert auf der Schätzskala":
+    "Valeur minimale sur l'échelle d'estimation",
+  "Maximalwert auf der Schätzskala":
+    "Valeur maximale sur l'échelle d'estimation",
+  "Grösse der Zwischenschritte beim Verschieben des Sliders":
+    "Taille des étapes intermédiaires lors du déplacement du curseur",
+  "Sollte so gewählt sein, dass sich zwischen Minimal- und Maximalwert etwa 100-500 Zwischenschritte ergeben.":
+    "Devrait être choisi de sorte qu'entre la valeur minimale et maximale environ 100-500 étapes intermédiaires résultent.",
+  "Ort schätzen": "Appréciez l'endroit",
+  "Letzte Seite": "Dernière page",
+  "Auswertung anzeigen": "Afficher l'évaluation",
+  "Abmoderation": "Texte fermeture",
+  "Link zu Anschlussquiz": "Lien vers le quiz de connexion",
+  "https://www.nzz.ch/... (am besten ein thematisch ähnliches Quiz, das ein ähnliches Zielpublikum ansprechen dürfte)":
+    "https://www.nzz.ch/... (de préférence un quiz thématique similaire qui devrait intéresser un public cible similaire)",
+  "Titel Anschlussquiz": "Question Connection Quiz",
+  "Artikelempfehlungen": "Article de journal de recommandations",
+  "Artikelempfehlung": "Article de journal de recommandation",
+  "Anmoderation": "Texte d'introduction",
+  "Artikel ID": "ld.123456",
+  "Bild": "Image",
+  "URL zum Bild": "Image Url"
+}
