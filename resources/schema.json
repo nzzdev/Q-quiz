@@ -17,30 +17,29 @@
         "availabilityChecks": [
           {
             "type": "ItemHasId",
-            "unavailableMessage": "Bitte speichere deinen Titel um fortzufahren."
+            "unavailableMessage":
+              "Bitte speichere deinen Titel um fortzufahren."
           }
         ]
       },
       "items": {
         "oneOf": [
-          {"$ref": "#/definitions/cover"},
-          {"$ref": "#/definitions/multipleChoice"},
-          {"$ref": "#/definitions/numberGuess"},
-          {"$ref": "#/definitions/mapPointGuess"},
-          {"$ref": "#/definitions/lastCard"}
+          { "$ref": "#/definitions/cover" },
+          { "$ref": "#/definitions/multipleChoice" },
+          { "$ref": "#/definitions/numberGuess" },
+          { "$ref": "#/definitions/mapPointGuess" },
+          { "$ref": "#/definitions/lastCard" }
         ]
       }
     }
-  },   
-  "required": [
-    "title"
-  ],
+  },
+  "required": ["title"],
   "definitions": {
     "cover": {
       "type": "object",
       "title": "Cover",
       "properties": {
-        "id": {"$ref": "#/definitions/elementId"},
+        "id": { "$ref": "#/definitions/elementId" },
         "type": {
           "type": "string",
           "default": "cover",
@@ -60,7 +59,7 @@
       "type": "object",
       "title": "Multiple Choice",
       "properties": {
-        "id": {"$ref": "#/definitions/elementId"},
+        "id": { "$ref": "#/definitions/elementId" },
         "type": {
           "type": "string",
           "default": "multipleChoice",
@@ -73,7 +72,7 @@
           "type": "string",
           "title": "Frage"
         },
-        "image": {"$ref": "#/definitions/image"},
+        "image": { "$ref": "#/definitions/image" },
         "answer": {
           "type": "string",
           "title": "Korrekte Antwort"
@@ -94,25 +93,25 @@
           "type": "string",
           "title": "Ausformulierte Antwort",
           "Q:options": {
-            "placeholder": "Sagt dem Nutzer in Prosa, welche Antwort richtig ist und liefert idealerweise noch etwas Erklärung dazu."
+            "placeholder":
+              "Sagt dem Nutzer in Prosa, welche Antwort richtig ist und liefert idealerweise noch etwas Erklärung dazu."
           }
         },
         "notes": {
           "type": "string",
           "title": "Anmerkungen"
         },
-        "articleRecommendations": {"$ref": "#/definitions/articleRecommendations"}
+        "articleRecommendations": {
+          "$ref": "#/definitions/articleRecommendations"
+        }
       },
-      "required":[
-        "question",
-        "answer"
-      ]
+      "required": ["question", "answer"]
     },
     "numberGuess": {
       "type": "object",
       "title": "Zahl schätzen",
       "properties": {
-        "id": {"$ref": "#/definitions/elementId"},
+        "id": { "$ref": "#/definitions/elementId" },
         "type": {
           "type": "string",
           "default": "numberGuess",
@@ -125,7 +124,7 @@
           "type": "string",
           "title": "Frage"
         },
-        "image": {"$ref": "#/definitions/image"},
+        "image": { "$ref": "#/definitions/image" },
         "answer": {
           "type": "number",
           "title": "Korrekte Antwort"
@@ -134,7 +133,8 @@
           "type": "string",
           "title": "Einheit Plural",
           "Q:options": {
-            "placeholder": "Was für eine Zahl ist zu schätzen? Meter? Personen? Franken? etc."
+            "placeholder":
+              "Was für eine Zahl ist zu schätzen? Meter? Personen? Franken? etc."
           }
         },
         "unit_singular": {
@@ -156,35 +156,33 @@
           "type": "number",
           "title": "Grösse der Zwischenschritte beim Verschieben des Sliders",
           "Q:options": {
-            "placeholder": "Sollte so gewählt sein, dass sich zwischen Minimal- und Maximalwert etwa 100-500 Zwischenschritte ergeben."
+            "placeholder":
+              "Sollte so gewählt sein, dass sich zwischen Minimal- und Maximalwert etwa 100-500 Zwischenschritte ergeben."
           }
         },
         "answerText": {
           "type": "string",
           "title": "Ausformulierte Antwort",
           "Q:options": {
-            "placeholder": "Sagt dem Nutzer in Prosa, welche Antwort richtig ist und liefert idealerweise noch etwas Erklärung dazu."
+            "placeholder":
+              "Sagt dem Nutzer in Prosa, welche Antwort richtig ist und liefert idealerweise noch etwas Erklärung dazu."
           }
         },
         "notes": {
           "type": "string",
           "title": "Anmerkungen"
         },
-        "articleRecommendations": {"$ref": "#/definitions/articleRecommendations"}
+        "articleRecommendations": {
+          "$ref": "#/definitions/articleRecommendations"
+        }
       },
-      "required": [
-        "question",
-        "answer",
-        "min", 
-        "max", 
-        "step"
-      ]
+      "required": ["question", "answer", "min", "max", "step"]
     },
     "mapPointGuess": {
       "type": "object",
       "title": "Ort schätzen",
       "properties": {
-        "id": {"$ref": "#/definitions/elementId"},
+        "id": { "$ref": "#/definitions/elementId" },
         "type": {
           "type": "string",
           "default": "mapPointGuess",
@@ -208,16 +206,18 @@
           "type": "string",
           "title": "Anmerkungen"
         },
-        "image": {"$ref": "#/definitions/image"},
-        "articleRecommendations": {"$ref": "#/definitions/articleRecommendations"}
+        "image": { "$ref": "#/definitions/image" },
+        "articleRecommendations": {
+          "$ref": "#/definitions/articleRecommendations"
+        }
       },
-      "required":[ "question" ]
+      "required": ["question"]
     },
     "lastCard": {
       "type": "object",
       "title": "Letzte Seite",
       "properties": {
-        "id": {"$ref": "#/definitions/elementId"},
+        "id": { "$ref": "#/definitions/elementId" },
         "type": {
           "type": "string",
           "default": "lastCard",
@@ -244,12 +244,15 @@
           "type": "string",
           "title": "Abmoderation"
         },
-        "articleRecommendations": {"$ref": "#/definitions/articleRecommendations"},
+        "articleRecommendations": {
+          "$ref": "#/definitions/articleRecommendations"
+        },
         "quizLink": {
           "type": "string",
           "title": "Link zu Anschlussquiz",
           "Q:options": {
-            "placeholder": "https://www.nzz.ch/... (am besten ein thematisch ähnliches Quiz, das ein ähnliches Zielpublikum ansprechen dürfte)"
+            "placeholder":
+              "https://www.nzz.ch/... (am besten ein thematisch ähnliches Quiz, das ein ähnliches Zielpublikum ansprechen dürfte)"
           }
         },
         "quizTitle": {
@@ -285,7 +288,7 @@
             "title": "Artikel ID",
             "Q:options": {
               "placeholder": "ld.123456"
-          }
+            }
           }
         }
       }
@@ -339,7 +342,7 @@
             }
           }
         },
-        "bbox": { 
+        "bbox": {
           "oneOf": [
             {
               "$ref": "#/definitions/bbox"
@@ -364,14 +367,19 @@
       "description": "A single position",
       "type": "array",
       "minItems": 2,
-      "items": [ { "type": "number" }, { "type": "number" } ],
+      "items": [{ "type": "number" }, { "type": "number" }],
       "additionalItems": false
     },
     "bbox": {
       "description": "A bounding box",
       "type": "array",
       "minItems": 4,
-      "items": [ { "type": "number" }, { "type": "number" }, { "type": "number" }, { "type": "number" } ],
+      "items": [
+        { "type": "number" },
+        { "type": "number" },
+        { "type": "number" },
+        { "type": "number" }
+      ],
       "additionalItems": false
     }
   }

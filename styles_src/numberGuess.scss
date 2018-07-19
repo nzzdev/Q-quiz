@@ -27,7 +27,7 @@ $q-quiz-result__number-guess-visual__stats-graphic-height: 60px;
 
   // contains the small line towards the correct answer / user answer line
   &::before {
-    content: '';
+    content: "";
     display: block;
     position: absolute;
     width: 1px;
@@ -88,7 +88,8 @@ $q-quiz-result__number-guess-visual__stats-graphic-height: 60px;
   }
 }
 
-.q-quiz-answer-chart-min-line, .q-quiz-answer-chart-max-line {
+.q-quiz-answer-chart-min-line,
+.q-quiz-answer-chart-max-line {
   stroke-width: 1px;
   stroke: currentColor;
   shape-rendering: crispEdges;

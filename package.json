@@ -49,7 +49,7 @@
     "jspm": "0.17.0-beta.41",
     "lab": "^15.5.0",
     "node-fetch": "^1.7.3",
-    "node-sass": "^4.9.0",
+    "node-sass": "^4.9.2",
     "pino-noir": "^2.2.1",
     "postcss-import": "^11.1.0",
     "pouchdb": "^6.4.3",
@@ -62,11 +62,11 @@
     "name": "@nzz/q-quiz",
     "main": "@nzz/q-quiz.js",
     "dependencies": {
-      "leaflet": "github:Leaflet/Leaflet@^1.0.3",
-      "text": "github:systemjs/plugin-text@^0.0.9"
+      "leaflet": "github:Leaflet/Leaflet@^1.3.3",
+      "text": "github:systemjs/plugin-text@^0.0.11"
     },
     "devDependencies": {
-      "plugin-babel": "npm:systemjs-plugin-babel@^0.0.21"
+      "plugin-babel": "npm:systemjs-plugin-babel@^0.0.25"
     }
   }
 }
