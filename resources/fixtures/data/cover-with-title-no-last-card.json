@@ -1,5 +1,6 @@
 {
-  "title": "FIXTURE: Ein Quiz mit Cover mit Titel, alle Fragetypen, ohne letzte Seite",
+  "title":
+    "FIXTURE: Ein Quiz mit Cover mit Titel, alle Fragetypen, ohne letzte Seite",
   "elements": [
     {
       "id": "quiz-1-1503673199200-897399321",
@@ -10,17 +11,14 @@
       "id": "quiz-1-1503673205043-233776299",
       "type": "multipleChoice",
       "image": {
-        "url": "https://nzz-q-assets-stage.s3.eu-west-1.amazonaws.com/2018/02/05/ea4995ff-38d9-4ba2-a6b4-f8707f98b57c.png",
+        "url":
+          "https://nzz-q-assets-stage.s3.eu-west-1.amazonaws.com/2018/02/05/ea4995ff-38d9-4ba2-a6b4-f8707f98b57c.png",
         "key": "2018/02/05/ea4995ff-38d9-4ba2-a6b4-f8707f98b57c.png",
         "size": 14577,
         "width": 902,
         "height": 168
       },
-      "choices": [
-        "vielleicht",
-        "falsch",
-        "absolut falsch"
-      ],
+      "choices": ["vielleicht", "falsch", "absolut falsch"],
       "articleRecommendations": [],
       "question": "Was ist die richtige Antwort?",
       "answer": "richtig"
@@ -43,10 +41,7 @@
         "type": "Feature",
         "geometry": {
           "type": "Point",
-          "coordinates": [
-            8.548714,
-            47.3664
-          ]
+          "coordinates": [8.548714, 47.3664]
         },
         "properties": {
           "pointLabel": "NZZ Red",
