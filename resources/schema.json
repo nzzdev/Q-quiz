@@ -68,11 +68,15 @@
             "hideInEditor": true
           }
         },
+        "intoduction": {
+          "type": "string",
+          "title": "Einleitung"
+        },
+        "image": { "$ref": "#/definitions/image" },
         "question": {
           "type": "string",
           "title": "Frage"
         },
-        "image": { "$ref": "#/definitions/image" },
         "answer": {
           "type": "string",
           "title": "Korrekte Antwort"
@@ -120,11 +124,15 @@
             "hideInEditor": true
           }
         },
+        "intoduction": {
+          "type": "string",
+          "title": "Einleitung"
+        },
+        "image": { "$ref": "#/definitions/image" },
         "question": {
           "type": "string",
           "title": "Frage"
         },
-        "image": { "$ref": "#/definitions/image" },
         "answer": {
           "type": "number",
           "title": "Korrekte Antwort"
@@ -192,6 +200,11 @@
             "hideInEditor": true
           }
         },
+        "intoduction": {
+          "type": "string",
+          "title": "Einleitung"
+        },
+        "image": { "$ref": "#/definitions/image" },
         "question": {
           "type": "string",
           "title": "Frage"
@@ -207,7 +220,6 @@
           "type": "string",
           "title": "Anmerkungen"
         },
-        "image": { "$ref": "#/definitions/image" },
         "articleRecommendations": {
           "$ref": "#/definitions/articleRecommendations"
         }
