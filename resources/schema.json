@@ -154,6 +154,7 @@
         },
         "step": {
           "type": "number",
+          "minimum": 1,
           "title": "Grösse der Zwischenschritte beim Verschieben des Sliders",
           "Q:options": {
             "placeholder":
