@@ -15,7 +15,7 @@ function getAnswers(type, questionId, options) {
     options["group"] = true;
   }
 
-  return quizDb.query("stats/answers-" + type, options);
+  return quizDb.query(`stats/answers-${type}`, options);
 }
 
 function getAnswer(id) {

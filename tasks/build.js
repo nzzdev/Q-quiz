@@ -13,7 +13,7 @@ const cssnano = require("cssnano");
 //   browsers: ['ie > 9', 'last 3 versions']
 // });
 
-const stylesDir = __dirname + "/../styles_src/";
+const stylesDir = `${__dirname}/../styles_src/`;
 
 builder.config({
   map: {
@@ -87,7 +87,7 @@ async function compileStylesheet(name) {
       sass.render(
         {
           file: filePath,
-          includePaths: [__dirname + "/../jspm_packages/npm"],
+          includePaths: [`${__dirname}/../jspm_packages/npm`],
           outputStyle: "compressed"
         },
         (err, sassResult) => {

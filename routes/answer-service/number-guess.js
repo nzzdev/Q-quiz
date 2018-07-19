@@ -56,10 +56,7 @@ function getStripplotSvg(data, stats, plotWidth) {
           .attr("width", width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom)
           .append("g")
-          .attr(
-            "transform",
-            "translate(" + margin.left + "," + margin.top + ")"
-          );
+          .attr("transform", `translate(${margin.left},${margin.top})`);
 
         svg
           .append("rect")
@@ -176,10 +173,7 @@ function getBarchartSvg(data, stats, chartWidth) {
           .attr("width", width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom)
           .append("g")
-          .attr(
-            "transform",
-            "translate(" + margin.left + "," + margin.top + ")"
-          );
+          .attr("transform", `translate(${margin.left},${margin.top})`);
 
         svg
           .append("rect")

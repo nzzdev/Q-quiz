@@ -90,7 +90,7 @@ module.exports = [
             return Boom.badRequest(couchError.message);
           });
       } catch (e) {
-        console.log("error in stats route: " + e);
+        console.log(`error in stats route: ${e}`);
         return Boom.badRequest(e);
       }
     }

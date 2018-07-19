@@ -99,7 +99,7 @@ function getRecommendationsElement(articleRecommendations) {
               articleRecommendations[index].text.length &&
               articleRecommendations[index].text.length > 0
             ) {
-              recommendationText = articleRecommendations[index].text + " ";
+              recommendationText = `${articleRecommendations[index].text} `;
             }
             recommendationsHtml += `
               <span>${recommendationText}<a href="${

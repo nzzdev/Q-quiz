@@ -1,5 +1,3 @@
-const path = require("path");
-
 module.exports = [
   {
     method: "GET",
@@ -7,7 +5,7 @@ module.exports = [
     options: {
       cors: true,
       files: {
-        relativeTo: path.join(__dirname, "/../scripts/")
+        relativeTo: `${__dirname}/../scripts/`
       }
     },
     handler: function(request, h) {

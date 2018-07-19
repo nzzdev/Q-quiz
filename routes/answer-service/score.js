@@ -2,7 +2,7 @@ const fs = require("fs");
 const Enjoi = require("enjoi");
 const Joi = require("joi");
 const Boom = require("boom");
-const resourcesDir = __dirname + "/../../resources/";
+const resourcesDir = `${__dirname}/../../resources/`;
 const scoreHelpers = require(`${resourcesDir}helpers/scoreHelpers.js`);
 const questionTypes = require(`${resourcesDir}helpers/constants.js`)
   .questionTypes;

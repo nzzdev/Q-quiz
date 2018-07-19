@@ -86,7 +86,7 @@ export default class MapPointGuessHandler {
 
   setMapSize(map) {
     let container = map.getContainer();
-    container.style.height = map.getSize()["x"] * (9 / 16) + "px";
+    container.style.height = `${map.getSize()["x"] * (9 / 16)}px`;
     map.invalidateSize();
   }
 
