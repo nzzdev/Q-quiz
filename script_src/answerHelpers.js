@@ -40,9 +40,9 @@ export function getAnswerTextElement(stats, isCorrectAnswer, getDiffText) {
 
     if (stats.totalAnswers === 2) {
       statsTextHtml +=
-        " Das klingt schlimmer als es ist. Sie waren so schnell, dass erst eine andere Person mitgemacht hat. Ihre Schätzung ist also auch die Zweitbeste.";
+        " Das klingt schlimmer, als es ist. Sie waren so schnell, dass erst eine andere Person mitgemacht hat. Ihre Schätzung ist also auch die zweitbeste.";
     } else if (stats.totalAnswers <= 11) {
-      statsTextHtml += ` Das klingt schlimmer als es ist. Sie waren so schnell, dass erst ${stats.totalAnswers -
+      statsTextHtml += ` Das klingt schlimmer, als es ist. Sie waren so schnell, dass erst ${stats.totalAnswers -
         1} andere mitgemacht haben.`;
     } else {
       statsTextHtml +=
