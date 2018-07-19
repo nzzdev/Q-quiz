@@ -9,7 +9,7 @@ SystemJS.config({
   },
   devConfig: {
     map: {
-      "plugin-babel": "npm:systemjs-plugin-babel@0.0.21"
+      "plugin-babel": "npm:systemjs-plugin-babel@0.0.25"
     }
   },
   transpiler: "plugin-babel",
@@ -28,8 +28,8 @@ SystemJS.config({
 SystemJS.config({
   packageConfigPaths: ["npm:@*/*.json", "npm:*.json", "github:*/*.json"],
   map: {
-    leaflet: "github:Leaflet/Leaflet@1.0.3",
-    text: "github:systemjs/plugin-text@0.0.9"
+    leaflet: "github:Leaflet/Leaflet@1.3.3",
+    text: "github:systemjs/plugin-text@0.0.11"
   },
   packages: {}
 });
