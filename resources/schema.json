@@ -68,10 +68,7 @@
             "hideInEditor": true
           }
         },
-        "intoduction": {
-          "type": "string",
-          "title": "Einleitung"
-        },
+        "introduction": { "$ref": "#/definitions/introduction" },
         "image": { "$ref": "#/definitions/image" },
         "credit": { "$ref": "#/definitions/credit" },
         "question": {
@@ -125,10 +122,7 @@
             "hideInEditor": true
           }
         },
-        "intoduction": {
-          "type": "string",
-          "title": "Einleitung"
-        },
+        "introduction": { "$ref": "#/definitions/introduction" },
         "image": { "$ref": "#/definitions/image" },
         "credit": { "$ref": "#/definitions/credit" },
         "question": {
@@ -202,10 +196,7 @@
             "hideInEditor": true
           }
         },
-        "intoduction": {
-          "type": "string",
-          "title": "Einleitung"
-        },
+        "introduction": { "$ref": "#/definitions/introduction" },
         "image": { "$ref": "#/definitions/image" },
         "credit": { "$ref": "#/definitions/credit" },
         "question": {
@@ -309,6 +300,10 @@
         }
       }
     },
+    "introduction": {
+      "type": "string",
+      "title": "Einleitung"
+    },
     "image": {
       "type": "object",
       "Q:type": "files",
@@ -341,7 +336,8 @@
               "title": "Link",
               "type": "string",
               "Q:options": {
-                "placeholder": "Direktlink zum Fotografen, http://..."
+                "placeholder":
+                  "Direktlink zum Fotografen, http://&#46;&#46;&#46;"
               }
             },
             "isValid": {
