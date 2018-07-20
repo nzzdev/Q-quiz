@@ -8,7 +8,12 @@
 {{ else }}
 <picture class="q-quiz-question-image" data-imageServiceUrl="{{imageServiceUrl}}" data-imageKey="{{question.image.key}}"
   style="position:relative; display: block; padding-bottom: {{ question.image.height / question.image.width * 100 }}%;"></picture>
-{{/if}} {{/if}}
+{{/if}} {{/if}} {{#if question.credit.text }}
+<p class="q-quiz-question-image-credit s-font-note s-font-note--light">
+  {{#if question.credit.link.url && question.credit.link.isValid }} (Bild:
+  <a href="{{ question.credit.link.url }}" target="blank" rel="noopener noreferrer">{{ question.credit.text }}</a>) {{ else }} (Bild: {{ question.credit.text }}) {{/if}}
+</p>
+{{/if}}
 <h3 class="s-q-item__title">{{#if question.question}}{{question.question}}{{/if}}</h3>
 <div>
   {{#if isMultipleChoice}}

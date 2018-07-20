@@ -73,6 +73,7 @@
           "title": "Einleitung"
         },
         "image": { "$ref": "#/definitions/image" },
+        "credit": { "$ref": "#/definitions/credit" },
         "question": {
           "type": "string",
           "title": "Frage"
@@ -129,6 +130,7 @@
           "title": "Einleitung"
         },
         "image": { "$ref": "#/definitions/image" },
+        "credit": { "$ref": "#/definitions/credit" },
         "question": {
           "type": "string",
           "title": "Frage"
@@ -205,6 +207,7 @@
           "title": "Einleitung"
         },
         "image": { "$ref": "#/definitions/image" },
+        "credit": { "$ref": "#/definitions/credit" },
         "question": {
           "type": "string",
           "title": "Frage"
@@ -318,6 +321,33 @@
           "size": "size",
           "width": "width",
           "height": "height"
+        }
+      }
+    },
+    "credit": {
+      "type": "object",
+      "title": "Bildcredit",
+      "properties": {
+        "text": {
+          "title": "Credit",
+          "type": "string"
+        },
+        "link": {
+          "Q:type": "link",
+          "title": "Link",
+          "type": "object",
+          "properties": {
+            "url": {
+              "title": "Link",
+              "type": "string",
+              "Q:options": {
+                "placeholder": "Direktlink zum Fotografen, http://..."
+              }
+            },
+            "isValid": {
+              "type": "boolean"
+            }
+          }
         }
       }
     },
