@@ -1,4 +1,6 @@
 const fs = require("fs");
+const Enjoi = require("enjoi");
+const Joi = require("joi");
 const resourcesDir = `${__dirname}/../../resources/`;
 const viewsDir = `${__dirname}/../../views/`;
 const scriptsDir = `${__dirname}/../../scripts/`;
@@ -8,40 +10,13 @@ const getExactPixelWidth = require(`${resourcesDir}helpers/toolRuntimeConfig.js`
   .getExactPixelWidth;
 const getImageUrls = require(`${resourcesDir}helpers/images.js`).getImageUrls;
 
-// POSTed item will be validated against given schema
-// hence we fetch the JSON schema...
 const schemaString = JSON.parse(
   fs.readFileSync(`${resourcesDir}schema.json`, {
     encoding: "utf-8"
   })
 );
-const Ajv = require("ajv");
-const ajv = new Ajv();
 
-// add draft-04 support explicit
-ajv.addMetaSchema(require("ajv/lib/refs/json-schema-draft-04.json"));
-
-const validate = ajv.compile(schemaString);
-function validateAgainstSchema(item, options) {
-  if (validate(item)) {
-    return item;
-  } else {
-    throw Boom.badRequest(JSON.stringify(validate.errors));
-  }
-}
-
-async function validatePayload(payload, options, next) {
-  if (typeof payload !== "object") {
-    return next(Boom.badRequest(), payload);
-  }
-  if (typeof payload.item !== "object") {
-    return next(Boom.badRequest(), payload);
-  }
-  if (typeof payload.toolRuntimeConfig !== "object") {
-    return next(Boom.badRequest(), payload);
-  }
-  await validateAgainstSchema(payload.item, options);
-}
+const schema = Enjoi(schemaString).required();
 
 const scriptHashMap = require(`${scriptsDir}/hashMap.json`);
 const styleHashMap = require(`${stylesDir}/hashMap.json`);
@@ -87,8 +62,15 @@ module.exports = {
       options: {
         allowUnknown: true
       },
-      payload: validatePayload
-    }
+      payload: {
+        item: schema,
+        toolRuntimeConfig: Joi.object({
+          toolBaseUrl: Joi.string().required()
+        }).required()
+      }
+    },
+    cache: false,
+    cors: true
   },
   handler: function(request, h) {
     // item.elements will be split into cover, last card and questions during transformation step
