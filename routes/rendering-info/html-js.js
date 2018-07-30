@@ -6,8 +6,8 @@ const viewsDir = `${__dirname}/../../views/`;
 const scriptsDir = `${__dirname}/../../scripts/`;
 const stylesDir = `${__dirname}/../../styles/`;
 const transform = require(`${resourcesDir}helpers/itemTransformer.js`);
-const getExactPixelWidth = require(resourcesDir +
-  "helpers/toolRuntimeConfig.js").getExactPixelWidth;
+const getExactPixelWidth = require(`${resourcesDir}helpers/toolRuntimeConfig.js`)
+  .getExactPixelWidth;
 const getImageUrls = require(`${resourcesDir}helpers/images.js`).getImageUrls;
 
 const schemaString = JSON.parse(
