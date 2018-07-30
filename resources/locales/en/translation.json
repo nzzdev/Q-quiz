@@ -32,7 +32,7 @@
   "Auswertung anzeigen": "Show final score",
   "Abmoderation": "Closing text",
   "Link zu Anschlussquiz": "Url to follow-up quiz",
-  "https://www.nzz.ch/... (am besten ein thematisch ähnliches Quiz, das ein ähnliches Zielpublikum ansprechen dürfte)":
+  "https&#58;//www&#46;nzz&#46;ch/&#46;&#46;&#46; (am besten ein thematisch ähnliches Quiz, das ein ähnliches Zielpublikum ansprechen dürfte)":
     "https://www.nzz.ch/... (preferably a thematically similar quiz that should appeal to a similar target audience)",
   "Titel Anschlussquiz": "Title follow-up quiz",
   "Artikelempfehlungen": "Article recommendations",
@@ -43,6 +43,6 @@
   "Bildcredit": "Image credit",
   "Credit": "Credit",
   "Link": "Link",
-  "Direktlink zum Fotografen, http://&#46;&#46;&#46;":
-    "Direct link to the photographer, http://..."
+  "Direktlink zum Fotografen, https&#58;//&#46;&#46;&#46;":
+    "Direct link to the photographer, https://..."
 }
