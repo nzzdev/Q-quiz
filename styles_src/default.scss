@@ -118,7 +118,6 @@
 
 .q-quiz-question-image {
   display: block;
-  margin: 10px auto;
   width: 100%;
 }
 
@@ -126,6 +125,11 @@
   position: absolute;
   top: 0;
   left: 0;
+}
+
+.q-quiz-question-image-credit {
+  margin-top: 4px !important;
+  margin-bottom: 0 !important;
 }
 
 .q-quiz-play-another-container {

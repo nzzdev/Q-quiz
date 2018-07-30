@@ -41,6 +41,10 @@
   "Artikelempfehlung": "Article de journal de recommandation",
   "Anmoderation": "Texte d'introduction",
   "Artikel ID": "ld.123456",
-  "Bild": "Image",
-  "URL zum Bild": "Image Url"
+  "Einleitung": "Introduction",
+  "Bildcredit": "Crédit d'image",
+  "Credit": "Crédit",
+  "Link": "Lien",
+  "Direktlink zum Fotografen, http://&#46;&#46;&#46;":
+    "Lien direct vers le photographe, http://..."
 }
