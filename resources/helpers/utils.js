@@ -1,24 +1,27 @@
-const quizDb = require('./db.js').quizDb;
-const fetch = require('node-fetch');
+const quizDb = require("./db.js").quizDb;
+const fetch = require("node-fetch");
 
 function getAnswers(type, questionId, options) {
-  if (typeof options === 'undefined') {
+  if (typeof options === "undefined") {
     options = {};
   }
-  if (type === 'numberGuess' || type === 'mapPointGuess' || type === 'multipleChoice') {
-    options['start_key'] = [questionId];
-    options['end_key'] = [questionId,{}];
-    options['group'] = true;
+  if (
+    type === "numberGuess" ||
+    type === "mapPointGuess" ||
+    type === "multipleChoice"
+  ) {
+    options["start_key"] = [questionId];
+    options["end_key"] = [questionId, {}];
+    options["group"] = true;
   }
 
-  return quizDb.query('stats/answers-' + type, options);
+  return quizDb.query(`stats/answers-${type}`, options);
 }
 
 function getAnswer(id) {
-  return quizDb.get(id)
-    .then(answer => {
-      return answer.data
-    });
+  return quizDb.get(id).then(answer => {
+    return answer.data;
+  });
 }
 
 function getItem(itemId) {
@@ -27,7 +30,7 @@ function getItem(itemId) {
       if (response.ok && response.status < 400) {
         return response.json();
       }
-      throw(new Error(response));
+      throw new Error(response);
     })
     .then(item => {
       // if the type is set directly on the top level, we have a legacy datastructure
@@ -51,23 +54,22 @@ function getItem(itemId) {
         delete item.type;
         item.data = {
           elements: elements
-        }
+        };
       }
       return item;
-    })
+    });
 }
 
 function getNumberOfAnswers(questionId, options) {
-  if (typeof options === 'undefined') {
+  if (typeof options === "undefined") {
     options = {};
   }
-  options['key'] = questionId;
-  options['reduce'] = true;
+  options["key"] = questionId;
+  options["reduce"] = true;
 
-  return quizDb.query('docs/byQuestionId', options)
-    .then(data => {
-      return data.rows[0].value
-    })
+  return quizDb.query("docs/byQuestionId", options).then(data => {
+    return data.rows[0].value;
+  });
 }
 
 function getPrecision(n) {
@@ -82,4 +84,4 @@ module.exports = {
   getAnswer: getAnswer,
   getItem: getItem,
   getPrecision: getPrecision
-}
+};

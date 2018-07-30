@@ -10,12 +10,10 @@
   row-wrap: nowrap;
   align-items: flex-start;
 
-
   .q-quiz-element-container {
     display: block !important;
     white-space: normal;
     flex-grow: 0;
-
 
     &--is-active {
       height: auto;

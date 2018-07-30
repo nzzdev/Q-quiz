@@ -1,0 +1,94 @@
+{
+  "title": "FIXTURE: All question types with image and credit",
+  "department": "Storytelling / Infografik",
+  "publication": "nzz",
+  "acronym": "mro",
+  "elements": [
+    {
+      "id": "cd11d746cd1d1b6018d83e00b701e899-1532100973311-320454144",
+      "type": "multipleChoice",
+      "credit": {
+        "link": {
+          "url": "https://www.stmoritz.ch/",
+          "isValid": true
+        },
+        "text": "St.Moritz Tourismus"
+      },
+      "choices": ["Engelberg", "Adelboden", "Stoos"],
+      "articleRecommendations": [],
+      "introduction":
+        "Skifans können es jedes Jahr kaum erwarten, bis der erste Schnee aus Berghängen Pisten macht und die Gondeln sich in Bewegung setzen.",
+      "image": {
+        "url":
+          "https://nzz-q-assets-stage.s3.eu-west-1.amazonaws.com/2018/07/20/0906aa61-f5ce-4c64-8d93-9919ae2542ce.jpeg",
+        "key": "2018/07/20/0906aa61-f5ce-4c64-8d93-9919ae2542ce.jpeg",
+        "size": 266724,
+        "width": 1280,
+        "height": 855
+      },
+      "question":
+        "Welcher Schweizer Ort gilt als Wiege oder auch Geburtsort des Wintersports?",
+      "answer": "St.Moritz"
+    },
+    {
+      "id": "cd11d746cd1d1b6018d83e00b701e899-1532101097031-10309866",
+      "type": "numberGuess",
+      "credit": {
+        "link": {
+          "url": "",
+          "isValid": false
+        },
+        "text": ""
+      },
+      "articleRecommendations": [],
+      "introduction":
+        "Für den Winter 2016/2017 hatte Saas-Fee eine Marketing-Aktion gestartet. ",
+      "image": {},
+      "question": "Statt für regulär Fr. 1050 gab es das Saison-Ticket für ...",
+      "answer": 222,
+      "min": 100,
+      "max": 1000,
+      "step": 2,
+      "answerText":
+        "2016 gab es in Saas-Fee eine kleine Revolution. Statt für 1050 Fr. stand die Saisonkarte für 222 Fr. zum Verkauf. Dies allerdings nur, wenn innert fünf Wochen via Crowdfunding 99 999 Personen das Billet kaufen würden. Der Marketing-Coup funktionierte und war ein Weckruf für die ganze Schweizer Ski-Tourismus-Branche. Ihre Schätzung liegt um 117 Prozent zu hoch. Sie haben damit besser geschätzt als 26 Prozent aller anderen."
+    },
+    {
+      "id": "cd11d746cd1d1b6018d83e00b701e899-1532101186644-655788839",
+      "type": "mapPointGuess",
+      "credit": {
+        "link": {
+          "url": "https://www.stmoritz.ch/",
+          "isValid": true
+        },
+        "text": "St.Moritz Tourismus"
+      },
+      "answer": {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [9.8459437, 46.498021]
+        },
+        "properties": {
+          "label": "St. Moritz"
+        },
+        "bbox": [
+          6.23748779296875,
+          45.02500920723146,
+          13.444519042968752,
+          47.818687628247105
+        ]
+      },
+      "articleRecommendations": [],
+      "question": "Wo liegt St.Moritz?",
+      "introduction": "",
+      "image": {
+        "url":
+          "https://nzz-q-assets-stage.s3.eu-west-1.amazonaws.com/2018/07/20/65ed8661-e5c9-4de4-97fc-4c8402dd0b9e.jpeg",
+        "key": "2018/07/20/65ed8661-e5c9-4de4-97fc-4c8402dd0b9e.jpeg",
+        "size": 266724,
+        "width": 1280,
+        "height": 855
+      }
+    }
+  ]
+}
