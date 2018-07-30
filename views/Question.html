@@ -5,7 +5,7 @@
   <source srcset="{{ question.image.urls.image1x }} 1x, {{ question.image.urls.image2x }} 2x">
   <img class="q-quiz-question-image q-quiz-question-image--responsive" src="{{ question.image.urls.image1x }}" />
 </picture>
-{{/if}} {{#if question.credit }}
+{{#if question.credit }}
 <p class="q-quiz-question-image-credit s-font-note s-font-note--light">
   {{#if question.credit.text }}{{#if question.credit.link.url && question.credit.link.isValid }} (Bild:
   <a href="{{ question.credit.link.url }}" target="blank" rel="noopener noreferrer">{{ question.credit.text }}</a>) {{ else }} (Bild: {{ question.credit.text }}) {{/if}}{{/if}}
@@ -18,7 +18,7 @@
   {{#if question.credit.text }}{{#if question.credit.link.url && question.credit.link.isValid }} (Bild:
   <a href="{{ question.credit.link.url }}" target="blank" rel="noopener noreferrer">{{ question.credit.text }}</a>) {{ else }} (Bild: {{ question.credit.text }}) {{/if}}{{/if}}
 </p>
-{{/if}} {{/if}}
+{{/if}} {{/if}} {{/if}}
 <h3 class="s-q-item__title">{{#if question.question}}{{question.question}}{{/if}}</h3>
 <div>
   {{#if isMultipleChoice}}
