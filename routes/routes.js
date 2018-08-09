@@ -4,6 +4,7 @@ module.exports = [
   require("./schema.js"),
   require("./locales.js"),
   require("./health.js"),
+  require("./availability-checks.js"),
   require("./fixtures/data.js")
 ].concat(
   require("./scripts.js"),

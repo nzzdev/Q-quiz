@@ -322,6 +322,15 @@
     "credit": {
       "type": "object",
       "title": "Bildcredit",
+      "Q:options": {
+        "availabilityChecks": [
+          {
+            "type": "ToolEndpoint",
+            "withData": true,
+            "endpoint": "availability-checks/credit"
+          }
+        ]
+      },
       "properties": {
         "text": {
           "title": "Credit",
