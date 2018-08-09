@@ -1,4 +1,4 @@
-<h3 class="s-font-text">{{#if question.introduction}}{{question.introduction}}{{/if}}</h3>
+{{#if question.introduction}}<h3 class="s-font-text q-quiz-question-introduction">{{question.introduction}}</h3>{{/if}}
 {{#if question.image && question.image.key}} {{#if width }}
 <picture style="position:relative; display:block; padding-bottom:{{ question.image.height / question.image.width * 100 }}%;">
   <source type="image/webp" srcset="{{ question.image.urls.webp1x }} 1x, {{ question.image.urls.webp2x }} 2x">
@@ -19,7 +19,7 @@
   <a href="{{ question.credit.link.url }}" target="blank" rel="noopener noreferrer">{{ question.credit.text }}</a>) {{ else }} (Bild: {{ question.credit.text }}) {{/if}}{{/if}}
 </p>
 {{/if}} {{/if}} {{/if}}
-<h3 class="s-q-item__title">{{#if question.question}}{{question.question}}{{/if}}</h3>
+{{#if question.question}}<h3 class="s-q-item__title">{{question.question}}</h3>{{/if}}
 <div>
   {{#if isMultipleChoice}}
   <MultipleChoice question="{{question}}" /> {{/if}} {{#if isNumberGuess}}

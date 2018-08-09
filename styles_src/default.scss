@@ -116,6 +116,11 @@
   transform: translateX(-50%);
 }
 
+.q-quiz-question-introduction {
+  margin: 0;
+  margin-bottom: 8px;
+}
+
 .q-quiz-question-image {
   display: block;
   width: 100%;
@@ -129,7 +134,7 @@
 
 .q-quiz-question-image-credit {
   margin-top: 4px !important;
-  margin-bottom: 0 !important;
+  margin-bottom: 8px !important;
 }
 
 .q-quiz-play-another-container {
