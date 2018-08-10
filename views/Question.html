@@ -1,4 +1,4 @@
-{{#if question.introduction}}<h3 class="s-font-text q-quiz-question-introduction">{{question.introduction}}</h3>{{/if}}
+{{#if question.introduction}}<h3 class="s-font-text-s q-quiz-question-introduction">{{question.introduction}}</h3>{{/if}}
 {{#if question.image && question.image.key}} {{#if width }}
 <picture style="position:relative; display:block; padding-bottom:{{ question.image.height / question.image.width * 100 }}%;">
   <source type="image/webp" srcset="{{ question.image.urls.webp1x }} 1x, {{ question.image.urls.webp2x }} 2x">
