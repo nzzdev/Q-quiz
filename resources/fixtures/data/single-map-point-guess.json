@@ -8,10 +8,7 @@
         "type": "Feature",
         "geometry": {
           "type": "Point",
-          "coordinates": [
-            8.548714,
-            47.3664
-          ]
+          "coordinates": [8.548714, 47.3664]
         },
         "properties": {
           "pointLabel": "NZZ Red",

@@ -10,11 +10,6 @@
 
   position: relative;
 
-  margin-top: 16px;
-  padding-top: 16px;
-
-  margin-bottom: 48px;
-
   svg {
     overflow: visible;
   }
@@ -40,10 +35,6 @@
   margin: 0;
   padding: 0;
   opacity: 0;
-}
-
-.q-quiz-input {
-  margin-top: 16px;
 }
 
 .q-quiz-input,
@@ -116,9 +107,13 @@
   transform: translateX(-50%);
 }
 
+.q-quiz-question-introduction {
+  margin: 0;
+  margin-bottom: 8px;
+}
+
 .q-quiz-question-image {
   display: block;
-  margin: 10px auto;
   width: 100%;
 }
 
@@ -126,6 +121,10 @@
   position: absolute;
   top: 0;
   left: 0;
+}
+
+.q-quiz-question-title {
+  margin-top: 8px;
 }
 
 .q-quiz-play-another-container {

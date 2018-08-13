@@ -1,9 +1,9 @@
-const Hapi = require('hapi');
-const Boom = require('boom');
-const Joi = require('joi');
+const Hapi = require("hapi");
+const Boom = require("boom");
+const Joi = require("joi");
 
 // provide every fixture data file present in ../../resources/fixtures/data
-const fixtureDataDirectory = '../../resources/fixtures/data';
+const fixtureDataDirectory = "../../resources/fixtures/data";
 const fixtureData = [
   require(`${fixtureDataDirectory}/all.json`),
   require(`${fixtureDataDirectory}/cover-with-title-no-last-card.json`)
@@ -17,8 +17,8 @@ const server = Hapi.server({
 });
 
 server.route({
-  method: 'GET',
-  path: '/item/{id}',
+  method: "GET",
+  path: "/item/{id}",
   options: {
     validate: {
       params: {
@@ -39,4 +39,4 @@ module.exports = {
   start: async function() {
     await server.start();
   }
-}
+};

@@ -1,10 +1,10 @@
 module.exports = {
-  path: '/health',
-  method: 'GET',
+  path: "/health",
+  method: "GET",
   options: {
-    tags: ['api', 'health']
+    tags: ["api", "health"]
   },
   handler: (request, h) => {
-    return 'ok';
+    return "ok";
   }
-}
+};

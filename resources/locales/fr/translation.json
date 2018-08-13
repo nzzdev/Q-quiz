@@ -34,13 +34,17 @@
   "Auswertung anzeigen": "Afficher l'évaluation",
   "Abmoderation": "Texte fermeture",
   "Link zu Anschlussquiz": "Lien vers le quiz de connexion",
-  "https://www.nzz.ch/... (am besten ein thematisch ähnliches Quiz, das ein ähnliches Zielpublikum ansprechen dürfte)":
+  "https&#58;//www&#46;nzz&#46;ch/&#46;&#46;&#46; (am besten ein thematisch ähnliches Quiz, das ein ähnliches Zielpublikum ansprechen dürfte)":
     "https://www.nzz.ch/... (de préférence un quiz thématique similaire qui devrait intéresser un public cible similaire)",
   "Titel Anschlussquiz": "Question Connection Quiz",
   "Artikelempfehlungen": "Article de journal de recommandations",
   "Artikelempfehlung": "Article de journal de recommandation",
   "Anmoderation": "Texte d'introduction",
   "Artikel ID": "ld.123456",
-  "Bild": "Image",
-  "URL zum Bild": "Image Url"
+  "Einleitung": "Introduction",
+  "Bildcredit": "Crédit d'image",
+  "Credit": "Crédit",
+  "Link": "Lien",
+  "Direktlink zum Fotografen, https&#58;//&#46;&#46;&#46;":
+    "Lien direct vers le photographe, https://..."
 }

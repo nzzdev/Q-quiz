@@ -1,17 +1,17 @@
 const fs = require("fs");
 const Enjoi = require("enjoi");
 const Joi = require("joi");
-const resourcesDir = __dirname + "/../../resources/";
-const viewsDir = __dirname + "/../../views/";
-const scriptsDir = __dirname + "/../../scripts/";
-const stylesDir = __dirname + "/../../styles/";
-const transform = require(resourcesDir + "helpers/itemTransformer.js");
+const resourcesDir = `${__dirname}/../../resources/`;
+const viewsDir = `${__dirname}/../../views/`;
+const scriptsDir = `${__dirname}/../../scripts/`;
+const stylesDir = `${__dirname}/../../styles/`;
+const transform = require(`${resourcesDir}helpers/itemTransformer.js`);
 const getExactPixelWidth = require(resourcesDir +
   "helpers/toolRuntimeConfig.js").getExactPixelWidth;
-const getImageUrls = require(resourcesDir + "helpers/images.js").getImageUrls;
+const getImageUrls = require(`${resourcesDir}helpers/images.js`).getImageUrls;
 
 const schemaString = JSON.parse(
-  fs.readFileSync(resourcesDir + "schema.json", {
+  fs.readFileSync(`${resourcesDir}schema.json`, {
     encoding: "utf-8"
   })
 );
@@ -22,7 +22,7 @@ const scriptHashMap = require(`${scriptsDir}/hashMap.json`);
 const styleHashMap = require(`${stylesDir}/hashMap.json`);
 
 require("svelte/ssr/register");
-const staticTemplate = require(viewsDir + "HtmlJs.html");
+const staticTemplate = require(`${viewsDir}HtmlJs.html`);
 
 function getTransformedItemForClientSideScript(item, toolRuntimeConfig) {
   const questionElementData = item.questions.map(element => {
