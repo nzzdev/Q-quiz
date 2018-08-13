@@ -1,5 +1,5 @@
 {
-  "title": "FIXTURE: All question types with image and credit",
+  "title": "FIXTURE: All question types with images",
   "department": "Storytelling / Infografik",
   "publication": "nzz",
   "acronym": "mro",
@@ -7,13 +7,6 @@
     {
       "id": "cd11d746cd1d1b6018d83e00b701e899-1532100973311-320454144",
       "type": "multipleChoice",
-      "credit": {
-        "link": {
-          "url": "https://www.stmoritz.ch/",
-          "isValid": true
-        },
-        "text": "St.Moritz Tourismus"
-      },
       "choices": ["Engelberg", "Adelboden", "Stoos"],
       "articleRecommendations": [],
       "introduction":
@@ -33,13 +26,6 @@
     {
       "id": "cd11d746cd1d1b6018d83e00b701e899-1532101097031-10309866",
       "type": "numberGuess",
-      "credit": {
-        "link": {
-          "url": "",
-          "isValid": false
-        },
-        "text": ""
-      },
       "articleRecommendations": [],
       "introduction":
         "Für den Winter 2016/2017 hatte Saas-Fee eine Marketing-Aktion gestartet. ",
@@ -55,13 +41,6 @@
     {
       "id": "cd11d746cd1d1b6018d83e00b701e899-1532101186644-655788839",
       "type": "mapPointGuess",
-      "credit": {
-        "link": {
-          "url": "https://www.stmoritz.ch/",
-          "isValid": true
-        },
-        "text": "St.Moritz Tourismus"
-      },
       "answer": {
         "type": "Feature",
         "geometry": {
