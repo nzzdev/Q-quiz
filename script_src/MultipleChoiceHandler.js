@@ -38,7 +38,6 @@ export default class MultipleChoiceHandler {
           correctAnswerElement.innerText = "korrekte Antwort";
           parentNode.insertBefore(correctAnswerElement, element.nextSibling);
 
-          bar.classList.add("s-font-note-s--strong");
           bar.classList.add("s-color-positive");
 
           // is user input correct
@@ -61,7 +60,6 @@ export default class MultipleChoiceHandler {
             wrongAnswerElement.innerText = "falsche Antwort";
             parentNode.insertBefore(wrongAnswerElement, element.nextSibling);
 
-            bar.classList.add("s-font-note-s--strong");
             bar.classList.add("s-color-negative");
           } else {
             // all other answer elements
@@ -117,9 +115,9 @@ export default class MultipleChoiceHandler {
       }
       bar.style.width = `${barWidthPercentage}%`;
       if (percentageWithThisAnswer === 0) {
-        bar.innerHTML = `<span class="q-quiz-result-mc-answer-is-zero">${percentageWithThisAnswer} %</span>`;
+        bar.innerHTML = `<span class="q-quiz-result-mc-answer-is-zero s-font-note-s">${percentageWithThisAnswer} %</span>`;
       } else {
-        bar.innerHTML = `<span>${percentageWithThisAnswer} %</span>`;
+        bar.innerHTML = `<span class="s-font-note-s">${percentageWithThisAnswer} %</span>`;
       }
     });
     this.questionElement
