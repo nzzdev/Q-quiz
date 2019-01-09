@@ -68,5 +68,8 @@
     "devDependencies": {
       "plugin-babel": "npm:systemjs-plugin-babel@^0.0.25"
     }
+  },
+  "devDependencies": {
+    "wreck": "^14.1.3"
   }
 }
