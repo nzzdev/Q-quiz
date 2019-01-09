@@ -84,8 +84,8 @@ export default class NumberGuessHandler {
     defaultInputValueMessageElement.classList.add(
       "q-quiz-invalid-input-message"
     );
-    defaultInputValueMessageElement.classList.add("s-font-text-s");
-    defaultInputValueMessageElement.classList.add("s-font-text-s--strong");
+    defaultInputValueMessageElement.classList.add("s-font-note");
+    defaultInputValueMessageElement.classList.add("s-font-note--strong");
     defaultInputValueMessageElement.innerHTML =
       "Sie haben den Schieberegeler nicht bewegt, trotzdem die Position speichern?";
     answerButton.parentNode.insertBefore(
