@@ -17,7 +17,9 @@
         "availabilityChecks": [
           {
             "type": "ItemHasId",
-            "unavailableMessage": "Bitte speichere deinen Titel um fortzufahren."
+            "config": {
+              "unavailableMessage": "Bitte speichere deinen Titel um fortzufahren."
+            }
           }
         ]
       },
