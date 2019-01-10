@@ -17,8 +17,9 @@
         "availabilityChecks": [
           {
             "type": "ItemHasId",
-            "unavailableMessage":
-              "Bitte speichere deinen Titel um fortzufahren."
+            "config": {
+              "unavailableMessage": "Bitte speichere deinen Titel um fortzufahren."
+            }
           }
         ]
       },
@@ -94,8 +95,7 @@
           "type": "string",
           "title": "Ausformulierte Antwort",
           "Q:options": {
-            "placeholder":
-              "Sagt dem Nutzer in Prosa, welche Antwort richtig ist und liefert idealerweise noch etwas Erklärung dazu."
+            "placeholder": "Sagt dem Nutzer in Prosa, welche Antwort richtig ist und liefert idealerweise noch etwas Erklärung dazu."
           }
         },
         "notes": {
@@ -135,8 +135,7 @@
           "type": "string",
           "title": "Einheit Plural",
           "Q:options": {
-            "placeholder":
-              "Was für eine Zahl ist zu schätzen? Meter? Personen? Franken? etc."
+            "placeholder": "Was für eine Zahl ist zu schätzen? Meter? Personen? Franken? etc."
           }
         },
         "unit_singular": {
@@ -159,16 +158,14 @@
           "minimum": 0,
           "title": "Grösse der Zwischenschritte beim Verschieben des Sliders",
           "Q:options": {
-            "placeholder":
-              "Sollte so gewählt sein, dass sich zwischen Minimal- und Maximalwert etwa 100-500 Zwischenschritte ergeben."
+            "placeholder": "Sollte so gewählt sein, dass sich zwischen Minimal- und Maximalwert etwa 100-500 Zwischenschritte ergeben."
           }
         },
         "answerText": {
           "type": "string",
           "title": "Ausformulierte Antwort",
           "Q:options": {
-            "placeholder":
-              "Sagt dem Nutzer in Prosa, welche Antwort richtig ist und liefert idealerweise noch etwas Erklärung dazu."
+            "placeholder": "Sagt dem Nutzer in Prosa, welche Antwort richtig ist und liefert idealerweise noch etwas Erklärung dazu."
           }
         },
         "notes": {
@@ -255,8 +252,7 @@
           "type": "string",
           "title": "Link zu Anschlussquiz",
           "Q:options": {
-            "placeholder":
-              "https&#58;//www&#46;nzz&#46;ch/&#46;&#46;&#46; (am besten ein thematisch ähnliches Quiz, das ein ähnliches Zielpublikum ansprechen dürfte)"
+            "placeholder": "https&#58;//www&#46;nzz&#46;ch/&#46;&#46;&#46; (am besten ein thematisch ähnliches Quiz, das ein ähnliches Zielpublikum ansprechen dürfte)"
           }
         },
         "quizTitle": {
@@ -312,7 +308,8 @@
           "key": "key",
           "size": "size",
           "width": "width",
-          "height": "height"
+          "height": "height",
+          "type": "type"
         }
       }
     },
