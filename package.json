@@ -49,8 +49,8 @@
     "node-sass": "^4.11.0",
     "pino-noir": "^2.2.1",
     "postcss-import": "^11.1.0",
-    "pouchdb": "^6.4.3",
-    "pouchdb-server": "^2.3.7",
+    "pouchdb": "^7.0.0",
+    "pouchdb-server": "^4.1.0",
     "sparseheatmap": "^1.1.1",
     "svelte": "1.22.3",
     "yaral": "^2.2.2"
