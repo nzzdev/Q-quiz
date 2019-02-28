@@ -173,7 +173,7 @@ module.exports = {
           content: loaderScript
         }
       ],
-      markup: staticTemplate.render(context)
+      markup: staticTemplate.render(context).html
     };
     return renderingInfo;
   }
