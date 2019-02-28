@@ -16,7 +16,7 @@ const schemaString = JSON.parse(
   })
 );
 
-const schema = Enjoi(schemaString).required();
+const schema = Enjoi.schema(schemaString).required();
 
 const scriptHashMap = require(`${scriptsDir}/hashMap.json`);
 const styleHashMap = require(`${stylesDir}/hashMap.json`);
@@ -72,7 +72,7 @@ module.exports = {
     cache: false,
     cors: true
   },
-  handler: function(request, h) {
+  handler: function (request, h) {
     // item.elements will be split into cover, last card and questions during transformation step
     // after that we don't need item.elements anymore
     let item = transform(request.payload.item);
@@ -95,8 +95,8 @@ module.exports = {
       System.config({
         map: {
           "q-quiz/quiz.js": "${
-            request.payload.toolRuntimeConfig.toolBaseUrl
-          }/script/${scriptHashMap["quiz"]}"
+      request.payload.toolRuntimeConfig.toolBaseUrl
+      }/script/${scriptHashMap["quiz"]}"
         }
       });
     `;
@@ -119,8 +119,8 @@ module.exports = {
       System.import('q-quiz/quiz.js')
         .then(function(module) {
           return module.display(${JSON.stringify(
-            scriptData
-          )}, document.querySelector('#${quizContainerId}'), ${JSON.stringify(
+      scriptData
+    )}, document.querySelector('#${quizContainerId}'), ${JSON.stringify(
       clientEnv
     )})
         })
