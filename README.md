@@ -1,5 +1,7 @@
 # Q Quiz [![Build Status](https://travis-ci.com/nzzdev/Q-quiz.svg?token=bwR7zbPTTpEoDxbY2dJR&branch=dev)](https://travis-ci.com/nzzdev/Q-quiz)
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/nzzdev/Q-quiz.svg?token=0092ccff54931fc37f0887dd73f1a0bd550f584c80482e40fde8768e26d885ac&ts=1551342745740)](https://greenkeeper.io/)
+
 **Maintainer**: [manuelroth](https://github.com/manuelroth)
 
 Q Quiz is one tool of the Q toolbox to render quizes containing questions of type multiple choice, number guess and map point guess. It also includes the rendering of answer statistics for each question type. Test it in the [playground](https://q-playground.st.nzz.ch/).
