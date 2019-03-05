@@ -45,7 +45,7 @@ $ Q server
 
 Run the Q tool:
 ```
-$ node index.js
+$ node dev.js
 ```
 [to the top](#table-of-contents)
 
