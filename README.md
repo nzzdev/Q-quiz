@@ -11,6 +11,7 @@ Q Quiz is one tool of the Q toolbox to render quizzes containing questions of ty
 - [Testing](#testing)
 - [Tool implementation details ](#tool-implementation-details)
 - [Features](#features)
+- [Architecture](#architecture)
 - [License](#license)
 
 ## Installation
@@ -75,6 +76,8 @@ The tool structure follows the general structure of each Q tool. Further informa
 
 Q-Quiz support three different question types multiple choice, number guess and map point guess. Each question type takes a question, a correct answer and additional configuration parameters like wrong answers or min and max values.
 The questions types are implemented as ES6 classes and each follow the same structure.
+
+[to the top](#table-of-contents)
 
 ## Architecture
 
