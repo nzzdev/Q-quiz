@@ -74,20 +74,36 @@ The tool structure follows the general structure of each Q tool. Further informa
 
 ### Question Types
 
-Q-Quiz support three different question types multiple choice, number guess and map point guess. Each question type takes a question, a correct answer and additional configuration parameters like wrong answers or min and max values.
-The questions types are implemented as ES6 classes and each follow the same structure.
+Q-Quiz supports three different question types multiple choice, number guess and map point guess. Each question type takes a question, a correct answer and additional configuration parameters like wrong answers or min and max values. The questions types are implemented as ES6 classes and each follow the same structure.
 
-[to the top](#table-of-contents)
+### `/rendering-info/html-js`
 
-## Architecture
-
-### Frontend code
-
-The frontend code gets transpiled to a jspm bundle and this bundle gets loaded and initialized by the jspm loader on client-side.
+This is the default endpoint called for web targets. It returns the markup, stylesheets and scripts 
+. The svelte framework is used to generate the markup. The scripts get transpiled to a jspm bundle and get loaded by the jspm loader on client-side.
 
 ### Answer-Service
 
-The frontend communicates with the answer-service to store all the entered answers, get the total score and statistics.
+The frontend communicates with the answer-service to store all the entered answers, get statistics on a single question or get the total score.
+
+#### `/answer`
+
+This endpoint is responsible for saving an `answer` object in the quiz answer database.
+
+#### `/score`
+
+This endpoint takes the `item` and an array of `answer` objects and returns a score object with properties `maxScore` and `achievedScore` based on the submitted answers.
+
+#### `/stats/answers/{type}/{itemId}/{questionId}/{answerId?}`
+
+This endpoint takes the question `type`, `itemId`, `questionId` and optionally an `answerId` as input and returns a stats object with parameters `betterThanPercentage`, `betterThanCount`, `diffPercentage`, `numberOfSameAnswers`, `totalAnswers`. This information is used to display sentences like `Nur 10 Prozent aller anderen lagen noch weiter daneben als Sie` after the user entered an answer.
+
+#### `/map/{questionId}/heatmap/{width}/{height}/{bbox}`
+
+This endpoint takes the `questionId`, `width`, `height` and bounding box as parameter and returns a heatmap visualizing other map point guesses.
+
+#### `/number-guess/{itemId}/{questionId}/plot/{width}`
+
+This endpoint takes the `itemId`, `questionId` and width as parameter and stripplot svg visualizing other number guesses.
 
 [to the top](#table-of-contents)
 

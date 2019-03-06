@@ -75,7 +75,7 @@ function elementCount(markup, selector) {
   });
 }
 
-lab.experiment("Q chart dom tests", () => {
+lab.experiment("dom tests", () => {
   it("should display title", async () => {
     const response = await server.inject({
       url: "/rendering-info/html-js",
