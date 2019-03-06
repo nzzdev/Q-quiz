@@ -30,13 +30,17 @@ npm run build
 
 The following environment variables must be specified when starting the tool:
 
-- `COUCH_DB_USER`
-- `COUCH_DB_PASS`
-- `COUCH_DB_URL_Q_QUIZ`
-- `COUCH_DB_URL_Q_ITEMS`
-- `IMAGE_SERVICE_URL`
-- `ENRICO_API_URL`
-- `ENRICO_PRODUCTS`
+- `COUCH_DB_USER` - couchdb user for accessing the answer-store database
+- `COUCH_DB_PASS` - couchdb password for accessing the answer-store database
+- `COUCH_DB_URL_Q_QUIZ` - url to the answer-store database
+- `COUCH_DB_URL_Q_ITEMS` - url to the q-items database (used for the statistics)
+- `ENRICO_API_URL` - url to enrico used to give article recommendations
+- `ENRICO_PRODUCTS` - array of publications which should be queried for article recommendations
+- `IMAGE_SERVICE_URL` - url to the image service - It should contain a URL with 3 parameters that will get replaced before the URL is used to load the images.
+  `{key}` will be replaced by the string Q-server stored as the key when the file got uploaded through Q-servers `/file` endpoint provided by the [file plugin](https://github.com/nzzdev/Q-server/blob/dev/plugins/file/index.js)
+  `{width}` is replaced by the width the image should be loaded
+  `{format}` will be `png` or `webp` (a `picture` element is used in the HTML with multiple `source` elements)
+  Example: `https://q-images.nzz.ch/{key}?width={width}&format={format}`
 
 Please have a look at the test environment for examples on what this variables should look like.
 
