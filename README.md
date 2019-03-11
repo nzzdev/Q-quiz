@@ -21,6 +21,7 @@ git clone git@github.com:nzzdev/Q-quiz.git
 cd ./Q-quiz
 nvm use
 npm install
+jspm install
 npm run build
 ```
 
