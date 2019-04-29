@@ -1,8 +1,8 @@
 const plugins = require("./server-plugins.js");
 const routes = require("./routes/routes.js");
-const Hapi = require("hapi");
+const Hapi = require("@hapi/hapi");
 
-const start = async function () {
+const start = async function() {
   let server = Hapi.server({
     port: process.env.PORT || 3000,
     routes: {
@@ -13,9 +13,9 @@ const start = async function () {
   server.route(routes);
   server.cache.provision({
     provider: {
-      constructor: require('catbox-memory'),
+      constructor: require("catbox-memory"),
       options: {
-        partition: 'x',
+        partition: "x",
         maxByteSize: 10000
       }
     },

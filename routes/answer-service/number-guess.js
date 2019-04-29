@@ -1,7 +1,7 @@
 "use strict";
 
-const Boom = require("boom");
-const Joi = require("joi");
+const Boom = require("@hapi/boom");
+const Joi = require("@hapi/joi");
 const getAnswers = require("../../resources/helpers/utils.js").getAnswers;
 const getItem = require("../../resources/helpers/utils.js").getItem;
 const getPrecision = require("../../resources/helpers/utils.js").getPrecision;

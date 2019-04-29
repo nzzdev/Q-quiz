@@ -1,6 +1,6 @@
 const Lab = require("lab");
 const Code = require("code");
-const Hapi = require("hapi");
+const Hapi = require("@hapi/hapi");
 const lab = (exports.lab = Lab.script());
 
 const expect = Code.expect;
@@ -41,7 +41,7 @@ before(async () => {
 
   await require("./mock/qserver.js").start();
 
-  await server.register(require("inert"));
+  await server.register(require("@hapi/inert"));
   server.route(routes);
   await server.start();
 });

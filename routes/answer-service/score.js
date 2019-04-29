@@ -1,7 +1,7 @@
 const fs = require("fs");
 const Enjoi = require("enjoi");
-const Joi = require("joi");
-const Boom = require("boom");
+const Joi = require("@hapi/joi");
+const Boom = require("@hapi/boom");
 const resourcesDir = `${__dirname}/../../resources/`;
 const scoreHelpers = require(`${resourcesDir}helpers/scoreHelpers.js`);
 const questionTypes = require(`${resourcesDir}helpers/constants.js`)
@@ -35,7 +35,7 @@ module.exports = {
     },
     cors: true
   },
-  handler: async function (request, h) {
+  handler: async function(request, h) {
     try {
       const questions = request.payload.item.elements.filter(element => {
         return questionTypes.includes(element.type);

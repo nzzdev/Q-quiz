@@ -1,7 +1,7 @@
 const noir = require("pino-noir");
 
 module.exports = [
-  require("inert"),
+  require("@hapi/inert"),
   {
     plugin: require("hapi-pino"),
     options: {
