@@ -67,9 +67,9 @@
     "cssnano": "^4.1.10",
     "jspm": "0.17.0-beta.41",
     "lab": "^18.0.1",
-    "node-sass": "^4.11.0",
     "postcss": "^7.0.14",
     "postcss-import": "^12.0.1",
+    "sass": "^1.19.0",
     "wreck": "^14.1.3"
   }
 }
