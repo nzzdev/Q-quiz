@@ -23,7 +23,7 @@
   ],
   "main": "index.js",
   "scripts": {
-    "test": "lab -a code -t 85 -P tests -m 3000 --verbose --leaks",
+    "test": "lab -a @hapi/code -t 85 -P tests -m 3000 --verbose --leaks",
     "build": "rm -rf scripts && mkdir scripts && rm -rf styles && mkdir styles && node tasks/build.js"
   },
   "repository": {
@@ -64,14 +64,14 @@
     }
   },
   "devDependencies": {
+    "@hapi/lab": "^18.1.2",
+    "@hapi/code": "^5.3.1",
+    "@hapi/wreck": "^15.0.1",
     "autoprefixer": "^9.5.1",
-    "code": "^5.2.4",
     "cssnano": "^4.1.10",
     "jspm": "0.17.0-beta.41",
-    "lab": "^18.0.1",
     "postcss": "^7.0.14",
     "postcss-import": "^12.0.1",
-    "sass": "^1.19.0",
-    "@hapi/wreck": "^15.0.1"
+    "sass": "^1.19.0"
   }
 }
