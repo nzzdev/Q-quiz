@@ -13,7 +13,7 @@ const start = async function() {
   server.route(routes);
   server.cache.provision({
     provider: {
-      constructor: require("catbox-memory"),
+      constructor: require("@hapi/catbox-memory"),
       options: {
         partition: "x",
         maxByteSize: 10000
