@@ -49,7 +49,7 @@
     "pouchdb": "^7.0.0",
     "pouchdb-server": "^4.1.0",
     "sparseheatmap": "^1.1.1",
-    "svelte": "2.16.1",
+    "svelte": "3.2.0",
     "yaral": "^3.0.2"
   },
   "jspm": {
