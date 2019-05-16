@@ -64,7 +64,7 @@
     }
   },
   "devDependencies": {
-    "@hapi/lab": "^18.1.2",
+    "@hapi/lab": "^19.0.0",
     "@hapi/code": "^5.3.1",
     "@hapi/wreck": "^15.0.1",
     "autoprefixer": "^9.5.1",
