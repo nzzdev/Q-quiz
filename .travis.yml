@@ -1,31 +1,27 @@
 dist: trusty
 sudo: true
 services:
-- docker
+  - docker
 language: node_js
 node_js:
-- '10'
-install:
-- npm install -g jspm
-- npm install
-- jspm -v
-- jspm install
-before_script:
-- DOCKER_IMAGE_NAME="q-quiz"
-- DOCKER_TAG=$TRAVIS_BRANCH
-script:
-- npm run build
-- npm run test
-- docker build -t $DOCKER_IMAGE_NAME:$DOCKER_TAG .
-- echo $DOCKER_PASSWORD | docker login -u="$DOCKER_USERNAME" --password-stdin; docker tag $DOCKER_IMAGE_NAME:$DOCKER_TAG
-  nzzonline/$DOCKER_IMAGE_NAME:$DOCKER_TAG; docker push nzzonline/$DOCKER_IMAGE_NAME:$DOCKER_TAG;
-- if [ "$TRAVIS_BRANCH" == "staging" ]; then docker run --rm -it -e RANCHER_URL -e CATTLE_ACCESS_KEY
-  -e CATTLE_SECRET_KEY etlweather/gaucho upgrade $RANCHER_SERVICE_ID_STAGING --auto_complete
-  --start_first --imageUuid="docker:nzzonline/$DOCKER_IMAGE_NAME:$DOCKER_TAG" || true;
-  fi
+  - "10"
 cache:
   directories:
-  - node_modules
+    - node_modules
+    - jspm_packages
+install:
+  - npm install -g jspm
+  - npm install
+  - jspm install
+before_script:
+  - DOCKER_IMAGE_NAME="q-quiz"
+  - DOCKER_TAG=${TRAVIS_BRANCH//[^a-zA-Z0-9\_\-\.]/_}
+script:
+  - npm run build
+  - npm run test
+  - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then docker build -t $DOCKER_IMAGE_NAME:$DOCKER_TAG .; fi'
+after_success:
+  - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then echo $DOCKER_PASSWORD | docker login -u="$DOCKER_USERNAME" --password-stdin; docker tag $DOCKER_IMAGE_NAME:$DOCKER_TAG nzzonline/$DOCKER_IMAGE_NAME:$DOCKER_TAG; docker push nzzonline/$DOCKER_IMAGE_NAME:$DOCKER_TAG; fi'
 notifications:
   slack:
-    secure: securekey
+    secure: cGKGD1gKHQEJgb6zEElK3lnJNhAT2nWF/0a35TQ+WMrEK5KawMJa/xyD93jOCYW13swKlXyYkgQLMpC5yh2LejChVnsVJ4vzxJvEd7OIPabZ/87UUT0XzfSBmAl96DjpJxQ1WhTiiSnr7DTmu61SQoXjhcBLrWzE63wzhvbE/kljv1hPOfVjLWIg6TNMwxc9g40hfqkd3Bc/P69Iw/4L4TqYnNuAXncvAtcPmtfxuTFUXY4N/zHuhiG/MKoq2g1DWqYNLUUh1NmG+fusFu7IhgYGwKdIFqhEoPfAJNxivuflalYOVDA3oBENaAU347CnxgHSwO2X+Mw+c0lG9w8gxGcUUsYmv8kZ32kPvBPrt3IFHTRseQvMk8lWfyhRoecucFbv6Z1y2disBsoP5Y2jILimv6jXkqP8TYGYyX3IMjpydA4qN27yRNJF2O1HHBj3W2nGW0nrjyCUttrSrOjJ6jS4zf7jXcb1xEL1iblk7Y5u39obMSJNyAJQ8+jx/LaTHyDOJB5r8u1tPTsMsWH9tGaDFwsV3PovHNCHDK5vwF1Yd3jBjcXeHaTPBw6fvZH6DkSl410c0uxH/lr92TZ/7OeL902p063Mcj4HGO/2CEZgF+wDCIPqPrfakfVSlrx5DvGbtIA/RNpL2J2VszeDi3NCh+K2hoP3OXrL3Ey9LFc=

@@ -1,6 +1,6 @@
-const Hapi = require("hapi");
-const Boom = require("boom");
-const Joi = require("joi");
+const Hapi = require("@hapi/hapi");
+const Boom = require("@hapi/boom");
+const Joi = require("@hapi/joi");
 
 // provide every fixture data file present in ../../resources/fixtures/data
 const fixtureDataDirectory = "../../resources/fixtures/data";

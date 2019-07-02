@@ -1,6 +1,6 @@
 const fs = require("fs");
 const Enjoi = require("enjoi");
-const Joi = require("joi");
+const Joi = require("@hapi/joi");
 const resourcesDir = `${__dirname}/../../resources/`;
 const viewsDir = `${__dirname}/../../views/`;
 const scriptsDir = `${__dirname}/../../scripts/`;
@@ -16,7 +16,7 @@ const schemaString = JSON.parse(
   })
 );
 
-const schema = Enjoi(schemaString).required();
+const schema = Enjoi.schema(schemaString).required();
 
 const scriptHashMap = require(`${scriptsDir}/hashMap.json`);
 const styleHashMap = require(`${stylesDir}/hashMap.json`);
@@ -173,7 +173,7 @@ module.exports = {
           content: loaderScript
         }
       ],
-      markup: staticTemplate.render(context)
+      markup: staticTemplate.render(context).html
     };
     return renderingInfo;
   }

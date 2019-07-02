@@ -1,4 +1,4 @@
-const wreck = require("wreck");
+const wreck = require("@hapi/wreck");
 
 const views = require("./views.js");
 const answers = require("./answers.js");

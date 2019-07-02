@@ -3,8 +3,8 @@
 var heatmap = require("sparseheatmap");
 heatmap.FILTER = heatmap.FILTERS.LOWPASS;
 
-const Joi = require("joi");
-const Boom = require("boom");
+const Joi = require("@hapi/joi");
+const Boom = require("@hapi/boom");
 
 const quizDb = require("../../resources/helpers/db.js").quizDb;
 

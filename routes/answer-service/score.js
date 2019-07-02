@@ -1,7 +1,7 @@
 const fs = require("fs");
 const Enjoi = require("enjoi");
-const Joi = require("joi");
-const Boom = require("boom");
+const Joi = require("@hapi/joi");
+const Boom = require("@hapi/boom");
 const resourcesDir = `${__dirname}/../../resources/`;
 const scoreHelpers = require(`${resourcesDir}helpers/scoreHelpers.js`);
 const questionTypes = require(`${resourcesDir}helpers/constants.js`)
@@ -14,7 +14,7 @@ const schemaString = JSON.parse(
   })
 );
 
-const schema = Enjoi(schemaString).required();
+const schema = Enjoi.schema(schemaString).required();
 
 module.exports = {
   method: "POST",
