@@ -73,10 +73,11 @@ export default class QuestionHandler {
 
     // dispatch a custom event for tracking system to track the answer
     // and others if they are interested
-    let answerEvent = new CustomEvent("q-quiz-answer", {
+    let answerEvent = new CustomEvent("q-tracking-event", {
       bubbles: true,
       detail: {
-        id: this.data.questionElementData[this.questionPosition].id
+        id: this.data.questionElementData[this.questionPosition].id,
+        eventAction: "q-quiz-answer"
       }
     });
     this.quizRootElement.dispatchEvent(answerEvent);
@@ -183,13 +184,11 @@ export default class QuestionHandler {
       if (this.data.isFinalScoreShown) {
         this.quizElement.querySelector(
           ".q-quiz-button__content span"
-        ).textContent =
-          "zur Auswertung";
+        ).textContent = "zur Auswertung";
       } else {
         this.quizElement.querySelector(
           ".q-quiz-button__content span"
-        ).textContent =
-          "Thema vertiefen";
+        ).textContent = "Thema vertiefen";
       }
     }
   }
@@ -229,8 +228,7 @@ export default class QuestionHandler {
         } von ${score.maxScore} möglichen Punkten erzielt.`;
         this.quizRootElement.querySelector(
           ".q-quiz-header__title"
-        ).textContent =
-          score.lastCardTitle;
+        ).textContent = score.lastCardTitle;
       });
     }
   }
