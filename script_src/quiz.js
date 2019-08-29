@@ -24,10 +24,11 @@ export function display(data, quizRootElement, clientEnv) {
 
       // dispatch CustomEvent for next-screen for tracking
       // or anyone else interested in it
-      let quizControlEvent = new CustomEvent("q-quiz-next-screen", {
+      let quizControlEvent = new CustomEvent("q-tracking-event", {
         bubbles: true,
         detail: {
-          id: data.itemId
+          id: data.itemId,
+          eventAction: "q-quiz-next-screen"
         }
       });
       quizRootElement.dispatchEvent(quizControlEvent);
