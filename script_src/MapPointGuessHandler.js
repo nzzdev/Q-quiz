@@ -4,7 +4,7 @@ import { getAnswerTextElement, getDistanceText } from "./answerHelpers.js";
 import env from "./env.js";
 
 Leaflet.Icon.Default.imagePath =
-  "jspm_packages/github/Leaflet/Leaflet@1.3.3/dist/images";
+  "jspm_packages/github/Leaflet/Leaflet@1.5.1/dist/images";
 
 const mapOptions = {
   boxZoom: false,
