@@ -42,6 +42,7 @@ The following environment variables must be specified when starting the tool:
   `{width}` is replaced by the width the image should be loaded
   `{format}` will be `png` or `webp` (a `picture` element is used in the HTML with multiple `source` elements)
   Example: `https://q-images.nzz.ch/{key}?width={width}&format={format}`
+- `MAP` - object containing properties (style url, attribution) for the map required by the mappointguess question type
 
 Please have a look at the test environment for examples on what this variables should look like.
 

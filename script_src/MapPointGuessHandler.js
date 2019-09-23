@@ -1,12 +1,10 @@
 import Leaflet from "leaflet";
 import iconPinSvg from "./resources/icon-pin.svg!text";
 import { getAnswerTextElement, getDistanceText } from "./answerHelpers.js";
+import env from "./env.js";
 
 Leaflet.Icon.Default.imagePath =
-  "jspm_packages/github/Leaflet/Leaflet@1.3.3/dist/images";
-
-const tileUrl =
-  "https://api.mapbox.com/styles/v1/neuezuercherzeitung/cj3yj33bk1w5t2rmyy0jty3bb/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibmV1ZXp1ZXJjaGVyemVpdHVuZyIsImEiOiJjaXFnbWpvbmMwMDk4aHptY2RiYjM0dHc2In0.Y3HeaE0zhj9OaFEoDIrxRA";
+  "jspm_packages/github/Leaflet/Leaflet@1.5.1/dist/images";
 
 const mapOptions = {
   boxZoom: false,
@@ -51,10 +49,9 @@ export default class MapPointGuessHandler {
 
     map.attributionControl.setPrefix("");
 
-    L.tileLayer(tileUrl, {
+    L.tileLayer(env.MAP.style, {
       maxZoom: 18,
-      attribution:
-        '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> &amp; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      attribution: env.MAP.attribution,
       bounds: [[90, -180], [-90, 180]],
       noWrap: true
     }).addTo(map);
@@ -115,10 +112,9 @@ export default class MapPointGuessHandler {
 
     this.setMapSize(map);
 
-    L.tileLayer(tileUrl, {
+    L.tileLayer(env.MAP.style, {
       maxZoom: 18,
-      attribution:
-        '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> &amp; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      attribution: env.MAP.attribution
     }).addTo(map);
 
     this.bounds = map.getBounds();
@@ -234,9 +230,7 @@ export default class MapPointGuessHandler {
     let mapBounds = map.getBounds();
     let southWest = mapBounds.getSouthWest();
     let northEast = mapBounds.getNorthEast();
-    let heatmapBounds = `${southWest.lng}, ${southWest.lat}, ${
-      northEast.lng
-    }, ${northEast.lat}`;
+    let heatmapBounds = `${southWest.lng}, ${southWest.lat}, ${northEast.lng}, ${northEast.lat}`;
     heatmapImgOverlay.setUrl(
       `${this.toolBaseUrl}/map/${this.data.id}/heatmap/${map.getSize().x}/${
         map.getSize().y

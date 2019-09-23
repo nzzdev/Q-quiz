@@ -5,20 +5,20 @@ SystemJS.config({
     "github:": "jspm_packages/github/"
   },
   browserConfig: {
-    baseURL: "/"
+    "baseURL": "/"
   },
   devConfig: {
-    map: {
+    "map": {
       "plugin-babel": "npm:systemjs-plugin-babel@0.0.25"
     }
   },
   transpiler: "plugin-babel",
   packages: {
     "q-quiz": {
-      main: "q-quiz.js",
-      meta: {
+      "main": "q-quiz.js",
+      "meta": {
         "*.js": {
-          loader: "plugin-babel"
+          "loader": "plugin-babel"
         }
       }
     }
@@ -26,10 +26,14 @@ SystemJS.config({
 });
 
 SystemJS.config({
-  packageConfigPaths: ["npm:@*/*.json", "npm:*.json", "github:*/*.json"],
+  packageConfigPaths: [
+    "npm:@*/*.json",
+    "npm:*.json",
+    "github:*/*.json"
+  ],
   map: {
-    leaflet: "github:Leaflet/Leaflet@1.3.3",
-    text: "github:systemjs/plugin-text@0.0.11"
+    "leaflet": "github:Leaflet/Leaflet@1.5.1",
+    "text": "github:systemjs/plugin-text@0.0.11"
   },
   packages: {}
 });

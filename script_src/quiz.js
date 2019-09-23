@@ -6,6 +6,10 @@ import env from "./env.js";
 export function display(data, quizRootElement, clientEnv) {
   env.ENRICO_API_URL = clientEnv.ENRICO_API_URL;
   env.ENRICO_PRODUCTS = clientEnv.ENRICO_PRODUCTS;
+  env.MAP = {
+    style: clientEnv.MAP_STYLE_URL,
+    attribution: clientEnv.MAP_ATTRIBUTION
+  };
 
   let questionHandler = new QuestionHandler(quizRootElement, data);
   let position = 0;
