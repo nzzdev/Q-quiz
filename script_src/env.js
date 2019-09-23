@@ -1,4 +1,5 @@
 export default {
   ENRICO_API_URL: "",
-  ENRICO_PRODUCTS: []
+  ENRICO_PRODUCTS: [],
+  MAP: {}
 };

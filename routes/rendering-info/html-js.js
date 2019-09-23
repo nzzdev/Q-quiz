@@ -112,7 +112,9 @@ module.exports = {
 
     const clientEnv = {
       ENRICO_API_URL: process.env.ENRICO_API_URL,
-      ENRICO_PRODUCTS: JSON.parse(process.env.ENRICO_PRODUCTS)
+      ENRICO_PRODUCTS: JSON.parse(process.env.ENRICO_PRODUCTS),
+      MAP_STYLE_URL: process.env.MAP_STYLE_URL,
+      MAP_ATTRIBUTION: process.env.MAP_ATTRIBUTION
     };
 
     const loaderScript = `
