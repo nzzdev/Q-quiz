@@ -31,7 +31,7 @@
     "url": "git+https://github.com/nzzdev/Q-quiz.git"
   },
   "dependencies": {
-    "@hapi/boom": "^7.4.9",
+    "@hapi/boom": "^8.0.0",
     "@hapi/catbox-memory": "^4.1.1",
     "@hapi/hapi": "^18.4.0",
     "@hapi/inert": "^5.2.2",
