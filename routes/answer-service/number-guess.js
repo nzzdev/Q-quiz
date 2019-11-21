@@ -40,7 +40,7 @@ function getStripplotSvg(data, stats, plotWidth) {
       .domain([0, d3.max(stats, d => parseInt(d.count))])
       .range([height, 0]);
 
-    let element = window.document.createElement("div");
+    let element = dom.window.document.createElement("div");
 
     let svg = d3
       .select(element)
@@ -143,7 +143,10 @@ function getBarchartSvg(data, stats, chartWidth) {
       .scaleLinear()
       .domain([
         0,
-        Math.max(200 / stats.length, d3.max(stats, d => parseInt(d.count)))
+        Math.max(
+          200 / stats.length,
+          d3.max(stats, d => parseInt(d.count))
+        )
       ])
       .range([height, 0]);
 
