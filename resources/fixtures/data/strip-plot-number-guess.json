@@ -1,0 +1,15 @@
+{
+  "title": "FIXTURE: Number guess - stripplot",
+  "elements": [
+    {
+      "id": "5-1574250413809-187227046",
+      "type": "numberGuess",
+      "articleRecommendations": [],
+      "question": "Wie viele",
+      "answer": 75,
+      "min": 1,
+      "max": 150,
+      "step": 1
+    }
+  ]
+}
