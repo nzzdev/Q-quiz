@@ -94,9 +94,7 @@ module.exports = {
     const systemConfigScript = `
       System.config({
         map: {
-          "q-quiz/quiz.js": "${
-            request.payload.toolRuntimeConfig.toolBaseUrl
-          }/script/${scriptHashMap["quiz"]}"
+          "q-quiz/quiz.js": "${request.payload.toolRuntimeConfig.toolBaseUrl}/script/${scriptHashMap["quiz"]}"
         }
       });
     `;
@@ -158,7 +156,7 @@ module.exports = {
 
     const renderingInfo = {
       loaderConfig: {
-        polyfills: ["Promise", "CustomEvent"],
+        polyfills: ["Promise", "CustomEvent", "NodeList.prototype.forEach"],
         loadSystemJs: "full"
       },
       stylesheets: [
