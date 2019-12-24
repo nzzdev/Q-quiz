@@ -15,24 +15,22 @@ module.exports = [
       logRouteTags: true,
       ignorePaths: ["/health"]
     }
-  }
-  // should be added again as soon as yaral and hapi 17 are compatible
-  /* {
-    plugin: require('yaral'),
+  },
+  {
+    plugin: require("yaral"),
     options: {
-      cache: 'memoryCache',
+      cache: "memoryCache",
       buckets: [
         {
-          name: 'maxPerIp',
+          name: "maxPerIp",
           max: 30,
           interval: 1000 * 300,
-          mode: 'continuous',
+          mode: "continuous",
           id: function(request) {
-            return request.info.remoteAddress || 'a';
+            return request.info.remoteAddress || Math.random();
           }
         }
-      ],
-      default: []
+      ]
     }
-  }, */
+  }
 ];

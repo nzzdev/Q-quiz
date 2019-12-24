@@ -9,8 +9,6 @@ const start = async function() {
       cors: true
     }
   });
-  await server.register(plugins);
-  server.route(routes);
   server.cache.provision({
     provider: {
       constructor: require("@hapi/catbox-memory"),
@@ -21,6 +19,8 @@ const start = async function() {
     },
     name: "memoryCache"
   });
+  await server.register(plugins);
+  server.route(routes);
   await server.start();
   console.log(`Server running at: ${server.info.uri}`);
 };
