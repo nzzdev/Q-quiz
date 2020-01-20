@@ -43,7 +43,7 @@
     "d3-selection": "^1.4.1",
     "enjoi": "^6.0.0",
     "hapi-pino": "^6.3.0",
-    "jsdom": "^15.2.1",
+    "jsdom": "^16.0.1",
     "node-fetch": "^2.6.0",
     "pino-noir": "^2.2.1",
     "pouchdb": "^7.1.1",
