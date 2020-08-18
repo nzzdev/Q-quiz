@@ -17,20 +17,20 @@ export function getAnswerTextElement(stats, isCorrectAnswer, getDiffText) {
       statsTextHtml +=
         " Etwas relativieren müssen wir das Lob allerdings: Sie waren so schnell, dass erst eine andere Person mitgemacht hat.";
     } else if (stats.totalAnswers <= 11) {
-      statsTextHtml += ` Etwas relativieren müssen wir das Lob allerdings: Sie waren so schnell, dass erst ${stats.totalAnswers -
-        1} andere mitgemacht haben.`;
+      statsTextHtml += ` Etwas relativieren müssen wir das Lob allerdings: Sie waren so schnell, dass erst ${
+        stats.totalAnswers - 1
+      } andere mitgemacht haben.`;
     }
     statsTextHtml += "</span>";
   } else if (stats.betterThanPercentage > 90) {
     statsTextHtml += `<span class="s-font-text-s">
-      Hervorragend. Nur ${100 -
-        stats.betterThanPercentage} Prozent aller anderen haben noch besser geschätzt als Sie.
+      Hervorragend. Nur ${
+        100 - stats.betterThanPercentage
+      } Prozent aller anderen haben noch besser geschätzt als Sie.
     </span>`;
   } else if (stats.betterThanPercentage > 20) {
     statsTextHtml += `<span class="s-font-text-s">
-      Sie haben damit besser geschätzt als ${
-        stats.betterThanPercentage
-      } Prozent aller anderen.
+      Sie haben damit besser geschätzt als ${stats.betterThanPercentage} Prozent aller anderen.
     </span>`;
   } else if (
     stats.betterThanPercentage === 0 &&
@@ -42,8 +42,9 @@ export function getAnswerTextElement(stats, isCorrectAnswer, getDiffText) {
       statsTextHtml +=
         " Das klingt schlimmer, als es ist. Sie waren so schnell, dass erst eine andere Person mitgemacht hat. Ihre Schätzung ist also auch die zweitbeste.";
     } else if (stats.totalAnswers <= 11) {
-      statsTextHtml += ` Das klingt schlimmer, als es ist. Sie waren so schnell, dass erst ${stats.totalAnswers -
-        1} andere mitgemacht haben.`;
+      statsTextHtml += ` Das klingt schlimmer, als es ist. Sie waren so schnell, dass erst ${
+        stats.totalAnswers - 1
+      } andere mitgemacht haben.`;
     } else {
       statsTextHtml +=
         ' Dürfen wir Ihnen, damit das nicht mehr vorkommt, ein <a href="https://abo.nzz.ch">NZZ-Abo</a> empfehlen?';
@@ -58,9 +59,7 @@ export function getAnswerTextElement(stats, isCorrectAnswer, getDiffText) {
     stats.betterThanPercentage !== null
   ) {
     statsTextHtml += `<span class="s-font-text-s">
-      Nur ${
-        stats.betterThanPercentage
-      } Prozent aller anderen lagen noch weiter daneben als Sie.
+      Nur ${stats.betterThanPercentage} Prozent aller anderen lagen noch weiter daneben als Sie.
     </span>`;
   }
   statsTextHtml += "</span>";
@@ -86,10 +85,10 @@ function getRecommendationsElement(articleRecommendations) {
     let punctuation = ["!", "?", "."];
 
     helpers
-      .loadAdditionalArticles(articleRecommendations.map(r => r.articleId))
-      .then(articles => {
+      .loadAdditionalArticles(articleRecommendations.map((r) => r.articleId))
+      .then((articles) => {
         articles
-          .filter(article => {
+          .filter((article) => {
             return article !== undefined;
           })
           .forEach((article, index) => {
