@@ -42,11 +42,9 @@ export function getAnswerTextElement(stats, isCorrectAnswer, getDiffText) {
       statsTextHtml +=
         " Das klingt schlimmer, als es ist. Sie waren so schnell, dass erst eine andere Person mitgemacht hat. Ihre Schätzung ist also auch die zweitbeste.";
     } else if (stats.totalAnswers <= 11) {
-      statsTextHtml += ` Das klingt schlimmer, als es ist. Sie waren so schnell, dass erst ${
-        stats.totalAnswers - 1
-      } andere mitgemacht haben.`;
-    }
-
+      statsTextHtml += ` Das klingt schlimmer, als es ist. Sie waren so schnell, dass erst ${stats.totalAnswers -
+        1} andere mitgemacht haben.`;
+    } 
     statsTextHtml += "</span>";
   } else if (stats.betterThanPercentage === 0) {
     statsTextHtml += `<span class="s-font-text-s">
