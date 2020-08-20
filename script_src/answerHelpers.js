@@ -44,10 +44,7 @@ export function getAnswerTextElement(stats, isCorrectAnswer, getDiffText) {
     } else if (stats.totalAnswers <= 11) {
       statsTextHtml += ` Das klingt schlimmer, als es ist. Sie waren so schnell, dass erst ${stats.totalAnswers -
         1} andere mitgemacht haben.`;
-    } else {
-      statsTextHtml +=
-        ' Dürfen wir Ihnen, damit das nicht mehr vorkommt, ein <a href="https://abo.nzz.ch">NZZ-Abo</a> empfehlen?';
-    }
+    } 
     statsTextHtml += "</span>";
   } else if (stats.betterThanPercentage === 0) {
     statsTextHtml += `<span class="s-font-text-s">
