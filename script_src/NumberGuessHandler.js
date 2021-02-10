@@ -169,7 +169,7 @@ export default class NumberGuessHandler {
 
     // show the users answer
     let answerHtml = `
-      <div class="q-quiz-result__number-guess-visual__text__label s-font-note s-color-primary-7">
+      <div class="q-quiz-result__number-guess-visual__text__label s-font-note s-color-primary-7 s-font-note--tabularnums">
         Ihre Schätzung
         <div class="s-font-note--strong">${answer} ${getUnit(
       answer,

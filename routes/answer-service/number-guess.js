@@ -172,7 +172,7 @@ function getBarchartSvg(data, stats, chartWidth) {
     svg
       .append("text")
       .text(data.min)
-      .attr("class", "s-font-note-s s-font-note-s--light")
+      .attr("class", "s-font-note-s s-font-note-s--light s-font-note--tabularnums")
       .attr("text-anchor", "start")
       .attr("x", 3)
       .attr("y", margin.top + 60)
@@ -188,7 +188,7 @@ function getBarchartSvg(data, stats, chartWidth) {
     svg
       .append("text")
       .text(data.max)
-      .attr("class", "s-font-note-s s-font-note-s--light")
+      .attr("class", "s-font-note-s s-font-note-s--light s-font-note--tabularnums")
       .attr("text-anchor", "end")
       .attr("x", width - 3)
       .attr("y", margin.top + 60)
