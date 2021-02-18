@@ -34,7 +34,7 @@ export default class MultipleChoiceHandler {
           element.classList.add("s-color-positive");
 
           let correctAnswerElement = document.createElement("span");
-          correctAnswerElement.classList.add("s-color-positive");
+          correctAnswerElement.classList.add("s-color-positive", "s-font-note--tabularnums");
           correctAnswerElement.innerText = "korrekte Antwort";
           parentNode.insertBefore(correctAnswerElement, element.nextSibling);
 
@@ -115,9 +115,9 @@ export default class MultipleChoiceHandler {
       }
       bar.style.width = `${barWidthPercentage}%`;
       if (percentageWithThisAnswer === 0) {
-        bar.innerHTML = `<span class="q-quiz-result-mc-answer-is-zero s-font-note-s">${percentageWithThisAnswer} %</span>`;
+        bar.innerHTML = `<span class="q-quiz-result-mc-answer-is-zero s-font-note-s s-font-note--tabularnums">${percentageWithThisAnswer} %</span>`;
       } else {
-        bar.innerHTML = `<span class="s-font-note-s">${percentageWithThisAnswer} %</span>`;
+        bar.innerHTML = `<span class="s-font-note-s s-font-note--tabularnums">${percentageWithThisAnswer} %</span>`;
       }
     });
     this.questionElement
