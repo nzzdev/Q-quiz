@@ -32,7 +32,7 @@ SystemJS.config({
     "github:*/*.json"
   ],
   map: {
-    "leaflet": "github:Leaflet/Leaflet@1.5.1",
+    "leaflet": "github:Leaflet/Leaflet@1.7.1",
     "text": "github:systemjs/plugin-text@0.0.11"
   },
   packages: {}
