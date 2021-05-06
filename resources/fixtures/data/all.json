@@ -85,6 +85,16 @@
       "question": "wo kommt sharon her?"
     },
     {
+      "id": "quiz-0-1503673375520-572013999",
+      "type": "numberPoll",
+      "image": {},
+      "articleRecommendations": [],
+      "question": "Temperatur",
+      "min": 1,
+      "max": 35,
+      "step": 1
+    },
+    {
       "id": "quiz-0-1503673750136-872919612",
       "type": "lastCard",
       "title": "Geschafft. Danke fürs Mitspielen.",

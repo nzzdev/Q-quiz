@@ -1,5 +1,6 @@
 module.exports = {
   questionTypes: ["multipleChoice", "numberGuess", "mapPointGuess", "numberPoll"],
+  scoredQuestionTypes: ["multipleChoice", "numberGuess", "mapPointGuess"],
   multiplicator: {
     multipleChoice: 5,
     numberGuess: 10,
