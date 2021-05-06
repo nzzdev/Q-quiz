@@ -77,7 +77,6 @@ module.exports = {
     // after that we don't need item.elements anymore
     let item = transform(request.payload.item);
     delete item.elements;
-
     // get id of quiz item out of query string
     let id = request.query._id;
     if (id === undefined && item.elements && item.elements.length > 0) {

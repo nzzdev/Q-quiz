@@ -13,7 +13,8 @@
 <div>
   {#if isMultipleChoice}
   <MultipleChoice question="{question}" /> {/if} {#if isNumberGuess}
-  <NumberGuess question="{question}" /> {/if} {#if isMapPointGuess}
+  <NumberGuess question="{question}" /> {/if} {#if isNumberPoll}
+  <NumberPoll question="{question}" /> {/if} {#if isMapPointGuess}
   <MapPointGuess question="{question}" /> {/if}
   <div class="s-q-item__footer">
     {#if question.notes}
@@ -39,6 +40,7 @@
 <script>
   import MultipleChoice from './MultipleChoice.html';
   import NumberGuess from './NumberGuess.html';
+  import NumberPoll from './NumberPoll.html';
   import MapPointGuess from './MapPointGuess.html';
 
   export default {
@@ -49,6 +51,9 @@
       isNumberGuess: ({ question }) => {
         return question.type === 'numberGuess';
       },
+      isNumberPoll: ({ question }) => {
+        return question.type === 'numberPoll';
+      },
       isMapPointGuess: ({ question }) => {
         return question.type === 'mapPointGuess';
       }
@@ -56,6 +61,7 @@
     components: {
       MultipleChoice,
       NumberGuess,
+      NumberPoll,
       MapPointGuess
     }
   };

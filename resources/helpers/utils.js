@@ -7,6 +7,7 @@ function getAnswers(type, questionId, options) {
   }
   if (
     type === "numberGuess" ||
+    type === "numberPoll" ||
     type === "mapPointGuess" ||
     type === "multipleChoice"
   ) {

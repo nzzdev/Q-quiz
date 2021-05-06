@@ -35,6 +35,7 @@ export function isQuestionElement(element) {
 export function isQuestionType(type) {
   return (
     type === "numberGuess" ||
+    type === "numberPoll" ||
     type === "multipleChoice" ||
     type === "mapPointGuess"
   );

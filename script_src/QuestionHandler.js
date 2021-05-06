@@ -1,4 +1,5 @@
 import NumberGuess from "./NumberGuessHandler.js";
+import NumberPoll from "./NumberPollHandler.js";
 import MultipleChoice from "./MultipleChoiceHandler.js";
 import MapPointGuess from "./MapPointGuessHandler.js";
 import * as answerHelpers from "./answerHelpers.js";
@@ -7,6 +8,7 @@ import AnswerStore from "./AnswerStore.js";
 
 const questionTypes = {
   numberGuess: NumberGuess,
+  numberPoll: NumberPoll, 
   multipleChoice: MultipleChoice,
   mapPointGuess: MapPointGuess
 };
