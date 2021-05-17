@@ -2,13 +2,14 @@
   "title": "FIXTURE: Number poll - single question quiz",
   "elements": [
     {
-      "id": "quiz-6-1503673375520-572013999",
+      "id": "quiz-9-1620205109920-228184695",
       "type": "numberPoll",
-      "image": {},
       "articleRecommendations": [],
-      "question": "Temperatur",
+      "introduction": "This is the introduction",
+      "question": "Test Frage",
+      "answer": 0,
       "min": 1,
-      "max": 35,
+      "max": 10,
       "step": 1
     }
   ]

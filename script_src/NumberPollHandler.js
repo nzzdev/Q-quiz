@@ -127,7 +127,7 @@ export default class NumberPollHandler {
     // show the users answer
     let answerHtml = `
       <div class="q-quiz-result__number-guess-visual__text__label s-font-note s-color-primary-7">
-        Ihre Schätzung
+        Ihre Meinung
         <div class="s-font-note--strong s-font-note--tabularnums">${answer} ${getUnit(
       answer,
       unitData
