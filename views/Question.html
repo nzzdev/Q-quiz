@@ -10,6 +10,7 @@
   style="position:relative; display: block; padding-bottom: { question.image.height / question.image.width * 100 }%;"></picture>
 {/if} {/if}
 {#if question.question}<h3 class="s-q-item__title q-quiz-question-title">{question.question}</h3>{/if}
+{#if question.questionSubTitle}<p class="s-font-text-s" style="font-style:italic">{question.questionSubTitle}</p>{/if}
 <div>
   {#if isMultipleChoice}
   <MultipleChoice question="{question}" /> {/if} {#if isNumberGuess}

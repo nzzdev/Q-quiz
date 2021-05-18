@@ -198,6 +198,10 @@
           "type": "string",
           "title": "Frage"
         },
+        "questionSubTitle": {
+          "type": "string",
+          "title": "Frage Untertitel"
+        },
         "unit": {
           "type": "string",
           "title": "Einheit Plural",
