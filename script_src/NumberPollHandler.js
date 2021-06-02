@@ -1,5 +1,4 @@
 import Scale from "./Scale.js";
-import { getAnswerTextElement } from "./answerHelpers.js";
 
 function getUnit(value, data) {
   let unit = data.unit;
@@ -27,7 +26,6 @@ export default class NumberPollHandler {
     this.data = data;
     this.quizId = quizId;
     this.toolBaseUrl = toolBaseUrl;
-    this.correctAnswer = parseFloat(data.correctAnswer);
   }
 
   renderInput() {
@@ -168,31 +166,12 @@ export default class NumberPollHandler {
   }
 
   renderResultStats(answer, answersStats) {
-    let isCorrectAnswer = answer === this.correctAnswer;
     let resultVisualElement = this.questionElement.querySelector(
       ".q-quiz-result .q-quiz-result__number-guess-visual"
     );
-    let resultTextElement = this.questionElement.querySelector(
-      ".q-quiz-result .q-quiz-result-answer-text"
-    );
-
-    if (
-      answersStats !== undefined &&
-      answersStats.diffPercentage !== undefined &&
-      answersStats.diffPercentage !== null
-    ) {
-      let textElement = getAnswerTextElement(
-        answersStats,
-        isCorrectAnswer,
-        () => {
-          return `Ihre Schätzung liegt um ${
-            answersStats.diffPercentage
-          } Prozent zu ${answer > this.correctAnswer ? "hoch" : "tief"}.`;
-        }
-      );
-      resultTextElement.appendChild(textElement);
-    }
-
+      // Normally here comes an evaluation, how correct is the answer
+      // In this case this is not needed, but
+      // To maintain consistency we keep this
     this.renderStatsVisual(resultVisualElement);
   }
 
