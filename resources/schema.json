@@ -206,7 +206,7 @@
           "type": "string",
           "title": "Einheit Plural",
           "Q:options": {
-            "placeholder": "Was für eine Zahl ist zu schätzen? Meter? Personen? Franken? etc."
+            "placeholder": "Was für eine Zahl? Meter? Personen? Franken? etc."
           }
         },
         "unit_singular": {
@@ -218,11 +218,11 @@
         },
         "min": {
           "type": "number",
-          "title": "Minimalwert auf der Schätzskala"
+          "title": "Minimalwert auf der Skala"
         },
         "max": {
           "type": "number",
-          "title": "Maximalwert auf der Schätzskala"
+          "title": "Maximalwert auf der Skala"
         },
         "step": {
           "type": "number",
