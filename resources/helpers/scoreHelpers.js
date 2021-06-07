@@ -8,6 +8,9 @@ function calculateWorstAnswerDifference(question) {
       question.max - question.answer
     );
   }
+  if (question.type === "numberPoll") {
+    return 1;
+  }
   if (question.type === "mapPointGuess") {
     const bbox = question.answer.bbox;
     const correctAnswerCoord = question.answer.geometry.coordinates;
@@ -83,6 +86,9 @@ function getAnswerQuality(question) {
       1 -
       Math.abs(question.userAnswer - question.answer) / worstAnswerDifference
     );
+  }
+  if (question.type === "numberPoll") {
+    return 1;
   }
   if (
     question.type === "mapPointGuess" &&

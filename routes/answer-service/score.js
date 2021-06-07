@@ -5,7 +5,7 @@ const Boom = require("@hapi/boom");
 const resourcesDir = `${__dirname}/../../resources/`;
 const scoreHelpers = require(`${resourcesDir}helpers/scoreHelpers.js`);
 const questionTypes = require(`${resourcesDir}helpers/constants.js`)
-  .questionTypes;
+  .scoredQuestionTypes;
 const answerDb = require("../../resources/helpers/db.js").quizDb;
 
 const schemaString = JSON.parse(

@@ -24,6 +24,7 @@ export default class AnswerStore {
   getStats(itemId, questionData, answerId = undefined) {
     if (
       questionData.type === "numberGuess" ||
+      questionData.type === "numberPoll" ||
       questionData.type === "mapPointGuess" ||
       questionData.type === "multipleChoice"
     ) {

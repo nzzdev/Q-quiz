@@ -54,6 +54,36 @@ class NumberGuessStatsCalculator {
   }
 }
 
+class NumberPollStatsCalculator {
+  constructor(answersStats, correctAnswer, userAnswer) {
+    // for consistency, we keep the correctAnswer argument
+    this.answersStats = answersStats;
+    this.userAnswer = userAnswer;
+  }
+
+  getStats() {
+    let numberOfSameAnswers;
+
+    let totalAnswers = this.answersStats.reduce((prev, current) => {
+      return prev + current.count;
+    }, 0);
+
+    if (this.userAnswer) {
+      numberOfSameAnswers = this.answersStats.reduce((prev, current) => {
+        if (this.userAnswer.value === current.value) {
+          return prev + current.count - 1;
+        }
+        return prev;
+      }, 0);
+    }
+
+    return {
+      numberOfSameAnswers: numberOfSameAnswers,
+      totalAnswers: totalAnswers
+    };
+  }
+}
+
 class MultipleChoiceStatsCalculator {
   constructor(answersStats, correctAnswer, userAnswer) {
     this.answersStats = answersStats;
@@ -120,6 +150,7 @@ class MapPointGuessStatsCalculator {
 
 module.exports = {
   numberGuess: NumberGuessStatsCalculator,
+  numberPoll: NumberPollStatsCalculator,
   multipleChoice: MultipleChoiceStatsCalculator,
   mapPointGuess: MapPointGuessStatsCalculator
 };

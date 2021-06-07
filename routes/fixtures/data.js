@@ -10,7 +10,8 @@ const fixtureData = [
   require(`${fixtureDataDirectory}/strip-plot-number-guess.json`),
   require(`${fixtureDataDirectory}/single-map-point-guess.json`),
   require(`${fixtureDataDirectory}/single-map-point-guess-low-zoomlevel.json`),
-  require(`${fixtureDataDirectory}/single-map-point-guess-high-zoomlevel.json`)
+  require(`${fixtureDataDirectory}/single-map-point-guess-high-zoomlevel.json`),
+  require(`${fixtureDataDirectory}/single-number-poll.json`)
 ];
 
 module.exports = {

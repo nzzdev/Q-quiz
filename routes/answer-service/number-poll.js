@@ -11,7 +11,7 @@ const getStripplotSvg = require("../../resources/helpers/svgHelpers.js").getStri
 module.exports = [
   {
     method: "GET",
-    path: "/number-guess/{itemId}/{questionId}/plot/{width}",
+    path: "/number-poll/{itemId}/{questionId}/plot/{width}",
     options: {
       tags: ["api"],
       validate: {
@@ -26,7 +26,7 @@ module.exports = [
     handler: async function(request, h) {
       return await Promise.all([
         getItem(request.params.itemId),
-        getAnswers("numberGuess", request.params.questionId)
+        getAnswers("numberPoll", request.params.questionId)
       ])
         .then(data => {
           let item = data[0];
