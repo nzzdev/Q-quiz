@@ -28,6 +28,7 @@
           { "$ref": "#/definitions/cover" },
           { "$ref": "#/definitions/multipleChoice" },
           { "$ref": "#/definitions/numberGuess" },
+          { "$ref": "#/definitions/numberPoll" },
           { "$ref": "#/definitions/mapPointGuess" },
           { "$ref": "#/definitions/lastCard" }
         ]
@@ -177,6 +178,69 @@
         }
       },
       "required": ["question", "answer", "min", "max", "step"]
+    },
+    "numberPoll": {
+      "type": "object",
+      "title": "Zahl Umfrage",
+      "properties": {
+        "id": { "$ref": "#/definitions/elementId" },
+        "type": {
+          "type": "string",
+          "default": "numberPoll",
+          "enum": ["numberPoll"],
+          "Q:options": {
+            "hideInEditor": true
+          }
+        },
+        "introduction": { "$ref": "#/definitions/introduction" },
+        "image": { "$ref": "#/definitions/image" },
+        "question": {
+          "type": "string",
+          "title": "Frage"
+        },
+        "questionSubTitle": {
+          "type": "string",
+          "title": "Frage Untertitel"
+        },
+        "unit": {
+          "type": "string",
+          "title": "Einheit Plural",
+          "Q:options": {
+            "placeholder": "Was für eine Zahl? Meter? Personen? Franken? etc."
+          }
+        },
+        "unit_singular": {
+          "type": "string",
+          "title": "Einheit Singular",
+          "Q:options": {
+            "placeholder": "Nur nötig, falls abweichend von Einheit Plural."
+          }
+        },
+        "min": {
+          "type": "number",
+          "title": "Minimalwert auf der Skala"
+        },
+        "max": {
+          "type": "number",
+          "title": "Maximalwert auf der Skala"
+        },
+        "step": {
+          "type": "number",
+          "minimum": 0,
+          "title": "Grösse der Zwischenschritte beim Verschieben des Sliders",
+          "Q:options": {
+            "placeholder": "Sollte so gewählt sein, dass sich zwischen Minimal- und Maximalwert etwa 100-500 Zwischenschritte ergeben."
+          }
+        },
+        "notes": {
+          "type": "string",
+          "title": "Anmerkungen"
+        },
+        "articleRecommendations": {
+          "$ref": "#/definitions/articleRecommendations"
+        }
+      },
+      "required": ["question", "min", "max", "step"]
     },
     "mapPointGuess": {
       "type": "object",

@@ -58,6 +58,14 @@ module.exports = [
   {
     data: {
       itemId: "quiz-0",
+      questionId: "quiz-0-1503673375520-572013999",
+      type: "numberPoll",
+      value: 30
+    }
+  },
+  {
+    data: {
+      itemId: "quiz-0",
       questionId: "quiz-0-1503673602641-999859280",
       type: "mapPointGuess",
       value: {

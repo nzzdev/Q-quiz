@@ -10,10 +10,12 @@
   style="position:relative; display: block; padding-bottom: { question.image.height / question.image.width * 100 }%;"></picture>
 {/if} {/if}
 {#if question.question}<h3 class="s-q-item__title q-quiz-question-title">{question.question}</h3>{/if}
+{#if question.questionSubTitle}<p class="s-font-text-s" style="font-style:italic">{question.questionSubTitle}</p>{/if}
 <div>
   {#if isMultipleChoice}
   <MultipleChoice question="{question}" /> {/if} {#if isNumberGuess}
-  <NumberGuess question="{question}" /> {/if} {#if isMapPointGuess}
+  <NumberGuess question="{question}" /> {/if} {#if isNumberPoll}
+  <NumberPoll question="{question}" /> {/if} {#if isMapPointGuess}
   <MapPointGuess question="{question}" /> {/if}
   <div class="s-q-item__footer">
     {#if question.notes}
@@ -39,6 +41,7 @@
 <script>
   import MultipleChoice from './MultipleChoice.html';
   import NumberGuess from './NumberGuess.html';
+  import NumberPoll from './NumberPoll.html';
   import MapPointGuess from './MapPointGuess.html';
 
   export default {
@@ -49,6 +52,9 @@
       isNumberGuess: ({ question }) => {
         return question.type === 'numberGuess';
       },
+      isNumberPoll: ({ question }) => {
+        return question.type === 'numberPoll';
+      },
       isMapPointGuess: ({ question }) => {
         return question.type === 'mapPointGuess';
       }
@@ -56,6 +62,7 @@
     components: {
       MultipleChoice,
       NumberGuess,
+      NumberPoll,
       MapPointGuess
     }
   };

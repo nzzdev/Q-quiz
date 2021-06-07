@@ -7,6 +7,11 @@ module.exports = [
           "function (doc) {\n  if (doc.data && doc.data.type === 'numberGuess' && typeof doc.data.value !== 'undefined') {\n    var questionId;\n    if (doc.data.questionId) {\n      questionId = doc.data.questionId;\n    } else if (doc.data.itemId) {\n      questionId = doc.data.itemId;\n    }\n    if (questionId) {\n      emit([questionId, doc.data.value], 1);\n    }\n  }\n}",
         reduce: "_count"
       },
+      "answers-numberPoll": {
+        map:
+          "function (doc) {\n  if (doc.data && doc.data.type === 'numberPoll' && typeof doc.data.value !== 'undefined') {\n    var questionId;\n    if (doc.data.questionId) {\n      questionId = doc.data.questionId;\n    } else if (doc.data.itemId) {\n      questionId = doc.data.itemId;\n    }\n    if (questionId) {\n      emit([questionId, doc.data.value], 1);\n    }\n  }\n}",
+        reduce: "_count"
+      },
       "answers-mapPointGuess": {
         map:
           "function (doc) {\n  if (doc.data && doc.data.type === 'mapPointGuess' && typeof doc.data.value !== 'undefined') {\n    var questionId;\n    if (doc.data.questionId) {\n      questionId = doc.data.questionId;\n    } else if (doc.data.itemId) {\n      questionId = doc.data.itemId;\n    }\n    if (questionId) {\n      emit([questionId, doc.data.value.distance], 1);\n    }\n  }\n}",

@@ -275,7 +275,7 @@ lab.experiment("answer stats endpoint", () => {
 
 lab.experiment("score endpoint", () => {
   const questionTypes = require("../resources/helpers/constants.js")
-    .questionTypes;
+    .scoredQuestionTypes;
   const worstAnswerDifference = require("../resources/helpers/scoreHelpers.js")
     .worstAnswerDifference;
 
@@ -329,7 +329,7 @@ lab.experiment("score endpoint", () => {
       };
       if (question.type === "multipleChoice") {
         userAnswer.value = question.choices[0];
-      } else if (question.type === "numberGuess") {
+      } else if (question.type === "numberGuess" || question.type === "numberPoll") {
         // random answer between min and max
         userAnswer.value =
           Math.random() + (question.max - question.min) + question.min;
@@ -372,7 +372,7 @@ lab.experiment("score endpoint", () => {
         };
         if (question.type === "multipleChoice") {
           userAnswer.value = question.answer;
-        } else if (question.type === "numberGuess") {
+        } else if (question.type === "numberGuess" || question.type === "numberPoll") {
           // random answer between min and max
           userAnswer.value =
             Math.random() + (question.max - question.min) + question.min;
@@ -504,6 +504,29 @@ lab.experiment("number guess plot endpoint", () => {
     const quiz = fixtureResponse.result[fixtureIndex];
     const response = await server.inject(
       `/number-guess/${fixtureIndex}/${quiz.elements[1].id}/plot/${560}`
+    );
+    expect(response.statusCode).to.be.equal(400);
+    expect(response.result.message).to.be.equal("stats is undefined");
+  });
+});
+
+lab.experiment("number poll plot endpoint", () => {
+  it("returns number poll plot", async () => {
+    const fixtureResponse = await server.inject("/fixtures/data");
+    const fixtureIndex = 0;
+    const quiz = fixtureResponse.result[fixtureIndex];
+    const response = await server.inject(
+      `/number-poll/${fixtureIndex}/${quiz.elements[6].id}/plot/${560}`
+    );
+    expect(response.statusCode).to.be.equal(200);
+  });
+
+  it("returns 400 for requesting number poll plot with multiple choice question", async () => {
+    const fixtureResponse = await server.inject("/fixtures/data");
+    const fixtureIndex = 0;
+    const quiz = fixtureResponse.result[fixtureIndex];
+    const response = await server.inject(
+      `/number-poll/${fixtureIndex}/${quiz.elements[1].id}/plot/${560}`
     );
     expect(response.statusCode).to.be.equal(400);
     expect(response.result.message).to.be.equal("stats is undefined");

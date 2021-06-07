@@ -112,7 +112,7 @@ lab.experiment("dom tests", () => {
       response.result.markup,
       ".q-quiz-element-container"
     ).then(value => {
-      expect(value).to.be.equal(7);
+      expect(value).to.be.equal(8);
     });
   });
 });

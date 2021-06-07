@@ -105,7 +105,7 @@ The tool structure follows the general structure of each Q tool. Further informa
 
 ### Question Types
 
-Q-Quiz supports three different question types `multiple choice`, `number guess` and `map point guess`. Each question type takes a question, a correct answer and additional configuration parameters like wrong answers or min and max values. The questions types are implemented as ES6 classes and each follow the same structure.
+Q-Quiz supports four question types `multiple choice`, `number guess`, `map point guess` and `number poll`. Each of them requires a question, and have additional configuration parameters, like min or max values. The questions `multiple choice`, `number guess` and `map point guess` require a correct answer and will evaluate results. A version of `number-guess`, called `number-poll` does not require correct answer. The questions types are implemented as ES6 classes and each follow the same structure.
 
 ### `/rendering-info/html-js`
 
