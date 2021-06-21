@@ -21,7 +21,7 @@ module.exports = [
           width: Joi.number().required()
         }
       },
-      cors: true
+      cors: false
     },
     handler: async function(request, h) {
       return await Promise.all([
