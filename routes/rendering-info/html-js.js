@@ -70,7 +70,6 @@ module.exports = {
       }
     },
     cache: false,
-    cors: true
   },
   handler: function(request, h) {
     // item.elements will be split into cover, last card and questions during transformation step
