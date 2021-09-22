@@ -1,5 +1,6 @@
 import Scale from "./Scale.js";
 import { getAnswerTextElement } from "./answerHelpers.js";
+import { alignInputRangeLabelPosition } from "./helpers.js";
 
 function getUnit(value, data) {
   let unit = data.unit;
@@ -32,6 +33,8 @@ export default class NumberGuessHandler {
 
   renderInput() {
     const labelContainer = this.inputElement.parentNode.firstElementChild;
+    const positionInPercent =
+      ((this.inputElement.value - this.min) / (this.max - this.min)) * 100;
     let label = labelContainer.querySelector(
       ".q-quiz-input-range-position-label"
     );
@@ -39,31 +42,24 @@ export default class NumberGuessHandler {
     this.defaultInputValue = this.inputElement.value;
 
     this.inputElement.addEventListener("input", () => {
+      const positionInPercent =
+        ((this.inputElement.value - this.min) / (this.max - this.min)) * 100;
       label.textContent = this.inputElement.value;
-      label.setAttribute(
-        "style",
-        `left: calc(${((this.inputElement.value - this.min) /
-          (this.max - this.min)) *
-          100}% - 1px);`
-      );
+      label.setAttribute("style", `left: calc(${positionInPercent}% - 1px);`);
+
+      alignInputRangeLabelPosition(positionInPercent, label, labelContainer);
     });
     this.inputElement.addEventListener("change", () => {
+      const positionInPercent =
+        ((this.inputElement.value - this.min) / (this.max - this.min)) * 100;
       label.textContent = this.inputElement.value;
-      label.setAttribute(
-        "style",
-        `left: calc(${((this.inputElement.value - this.min) /
-          (this.max - this.min)) *
-          100}% - 1px);`
-      );
+      label.setAttribute("style", `left: calc(${positionInPercent}% - 1px);`);
+
+      alignInputRangeLabelPosition(positionInPercent, label, labelContainer);
     });
 
     label.innerHTML = this.defaultInputValue;
-    label.setAttribute(
-      "style",
-      `left: calc(${((this.inputElement.value - this.min) /
-        (this.max - this.min)) *
-        100}% - 1px);`
-    );
+    label.setAttribute("style", `left: calc(${positionInPercent}% - 1px);`);
   }
 
   getValue(event) {
@@ -100,7 +96,7 @@ export default class NumberGuessHandler {
     );
     const unitData = {
       unit: this.resultElement.getAttribute("unit"),
-      unitSingular: this.resultElement.getAttribute("unit-singular")
+      unitSingular: this.resultElement.getAttribute("unit-singular"),
     };
 
     let steppedValues = [];
@@ -241,10 +237,8 @@ export default class NumberGuessHandler {
 
   getStatsPlot(width) {
     return fetch(
-      `${this.toolBaseUrl}/number-guess/${this.quizId}/${
-        this.data.id
-      }/plot/${width}`
-    ).then(response => {
+      `${this.toolBaseUrl}/number-guess/${this.quizId}/${this.data.id}/plot/${width}`
+    ).then((response) => {
       if (response.ok) {
         return response.text();
       }
@@ -253,13 +247,15 @@ export default class NumberGuessHandler {
   }
 
   renderStatsVisual(element) {
-    this.getStatsPlot(element.getBoundingClientRect().width).then(svgString => {
-      let statsVisualContainerElement = document.createElement("div");
-      statsVisualContainerElement.classList.add(
-        "q-quiz-result__number-guess-visual__stats-graphic-container"
-      );
-      statsVisualContainerElement.innerHTML = svgString;
-      element.appendChild(statsVisualContainerElement);
-    });
+    this.getStatsPlot(element.getBoundingClientRect().width).then(
+      (svgString) => {
+        let statsVisualContainerElement = document.createElement("div");
+        statsVisualContainerElement.classList.add(
+          "q-quiz-result__number-guess-visual__stats-graphic-container"
+        );
+        statsVisualContainerElement.innerHTML = svgString;
+        element.appendChild(statsVisualContainerElement);
+      }
+    );
   }
 }

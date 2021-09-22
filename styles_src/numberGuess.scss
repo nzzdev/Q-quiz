@@ -116,6 +116,7 @@ $q-quiz-result__number-guess-visual__stats-graphic-height: 60px;
   stroke-width: 3px;
   shape-rendering: crispEdges;
 }
+
 .q-quiz-answer-chart-correctanswerlabel {
   fill: black;
 }
@@ -124,4 +125,9 @@ $q-quiz-result__number-guess-visual__stats-graphic-height: 60px;
   stroke: #787878;
   stroke-width: 1px;
   shape-rendering: crispEdges;
+}
+
+.q-quiz-input-range-position-label {
+  width: initial;
+  max-width: 200px;
 }

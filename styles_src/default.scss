@@ -99,11 +99,25 @@
   height: 1em;
 }
 
+.q-quiz-input-range-position-label-container--flex {
+  display: flex;
+  margin-left: 0;
+  margin-right: 0;
+}
+
 .q-quiz-input-range-position-label {
   position: absolute;
   width: 200px;
   text-align: center;
   transform: translateX(-50%);
+}
+
+.q-quiz-input-range-position-label--left-aligned {
+  transform: translateX(0);
+}
+
+.q-quiz-input-range-position-label--right-aligned {
+  transform: translateX(-100%);
 }
 
 .q-quiz-question-introduction {
