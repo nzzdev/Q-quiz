@@ -8,6 +8,7 @@ const fixtureData = [
   require(`${fixtureDataDirectory}/single-multiple-choice.json`),
   require(`${fixtureDataDirectory}/single-number-guess.json`),
   require(`${fixtureDataDirectory}/single-big-number-guess.json`),
+  require(`${fixtureDataDirectory}/single-big-number-small-step-guess.json`),
   require(`${fixtureDataDirectory}/single-float-number-guess.json`),
   require(`${fixtureDataDirectory}/strip-plot-number-guess.json`),
   require(`${fixtureDataDirectory}/single-map-point-guess.json`),
