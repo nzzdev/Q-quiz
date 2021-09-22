@@ -1,0 +1,17 @@
+{
+  "title": "FIXTURE: Number poll - single question big number quiz",
+  "elements": [
+    {
+      "id": "quiz-9-1620205109920-228181337",
+      "type": "numberPoll",
+      "articleRecommendations": [],
+      "introduction": "This is the introduction",
+      "question": "Test Frage",
+      "questionSubTitle": "Test Subtitle",
+      "answer": 5000000,
+      "min": 1000000,
+      "max": 10000000,
+      "step": 1000000
+    }
+  ]
+}
