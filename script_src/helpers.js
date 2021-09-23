@@ -86,6 +86,17 @@ export function alignInputRangeLabelPosition(
   }
 }
 
+export function formatNumber(number) {
+  const quarterSpace = " ";
+  const formatter = new Intl.NumberFormat("de-CH");
+  const parts = formatter.formatToParts(number);
+  const formattedNumber = parts
+    .map((part) => (part.type === "group" ? quarterSpace : part.value))
+    .join("");
+
+  return formattedNumber;
+}
+
 function getImageUrls(imageServiceUrl, imageKey, width) {
   return {
     image1x: getImageUrl(

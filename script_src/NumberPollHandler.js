@@ -1,5 +1,5 @@
 import Scale from "./Scale.js";
-import { alignInputRangeLabelPosition } from "./helpers.js";
+import { alignInputRangeLabelPosition, formatNumber } from "./helpers.js";
 
 function getUnit(value, data) {
   let unit = data.unit;
@@ -42,7 +42,7 @@ export default class NumberPollHandler {
     this.inputElement.addEventListener("input", () => {
       const positionInPercent =
         ((this.inputElement.value - this.min) / (this.max - this.min)) * 100;
-      label.textContent = this.inputElement.value;
+      label.textContent = formatNumber(this.inputElement.value);
       label.setAttribute("style", `left: calc(${positionInPercent}% - 1px);`);
 
       alignInputRangeLabelPosition(positionInPercent, label, labelContainer);
@@ -51,13 +51,13 @@ export default class NumberPollHandler {
     this.inputElement.addEventListener("change", () => {
       const positionInPercent =
         ((this.inputElement.value - this.min) / (this.max - this.min)) * 100;
-      label.textContent = this.inputElement.value;
+      label.textContent = formatNumber(this.inputElement.value);
       label.setAttribute("style", `left: calc(${positionInPercent}% - 1px);`);
 
       alignInputRangeLabelPosition(positionInPercent, label, labelContainer);
     });
 
-    label.innerHTML = this.defaultInputValue;
+    label.innerHTML = formatNumber(this.defaultInputValue);
     label.setAttribute("style", `left: calc(${positionInPercent}% - 1px);`);
   }
 
@@ -123,10 +123,9 @@ export default class NumberPollHandler {
     let answerHtml = `
       <div class="q-quiz-result__number-guess-visual__text__label s-font-note s-color-primary-7">
         Ihre Meinung
-        <div class="s-font-note--strong s-font-note--tabularnums">${answer} ${getUnit(
-      answer,
-      unitData
-    )}</div>
+        <div class="s-font-note--strong s-font-note--tabularnums">${formatNumber(
+          answer
+        )} ${getUnit(answer, unitData)}</div>
       </div>
       <div class="q-quiz-result__number-guess-visual__text__marker ${additionalMarkerClass}" ${additionalMarkerAttributes}></div>
     `;
