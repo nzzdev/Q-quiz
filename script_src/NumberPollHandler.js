@@ -133,9 +133,7 @@ export default class NumberPollHandler {
     let answerHtml = `
       <div class="q-quiz-result__number-guess-visual__text__label s-font-note s-color-primary-7">
         Ihre Meinung
-        <div class="s-font-note--strong s-font-note--tabularnums">${formatNumber(
-          answer
-        )} ${getUnit(answer, unitData)}</div>
+        <div class="s-font-note--strong s-font-note--tabularnums">${formatNumber(answer)} ${getUnit(answer, unitData)}</div>
       </div>
       <div class="q-quiz-result__number-guess-visual__text__marker ${additionalMarkerClass}" ${additionalMarkerAttributes}></div>
     `;

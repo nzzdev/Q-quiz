@@ -102,10 +102,7 @@ function calculateSnapToBorderThreshold(displayedValue, labelEle) {
   const quizWidth = qQuizEle.getBoundingClientRect().width;
   const smallViewportWidth = 400;
   const baseThreshold = quizWidth <= smallViewportWidth ? 10 : 5;
-  //const additionalThreshold =
-  //  displayedValue.length < 5 ? 0 : displayedValue.length - 5;
-  //let snapToStartThreshold = quizWidth <= smallViewportWidth ? 10 : 5;
-  //let snapToEndThreshold = 100 - snapToStartThreshold;
+
   return baseThreshold;
 }
 

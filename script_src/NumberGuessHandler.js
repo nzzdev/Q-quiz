@@ -134,9 +134,9 @@ export default class NumberGuessHandler {
     let correctAnswerHtml = `
       <div class="q-quiz-result__number-guess-visual__text__label s-font-note s-color-gray-8">
         Korrekte Antwort
-        <div class="s-font-note--strong">${
-          formatNumber(this.correctAnswer) || ""
-        } ${getUnit(this.correctAnswer, unitData)}</div>
+        <div class="s-font-note--strong">
+        ${formatNumber(this.correctAnswer) || ""} ${getUnit(this.correctAnswer, unitData)}
+        </div>
       </div>
       <div class="q-quiz-result__number-guess-visual__text__marker ${additionalMarkerClass}" ${additionalMarkerAttributes}></div>
     `;
@@ -176,9 +176,7 @@ export default class NumberGuessHandler {
     let answerHtml = `
       <div class="q-quiz-result__number-guess-visual__text__label s-font-note s-color-primary-7">
         Ihre Schätzung
-        <div class="s-font-note--strong s-font-note--tabularnums">${formatNumber(
-          answer
-        )} ${getUnit(answer, unitData)}</div>
+        <div class="s-font-note--strong s-font-note--tabularnums">${formatNumber(answer)} ${getUnit(answer, unitData)}</div>
       </div>
       <div class="q-quiz-result__number-guess-visual__text__marker ${additionalMarkerClass}" ${additionalMarkerAttributes}></div>
     `;
