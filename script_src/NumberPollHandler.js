@@ -45,7 +45,12 @@ export default class NumberPollHandler {
       label.textContent = formatNumber(this.inputElement.value);
       label.setAttribute("style", `left: calc(${positionInPercent}% - 1px);`);
 
-      alignInputRangeLabelPosition(positionInPercent, label, labelContainer);
+      alignInputRangeLabelPosition(
+        this.inputElement.value,
+        positionInPercent,
+        label,
+        labelContainer
+      );
     });
 
     this.inputElement.addEventListener("change", () => {
@@ -54,7 +59,12 @@ export default class NumberPollHandler {
       label.textContent = formatNumber(this.inputElement.value);
       label.setAttribute("style", `left: calc(${positionInPercent}% - 1px);`);
 
-      alignInputRangeLabelPosition(positionInPercent, label, labelContainer);
+      alignInputRangeLabelPosition(
+        this.inputElement.value,
+        positionInPercent,
+        label,
+        labelContainer
+      );
     });
 
     label.innerHTML = formatNumber(this.defaultInputValue);

@@ -59,16 +59,23 @@ export function constructPictureElement(quizRootElement, quizQuestionImages) {
 }
 
 export function alignInputRangeLabelPosition(
+  displayedRangeValue,
   positionInPercent,
   labelEle,
   labelContainerEle
 ) {
-  if (positionInPercent < 5) {
+  const snapToStartThreshold = calculateSnapToBorderThreshold(
+    displayedRangeValue,
+    labelEle
+  );
+  const snapToEndThreshold = 100 - snapToStartThreshold;
+
+  if (positionInPercent < snapToStartThreshold) {
     labelContainerEle.classList.add(
       "q-quiz-input-range-position-label-container--flex"
     );
     labelEle.classList.add("q-quiz-input-range-position-label--left-aligned");
-  } else if (positionInPercent > 95) {
+  } else if (positionInPercent > snapToEndThreshold) {
     labelContainerEle.classList.add(
       "q-quiz-input-range-position-label-container--flex"
     );
@@ -84,6 +91,22 @@ export function alignInputRangeLabelPosition(
       "q-quiz-input-range-position-label--right-aligned"
     );
   }
+}
+
+function calculateSnapToBorderThreshold(displayedValue, labelEle) {
+  if (displayedValue < 1000) {
+    return 0;
+  }
+
+  const qQuizEle = labelEle.closest(".q-quiz");
+  const quizWidth = qQuizEle.getBoundingClientRect().width;
+  const smallViewportWidth = 400;
+  const baseThreshold = quizWidth <= smallViewportWidth ? 10 : 5;
+  //const additionalThreshold =
+  //  displayedValue.length < 5 ? 0 : displayedValue.length - 5;
+  //let snapToStartThreshold = quizWidth <= smallViewportWidth ? 10 : 5;
+  //let snapToEndThreshold = 100 - snapToStartThreshold;
+  return baseThreshold;
 }
 
 export function formatNumber(number) {
