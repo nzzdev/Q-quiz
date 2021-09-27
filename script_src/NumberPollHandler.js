@@ -1,4 +1,5 @@
 import Scale from "./Scale.js";
+import { alignInputRangeLabelPosition, formatNumber } from "./helpers.js";
 
 function getUnit(value, data) {
   let unit = data.unit;
@@ -30,6 +31,8 @@ export default class NumberPollHandler {
 
   renderInput() {
     const labelContainer = this.inputElement.parentNode.firstElementChild;
+    const positionInPercent =
+      ((this.inputElement.value - this.min) / (this.max - this.min)) * 100;
     let label = labelContainer.querySelector(
       ".q-quiz-input-range-position-label"
     );
@@ -37,31 +40,35 @@ export default class NumberPollHandler {
     this.defaultInputValue = this.inputElement.value;
 
     this.inputElement.addEventListener("input", () => {
-      label.textContent = this.inputElement.value;
-      label.setAttribute(
-        "style",
-        `left: calc(${((this.inputElement.value - this.min) /
-          (this.max - this.min)) *
-          100}% - 1px);`
-      );
-    });
-    this.inputElement.addEventListener("change", () => {
-      label.textContent = this.inputElement.value;
-      label.setAttribute(
-        "style",
-        `left: calc(${((this.inputElement.value - this.min) /
-          (this.max - this.min)) *
-          100}% - 1px);`
+      const positionInPercent =
+        ((this.inputElement.value - this.min) / (this.max - this.min)) * 100;
+      label.textContent = formatNumber(this.inputElement.value);
+      label.setAttribute("style", `left: calc(${positionInPercent}% - 1px);`);
+
+      alignInputRangeLabelPosition(
+        this.inputElement.value,
+        positionInPercent,
+        label,
+        labelContainer
       );
     });
 
-    label.innerHTML = this.defaultInputValue;
-    label.setAttribute(
-      "style",
-      `left: calc(${((this.inputElement.value - this.min) /
-        (this.max - this.min)) *
-        100}% - 1px);`
-    );
+    this.inputElement.addEventListener("change", () => {
+      const positionInPercent =
+        ((this.inputElement.value - this.min) / (this.max - this.min)) * 100;
+      label.textContent = formatNumber(this.inputElement.value);
+      label.setAttribute("style", `left: calc(${positionInPercent}% - 1px);`);
+
+      alignInputRangeLabelPosition(
+        this.inputElement.value,
+        positionInPercent,
+        label,
+        labelContainer
+      );
+    });
+
+    label.innerHTML = formatNumber(this.defaultInputValue);
+    label.setAttribute("style", `left: calc(${positionInPercent}% - 1px);`);
   }
 
   getValue(event) {
@@ -98,7 +105,7 @@ export default class NumberPollHandler {
     );
     const unitData = {
       unit: this.resultElement.getAttribute("unit"),
-      unitSingular: this.resultElement.getAttribute("unit-singular")
+      unitSingular: this.resultElement.getAttribute("unit-singular"),
     };
 
     let steppedValues = [];
@@ -121,15 +128,12 @@ export default class NumberPollHandler {
         "q-quiz-result__number-guess-visual__text__marker--few-answers";
       additionalMarkerAttributes = `style="width: ${stepWidth}px;"`;
     }
-    
+
     // show the users answer
     let answerHtml = `
       <div class="q-quiz-result__number-guess-visual__text__label s-font-note s-color-primary-7">
         Ihre Meinung
-        <div class="s-font-note--strong s-font-note--tabularnums">${answer} ${getUnit(
-      answer,
-      unitData
-    )}</div>
+        <div class="s-font-note--strong s-font-note--tabularnums">${formatNumber(answer)} ${getUnit(answer, unitData)}</div>
       </div>
       <div class="q-quiz-result__number-guess-visual__text__marker ${additionalMarkerClass}" ${additionalMarkerAttributes}></div>
     `;
@@ -169,18 +173,16 @@ export default class NumberPollHandler {
     let resultVisualElement = this.questionElement.querySelector(
       ".q-quiz-result .q-quiz-result__number-guess-visual"
     );
-      // Normally here comes an evaluation, how correct is the answer
-      // In this case this is not needed, but
-      // To maintain consistency we keep this
+    // Normally here comes an evaluation, how correct is the answer
+    // In this case this is not needed, but
+    // To maintain consistency we keep this
     this.renderStatsVisual(resultVisualElement);
   }
 
   getStatsPlot(width) {
     return fetch(
-      `${this.toolBaseUrl}/number-poll/${this.quizId}/${
-        this.data.id
-      }/plot/${width}`
-    ).then(response => {
+      `${this.toolBaseUrl}/number-poll/${this.quizId}/${this.data.id}/plot/${width}`
+    ).then((response) => {
       if (response.ok) {
         return response.text();
       }
@@ -189,13 +191,15 @@ export default class NumberPollHandler {
   }
 
   renderStatsVisual(element) {
-    this.getStatsPlot(element.getBoundingClientRect().width).then(svgString => {
-      let statsVisualContainerElement = document.createElement("div");
-      statsVisualContainerElement.classList.add(
-        "q-quiz-result__number-guess-visual__stats-graphic-container"
-      );
-      statsVisualContainerElement.innerHTML = svgString;
-      element.appendChild(statsVisualContainerElement);
-    });
+    this.getStatsPlot(element.getBoundingClientRect().width).then(
+      (svgString) => {
+        let statsVisualContainerElement = document.createElement("div");
+        statsVisualContainerElement.classList.add(
+          "q-quiz-result__number-guess-visual__stats-graphic-container"
+        );
+        statsVisualContainerElement.innerHTML = svgString;
+        element.appendChild(statsVisualContainerElement);
+      }
+    );
   }
 }

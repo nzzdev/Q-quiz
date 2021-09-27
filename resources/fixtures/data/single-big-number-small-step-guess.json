@@ -1,0 +1,16 @@
+{
+  "title": "FIXTURE: Number guess - single big number small step question quiz",
+  "elements": [
+    {
+      "id": "quiz-3-1503673375520-572013569",
+      "type": "numberGuess",
+      "image": {},
+      "articleRecommendations": [],
+      "question": "Zurück in die Gegenwart: Wieviele Katzen leben in der Schweiz?",
+      "answer": 5000000,
+      "min": 1000000,
+      "max": 10000000,
+      "step": 10000
+    }
+  ]
+}
