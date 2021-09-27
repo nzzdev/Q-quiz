@@ -5,21 +5,21 @@ export function loadAdditionalArticles(articleIds) {
   const apiUrl = env.ENRICO_API_URL;
   const enricoProducts = env.ENRICO_PRODUCTS;
 
-  articleIds.forEach(articleId => {
+  articleIds.forEach((articleId) => {
     if (!articleId || articleId.length === 0) {
       return;
     }
 
-    enricoProducts.forEach(product => {
+    enricoProducts.forEach((product) => {
       loadPromises.push(
         fetch(`${apiUrl}?product=${product}&articleid=${articleId}`)
-          .then(response => {
+          .then((response) => {
             if (response.status >= 200 && response.status < 300) {
               return response.json();
             }
             return undefined;
           })
-          .catch(e => {
+          .catch((e) => {
             // console.log(e);
           })
       );
@@ -45,7 +45,7 @@ export function constructPictureElement(quizRootElement, quizQuestionImages) {
   const elementMarkup =
     '<source type="image/webp" srcset="{webp1x} 1x, {webp2x} 2x"><source srcset="{image1x} 1x, {image2x} 2x"><img class="q-quiz-question-image q-quiz-question-image--responsive" src="{image1x}">';
   const rootElementWidth = quizRootElement.getBoundingClientRect().width;
-  quizQuestionImages.forEach(function(quizImage) {
+  quizQuestionImages.forEach(function (quizImage) {
     const imageKey = quizImage.getAttribute("data-imageKey");
     const imageServiceUrl = quizImage.getAttribute("data-imageServiceUrl");
     const urls = getImageUrls(imageServiceUrl, imageKey, rootElementWidth);
@@ -56,6 +56,65 @@ export function constructPictureElement(quizRootElement, quizQuestionImages) {
       .replace(/{webp2x}/g, urls.webp2x);
     quizImage.innerHTML = innerHTMLPictureElement;
   });
+}
+
+export function alignInputRangeLabelPosition(
+  displayedRangeValue,
+  positionInPercent,
+  labelEle,
+  labelContainerEle
+) {
+  const snapToStartThreshold = calculateSnapToBorderThreshold(
+    displayedRangeValue,
+    labelEle
+  );
+  const snapToEndThreshold = 100 - snapToStartThreshold;
+
+  if (positionInPercent < snapToStartThreshold) {
+    labelContainerEle.classList.add(
+      "q-quiz-input-range-position-label-container--flex"
+    );
+    labelEle.classList.add("q-quiz-input-range-position-label--left-aligned");
+  } else if (positionInPercent > snapToEndThreshold) {
+    labelContainerEle.classList.add(
+      "q-quiz-input-range-position-label-container--flex"
+    );
+    labelEle.classList.add("q-quiz-input-range-position-label--right-aligned");
+  } else {
+    labelContainerEle.classList.remove(
+      "q-quiz-input-range-position-label-container--flex"
+    );
+    labelEle.classList.remove(
+      "q-quiz-input-range-position-label--left-aligned"
+    );
+    labelEle.classList.remove(
+      "q-quiz-input-range-position-label--right-aligned"
+    );
+  }
+}
+
+function calculateSnapToBorderThreshold(displayedValue, labelEle) {
+  if (displayedValue < 1000) {
+    return 0;
+  }
+
+  const qQuizEle = labelEle.closest(".q-quiz");
+  const quizWidth = qQuizEle.getBoundingClientRect().width;
+  const smallViewportWidth = 400;
+  const baseThreshold = quizWidth <= smallViewportWidth ? 10 : 5;
+
+  return baseThreshold;
+}
+
+export function formatNumber(number) {
+  const quarterSpace = " ";
+  const formatter = new Intl.NumberFormat("de-CH");
+  const parts = formatter.formatToParts(number);
+  const formattedNumber = parts
+    .map((part) => (part.type === "group" ? quarterSpace : part.value))
+    .join("");
+
+  return formattedNumber;
 }
 
 function getImageUrls(imageServiceUrl, imageKey, width) {
@@ -73,7 +132,7 @@ function getImageUrls(imageServiceUrl, imageKey, width) {
       getFileExtension(imageKey)
     ),
     webp1x: getImageUrl(imageServiceUrl, imageKey, width, "webply"),
-    webp2x: getImageUrl(imageServiceUrl, imageKey, width * 2, "webply")
+    webp2x: getImageUrl(imageServiceUrl, imageKey, width * 2, "webply"),
   };
 }
 
