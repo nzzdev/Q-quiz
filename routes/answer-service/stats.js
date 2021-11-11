@@ -27,7 +27,6 @@ module.exports = [
           answerId: Joi.string().optional()
         }
       },
-      cors: true
     },
     handler: async function(request, h) {
       try {

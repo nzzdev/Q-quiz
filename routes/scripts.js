@@ -3,7 +3,6 @@ module.exports = [
     method: "GET",
     path: "/script/{filename}.{hash}.{extension}",
     options: {
-      cors: true,
       files: {
         relativeTo: `${__dirname}/../scripts/`
       }
