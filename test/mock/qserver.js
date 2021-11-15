@@ -11,9 +11,6 @@ const fixtureData = [
 
 const server = Hapi.server({
   port: 9999,
-  routes: {
-    cors: true
-  }
 });
 
 server.route({

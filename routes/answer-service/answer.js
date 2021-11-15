@@ -16,7 +16,6 @@ module.exports = [
           data: Joi.object().required()
         }
       },
-      cors: true
     },
     handler: function(request, h) {
       var doc = request.payload;

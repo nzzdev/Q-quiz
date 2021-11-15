@@ -5,9 +5,6 @@ const Hapi = require("@hapi/hapi");
 const start = async function() {
   let server = Hapi.server({
     port: process.env.PORT || 3000,
-    routes: {
-      cors: true
-    }
   });
   await server.register(plugins);
   server.route(routes);

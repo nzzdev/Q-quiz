@@ -24,7 +24,6 @@ module.exports = {
   method: "GET",
   config: {
     tags: ["api"],
-    cors: true
   },
   handler: (request, h) => {
     return fixtureData;

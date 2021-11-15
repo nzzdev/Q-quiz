@@ -17,9 +17,6 @@ const routes = require("../routes/routes.js");
 before(async () => {
   server = Hapi.server({
     port: process.env.PORT || 3333,
-    routes: {
-      cors: true
-    }
   });
 
   const { spawn } = require("child_process");

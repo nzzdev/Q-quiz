@@ -8,9 +8,9 @@ import AnswerStore from "./AnswerStore.js";
 
 const questionTypes = {
   numberGuess: NumberGuess,
-  numberPoll: NumberPoll, 
+  numberPoll: NumberPoll,
   multipleChoice: MultipleChoice,
-  mapPointGuess: MapPointGuess
+  mapPointGuess: MapPointGuess,
 };
 
 export default class QuestionHandler {
@@ -49,9 +49,8 @@ export default class QuestionHandler {
   }
 
   renderQuestion() {
-    this.questionType = this.data.questionElementData[
-      this.questionPosition
-    ].type;
+    this.questionType =
+      this.data.questionElementData[this.questionPosition].type;
     this.questionRenderer = new questionTypes[this.questionType](
       this.quizElement,
       this.data.questionElementData[this.questionPosition],
@@ -78,38 +77,41 @@ export default class QuestionHandler {
     let answerEvent = new CustomEvent("q-tracking-event", {
       bubbles: true,
       detail: {
-        id: this.data.questionElementData[this.questionPosition].id,
-        eventAction: "q-quiz-answer"
-      }
+        eventInfo: {
+          componentName: "q-quiz",
+          eventAction: "answer",
+          eventNonInteractive: false,
+        },
+      },
     });
     this.quizRootElement.dispatchEvent(answerEvent);
     this.questionRenderer.renderResult(answerValue);
     this.userAnswers.push({
       questionId: this.data.questionElementData[this.questionPosition].id,
-      value: answerValue
+      value: answerValue,
     });
 
     this.storeAnswer(answerValue)
-      .then(responseStoreAnswer => {
+      .then((responseStoreAnswer) => {
         let answerId;
         if (responseStoreAnswer && responseStoreAnswer.id) {
           answerId = responseStoreAnswer.id;
         }
         return answerId;
       })
-      .then(answerId => {
+      .then((answerId) => {
         return this.answerStore.getStats(
           this.data.itemId,
           this.data.questionElementData[this.questionPosition],
           answerId
         );
       })
-      .then(stats => {
+      .then((stats) => {
         if (typeof this.questionRenderer.renderResultStats === "function") {
           this.questionRenderer.renderResultStats(answerValue, stats);
         }
       })
-      .catch(e => {
+      .catch((e) => {
         // nevermind errors in storing the answer, we move on without displaying stats in this case
       });
 
@@ -129,7 +131,7 @@ export default class QuestionHandler {
       itemId: this.data.itemId,
       questionId: this.data.questionElementData[this.questionPosition].id,
       type: this.questionType,
-      value: answerValue
+      value: answerValue,
     };
 
     if (!this.data.isPure) {
@@ -143,16 +145,14 @@ export default class QuestionHandler {
     // either scorePromise is already set with answering the last question or it will be set whenever needed e.g. when rendering last card
     if (this.scorePromise === undefined) {
       this.scorePromise = fetch(
-        `${this.data.toolBaseUrl}/score?appendItemToPayload=${
-          this.data.itemId
-        }`,
+        `${this.data.toolBaseUrl}/score?appendItemToPayload=${this.data.itemId}`,
         {
           method: "POST",
           body: JSON.stringify({
-            userAnswers: this.userAnswers
-          })
+            userAnswers: this.userAnswers,
+          }),
         }
-      ).then(response => {
+      ).then((response) => {
         if (response.ok) {
           return response.json();
         }
@@ -221,13 +221,11 @@ export default class QuestionHandler {
       );
     }
     if (this.data.isFinalScoreShown) {
-      this.getScore().then(score => {
+      this.getScore().then((score) => {
         let lastCardTitleElement = this.quizElement.querySelector(
           ".q-quiz-last-card-title"
         );
-        lastCardTitleElement.innerHTML = `Sie haben ${
-          score.achievedScore
-        } von ${score.maxScore} möglichen Punkten erzielt.`;
+        lastCardTitleElement.innerHTML = `Sie haben ${score.achievedScore} von ${score.maxScore} möglichen Punkten erzielt.`;
         this.quizRootElement.querySelector(
           ".q-quiz-header__title"
         ).textContent = score.lastCardTitle;

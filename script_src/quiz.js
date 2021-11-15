@@ -8,7 +8,7 @@ export function display(data, quizRootElement, clientEnv) {
   env.ENRICO_PRODUCTS = clientEnv.ENRICO_PRODUCTS;
   env.MAP = {
     style: clientEnv.MAP_STYLE_URL,
-    attribution: clientEnv.MAP_ATTRIBUTION
+    attribution: clientEnv.MAP_ATTRIBUTION,
   };
 
   let questionHandler = new QuestionHandler(quizRootElement, data);
@@ -21,7 +21,7 @@ export function display(data, quizRootElement, clientEnv) {
 
   // add event listeners for switching to next question, answer buttons and input elements (number guess)
   let quizButtons = quizRootElement.querySelectorAll(".q-quiz-button");
-  quizButtons.forEach(quizButton => {
+  quizButtons.forEach((quizButton) => {
     quizButton.addEventListener("click", () => {
       position++;
       questionHandler.renderInputElement(position);
@@ -31,17 +31,20 @@ export function display(data, quizRootElement, clientEnv) {
       let quizControlEvent = new CustomEvent("q-tracking-event", {
         bubbles: true,
         detail: {
-          id: data.itemId,
-          eventAction: "q-quiz-next-screen"
-        }
+          eventInfo: {
+            componentName: "q-quiz",
+            eventAction: "next-screen",
+            eventNonInteractive: false,
+          },
+        },
       });
       quizRootElement.dispatchEvent(quizControlEvent);
     });
   });
 
   let answerButtons = quizRootElement.querySelectorAll(".q-quiz-answer-button");
-  answerButtons.forEach(answerButton => {
-    answerButton.addEventListener("click", event => {
+  answerButtons.forEach((answerButton) => {
+    answerButton.addEventListener("click", (event) => {
       questionHandler.handleAnswer(event);
     });
   });
