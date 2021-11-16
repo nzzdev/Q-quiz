@@ -107,6 +107,10 @@ function calculateSnapToBorderThreshold(displayedValue, labelEle) {
 }
 
 export function formatNumber(number) {
+  if (number.length <= 4) {
+    return number;
+  }
+
   const quarterSpace = " ";
   const formatter = new Intl.NumberFormat("de-CH");
   const parts = formatter.formatToParts(number);
