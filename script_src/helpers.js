@@ -107,7 +107,7 @@ function calculateSnapToBorderThreshold(displayedValue, labelEle) {
 }
 
 export function formatNumber(number) {
-  if (number.length <= 4) {
+  if (number.toString().length <= 4) {
     return number;
   }
 
