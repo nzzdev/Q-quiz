@@ -2,14 +2,14 @@
   <div class="q-quiz-input-range-container">
     <div class="q-quiz-input-range-position-label-container">
       <div
-        class="
-          q-quiz-input-range-position-label
-          s-font-note s-font-note--strong s-font-note--tabularnums
-          s-color-primary-7
-        "
+        class="q-quiz-input-range-position-label"
         style="left: {labelPosition}%; transform: translateX({transformValue}%);"
       >
-        {initialValue}
+        <span class="s-font-note s-font-note--tabularnums s-font-note--strong">
+          <span class="q-quiz-input-range-position-label__label s-color-gray-1">
+            {initialValue}
+          </span>
+        </span>
       </div>
     </div>
     <input
