@@ -1,5 +1,6 @@
 $q-quiz-result__number-guess-visual__stats-graphic-top: 55px;
 $q-quiz-result__number-guess-visual__stats-graphic-height: 60px;
+$basis-margin: 4px;
 
 .q-quiz-result__number-guess-visual {
   height: 170px;
@@ -127,7 +128,22 @@ $q-quiz-result__number-guess-visual__stats-graphic-height: 60px;
   shape-rendering: crispEdges;
 }
 
+.q-quiz-input-range-container {
+  margin-bottom: $basis-margin * 6;
+}
+
+.q-quiz-input-range-position-label-container {
+  margin: 0 14px (9px + ($basis-margin * 3));
+}
+
 .q-quiz-input-range-position-label {
+  background-color: currentColor;
   width: max-content;
   max-width: 200px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.q-quiz-input-range-position-label__label  {
+  padding: 0 $basis-margin;
 }

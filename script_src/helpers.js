@@ -91,6 +91,14 @@ export function alignInputRangeLabelPosition(
       "q-quiz-input-range-position-label--right-aligned"
     );
   }
+
+  if (displayedRangeValue.toString().length === 3) {
+    if (positionInPercent === 100) {
+      labelEle.style.marginLeft = "-3px";
+    } else if (positionInPercent === 0) {
+      labelEle.style.marginLeft = "3px";
+    }
+  }
 }
 
 function calculateSnapToBorderThreshold(displayedValue, labelEle) {
@@ -107,6 +115,10 @@ function calculateSnapToBorderThreshold(displayedValue, labelEle) {
 }
 
 export function formatNumber(number) {
+  if (number.toString().length <= 4) {
+    return number;
+  }
+
   const quarterSpace = " ";
   const formatter = new Intl.NumberFormat("de-CH");
   const parts = formatter.formatToParts(number);

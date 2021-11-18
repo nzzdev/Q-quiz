@@ -1,6 +1,6 @@
 {
   "name": "@nzz/q-quiz",
-  "version": "1.11.2",
+  "version": "1.11.3",
   "description": "Q quiz",
   "keywords": [
     "storytelling",
@@ -19,6 +19,10 @@
     {
       "name": "Sharon Funke",
       "email": "sharon.funke@nzz.ch"
+    },
+    {
+      "name": "Michel Grautstück",
+      "email": "michel.grautstueck@nzz.ch"
     }
   ],
   "main": "index.js",
