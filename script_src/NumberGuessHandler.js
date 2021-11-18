@@ -38,14 +38,18 @@ export default class NumberGuessHandler {
     let label = labelContainer.querySelector(
       ".q-quiz-input-range-position-label"
     );
+    let innerLabel = labelContainer.querySelector(
+      ".q-quiz-input-range-position-label__label"
+    );
     this.inputElement.setAttribute("value", this.defaultInputValue);
     this.defaultInputValue = this.inputElement.value;
 
     this.inputElement.addEventListener("input", () => {
       const positionInPercent =
         ((this.inputElement.value - this.min) / (this.max - this.min)) * 100;
-      label.textContent = formatNumber(this.inputElement.value);
-      label.setAttribute("style", `left: calc(${positionInPercent}% - 1px);`);
+      innerLabel.innerHTML = formatNumber(this.inputElement.value);
+
+      label.setAttribute("style", `left: calc(${positionInPercent}%);`);
 
       alignInputRangeLabelPosition(
         this.inputElement.value,
@@ -57,8 +61,9 @@ export default class NumberGuessHandler {
     this.inputElement.addEventListener("change", () => {
       const positionInPercent =
         ((this.inputElement.value - this.min) / (this.max - this.min)) * 100;
-      label.textContent = formatNumber(this.inputElement.value);
-      label.setAttribute("style", `left: calc(${positionInPercent}% - 1px);`);
+      innerLabel.textContent = formatNumber(this.inputElement.value);
+
+      label.setAttribute("style", `left: calc(${positionInPercent}%);`);
 
       alignInputRangeLabelPosition(
         this.inputElement.value,
@@ -68,8 +73,8 @@ export default class NumberGuessHandler {
       );
     });
 
-    label.innerHTML = formatNumber(this.defaultInputValue);
-    label.setAttribute("style", `left: calc(${positionInPercent}% - 1px);`);
+    innerLabel.innerHTML = formatNumber(this.defaultInputValue);
+    label.setAttribute("style", `left: calc(${positionInPercent}%);`);
   }
 
   getValue(event) {
@@ -135,7 +140,10 @@ export default class NumberGuessHandler {
       <div class="q-quiz-result__number-guess-visual__text__label s-font-note s-color-gray-8">
         Korrekte Antwort
         <div class="s-font-note--strong">
-        ${formatNumber(this.correctAnswer) || ""} ${getUnit(this.correctAnswer, unitData)}
+        ${formatNumber(this.correctAnswer) || ""} ${getUnit(
+      this.correctAnswer,
+      unitData
+    )}
         </div>
       </div>
       <div class="q-quiz-result__number-guess-visual__text__marker ${additionalMarkerClass}" ${additionalMarkerAttributes}></div>
@@ -176,7 +184,9 @@ export default class NumberGuessHandler {
     let answerHtml = `
       <div class="q-quiz-result__number-guess-visual__text__label s-font-note s-color-primary-7">
         Ihre Schätzung
-        <div class="s-font-note--strong s-font-note--tabularnums">${formatNumber(answer)} ${getUnit(answer, unitData)}</div>
+        <div class="s-font-note--strong s-font-note--tabularnums">${formatNumber(
+          answer
+        )} ${getUnit(answer, unitData)}</div>
       </div>
       <div class="q-quiz-result__number-guess-visual__text__marker ${additionalMarkerClass}" ${additionalMarkerAttributes}></div>
     `;

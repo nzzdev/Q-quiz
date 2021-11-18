@@ -114,11 +114,14 @@
 
 .q-quiz-input-range-position-label--left-aligned {
   transform: translateX(0);
-  margin-left: 1px;
+  // Aligns label to the left border without making the position calculation logic more complex
+  margin-left: -13px;
 }
 
 .q-quiz-input-range-position-label--right-aligned {
   transform: translateX(-100%);
+  // Aligns label to the right border without making the position calculation logic more complex
+  margin-left: 14px;
 }
 
 .q-quiz-question-introduction {

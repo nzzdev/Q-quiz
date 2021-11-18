@@ -1,6 +1,6 @@
 # Q Quiz [![Build Status](https://travis-ci.com/nzzdev/Q-quiz.svg?token=bwR7zbPTTpEoDxbY2dJR&branch=dev)](https://travis-ci.com/nzzdev/Q-quiz)
 
-**Maintainer**: [Manuel Roth](https://github.com/manuelroth)
+**Maintainer**: [Michel Grautstück](https://github.com/migingreen)
 
 Q Quiz is one tool of the Q toolbox to render quizes containing questions of type multiple choice, number guess and map point guess. It also includes the rendering of answer statistics for each question type. Test it in the [playground](https://q-playground.st.nzz.ch/).
 
