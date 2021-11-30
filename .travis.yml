@@ -4,15 +4,12 @@ services:
   - docker
 language: node_js
 node_js:
-  - "10"
+  - "16"
 cache:
   directories:
     - node_modules
-    - jspm_packages
 install:
-  - npm install -g jspm
   - npm install
-  - jspm install
 before_script:
   - DOCKER_IMAGE_NAME="q-quiz"
   - DOCKER_TAG=${TRAVIS_BRANCH//[^a-zA-Z0-9\_\-\.]/_}
