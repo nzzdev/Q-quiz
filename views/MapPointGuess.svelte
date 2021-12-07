@@ -1,0 +1,14 @@
+<div class="q-quiz-input">
+  <div class="s-font-note-s s-font-note-s--light">
+    Klicken Sie auf die gewünschte Stelle auf der Karte, um Ihre Antwort
+    einzugeben.
+  </div>
+  <div class="q-quiz-map-container" style="height: 300px;" />
+  <button class="s-button s-button--small q-quiz-answer-button" disabled="true">
+    <span>Antworten</span>
+  </button>
+</div>
+<div class="q-quiz-result state-hidden">
+  <div class="q-quiz-map-container" style="height: 300px" />
+  <p class="q-quiz-result-answer-text s-font-text-s" />
+</div>
