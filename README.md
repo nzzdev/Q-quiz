@@ -21,7 +21,6 @@ git clone git@github.com:nzzdev/Q-quiz.git
 cd ./Q-quiz
 nvm use
 npm install
-jspm install
 npm run build
 ```
 
@@ -59,7 +58,7 @@ npx @nzz/q-cli server
 Run the Q tool:
 
 ```
-node dev.js
+npm run dev
 ```
 
 [to the top](#table-of-contents)
@@ -106,11 +105,6 @@ The tool structure follows the general structure of each Q tool. Further informa
 ### Question Types
 
 Q-Quiz supports four question types `multiple choice`, `number guess`, `map point guess` and `number poll`. Each of them requires a question, and have additional configuration parameters, like min or max values. The questions `multiple choice`, `number guess` and `map point guess` require a correct answer and will evaluate results. A version of `number-guess`, called `number-poll` does not require correct answer. The questions types are implemented as ES6 classes and each follow the same structure.
-
-### `/rendering-info/html-js`
-
-This is the default endpoint called for web targets. It returns the markup, stylesheets and scripts
-. The svelte framework is used to generate the markup. The scripts get transpiled to a jspm bundle and get loaded by the jspm loader on client-side.
 
 ### Answer-Service
 
