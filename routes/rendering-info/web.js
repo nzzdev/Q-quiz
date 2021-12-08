@@ -1,28 +1,54 @@
+const Boom = require("@hapi/boom");
 const fs = require("fs");
-const Enjoi = require("enjoi");
-const Joi = require("@hapi/joi");
-const resourcesDir = `${__dirname}/../../resources/`;
-const viewsDir = `${__dirname}/../../views/`;
-const scriptsDir = `${__dirname}/../../scripts/`;
-const stylesDir = `${__dirname}/../../styles/`;
-const transform = require(`${resourcesDir}helpers/itemTransformer.js`);
-const getExactPixelWidth = require(resourcesDir +
-  "helpers/toolRuntimeConfig.js").getExactPixelWidth;
-const getImageUrls = require(`${resourcesDir}helpers/images.js`).getImageUrls;
+const path = require("path");
+const Ajv = require("ajv");
 
+const viewsDir = path.join(__dirname, "/../../views/");
+const stylesDir = path.join(__dirname, "/../../styles/");
+const scriptsDir = path.join(__dirname, "/../../scripts/");
+const resourcesDir = path.join(__dirname, "/../../resources/");
+
+require("svelte/register");
+const staticTemplate = require(path.join(viewsDir, "/App.svelte")).default;
+const styles = fs.readFileSync(path.join(stylesDir, "/default.css")).toString();
+const styleHashMap = require(path.join(stylesDir, "/hashMap.json"));
+const scriptHashMap = require(path.join(scriptsDir, "/hashMap.json"));
+const transform = require(path.join(resourcesDir, "/helpers/itemTransformer.js"));
+const getExactPixelWidth = require(path.join(resourcesDir, "/helpers/toolRuntimeConfig.js").getExactPixelWidth;
+const getImageUrls = require(path.join(resourcesDir, "/helpers/images.js")).getImageUrls;
+
+
+// POSTed item will be validated against given schema
+// hence we fetch the JSON schema...
 const schemaString = JSON.parse(
-  fs.readFileSync(`${resourcesDir}schema.json`, {
-    encoding: "utf-8"
+  fs.readFileSync(path.join(__dirname, "../../resources/", "schema.json"), {
+    encoding: "utf-8",
   })
 );
 
-const schema = Enjoi.schema(schemaString).required();
+const ajv = new Ajv({ strict: false });
+const validate = ajv.compile(schemaString);
 
-const scriptHashMap = require(`${scriptsDir}/hashMap.json`);
-const styleHashMap = require(`${stylesDir}/hashMap.json`);
+function validateAgainstSchema(item, options) {
+  if (validate(item)) {
+    return item;
+  } else {
+    throw Boom.badRequest(JSON.stringify(validate.errors));
+  }
+}
 
-require("svelte/ssr/register");
-const staticTemplate = require(`${viewsDir}HtmlJs.html`);
+async function validatePayload(payload, options, next) {
+  if (typeof payload !== "object") {
+    return next(Boom.badRequest(), payload);
+  }
+  if (typeof payload.item !== "object") {
+    return next(Boom.badRequest(), payload);
+  }
+  if (typeof payload.toolRuntimeConfig !== "object") {
+    return next(Boom.badRequest(), payload);
+  }
+  await validateAgainstSchema(payload.item, options);
+}
 
 function getTransformedItemForClientSideScript(item, toolRuntimeConfig) {
   const questionElementData = item.questions.map(element => {
@@ -54,24 +80,20 @@ function getTransformedItemForClientSideScript(item, toolRuntimeConfig) {
   return scriptData;
 }
 
+
 module.exports = {
   method: "POST",
-  path: "/rendering-info/html-js",
+  path: "/rendering-info/web",
   options: {
     validate: {
       options: {
-        allowUnknown: true
+        allowUnknown: true,
       },
-      payload: {
-        item: schema,
-        toolRuntimeConfig: Joi.object({
-          toolBaseUrl: Joi.string().required()
-        }).required()
-      }
+      payload: validatePayload,
     },
-    cache: false,
+    cache: false // TODO: Check if still needed after build process update
   },
-  handler: function(request, h) {
+  handler: async function (request, h) {
     // item.elements will be split into cover, last card and questions during transformation step
     // after that we don't need item.elements anymore
     let item = transform(request.payload.item);
@@ -133,7 +155,7 @@ module.exports = {
       imageServiceUrl: process.env.IMAGE_SERVICE_URL
     };
 
-    // if we have the width in toolRuntimeConfig.size
+        // if we have the width in toolRuntimeConfig.size
     // we can use it to set the resolution of the image
     const exactPixelWidth = getExactPixelWidth(
       request.payload.toolRuntimeConfig
@@ -152,16 +174,16 @@ module.exports = {
       });
     }
 
+    const staticTemplateRender = staticTemplate.render(context);
+
     const renderingInfo = {
       loaderConfig: {
         polyfills: ["Promise", "CustomEvent", "NodeList.prototype.forEach"],
         loadSystemJs: "full"
       },
       stylesheets: [
-        {
-          name: styleHashMap["default"]
-        }
-      ],
+        { content: styles },
+        { name: styleHashMap["default"] }],
       scripts: [
         {
           content: systemConfigScript,
@@ -169,10 +191,12 @@ module.exports = {
         },
         {
           content: loaderScript
-        }
-      ],
-      markup: staticTemplate.render(context).html
+        },
+        { name: scriptHashMap["default"] }
+    ],
+      markup: staticTemplateRender.html,
     };
+
     return renderingInfo;
-  }
+  },
 };

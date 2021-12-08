@@ -1,10 +1,10 @@
 module.exports = [
-  require("./rendering-info/html-js.js"),
+  require("./rendering-info/web.js"),
   require("./stylesheet.js"),
   require("./schema.js"),
   require("./locales.js"),
   require("./health.js"),
-  require("./fixtures/data.js")
+  require("./fixtures/data.js"),
 ].concat(
   require("./scripts.js"),
   require("./answer-service/answer.js"),
