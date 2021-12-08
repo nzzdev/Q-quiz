@@ -1,6 +1,6 @@
 <script>
   import Header from "./Header.svelte";
-  import Question from "./Question.svelte";
+  import Question from "./question/Question.svelte";
 
   export let item;
   export let quizContainerId;

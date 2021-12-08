@@ -1,8 +1,8 @@
 <script>
-  import MultipleChoice from "./MultipleChoice.svelte";
-  import NumberGuess from "./NumberGuess.svelte";
-  import NumberPoll from "./NumberPoll.svelte";
-  import MapPointGuess from "./MapPointGuess.svelte";
+  import MultipleChoice from "./question-types/MultipleChoice.svelte";
+  import NumberGuess from "./question-types/NumberGuess.svelte";
+  import NumberPoll from "./question-types/NumberPoll.svelte";
+  import MapPointGuess from "./question-types/MapPointGuess.svelte";
 
   export let question;
   export let width;
