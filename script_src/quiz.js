@@ -1,4 +1,3 @@
-import MultiQuizPositionHandler from "./MultiQuizPositionHandler.js";
 import QuestionHandler from "./QuestionHandler.js";
 import * as helpers from "./helpers.js";
 import env from "./env.js";

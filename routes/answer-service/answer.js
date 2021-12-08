@@ -9,15 +9,15 @@ module.exports = [
     options: {
       tags: ["api"],
       payload: {
-        allow: ["application/json"]
+        allow: ["application/json"],
       },
       validate: {
         payload: {
-          data: Joi.object().required()
-        }
+          data: Joi.object().required(),
+        },
       },
     },
-    handler: function(request, h) {
+    handler: function (request, h) {
       var doc = request.payload;
       if (typeof request.payload !== "object") {
         doc = JSON.parse(request.payload);
@@ -28,22 +28,22 @@ module.exports = [
 
       return quizDb
         .post(doc)
-        .then(function(response) {
+        .then(function (response) {
           if (response.ok) {
             return response;
           } else {
             return new Boom(response.status);
           }
         })
-        .catch(function(couchError) {
+        .catch(function (couchError) {
           console.log(couchError);
           return Boom.badRequest(couchError.message);
         });
-    }
+    },
     /* plugins: {
       yaral: {
         buckets: ['maxPerIp']
       }
     } */
-  }
+  },
 ];
