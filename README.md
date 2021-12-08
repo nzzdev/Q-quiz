@@ -58,7 +58,7 @@ npx @nzz/q-cli server
 Run the Q tool:
 
 ```
-npm run dev
+node dev.js
 ```
 
 [to the top](#table-of-contents)
