@@ -13,10 +13,18 @@ const staticTemplate = require(path.join(viewsDir, "/App.svelte")).default;
 const styles = fs.readFileSync(path.join(stylesDir, "/default.css")).toString();
 const styleHashMap = require(path.join(stylesDir, "/hashMap.json"));
 const scriptHashMap = require(path.join(scriptsDir, "/hashMap.json"));
-const transform = require(path.join(resourcesDir, "/helpers/itemTransformer.js"));
-const getExactPixelWidth = require(path.join(resourcesDir, "/helpers/toolRuntimeConfig.js").getExactPixelWidth;
-const getImageUrls = require(path.join(resourcesDir, "/helpers/images.js")).getImageUrls;
-
+const transform = require(path.join(
+  resourcesDir,
+  "/helpers/itemTransformer.js"
+));
+const getExactPixelWidth = require(path.join(
+  resourcesDir,
+  "/helpers/toolRuntimeConfig.js"
+)).getExactPixelWidth;
+const getImageUrls = require(path.join(
+  resourcesDir,
+  "/helpers/images.js"
+)).getImageUrls;
 
 // POSTed item will be validated against given schema
 // hence we fetch the JSON schema...
@@ -51,13 +59,13 @@ async function validatePayload(payload, options, next) {
 }
 
 function getTransformedItemForClientSideScript(item, toolRuntimeConfig) {
-  const questionElementData = item.questions.map(element => {
+  const questionElementData = item.questions.map((element) => {
     return {
       id: element.id,
       type: element.type,
       correctAnswer: element.answer,
       answerText: element.answerText,
-      articleRecommendations: element.articleRecommendations
+      articleRecommendations: element.articleRecommendations,
     };
   });
 
@@ -68,18 +76,17 @@ function getTransformedItemForClientSideScript(item, toolRuntimeConfig) {
     hasLastCard: item.hasLastCard,
     numberElements: item.elementCount,
     toolBaseUrl: toolRuntimeConfig.toolBaseUrl,
-    isPure: toolRuntimeConfig.isPure || false
+    isPure: toolRuntimeConfig.isPure || false,
   };
 
   if (item.lastCard) {
     scriptData.lastCardData = {
-      articleRecommendations: item.lastCard.articleRecommendations
+      articleRecommendations: item.lastCard.articleRecommendations,
     };
     scriptData.isFinalScoreShown = item.isFinalScoreShown;
   }
   return scriptData;
 }
-
 
 module.exports = {
   method: "POST",
@@ -91,7 +98,7 @@ module.exports = {
       },
       payload: validatePayload,
     },
-    cache: false // TODO: Check if still needed after build process update
+    cache: false, // TODO: Check if still needed after build process update
   },
   handler: async function (request, h) {
     // item.elements will be split into cover, last card and questions during transformation step
@@ -132,7 +139,7 @@ module.exports = {
       ENRICO_API_URL: process.env.ENRICO_API_URL,
       ENRICO_PRODUCTS: JSON.parse(process.env.ENRICO_PRODUCTS),
       MAP_STYLE_URL: process.env.MAP_STYLE_URL,
-      MAP_ATTRIBUTION: process.env.MAP_ATTRIBUTION
+      MAP_ATTRIBUTION: process.env.MAP_ATTRIBUTION,
     };
 
     const loaderScript = `
@@ -152,10 +159,10 @@ module.exports = {
     const context = {
       item: item,
       quizContainerId: quizContainerId,
-      imageServiceUrl: process.env.IMAGE_SERVICE_URL
+      imageServiceUrl: process.env.IMAGE_SERVICE_URL,
     };
 
-        // if we have the width in toolRuntimeConfig.size
+    // if we have the width in toolRuntimeConfig.size
     // we can use it to set the resolution of the image
     const exactPixelWidth = getExactPixelWidth(
       request.payload.toolRuntimeConfig
@@ -163,7 +170,7 @@ module.exports = {
 
     if (Number.isInteger(exactPixelWidth)) {
       context.width = exactPixelWidth;
-      context.item.questions.map(question => {
+      context.item.questions.map((question) => {
         if (question.image && question.image.key) {
           question.image.urls = getImageUrls(
             question.image.key,
@@ -179,21 +186,19 @@ module.exports = {
     const renderingInfo = {
       loaderConfig: {
         polyfills: ["Promise", "CustomEvent", "NodeList.prototype.forEach"],
-        loadSystemJs: "full"
+        loadSystemJs: "full",
       },
-      stylesheets: [
-        { content: styles },
-        { name: styleHashMap["default"] }],
+      stylesheets: [{ content: styles }, { name: styleHashMap["default"] }],
       scripts: [
         {
           content: systemConfigScript,
-          loadOnce: true
+          loadOnce: true,
         },
         {
-          content: loaderScript
+          content: loaderScript,
         },
-        { name: scriptHashMap["default"] }
-    ],
+        { name: scriptHashMap["default"] },
+      ],
       markup: staticTemplateRender.html,
     };
 
