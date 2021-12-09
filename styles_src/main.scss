@@ -1,0 +1,8 @@
+@use "cover.scss";
+@use "default.scss";
+@use "q-quiz-button.scss";
+@use "q-quiz-multi-container.scss";
+@use "q-quiz-multi-header.scss";
+@use "../views/question/question-types/mapPointGuess.scss";
+@use "../views/question/question-types/multipleChoice.scss";
+@use "../views/question/question-types/numberGuess.scss";
