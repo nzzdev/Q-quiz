@@ -53,7 +53,6 @@
     "jsdom": "^15.2.1",
     "leaflet": "^1.7.1",
     "node-fetch": "^2.6.5",
-    "pino-noir": "^2.2.1",
     "pouchdb": "7.1.1",
     "pouchdb-server": "^4.2.0",
     "yaral": "^3.0.2"
@@ -67,7 +66,6 @@
     "autoprefixer": "^10.4.0",
     "cssnano": "^5.0.10",
     "glob": "^7.2.0",
-    "hapi-pino": "^9.0.0",
     "jsdom": "^17.0.0",
     "nodemon": "^2.0.13",
     "npm-run-all": "^4.1.5",
