@@ -1,10 +1,13 @@
 import Leaflet from "leaflet";
+import * as leafletHeatmap from "heatmap.js/plugins/leaflet-heatmap/leaflet-heatmap";
 import iconPinSvg from "./resources/icon-pin.svg!text";
 import { getAnswerTextElement, getDistanceText } from "./answerHelpers.js";
 import env from "./env.js";
 
 Leaflet.Icon.Default.imagePath =
   "jspm_packages/github/Leaflet/Leaflet@1.5.1/dist/images";
+
+const leafletHeatMapPlugin = leafletHeatmap; // TODO: Check if this is needed otherwise remove
 
 const mapOptions = {
   boxZoom: false,
@@ -15,14 +18,17 @@ const mapOptions = {
   touchZoom: false,
   zoomControl: false,
   inertia: false,
-  tap: false
+  tap: false,
 };
 
 function mapFitBbox(map, bbox) {
   if (!bbox) {
     return;
   }
-  map.fitBounds([[bbox[1], bbox[0]], [bbox[3], bbox[2]]]);
+  map.fitBounds([
+    [bbox[1], bbox[0]],
+    [bbox[3], bbox[2]],
+  ]);
 }
 
 export default class MapPointGuessHandler {
@@ -52,8 +58,11 @@ export default class MapPointGuessHandler {
     L.tileLayer(env.MAP.style, {
       maxZoom: 18,
       attribution: env.MAP.attribution,
-      bounds: [[90, -180], [-90, 180]],
-      noWrap: true
+      bounds: [
+        [90, -180],
+        [-90, 180],
+      ],
+      noWrap: true,
     }).addTo(map);
 
     this.mapBounds = map.getBounds();
@@ -62,19 +71,19 @@ export default class MapPointGuessHandler {
       className: "q-quiz-map-pin",
       html: iconPinSvg,
       iconSize: 52,
-      iconAnchor: [26, 38]
+      iconAnchor: [26, 38],
     });
 
     this.marker = new L.marker(
       {},
       {
         icon: markerPinIcon,
-        draggable: "true"
+        draggable: "true",
       }
     );
 
     let answerButton = this.inputElement.querySelector(".q-quiz-answer-button");
-    map.on("click", e => {
+    map.on("click", (e) => {
       this.marker.setLatLng(e.latlng);
       map.addLayer(this.marker);
       answerButton.removeAttribute("disabled");
@@ -90,11 +99,11 @@ export default class MapPointGuessHandler {
   getValue(event) {
     let correctLatLng = new L.latLng([
       this.data.correctAnswer.geometry.coordinates[1],
-      this.data.correctAnswer.geometry.coordinates[0]
+      this.data.correctAnswer.geometry.coordinates[0],
     ]);
     return {
       latLng: this.marker.getLatLng(),
-      distance: Math.floor(this.marker.getLatLng().distanceTo(correctLatLng))
+      distance: Math.floor(this.marker.getLatLng().distanceTo(correctLatLng)),
     };
   }
 
@@ -114,7 +123,7 @@ export default class MapPointGuessHandler {
 
     L.tileLayer(env.MAP.style, {
       maxZoom: 18,
-      attribution: env.MAP.attribution
+      attribution: env.MAP.attribution,
     }).addTo(map);
 
     this.bounds = map.getBounds();
@@ -155,14 +164,14 @@ export default class MapPointGuessHandler {
       let correctAnswerMarker = Leaflet.marker(
         [
           correctAnswer.geometry.coordinates[1],
-          correctAnswer.geometry.coordinates[0]
+          correctAnswer.geometry.coordinates[0],
         ],
         {
           icon: Leaflet.divIcon({
             className: "q-quiz-map-marker s-font-note-s s-color-grey-8",
             iconSize: [8, 8],
-            html: `<div class="q-quiz-map-marker__label q-quiz-map-marker__label--${correctAnswerLabelPosition} s-font-note s-font-note--strong s-color-grey-8">${correctAnswerLabel}</div>`
-          })
+            html: `<div class="q-quiz-map-marker__label q-quiz-map-marker__label--${correctAnswerLabelPosition} s-font-note s-font-note--strong s-color-grey-8">${correctAnswerLabel}</div>`,
+          }),
         }
       );
 
@@ -172,8 +181,8 @@ export default class MapPointGuessHandler {
           icon: Leaflet.divIcon({
             className: "q-quiz-map-marker s-font-note-s s-color-primary-7",
             iconSize: [8, 8],
-            html: `<div class="q-quiz-map-marker__label q-quiz-map-marker__label--${answerLabelPosition} s-font-note s-font-note--strong s-color-primary-7">Ihre Schätzung</div>`
-          })
+            html: `<div class="q-quiz-map-marker__label q-quiz-map-marker__label--${answerLabelPosition} s-font-note s-font-note--strong s-color-primary-7">Ihre Schätzung</div>`,
+          }),
         }
       );
 
@@ -181,7 +190,40 @@ export default class MapPointGuessHandler {
       map.addLayer(answerMarker);
     }
 
-    this.addHeatmapOverlayToMap(map);
+    // TODO: Define heatmap config
+    const heatmapConfig = {
+      // radius should be small ONLY if scaleRadius is true (or small radius is intended)
+      // if scaleRadius is false it will be the constant radius used in pixels
+      radius: 2,
+      maxOpacity: 0.8,
+      // scales the radius based on map zoom
+      scaleRadius: true,
+      // if set to false the heatmap uses the global maximum for colorization
+      // if activated: uses the data maximum within the current map boundaries
+      //   (there will always be a red spot with useLocalExtremas true)
+      useLocalExtrema: true,
+      // which field name in your data represents the latitude - default "lat"
+      latField: "lat",
+      // which field name in your data represents the longitude - default "lng"
+      lngField: "lng",
+      // which field name in your data represents the data value - default "value"
+      valueField: "count",
+    };
+
+    // TODO: Move into distinct functions
+    /*     const mapBounds = map.getBounds();
+    const southWest = mapBounds.getSouthWest();
+    const northEast = mapBounds.getNorthEast();
+    const heatmapBounds = `${southWest.lng}, ${southWest.lat}, ${northEast.lng}, ${northEast.lat}`;
+    const heatmapUrl = `${this.toolBaseUrl}/map/${this.data.id}/heatmap/${
+      map.getSize().x
+    }/${map.getSize().y}/${heatmapBounds}`;
+
+    const heatmapLayer = new HeatmapOverlay(heatmapConfig);
+
+    heatmapLayer.setData();
+
+    map.addLayer(heatmapLayer); */
   }
 
   renderResultStats(answer, answersStats) {
@@ -206,7 +248,7 @@ export default class MapPointGuessHandler {
     resultTextElement.appendChild(textElement);
   }
 
-  addHeatmapOverlayToMap(map) {
+  /*   addHeatmapOverlayToMap(map) {
     let heatmapImg = document.createElement("img");
     heatmapImg.setAttribute(
       "style",
@@ -214,7 +256,7 @@ export default class MapPointGuessHandler {
     );
 
     let heatmapImgOverlay = L.imageOverlay("", map.getBounds(), {
-      opacity: 0.4
+      opacity: 0.4,
     }).addTo(map);
 
     this.setHeatmapSrc(heatmapImgOverlay, map);
@@ -236,5 +278,5 @@ export default class MapPointGuessHandler {
         map.getSize().y
       }/${heatmapBounds}`
     );
-  }
+  } */
 }
