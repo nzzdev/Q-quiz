@@ -51,6 +51,7 @@
     "heatmap.js": "^2.0.5",
     "joi": "^17.4.2",
     "jsdom": "^15.2.1",
+    "leaflet": "^1.7.1",
     "node-fetch": "^2.6.5",
     "pino-noir": "^2.2.1",
     "pouchdb": "7.1.1",
