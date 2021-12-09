@@ -19,7 +19,9 @@ module.exports = [
       tags: ["api"],
       validate: {
         params: {
-          type: Joi.any().valid(Object.keys(statsCalculators)).required(),
+          type: Joi.any()
+            .valid(...Object.keys(statsCalculators))
+            .required(),
           itemId: Joi.string().required(),
           questionId: Joi.string().required(),
           answerId: Joi.string().optional(),
