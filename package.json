@@ -30,7 +30,7 @@
     "build": "rollup -c",
     "autobuild": "rollup -c -w",
     "dev": "run-p autobuild start",
-    "start": "nodemon index.js",
+    "start": "nodemon dev.js",
     "test": "lab -a @hapi/code -c -P tests --verbose --leaks"
   },
   "repository": {
