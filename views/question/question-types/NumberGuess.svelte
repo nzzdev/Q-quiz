@@ -1,5 +1,5 @@
 <script>
-  import * as helpers from "./../../../script_src/helpers.js";
+  import * as helpers from "./../../../scripts_src/helpers";
 
   export let question;
 
@@ -49,10 +49,9 @@
 <div class="q-quiz-input">
   <div class="q-quiz-input-range-container">
     <div class="q-quiz-input-range-position-label-container">
-      <!-- TODO: Check where 'transformValue' is -> If not needed then remove -->
       <div
         class="q-quiz-input-range-position-label s-color-primary-5"
-        style="left: {labelPosition}%; transform: translateX({transformValue}%);"
+        style="left: {labelPosition}%;"
       >
         <span class="s-font-note s-font-note--tabularnums s-font-note--strong">
           <span class="q-quiz-input-range-position-label__label s-color-gray-1">

@@ -100,14 +100,14 @@
           class="q-quiz-element-container q-quiz-element-container--is-active"
           style="width: {elementWidth}%;"
         >
-          <Question {question} {width} {imageServiceUrl} />
+          <Question {question} {imageServiceUrl} />
         </div>
       {:else}
         <div
           class="q-quiz-element-container q-quiz-element-container--is-inactive"
           style="width: {elementWidth}%; display: none;"
         >
-          <Question {question} {width} {imageServiceUrl} />
+          <Question {question} {imageServiceUrl} />
         </div>
       {/if}
     {/each}
