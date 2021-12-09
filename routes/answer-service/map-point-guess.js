@@ -3,7 +3,7 @@
 var heatmap = require("sparseheatmap");
 heatmap.FILTER = heatmap.FILTERS.LOWPASS;
 
-const Joi = require("@hapi/joi");
+const Joi = require("joi");
 const Boom = require("@hapi/boom");
 
 const quizDb = require("../../resources/helpers/db.js").quizDb;
@@ -34,29 +34,29 @@ module.exports = [
           questionId: Joi.string().required(),
           width: Joi.number().required(),
           height: Joi.number().required(),
-          bbox: Joi.string().required()
-        }
-      }
+          bbox: Joi.string().required(),
+        },
+      },
     },
-    handler: async function(request, h) {
+    handler: async function (request, h) {
       var data = [];
       try {
         const points = await quizDb
           .query("mapPointGuess/points", {
             reduce: false,
-            keys: [request.params.questionId]
+            keys: [request.params.questionId],
           })
-          .then(answers => {
+          .then((answers) => {
             if (answers && answers.rows && answers.rows.length) {
-              return answers.rows.map(answer => answer.value);
+              return answers.rows.map((answer) => answer.value);
             }
             throw "invalid answer";
           })
-          .then(userPoints => {
+          .then((userPoints) => {
             let points = [];
             let bbox = request.params.bbox
               .split(",")
-              .map(val => parseFloat(val));
+              .map((val) => parseFloat(val));
             for (var i = 0; i < userPoints.length; i++) {
               let lat = parseFloat(userPoints[i].lat);
               let lng = parseFloat(userPoints[i].lng);
@@ -99,7 +99,7 @@ module.exports = [
         );
 
         let heatmapStream = await Promise.resolve(
-          new Promise(resolve => {
+          new Promise((resolve) => {
             new heatmap(
               request.params.width,
               request.params.height,
@@ -107,7 +107,7 @@ module.exports = [
               heatmap.LAYOUTS.CENTERFIXEDWIDTH,
               data,
               heatmap.BLOBTYPE.SMALL,
-              function(heatmapStream) {
+              function (heatmapStream) {
                 resolve(heatmapStream);
               }
             );
@@ -118,6 +118,6 @@ module.exports = [
         console.log(e);
         return Boom.badRequest(e);
       }
-    }
-  }
+    },
+  },
 ];

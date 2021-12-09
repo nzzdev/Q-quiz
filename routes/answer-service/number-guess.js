@@ -1,12 +1,14 @@
 "use strict";
 
 const Boom = require("@hapi/boom");
-const Joi = require("@hapi/joi");
+const Joi = require("joi");
 const getAnswers = require("../../resources/helpers/utils.js").getAnswers;
 const getItem = require("../../resources/helpers/utils.js").getItem;
 
-const getBarchartSvg = require("../../resources/helpers/svgHelpers.js").getBarchartSvg;
-const getStripplotSvg = require("../../resources/helpers/svgHelpers.js").getStripplotSvg;
+const getBarchartSvg =
+  require("../../resources/helpers/svgHelpers.js").getBarchartSvg;
+const getStripplotSvg =
+  require("../../resources/helpers/svgHelpers.js").getStripplotSvg;
 
 module.exports = [
   {
@@ -18,38 +20,38 @@ module.exports = [
         params: {
           itemId: Joi.string().required(),
           questionId: Joi.string().required(),
-          width: Joi.number().required()
-        }
+          width: Joi.number().required(),
+        },
       },
     },
-    handler: async function(request, h) {
+    handler: async function (request, h) {
       return await Promise.all([
         getItem(request.params.itemId),
-        getAnswers("numberGuess", request.params.questionId)
+        getAnswers("numberGuess", request.params.questionId),
       ])
-        .then(data => {
+        .then((data) => {
           let item = data[0];
           let answers = data[1];
           let stats;
 
           if (answers.rows && answers.rows.length > 0) {
-            stats = answers.rows.map(row => {
+            stats = answers.rows.map((row) => {
               return {
                 value: row.key[1],
-                count: row.value
+                count: row.value,
               };
             });
           }
-          let question = item.elements.filter(element => {
+          let question = item.elements.filter((element) => {
             return element.id === request.params.questionId;
           })[0];
 
           return {
             stats: stats,
-            question: question
+            question: question,
           };
         })
-        .then(async data => {
+        .then(async (data) => {
           let stats = data.stats;
           let question = data.question;
 
@@ -86,10 +88,10 @@ module.exports = [
             }
           }
         })
-        .catch(couchError => {
+        .catch((couchError) => {
           console.log(couchError);
           return Boom.badRequest(couchError.message);
         });
-    }
-  }
+    },
+  },
 ];

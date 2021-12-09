@@ -1,16 +1,16 @@
 const fs = require("fs");
 const Enjoi = require("enjoi");
-const Joi = require("@hapi/joi");
+const Joi = require("joi");
 const Boom = require("@hapi/boom");
 const resourcesDir = `${__dirname}/../../resources/`;
 const scoreHelpers = require(`${resourcesDir}helpers/scoreHelpers.js`);
-const questionTypes = require(`${resourcesDir}helpers/constants.js`)
-  .scoredQuestionTypes;
+const questionTypes =
+  require(`${resourcesDir}helpers/constants.js`).scoredQuestionTypes;
 const answerDb = require("../../resources/helpers/db.js").quizDb;
 
 const schemaString = JSON.parse(
   fs.readFileSync(`${resourcesDir}schema.json`, {
-    encoding: "utf-8"
+    encoding: "utf-8",
   })
 );
 
@@ -25,26 +25,26 @@ module.exports = {
         item: schema,
         userAnswers: Joi.array().items(
           Joi.object({
-            questionId: Joi.string()
+            questionId: Joi.string(),
           })
-        )
+        ),
       },
       options: {
-        allowUnknown: true
-      }
+        allowUnknown: true,
+      },
     },
   },
-  handler: async function(request, h) {
+  handler: async function (request, h) {
     try {
-      const questions = request.payload.item.elements.filter(element => {
+      const questions = request.payload.item.elements.filter((element) => {
         return questionTypes.includes(element.type);
       });
 
       const userAnswers = request.payload.userAnswers;
-      questions.forEach(question => {
+      questions.forEach((question) => {
         if (userAnswers) {
           const relevantAnswers = userAnswers.filter(
-            userAnswer => userAnswer.questionId === question.id
+            (userAnswer) => userAnswer.questionId === question.id
           );
           if (relevantAnswers.length > 0) {
             question.userAnswer = relevantAnswers[0].value;
@@ -56,5 +56,5 @@ module.exports = {
     } catch (e) {
       return Boom.internal(e);
     }
-  }
+  },
 };
