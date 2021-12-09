@@ -1,6 +1,6 @@
-import env from "./env.js";
+const env = require("./env.js");
 
-export function loadAdditionalArticles(articleIds) {
+function loadAdditionalArticles(articleIds) {
   let loadPromises = [];
   const apiUrl = env.ENRICO_API_URL;
   const enricoProducts = env.ENRICO_PRODUCTS;
@@ -28,11 +28,11 @@ export function loadAdditionalArticles(articleIds) {
   return Promise.all(loadPromises);
 }
 
-export function isQuestionElement(element) {
+function isQuestionElement(element) {
   return isQuestionType(element.type);
 }
 
-export function isQuestionType(type) {
+function isQuestionType(type) {
   return (
     type === "numberGuess" ||
     type === "numberPoll" ||
@@ -41,7 +41,7 @@ export function isQuestionType(type) {
   );
 }
 
-export function constructPictureElement(quizRootElement, quizQuestionImages) {
+function constructPictureElement(quizRootElement, quizQuestionImages) {
   const elementMarkup =
     '<source type="image/webp" srcset="{webp1x} 1x, {webp2x} 2x"><source srcset="{image1x} 1x, {image2x} 2x"><img class="q-quiz-question-image q-quiz-question-image--responsive" src="{image1x}">';
   const rootElementWidth = quizRootElement.getBoundingClientRect().width;
@@ -58,7 +58,7 @@ export function constructPictureElement(quizRootElement, quizQuestionImages) {
   });
 }
 
-export function alignInputRangeLabelPosition(
+function alignInputRangeLabelPosition(
   displayedRangeValue,
   positionInPercent,
   labelEle,
@@ -114,7 +114,7 @@ function calculateSnapToBorderThreshold(displayedValue, labelEle) {
   return baseThreshold;
 }
 
-export function formatNumber(number) {
+function formatNumber(number) {
   if (number.toString().length <= 4) {
     return number;
   }
@@ -163,3 +163,12 @@ function getFileExtension(imageKey) {
   }
   return "pjpg";
 }
+
+module.exports = {
+  loadAdditionalArticles,
+  isQuestionElement,
+  isQuestionType,
+  constructPictureElement,
+  alignInputRangeLabelPosition,
+  formatNumber,
+};

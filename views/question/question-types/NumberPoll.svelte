@@ -1,5 +1,5 @@
 <script>
-  import * as helpers from "./../script_src/helpers.js";
+  import * as helpers from "./../../../script_src/helpers.js";
 
   export let question;
 
