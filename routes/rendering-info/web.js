@@ -101,6 +101,7 @@ module.exports = {
     cache: false, // TODO: Check if still needed after build process update
   },
   handler: async function (request, h) {
+    const toolRuntimeConfig = request.payload.toolRuntimeConfig;
     // item.elements will be split into cover, last card and questions during transformation step
     // after that we don't need item.elements anymore
     let item = transform(request.payload.item);
@@ -112,53 +113,14 @@ module.exports = {
         item.elements[0].id.split("-")[0] || (Math.random() * 10000).toFixed();
     }
     item._id = id;
-    const quizContainerId = `q-quiz-${id}`;
 
     if (item.lastCard) {
       item.isFinalScoreShown = item.lastCard.isFinalScoreShown || false;
     }
 
-    const systemConfigScript = `
-      System.config({
-        map: {
-          "q-quiz/quiz.js": "${request.payload.toolRuntimeConfig.toolBaseUrl}/script/${scriptHashMap["quiz"]}"
-        }
-      });
-    `;
-
-    const scriptData = getTransformedItemForClientSideScript(
-      item,
-      request.payload.toolRuntimeConfig
-    );
-
-    if (!process.env.ENRICO_PRODUCTS) {
-      process.env.ENRICO_PRODUCTS = `[]`;
-    }
-
-    const clientEnv = {
-      ENRICO_API_URL: process.env.ENRICO_API_URL,
-      ENRICO_PRODUCTS: JSON.parse(process.env.ENRICO_PRODUCTS),
-      MAP_STYLE_URL: process.env.MAP_STYLE_URL,
-      MAP_ATTRIBUTION: process.env.MAP_ATTRIBUTION,
-    };
-
-    const loaderScript = `
-      System.import('q-quiz/quiz.js')
-        .then(function(module) {
-          return module.display(${JSON.stringify(
-            scriptData
-          )}, document.querySelector('#${quizContainerId}'), ${JSON.stringify(
-      clientEnv
-    )})
-        })
-        .catch(function(error) {
-          console.log(error)
-        });
-    `;
-
     const context = {
+      id: `q-quiz-${toolRuntimeConfig.requestId}`,
       item: item,
-      quizContainerId: quizContainerId,
       imageServiceUrl: process.env.IMAGE_SERVICE_URL,
     };
 
@@ -190,14 +152,19 @@ module.exports = {
       },
       stylesheets: [{ content: styles }, { name: styleHashMap["default"] }],
       scripts: [
-        {
-          content: systemConfigScript,
-          loadOnce: true,
-        },
-        {
-          content: loaderScript,
-        },
         { name: scriptHashMap["default"] },
+        {
+          content: `
+          (function () {
+            var target = document.querySelector('#${context.id}_container');
+            target.innerHTML = "";
+            var props = ${JSON.stringify(context)};
+            new window._q_quiz.Quiz({
+              "target": target,
+              "props": props
+            })
+          })();`,
+        },
       ],
       markup: staticTemplateRender.html,
     };
