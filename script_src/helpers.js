@@ -12,7 +12,7 @@ export function loadAdditionalArticles(articleIds) {
 
     enricoProducts.forEach((product) => {
       loadPromises.push(
-        fetch(`${apiUrl}?product=${product}&articleid=${articleId}`)
+        fetch(`${apiUrl}?product=${product}&articleid=ld.${articleId}`)
           .then((response) => {
             if (response.status >= 200 && response.status < 300) {
               return response.json();
