@@ -15,14 +15,17 @@ const mapOptions = {
   touchZoom: false,
   zoomControl: false,
   inertia: false,
-  tap: false
+  tap: false,
 };
 
 function mapFitBbox(map, bbox) {
   if (!bbox) {
     return;
   }
-  map.fitBounds([[bbox[1], bbox[0]], [bbox[3], bbox[2]]]);
+  map.fitBounds([
+    [bbox[1], bbox[0]],
+    [bbox[3], bbox[2]],
+  ]);
 }
 
 export default class MapPointGuessHandler {
@@ -52,8 +55,11 @@ export default class MapPointGuessHandler {
     L.tileLayer(env.MAP.style, {
       maxZoom: 18,
       attribution: env.MAP.attribution,
-      bounds: [[90, -180], [-90, 180]],
-      noWrap: true
+      bounds: [
+        [90, -180],
+        [-90, 180],
+      ],
+      noWrap: true,
     }).addTo(map);
 
     this.mapBounds = map.getBounds();
@@ -62,19 +68,19 @@ export default class MapPointGuessHandler {
       className: "q-quiz-map-pin",
       html: iconPinSvg,
       iconSize: 52,
-      iconAnchor: [26, 38]
+      iconAnchor: [26, 38],
     });
 
     this.marker = new L.marker(
       {},
       {
         icon: markerPinIcon,
-        draggable: "true"
+        draggable: "true",
       }
     );
 
     let answerButton = this.inputElement.querySelector(".q-quiz-answer-button");
-    map.on("click", e => {
+    map.on("click", (e) => {
       this.marker.setLatLng(e.latlng);
       map.addLayer(this.marker);
       answerButton.removeAttribute("disabled");
@@ -90,11 +96,11 @@ export default class MapPointGuessHandler {
   getValue(event) {
     let correctLatLng = new L.latLng([
       this.data.correctAnswer.geometry.coordinates[1],
-      this.data.correctAnswer.geometry.coordinates[0]
+      this.data.correctAnswer.geometry.coordinates[0],
     ]);
     return {
       latLng: this.marker.getLatLng(),
-      distance: Math.floor(this.marker.getLatLng().distanceTo(correctLatLng))
+      distance: Math.floor(this.marker.getLatLng().distanceTo(correctLatLng)),
     };
   }
 
@@ -114,7 +120,7 @@ export default class MapPointGuessHandler {
 
     L.tileLayer(env.MAP.style, {
       maxZoom: 18,
-      attribution: env.MAP.attribution
+      attribution: env.MAP.attribution,
     }).addTo(map);
 
     this.bounds = map.getBounds();
@@ -155,14 +161,14 @@ export default class MapPointGuessHandler {
       let correctAnswerMarker = Leaflet.marker(
         [
           correctAnswer.geometry.coordinates[1],
-          correctAnswer.geometry.coordinates[0]
+          correctAnswer.geometry.coordinates[0],
         ],
         {
           icon: Leaflet.divIcon({
             className: "q-quiz-map-marker s-font-note-s s-color-grey-8",
             iconSize: [8, 8],
-            html: `<div class="q-quiz-map-marker__label q-quiz-map-marker__label--${correctAnswerLabelPosition} s-font-note s-font-note--strong s-color-grey-8">${correctAnswerLabel}</div>`
-          })
+            html: `<div class="q-quiz-map-marker__label q-quiz-map-marker__label--${correctAnswerLabelPosition} s-font-note s-font-note--strong s-color-grey-8">${correctAnswerLabel}</div>`,
+          }),
         }
       );
 
@@ -172,8 +178,8 @@ export default class MapPointGuessHandler {
           icon: Leaflet.divIcon({
             className: "q-quiz-map-marker s-font-note-s s-color-primary-7",
             iconSize: [8, 8],
-            html: `<div class="q-quiz-map-marker__label q-quiz-map-marker__label--${answerLabelPosition} s-font-note s-font-note--strong s-color-primary-7">Ihre Schätzung</div>`
-          })
+            html: `<div class="q-quiz-map-marker__label q-quiz-map-marker__label--${answerLabelPosition} s-font-note s-font-note--strong s-color-primary-7">Ihre Schätzung</div>`,
+          }),
         }
       );
 
@@ -214,7 +220,7 @@ export default class MapPointGuessHandler {
     );
 
     let heatmapImgOverlay = L.imageOverlay("", map.getBounds(), {
-      opacity: 0.4
+      opacity: 0.4,
     }).addTo(map);
 
     this.setHeatmapSrc(heatmapImgOverlay, map);

@@ -12,7 +12,7 @@ const getImageUrls = require(`${resourcesDir}helpers/images.js`).getImageUrls;
 
 const schemaString = JSON.parse(
   fs.readFileSync(`${resourcesDir}schema.json`, {
-    encoding: "utf-8"
+    encoding: "utf-8",
   })
 );
 
@@ -25,13 +25,13 @@ require("svelte/ssr/register");
 const staticTemplate = require(`${viewsDir}HtmlJs.html`);
 
 function getTransformedItemForClientSideScript(item, toolRuntimeConfig) {
-  const questionElementData = item.questions.map(element => {
+  const questionElementData = item.questions.map((element) => {
     return {
       id: element.id,
       type: element.type,
       correctAnswer: element.answer,
       answerText: element.answerText,
-      articleRecommendations: element.articleRecommendations
+      articleRecommendations: element.articleRecommendations,
     };
   });
 
@@ -42,12 +42,12 @@ function getTransformedItemForClientSideScript(item, toolRuntimeConfig) {
     hasLastCard: item.hasLastCard,
     numberElements: item.elementCount,
     toolBaseUrl: toolRuntimeConfig.toolBaseUrl,
-    isPure: toolRuntimeConfig.isPure || false
+    isPure: toolRuntimeConfig.isPure || false,
   };
 
   if (item.lastCard) {
     scriptData.lastCardData = {
-      articleRecommendations: item.lastCard.articleRecommendations
+      articleRecommendations: item.lastCard.articleRecommendations,
     };
     scriptData.isFinalScoreShown = item.isFinalScoreShown;
   }
@@ -60,18 +60,18 @@ module.exports = {
   options: {
     validate: {
       options: {
-        allowUnknown: true
+        allowUnknown: true,
       },
       payload: {
         item: schema,
         toolRuntimeConfig: Joi.object({
-          toolBaseUrl: Joi.string().required()
-        }).required()
-      }
+          toolBaseUrl: Joi.string().required(),
+        }).required(),
+      },
     },
     cache: false,
   },
-  handler: function(request, h) {
+  handler: function (request, h) {
     // item.elements will be split into cover, last card and questions during transformation step
     // after that we don't need item.elements anymore
     let item = transform(request.payload.item);
@@ -92,7 +92,7 @@ module.exports = {
     const systemConfigScript = `
       System.config({
         map: {
-          "q-quiz/quiz.js": "${request.payload.toolRuntimeConfig.toolBaseUrl}/script/${scriptHashMap["quiz"]}"
+          "q-quiz/quiz.js": "http://localhost:5000/tools/script/${scriptHashMap["quiz"]}"
         }
       });
     `;
@@ -110,7 +110,7 @@ module.exports = {
       ENRICO_API_URL: process.env.ENRICO_API_URL,
       ENRICO_PRODUCTS: JSON.parse(process.env.ENRICO_PRODUCTS),
       MAP_STYLE_URL: process.env.MAP_STYLE_URL,
-      MAP_ATTRIBUTION: process.env.MAP_ATTRIBUTION
+      MAP_ATTRIBUTION: process.env.MAP_ATTRIBUTION,
     };
 
     const loaderScript = `
@@ -130,7 +130,7 @@ module.exports = {
     const context = {
       item: item,
       quizContainerId: quizContainerId,
-      imageServiceUrl: process.env.IMAGE_SERVICE_URL
+      imageServiceUrl: process.env.IMAGE_SERVICE_URL,
     };
 
     // if we have the width in toolRuntimeConfig.size
@@ -141,7 +141,7 @@ module.exports = {
 
     if (Number.isInteger(exactPixelWidth)) {
       context.width = exactPixelWidth;
-      context.item.questions.map(question => {
+      context.item.questions.map((question) => {
         if (question.image && question.image.key) {
           question.image.urls = getImageUrls(
             question.image.key,
@@ -155,24 +155,24 @@ module.exports = {
     const renderingInfo = {
       loaderConfig: {
         polyfills: ["Promise", "CustomEvent", "NodeList.prototype.forEach"],
-        loadSystemJs: "full"
+        loadSystemJs: "full",
       },
       stylesheets: [
         {
-          name: styleHashMap["default"]
-        }
+          name: styleHashMap["default"],
+        },
       ],
       scripts: [
         {
           content: systemConfigScript,
-          loadOnce: true
+          loadOnce: true,
         },
         {
-          content: loaderScript
-        }
+          content: loaderScript,
+        },
       ],
-      markup: staticTemplate.render(context).html
+      markup: staticTemplate.render(context).html,
     };
     return renderingInfo;
-  }
+  },
 };
