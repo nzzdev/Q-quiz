@@ -5,3 +5,4 @@ styles
 .DS_STORE
 dev.js
 test/logs/pouchdb.log
+dev-config

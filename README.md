@@ -53,7 +53,7 @@ Please have a look at the test environment for examples on what this variables s
 Start the Q dev server:
 
 ```
-npx @nzz/q-cli server
+npx @nzz/q-cli server -c ./dev-config/server-config.js
 ```
 
 Run the Q tool:
