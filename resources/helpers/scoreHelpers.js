@@ -73,8 +73,6 @@ function calculateAchievedScore(answerQuality, questionType) {
   }
 }
 
-// Andrin FUNCTION TEST
-
 function getNumberGuessResult(question) {
   // Calculate the absolute difference between the correct answer and the user's answer
   const difference = Math.abs(question.answer - question.userAnswer);
