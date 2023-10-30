@@ -21,13 +21,13 @@ function calculateWorstAnswerDifference(question) {
     const pointSouthEast = turf.point([bbox[1], bbox[2]]);
     const correctAnswer = turf.point([
       correctAnswerCoord[1],
-      correctAnswerCoord[0]
+      correctAnswerCoord[0],
     ]);
 
     // there is no meter unit in turf, we use kilometers and multiply with
     // 1000 afterwards to get the needed meters
     const distanceOptions = {
-      units: "kilometers"
+      units: "kilometers",
     };
     return (
       Math.max(
@@ -73,6 +73,52 @@ function calculateAchievedScore(answerQuality, questionType) {
   }
 }
 
+function getNumberGuessResult(question) {
+  // Calculate the absolute difference between the correct answer and the user's answer
+  const difference = Math.abs(question.answer - question.userAnswer);
+  const maxScore = 10;
+  const minScore = 0;
+  const numberOfPossibleAnswers = (question.max - question.min) / question.step;
+
+  // Calculate the deviation as a percentage of the full range
+  const deviation = (difference / (question.max - question.min)) * 100;
+
+  let points =
+    maxScore -
+    (difference / (numberOfPossibleAnswers * question.step)) * maxScore;
+
+  // Initialize a stepFactor which adjusts the score if there are more than 100 steps in the range
+  let stepFactor = 1;
+
+  // Check if there are more than 100 steps in the range and adjust stepFactor accordingly
+  if (numberOfPossibleAnswers > 100) {
+    stepFactor = Math.min(1, numberOfPossibleAnswers / 100);
+  }
+
+  // Score calculation based on deviation from the correct answer
+  if (deviation <= 2) {
+    points = 10;
+  } else if (deviation <= 10) {
+    points *= 0.92 * stepFactor;
+  } else if (deviation >= 70) {
+    points *= 0;
+  } else if (deviation >= 60) {
+    points *= 0.05;
+  } else if (deviation >= 50) {
+    points *= 0.1;
+  } else if (deviation >= 40) {
+    points *= 0.3;
+  } else if (deviation >= 30) {
+    points *= 0.55;
+  } else if (deviation >= 20) {
+    points *= 0.75;
+  } else if (deviation >= 10) {
+    points *= 0.85 * stepFactor;
+  }
+
+  return Math.max(minScore, Math.round(points));
+}
+
 function getAnswerQuality(question) {
   let worstAnswerDifference = calculateWorstAnswerDifference(question);
   if (
@@ -116,16 +162,21 @@ function getScoreTitle(scorePercentage) {
 function calculateScore(questions) {
   let score = {
     maxScore: 0,
-    achievedScore: 0
+    achievedScore: 0,
   };
 
-  questions.forEach(question => {
+  questions.forEach((question) => {
     score.maxScore += constants.multiplicator[question.type];
+
     if (question.userAnswer !== undefined) {
-      score.achievedScore += calculateAchievedScore(
-        getAnswerQuality(question),
-        question.type
-      );
+      if (question.type === "numberGuess") {
+        score.achievedScore += getNumberGuessResult(question);
+      } else {
+        score.achievedScore += calculateAchievedScore(
+          getAnswerQuality(question),
+          question.type
+        );
+      }
     }
   });
 
@@ -141,5 +192,5 @@ function calculateScore(questions) {
 
 module.exports = {
   calculateScore: calculateScore,
-  worstAnswerDifference: calculateWorstAnswerDifference
+  worstAnswerDifference: calculateWorstAnswerDifference,
 };

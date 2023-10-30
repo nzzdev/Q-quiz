@@ -16,14 +16,15 @@ const fixtureData = [
   require(`${fixtureDataDirectory}/single-map-point-guess-high-zoomlevel.json`),
   require(`${fixtureDataDirectory}/single-number-poll.json`),
   require(`${fixtureDataDirectory}/single-big-number-poll.json`),
-  require(`${fixtureDataDirectory}/single-float-number-poll.json`)
+  require(`${fixtureDataDirectory}/single-float-number-poll.json`),
+  require(`${fixtureDataDirectory}/single-number-guess-andrin.json`)
 ];
 
 module.exports = {
   path: "/fixtures/data",
   method: "GET",
   config: {
-    tags: ["api"],
+    tags: ["api"],   
   },
   handler: (request, h) => {
     return fixtureData;

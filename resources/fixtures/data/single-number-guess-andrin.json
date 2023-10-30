@@ -1,0 +1,16 @@
+{
+"title": "FIXTURE: Number guess - single question quiz",
+"elements": [
+  {
+    "id": "quiz-3-1503673375520-572013569",
+    "type": "numberGuess",
+    "image": {},
+    "articleRecommendations": [],
+    "question": "Wie alt ist Andrin?",
+    "answer": 17,
+    "min": 1,
+    "max": 45,
+    "step": 1
+  }
+]
+}
