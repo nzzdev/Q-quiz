@@ -101,7 +101,6 @@ function getNumberGuessResult(question) {
   if (deviation <= 2) {
     points = 10;
   } else if (deviation <= 10) {
-    s;
     points *= 0.92 * stepFactor;
   } else if (deviation >= 70) {
     points *= 0;
