@@ -1,0 +1,54 @@
+{
+  "extends": "@tsconfig/svelte/tsconfig.json",
+  "compilerOptions": {
+    "verbatimModuleSyntax": true,
+    "sourceMap": false,
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@src/*": [
+        "src/*"
+      ],
+      "@cps/*": [
+        "src/components/*"
+      ],
+      "@rs/*": [
+        "resources/*"
+      ],
+      "@helpers/*": [
+        "src/helpers/*"
+      ]
+    },
+    // Fixes issues with Typescript 5+ in svelte-check
+    // "ignoreDeprecations": "5.0",
+    "allowSyntheticDefaultImports": true,
+    "declaration": false,
+    "esModuleInterop": true,
+    "module": "es2020",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "target": "ES2015",
+    "resolveJsonModule": true,
+    "types": [
+      "node",
+      "svelte",
+      "jest"
+    ],
+    "lib": [
+      "DOM"
+    ]
+  },
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "explicit"
+  },
+  "include": [
+    "src",
+    "resources",
+    "tests"
+  ],
+  "exclude": [
+    "jest.config.js",
+  ]
+}

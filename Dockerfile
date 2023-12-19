@@ -1,5 +1,5 @@
-# Use following version of Node as the base image
-FROM node:10
+# Use following version of node alpine as the base image
+FROM node:18-alpine
 
 # Set work directory for run/cmd
 WORKDIR /app
@@ -16,4 +16,4 @@ COPY . /app
 EXPOSE 3000
 
 # Run node
-CMD ["node", "/app/index.js"]
+CMD node index.js

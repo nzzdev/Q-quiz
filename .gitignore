@@ -1,7 +1,7 @@
 node_modules
-jspm_packages
-scripts
-styles
+.idea
 .DS_STORE
+.env.json
+.vscode/*
+!.vscode/launch.json
 dev.js
-test/logs/pouchdb.log
