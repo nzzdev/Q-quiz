@@ -9,7 +9,21 @@
       "request": "launch",
       "name": "Launch Program",
       "program": "${workspaceFolder}/dev.js",
-      "runtimeVersion": "10.16.1"
-    }
+      "runtimeExecutable": "${env:HOME}/.nvm/versions/node/v14.18.3/bin/node",
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "run e2e test",
+      "program": "${workspaceFolder}/test/e2e-tests.js",
+      "runtimeVersion": "14.15.3",
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "run dom test",
+      "program": "${workspaceFolder}/test/dom-tests.js",
+      "runtimeVersion": "14.15.3",
+    },
   ]
 }

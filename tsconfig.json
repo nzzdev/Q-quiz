@@ -6,18 +6,10 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "@src/*": [
-        "src/*"
-      ],
-      "@cps/*": [
-        "src/components/*"
-      ],
-      "@rs/*": [
-        "resources/*"
-      ],
-      "@helpers/*": [
-        "src/helpers/*"
-      ]
+      "@src/*": ["src/*"],
+      "@cps/*": ["src/components/*"],
+      "@rs/*": ["resources/*"],
+      "@helpers/*": ["src/helpers/*"]
     },
     // Fixes issues with Typescript 5+ in svelte-check
     // "ignoreDeprecations": "5.0",
@@ -30,25 +22,13 @@
     "strictNullChecks": true,
     "target": "ES2015",
     "resolveJsonModule": true,
-    "types": [
-      "node",
-      "svelte",
-      "jest"
-    ],
-    "lib": [
-      "DOM"
-    ]
+    "types": ["node", "svelte", "jest"],
+    "lib": ["DOM"]
   },
   "ts-node": {
     "esm": true,
     "experimentalSpecifierResolution": "explicit"
   },
-  "include": [
-    "src",
-    "resources",
-    "tests"
-  ],
-  "exclude": [
-    "jest.config.js",
-  ]
+  "include": ["src", "resources", "tests"],
+  "exclude": ["jest.config.js"]
 }

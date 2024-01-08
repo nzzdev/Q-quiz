@@ -22,20 +22,6 @@
   overflow: hidden;
 }
 
-.q-quiz-header {
-  border-bottom: 1px solid currentColor;
-  margin-bottom: 16px;
-  opacity: 1;
-  transition: opacity 0.2s ease-in;
-}
-.q-quiz-header.q-quiz-header--is-empty {
-  border-bottom-color: transparent;
-  height: 0;
-  margin: 0;
-  padding: 0;
-  opacity: 0;
-}
-
 .q-quiz-input,
 .q-quiz-result {
   &.state-hidden {
@@ -78,7 +64,7 @@
 }
 
 .q-quiz-input-range-container::after {
-  content: "";
+  content: '';
   display: table;
   clear: left;
 }
@@ -164,10 +150,10 @@
   }
 }
 
-@import "./numberGuess";
-@import "./mapPointGuess";
-@import "./multipleChoice";
-@import "./q-quiz-multi-header";
-@import "./q-quiz-multi-container";
-@import "./cover";
-@import "./q-quiz-button";
+@import './numberGuess';
+@import './mapPointGuess';
+@import './multipleChoice';
+@import './q-quiz-multi-header';
+@import './q-quiz-multi-container';
+@import './cover';
+@import './q-quiz-button';
