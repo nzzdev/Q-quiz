@@ -7,50 +7,13 @@ import type { Request, ServerRoute } from '@hapi/hapi';
 import type {
   DisplayOptions,
   QQuizSvelteProperties,
-  QuizContext,
-  QuizDoc,
   RenderingInfo,
   StyleHashMap,
-  ToolRuntimeConfig,
   WebPayload,
 } from '@src/interfaces';
-// import { transform } from '@src/helpers/itemTransformer';
+
 import getExactPixelWidth from '@src/helpers/toolRuntimeConfig';
-import { getImageUrls } from '@src/helpers/images';
 import { transform } from '@src/helpers/quizService';
-
-// function getTransformedItemForClientSideScript(
-//   item: QuizDoc,
-//   toolRuntimeConfig: ToolRuntimeConfig
-// ) {
-//   const questionElementData = item.elements.map((element) => {
-//     return {
-//       id: element.id,
-//       type: element.type,
-//       correctAnswer: element.answer,
-//       answerText: element.answerText,
-//       articleRecommendations: element.articleRecommendations,
-//     };
-//   });
-
-//   let scriptData = {
-//     itemId: item._id,
-//     questionElementData: questionElementData,
-//     hasCover: item.hasCover,
-//     hasLastCard: item.hasLastCard,
-//     numberElements: item.elementCount,
-//     toolBaseUrl: toolRuntimeConfig.toolBaseUrl,
-//     isPure: toolRuntimeConfig.isPure || false,
-//   };
-
-//   if (item.lastCard) {
-//     scriptData.lastCardData = {
-//       articleRecommendations: item.lastCard.articleRecommendations,
-//     };
-//     scriptData.isFinalScoreShown = item.isFinalScoreShown;
-//   }
-//   return scriptData;
-// }
 
 const ajv = new Ajv({
   strict: false,
@@ -130,83 +93,16 @@ const route: ServerRoute = {
       displayOptions: displayOptions,
       noInteraction: payload.toolRuntimeConfig.noInteraction || false,
       id,
-      width,
+      imageServiceUrl: process.env.IMAGE_SERVICE_URL || '',
+      mapConfigurtaion: {
+        styleUrl: process.env.MAP_STYLE_URL || '',
+        attribution: process.env.MAP_ATTRIBUTION || '',
+      },
+      enrico: {
+        products: JSON.parse(process.env.ENRICO_PRODUCTS || ''),
+        url: process.env.ENRICO_API_URL || '',
+      },
     };
-
-    // item.elements will be split into cover, last card and questions during transformation step
-    // after that we don't need item.elements anymore
-    // let item = transform(payload.item);
-    // let toolRuntimeConfig = payload.toolRuntimeConfig;
-    // TODO: find new solution for this
-    // delete item.elements;
-    // get id of quiz item out of query string
-    // let id = request.query._id;
-    // if (id === undefined && item.elements && item.elements.length > 0) {
-    //   id =
-    //     item.elements[0].id.split('-')[0] || (Math.random() * 10000).toFixed();
-    // }
-    // item._id = id;
-    // const quizContainerId = `q-quiz-${id}`;
-
-    // if (item.lastCard) {
-    //   item.isFinalScoreShown = item.lastCard.isFinalScoreShown || false;
-    // }
-
-    // const scriptData = getTransformedItemForClientSideScript(
-    //   item,
-    //   toolRuntimeConfig
-    // );
-
-    // if (!process.env.ENRICO_PRODUCTS) {
-    //   process.env.ENRICO_PRODUCTS = `[]`;
-    // }
-
-    // const clientEnv = {
-    //   ENRICO_API_URL: process.env.ENRICO_API_URL,
-    //   ENRICO_PRODUCTS: JSON.parse(process.env.ENRICO_PRODUCTS),
-    //   MAP_STYLE_URL: process.env.MAP_STYLE_URL,
-    //   MAP_ATTRIBUTION: process.env.MAP_ATTRIBUTION,
-    // };
-
-    // const loaderScript = `
-    //   System.import('q-quiz/quiz.js')
-    //     .then(function(module) {
-    //       return module.display(${JSON.stringify(
-    //         scriptData
-    //       )}, document.querySelector('#${quizContainerId}'), ${JSON.stringify(
-    //   clientEnv
-    // )})
-    //     })
-    //     .catch(function(error) {
-    //       console.log(error)
-    //     });
-    // `;
-
-    // const context: QuizContext = {
-    //   item: item,
-    //   quizContainerId: quizContainerId,
-    //   imageServiceUrl: process.env.IMAGE_SERVICE_URL || '',
-    // };
-
-    // if we have the width in toolRuntimeConfig.size
-    // we can use it to set the resolution of the image
-    // const exactPixelWidth = getExactPixelWidth(toolRuntimeConfig);
-
-    // if (
-    //   context.item &&
-    //   context.item.elements &&
-    //   Number.isInteger(exactPixelWidth)
-    // ) {
-    //   context.width = exactPixelWidth;
-    //   context.item.elements.map((element) => {
-    //     if (element.image && element.image.key) {
-    //       element.image.urls = getImageUrls(
-    //         element.image.key,
-    //         context.width as number
-    //       );
-    //     }
-    //   });
-    // }
 
     const renderingInfo: RenderingInfo = {
       polyfills: ['Promise', 'CustomEvent', 'NodeList.prototype.forEach'],

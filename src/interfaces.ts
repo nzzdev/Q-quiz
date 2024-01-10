@@ -63,32 +63,46 @@ export interface TrackingComponent {
 }
 
 export interface QuizDoc extends QDoc {
-  elements: QuizElement[];
+  elements: QuizBaseQuestion[];
 }
 
 export interface QuizElements {
   questions: (MultipleChoice | MapPointGuess | NumberPoll | NumberGuess)[];
-  cover?: QuizElement;
-  lastCard?: QuizElement;
+  cover?: Cover;
+  lastCard?: LastCard;
   hasCover: boolean;
   hasLastCard: boolean;
   questionCount: number;
 }
 
-export interface QuizElement {
+export interface QuizBaseQuestion {
   articleRecommendations: ArticleRecommendation[];
   id: string;
+  question: string;
   type: QuizElementType;
-  image: QuizImage;
+  image?: QuizImage;
+  introduction?: string;
+  notes?: string;
 }
 
-export interface MultipleChoice extends QuizElement {
+export interface Cover {
+  id: QuizQuestionId;
+  type: QuizElementType.Cover;
+  title: string;
+}
+
+export interface QuizSubtitleElement {
+  questionSubTitle: string;
+}
+
+export interface MultipleChoice extends QuizBaseQuestion {
+  type: QuizElementType.MultipleChoice;
   answer: string;
   choices: string[];
-  question: string;
+  wrongAnswerText: string[];
 }
 
-export interface MapPointGuess extends QuizElement {
+export interface MapPointGuess extends QuizBaseQuestion {
   type: QuizElementType.MapPointGuess;
   answer: {
     type: 'Feature';
@@ -101,39 +115,35 @@ export interface MapPointGuess extends QuizElement {
     };
     bbox: [number, number, number, number];
   };
-  introduction: string;
-  question: string;
 }
-
-export interface NumberPoll extends QuizElement {
-  introduction: string;
+export interface SliderQuestion extends QuizBaseQuestion {
   max: number;
   min: number;
-  question: string;
-  questionSubTitle: string;
   step: number;
+  unit: string;
+  unit_sinpular: string;
+}
+
+export interface NumberPoll extends SliderQuestion, QuizSubtitleElement {
   type: QuizElementType.NumberPoll;
 }
 
-export interface NumberGuess extends QuizElement {
+export interface NumberGuess extends SliderQuestion {
+  type: QuizElementType.NumberGuess;
   answer: number;
   answerText: string;
-  introduction: string;
-  max: number;
-  min: number;
-  question: string;
-  step: number;
-  type: QuizElementType.NumberGuess;
   unit: string;
 }
 
-export interface LastCard extends QuizElement {
+export interface LastCard {
+  id: QuizQuestionId;
+  type: QuizElementType.LastCard;
+  title: string;
   isFinalScoreShown: boolean;
   quizLink?: string;
-  quizTitle: string;
+  quizTitle?: string;
   text?: string;
-  title: string;
-  type: QuizElementType.LastCard;
+  articleRecommendations?: ArticleRecommendation[];
 }
 
 export type QuizImage = {
@@ -305,5 +315,17 @@ export interface QQuizSvelteProperties {
   displayOptions: DisplayOptions;
   noInteraction: boolean;
   id: string;
-  width: number | undefined;
+  imageServiceUrl: string;
+  enrico: Enrico;
+  mapConfigurtaion: MapConfiguration;
+}
+
+export interface Enrico {
+  url: string;
+  products: string[];
+}
+
+export interface MapConfiguration {
+  styleUrl: string;
+  attribution: string;
 }

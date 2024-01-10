@@ -1,8 +1,8 @@
-<script>
+<script lang="ts">
   export let hasCover = false;
   export let isMultiQuiz = false;
   export let numberQuestions = 0;
-  export let questionStep;
+  export let questionStep: number;
 
   const nextQuestion = () => {
     if (questionStep < numberQuestions - 1) {

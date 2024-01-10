@@ -1,10 +1,10 @@
-import { QuestionType } from './enums';
+import { QuizElementType } from './enums';
 import type { Multiplicators } from './interfaces';
 
 export const scoredQuestionTypes = [
-  QuestionType.MULTIPLE_CHOICE,
-  QuestionType.NUMBER_GUESS,
-  QuestionType.MAP_POINT_GUESS,
+  QuizElementType.MultipleChoice,
+  QuizElementType.NumberGuess,
+  QuizElementType.MapPointGuess,
 ];
 export const multiplicators: Multiplicators = {
   multipleChoice: 5,

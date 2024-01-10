@@ -4,6 +4,9 @@ import nodeResolve from '@rollup/plugin-node-resolve';
 import svelte from 'rollup-plugin-svelte';
 import sveltePreprocess from 'svelte-preprocess';
 import typescript from '@rollup/plugin-typescript';
+import svg from 'rollup-plugin-svg';
+import commonjs from 'rollup-plugin-commonjs';
+
 import terser from '@rollup/plugin-terser';
 
 const backendConfig = {
@@ -37,6 +40,10 @@ const frontendConfig = {
   plugins: [
     typescript(),
     json(),
+    svg(),
+    commonjs({
+      include: 'node_modules/**', // Default: undefined
+    }),
     svelte({
       preprocess: sveltePreprocess(),
       emitCss: false,
