@@ -109,7 +109,67 @@
     <span>Antworten</span>
   </button>
 </div>
+
 <!-- <div class="q-quiz-result state-hidden">
   <div class="q-quiz-map-container" style="height: 300px"></div>
   <p class="q-quiz-result-answer-text s-font-text-s"></p>
 </div> -->
+<style lang="scss">
+  .q-quiz-map-container {
+    margin: 8px 0 16px 0;
+  }
+
+  .q-quiz-map-marker {
+    border-radius: 50%;
+    box-sizing: content-box;
+    background: currentColor;
+    position: relative;
+
+    box-shadow: 0px 0px 0px 2px rgba(250, 250, 250, 0.9);
+  }
+
+  $q-quiz-marker-label-distance-to-point: 18px;
+  $q-quiz-marker-label-height: 20px;
+  .q-quiz-map-marker__label {
+    position: absolute;
+    word-break: nowrap;
+    white-space: nowrap;
+    line-height: $q-quiz-marker-label-height;
+
+    text-shadow:
+      rgb(250, 250, 250) 2px 0px 0px,
+      rgb(250, 250, 250) 1.75517px 0.958851px 0px,
+      rgb(250, 250, 250) 1.0806px 1.68294px 0px,
+      rgb(250, 250, 250) 0.141474px 1.99499px 0px,
+      rgb(250, 250, 250) -0.832294px 1.81859px 0px,
+      rgb(250, 250, 250) -1.60229px 1.19694px 0px,
+      rgb(250, 250, 250) -1.97998px 0.28224px 0px,
+      rgb(250, 250, 250) -1.87291px -0.701566px 0px,
+      rgb(250, 250, 250) -1.30729px -1.5136px 0px,
+      rgb(250, 250, 250) -0.421592px -1.95506px 0px,
+      rgb(250, 250, 250) 0.567324px -1.91785px 0px,
+      rgb(250, 250, 250) 1.41734px -1.41108px 0px,
+      rgb(250, 250, 250) 1.92034px -0.558831px 0px;
+
+    &--topright {
+      left: 0;
+      top: -$q-quiz-marker-label-distance-to-point;
+      text-align: left;
+    }
+    &--topleft {
+      right: 0;
+      top: -$q-quiz-marker-label-distance-to-point;
+      text-align: right;
+    }
+    &--bottomright {
+      left: 0;
+      bottom: -$q-quiz-marker-label-distance-to-point;
+      text-align: left;
+    }
+    &--bottomleft {
+      right: 0;
+      bottom: -$q-quiz-marker-label-distance-to-point;
+      text-align: right;
+    }
+  }
+</style>

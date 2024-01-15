@@ -15,6 +15,7 @@
   import QuestionImage from './QuestionImage.svelte';
   import QuestionNumberSlider from './QuestionNumberSlider.svelte';
   import QuestionInputMapPointGuess from './QuestionInputMapPointGuess.svelte';
+  import QuestionInputMultipleChoice from './QuestionInputMultipleChoice.svelte';
 
   export let element: MultipleChoice | MapPointGuess | NumberPoll | NumberGuess;
   export let containerWidth: number;
@@ -26,7 +27,7 @@
 {#if element.introduction}
   <QuestionIntroduction introduction={element.introduction} />
 {/if}
-{#if element.image}
+{#if element.image && element.image.url}
   <QuestionImage image={element.image} {containerWidth} {imageServiceUrl} />
 {/if}
 {#if element.question}
@@ -41,4 +42,6 @@
   <QuestionNumberSlider question={element} />
 {:else if element.type === QuizElementType.MapPointGuess}
   <QuestionInputMapPointGuess {element} {mapConfiguration} {enrico} />
-{:else if element.type === QuizElementType.MultipleChoice}{/if}
+{:else if element.type === QuizElementType.MultipleChoice}
+  <QuestionInputMultipleChoice {element} />
+{/if}

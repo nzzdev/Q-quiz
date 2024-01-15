@@ -1,44 +1,38 @@
+<script lang="ts">
+  import type { MultipleChoice } from '@src/interfaces';
+
+  export let element: MultipleChoice;
+
+  $: shuffledAnswers = shuffleArray(element.choices.concat([element.answer]));
+
+  function shuffleArray<T>(array: T[]): T[] {
+    let currentIndex = array.length;
+    let temporaryValue: T;
+    let randomIndex: number;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+  }
+</script>
+
 <div class="q-quiz-input">
-  {#each answers as answer}
-  <button class="s-button s-button--secondary s-button--small q-quiz-answer-button" value="{answer}">
-    <span style="pointer-events: none;">{answer}</span>
-  </button>
+  {#each shuffledAnswers as answer}
+    <button
+      class="s-button s-button--secondary s-button--small q-quiz-answer-button"
+      value={answer}
+    >
+      <span style="pointer-events: none;">{answer}</span>
+    </button>
   {/each}
 </div>
-<div class="q-quiz-result state-hidden">
-  <div class="q-quiz-result-visual q-quiz-result-visual--multiple-choice">
-    {#each answers as answer}
-      <div class="q-quiz-result__answer s-font-note">
-        <span>{answer}</span>
-        <div class="q-quiz-result__multiple-choice-bar"></div>
-      </div>
-    {/each}
-  </div>
-  <p class="q-quiz-result-answer-text s-font-text-s">
-  </p>
-</div>
-
-<script>
-  export default {
-    computed: {
-      answers: ({ question }) => {
-        if (question.choices === undefined) {
-          question.choices = [];
-        }
-
-        let answers = question.choices;
-        if (question.answer) {
-          answers = answers.concat(question.answer);
-        } 
-
-        for (let i = answers.length; i; i--) {
-          const randomIndex = Math.floor(Math.random() * i);
-          const element = answers[i - 1];
-          answers[i - 1] = answers[randomIndex];
-          answers[randomIndex] = element;
-        }
-        return answers;
-      }
-    }
-  };  
-</script>
