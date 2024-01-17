@@ -4,7 +4,7 @@ import type {
   QuizElementType,
   ToolType,
 } from './enums';
-import type { QuizQuestionId } from './types';
+import type { QuizQuestionId, StatisticViewKey } from './types';
 
 export interface QDoc {
   _id?: string;
@@ -104,17 +104,19 @@ export interface MultipleChoice extends QuizBaseQuestion {
 
 export interface MapPointGuess extends QuizBaseQuestion {
   type: QuizElementType.MapPointGuess;
-  answer: {
-    type: 'Feature';
-    geometry: {
-      type: 'Point';
-      coordinates: [number, number];
-    };
-    properties: {
-      pointLabel: string;
-    };
-    bbox: [number, number, number, number];
+  answer: MapPointGuessAnswer;
+}
+
+export interface MapPointGuessAnswer {
+  type: 'Feature';
+  geometry: {
+    type: 'Point';
+    coordinates: [number, number];
   };
+  properties: {
+    pointLabel: string;
+  };
+  bbox: [number, number, number, number];
 }
 export interface SliderQuestion extends QuizBaseQuestion {
   max: number;
@@ -146,18 +148,27 @@ export interface LastCard {
   articleRecommendations?: ArticleRecommendation[];
 }
 
-export type QuizImage = {
+export interface QuizImage {
   height?: number;
   key?: string;
   size?: number;
   url?: string;
   width?: number;
-};
+}
 
-export type ArticleRecommendation = {
+export interface ArticleRecommendation {
   articleId: string;
   text: string;
-};
+}
+
+export interface Statistic {
+  totalAnswers: number;
+  betterThanPercentage?: number;
+  betterThanCount?: number;
+  diffPercentage?: number;
+  numberOfSameAnswers?: number;
+  numberOfAnswersPerChoice?: number;
+}
 
 export interface WebPayload {
   item: QuizDoc;
@@ -261,10 +272,10 @@ export interface Coordinate {
   lng: number;
 }
 
-export interface AnswerStatistic {
-  value: number;
-  count: number;
-}
+// export interface AnswerStatistic {
+//   value: number;
+//   count: number;
+// }
 
 export interface QuizeScore {
   maxScore: number;
@@ -279,8 +290,12 @@ export interface Multiplicators {
   numberPoll: number;
 }
 
-// DB
+export interface AnswerNumberOption {
+  key?: string;
+  reduce?: boolean;
+}
 
+// DB
 export interface DBOptions {
   auth?: DBAuthOptions;
 }
@@ -296,11 +311,12 @@ export interface AnswerQueryOptions {
   group?: boolean;
 }
 
-export interface AnswerNumberOption {
-  key?: string;
-  reduce?: boolean;
+export interface StatisticView {
+  key: StatisticViewKey;
+  value: number;
 }
 
+// Backend
 export interface QQuizConfig {
   _id: string;
   title: string;
@@ -318,6 +334,7 @@ export interface QQuizSvelteProperties {
   imageServiceUrl: string;
   enrico: Enrico;
   mapConfigurtaion: MapConfiguration;
+  toolBaseUrl: string;
 }
 
 export interface Enrico {

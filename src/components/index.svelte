@@ -11,8 +11,7 @@
   $: imageServiceUrl = componentConfiguration.imageServiceUrl;
   $: enrico = componentConfiguration.enrico;
   $: mapConfiguration = componentConfiguration.mapConfigurtaion;
-
-  console.log(componentConfiguration);
+  $: toolBaseUrl = componentConfiguration.toolBaseUrl;
 </script>
 
 <div bind:clientWidth={containerWidth}>
@@ -32,6 +31,7 @@
           {imageServiceUrl}
           {enrico}
           {mapConfiguration}
+          {toolBaseUrl}
         />
       {/if}
     {/each}

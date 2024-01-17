@@ -1,18 +1,22 @@
 import { multiplicators } from '@src/constants';
-import { QuestionType } from '@src/enums';
+import { QuizElementType } from '@src/enums';
 import type {
-  MapPointElement,
-  NumberElement,
+  Cover,
+  LastCard,
+  MapPointGuess,
+  NumberGuess,
+  NumberPoll,
+  QuizBaseQuestion,
   QuizeScore,
 } from '@src/interfaces';
 
 const turf = require('@turf/turf');
 
 function calculateWorstAnswerDifference(
-  question: NumberElement | MapPointElement
+  question: NumberGuess | NumberPoll | MapPointGuess
 ) {
   if (question.type === 'numberGuess') {
-    const numberAnswer = question as NumberElement;
+    const numberAnswer = question as NumberGuess;
     return Math.max(
       numberAnswer.answer - numberAnswer.min,
       numberAnswer.max - question.answer
@@ -22,7 +26,7 @@ function calculateWorstAnswerDifference(
     return 1;
   }
   if (question.type === 'mapPointGuess') {
-    const mapPointAnswer = question as MapPointElement;
+    const mapPointAnswer = question as MapPointGuess;
     const bbox = mapPointAnswer.answer.bbox;
     const correctAnswerCoord = mapPointAnswer.answer.geometry.coordinates;
 
@@ -54,7 +58,7 @@ function calculateWorstAnswerDifference(
 
 function calculateAchievedScore(
   answerQuality: number,
-  questionType: QuestionType
+  questionType: QuizElementType
 ): number {
   const turningPoint = 0.6; // x=y
   // slope was pre-calculated with a defined point of worst estimation quality of (0.08, 0)
@@ -69,8 +73,8 @@ function calculateAchievedScore(
   const upperBoundX = (1 - upperConstant) / upperSlope; // 0 = ax + b, for a = upperSlope, b = upperConstant and y = 1 -> no values over 1
 
   if (
-    questionType !== QuestionType.COVER &&
-    questionType !== QuestionType.LAST_CARD
+    questionType !== QuizElementType.Cover &&
+    questionType !== QuizElementType.LastCard
   ) {
     const multiplicator = multiplicators[questionType];
 
@@ -96,7 +100,7 @@ function calculateAchievedScore(
   return 0;
 }
 
-function getNumberGuessResult(question: NumberElement) {
+function getNumberGuessResult(question: NumberGuess | NumberPoll) {
   // Calculate the absolute difference between the correct answer and the user's answer
   // @ts-ignore
   // TODO: check .userAnswer
@@ -144,17 +148,20 @@ function getNumberGuessResult(question: NumberElement) {
   return Math.max(minScore, Math.round(points));
 }
 
-function getAnswerQuality(question: MapPointElement) {
+function getAnswerQuality(question: NumberGuess | NumberPoll | MapPointGuess) {
   let worstAnswerDifference = calculateWorstAnswerDifference(question);
   if (
-    question.type === 'multipleChoice' &&
+    question.type === QuizElementType.MapPointGuess &&
     // @ts-ignore
     // TODO: check .userAnswer
     question.userAnswer === question.answer
   ) {
     return 1;
   }
-  if (question.type === 'numberGuess' && worstAnswerDifference !== undefined) {
+  if (
+    question.type === QuizElementType.NumberGuess &&
+    worstAnswerDifference !== undefined
+  ) {
     return (
       1 -
       // @ts-ignore
@@ -162,11 +169,11 @@ function getAnswerQuality(question: MapPointElement) {
       Math.abs(question.userAnswer - question.answer) / worstAnswerDifference
     );
   }
-  if (question.type === 'numberPoll') {
+  if (question.type === QuizElementType.NumberPoll) {
     return 1;
   }
   if (
-    question.type === 'mapPointGuess' &&
+    question.type === QuizElementType.MapPointGuess &&
     worstAnswerDifference !== undefined
   ) {
     // @ts-ignore
@@ -190,7 +197,9 @@ function getScoreTitle(scorePercentage: number) {
   }
 }
 
-function calculateScore(questions: (NumberElement | MapPointElement)[]) {
+function calculateScore(
+  questions: (NumberGuess | NumberPoll | MapPointGuess | Cover | LastCard)[]
+) {
   let score: QuizeScore = {
     maxScore: 0,
     achievedScore: 0,
@@ -198,8 +207,8 @@ function calculateScore(questions: (NumberElement | MapPointElement)[]) {
 
   questions.forEach((question) => {
     if (
-      question.type !== QuestionType.COVER &&
-      question.type !== QuestionType.LAST_CARD &&
+      question.type !== QuizElementType.Cover &&
+      question.type !== QuizElementType.LastCard &&
       // @ts-ignore
       // TODO: check .userAnswer
       question.userAnswer !== undefined
@@ -207,7 +216,7 @@ function calculateScore(questions: (NumberElement | MapPointElement)[]) {
       score.maxScore += multiplicators[question.type];
 
       if (question.type === 'numberGuess') {
-        score.achievedScore += getNumberGuessResult(question as NumberElement);
+        score.achievedScore += getNumberGuessResult(question as NumberGuess);
       } else {
         score.achievedScore += calculateAchievedScore(
           getAnswerQuality(question),

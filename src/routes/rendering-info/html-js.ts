@@ -1,9 +1,9 @@
 import Ajv from 'ajv';
 import Boom from '@hapi/boom';
-
-import { readFileSync } from 'fs';
-import schemaString from '../../../resources/schema.json';
 import type { Request, ServerRoute } from '@hapi/hapi';
+import { readFileSync } from 'fs';
+
+import schemaString from '../../../resources/schema.json';
 import type {
   DisplayOptions,
   QQuizSvelteProperties,
@@ -11,7 +11,6 @@ import type {
   StyleHashMap,
   WebPayload,
 } from '@src/interfaces';
-
 import getExactPixelWidth from '@src/helpers/toolRuntimeConfig';
 import { transform } from '@src/helpers/quizService';
 
@@ -102,6 +101,7 @@ const route: ServerRoute = {
         products: JSON.parse(process.env.ENRICO_PRODUCTS || ''),
         url: process.env.ENRICO_API_URL || '',
       },
+      toolBaseUrl: toolRuntimeConfig.toolBaseUrl,
     };
 
     const renderingInfo: RenderingInfo = {

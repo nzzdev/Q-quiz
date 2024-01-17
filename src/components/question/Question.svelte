@@ -1,6 +1,7 @@
 <script lang="ts">
   import { QuizElementType } from '@src/enums';
   import type {
+    DBOptions,
     Enrico,
     MapConfiguration,
     MapPointGuess,
@@ -14,7 +15,7 @@
   import QuestionIntroduction from './QuestionIntroduction.svelte';
   import QuestionImage from './QuestionImage.svelte';
   import QuestionNumberSlider from './QuestionNumberSlider.svelte';
-  import QuestionInputMapPointGuess from './QuestionInputMapPointGuess.svelte';
+  import InputMapPointGuess from '../input-map-point-guess/Question.svelte';
   import QuestionInputMultipleChoice from './QuestionInputMultipleChoice.svelte';
 
   export let element: MultipleChoice | MapPointGuess | NumberPoll | NumberGuess;
@@ -22,6 +23,7 @@
   export let mapConfiguration: MapConfiguration;
   export let enrico: Enrico;
   export let imageServiceUrl: string;
+  export let toolBaseUrl: string;
 </script>
 
 {#if element.introduction}
@@ -41,7 +43,7 @@
 {:else if element.type === QuizElementType.NumberGuess}
   <QuestionNumberSlider question={element} />
 {:else if element.type === QuizElementType.MapPointGuess}
-  <QuestionInputMapPointGuess {element} {mapConfiguration} {enrico} />
+  <InputMapPointGuess {element} {mapConfiguration} {enrico} {toolBaseUrl} />
 {:else if element.type === QuizElementType.MultipleChoice}
   <QuestionInputMultipleChoice {element} />
 {/if}

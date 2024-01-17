@@ -6,7 +6,7 @@ import {
 } from 'd3-scale';
 import { max as d3Max } from 'd3-array';
 
-import type { AnswerStatistic, NumberElement } from '@src/interfaces';
+import type { AnswerStatistic, NumberGuess, NumberPoll } from '@src/interfaces';
 import { getPrecision } from './utils';
 
 const styleClasses = {
@@ -17,7 +17,7 @@ const styleClasses = {
 
 // TODO: refactor to svelte component
 function getStripplotSvg(
-  data: NumberElement,
+  data: NumberGuess | NumberPoll,
   statistics: AnswerStatistic[],
   plotWidth: number
 ) {
@@ -113,7 +113,7 @@ function getStripplotSvg(
 }
 
 function getBarchartSvg(
-  data: NumberElement,
+  data: NumberGuess | NumberPoll,
   statistics: AnswerStatistic[],
   chartWidth: number
 ) {
