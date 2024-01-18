@@ -2,19 +2,19 @@
   import L, { Marker } from 'leaflet';
   import { onMount } from 'svelte';
 
-  import type { MapPointGuess } from '@src/interfaces';
+  import type { MapPointGuess, Statistic } from '@src/interfaces';
   import { QuizElementType } from '@src/enums';
 
-  import { getAnswerTextElement } from '@src/services/answer-text-service';
   import { StatisticCalculator } from '@src/services/statistic-calculator-service';
+  import AnswerText from '../AnswerText.svelte';
 
   export let element: MapPointGuess;
   export let userAnswer: Marker<any>;
   export let toolBaseUrl: string;
 
   let distance: number;
-  let textElement: HTMLSpanElement;
   let isCorrectAnswer: boolean;
+  let statistic: Statistic;
 
   onMount(() => {
     const correctLatLng = new L.LatLng(
@@ -28,28 +28,12 @@
     )
       .then((response) => response.json())
       .then((answers) => {
-        const statistic = StatisticCalculator.mapPointGuess(answers, distance);
-        console.log('statistic', statistic);
-        console.log(textElement);
-        textElement = getAnswerTextElement(statistic, distance === 0, diffText);
-        console.log('textElement', textElement);
+        statistic = StatisticCalculator.mapPointGuess(answers, distance);
       })
       .catch((error) => {
         console.log('error', error);
       });
   });
-
-  const diffText = () => {
-    let answer = element.answer;
-
-    console.log('distance', distance);
-    if (distance !== undefined) {
-      let distanceText = getDistanceText(distance);
-      console.log('distanceText', distanceText);
-      return ` Ihre Schätzung liegt um ${distanceText} daneben.`;
-    }
-    return '';
-  };
 
   function getDistanceText(distance: number) {
     if (distance > 1000) {
@@ -61,7 +45,10 @@
 </script>
 
 <p class="q-quiz-result-answer-text s-font-text-s">
-  {#if textElement}
-    <span bind:this={textElement}> </span>
+  {#if statistic}
+    <AnswerText {statistic} {isCorrectAnswer} />
+  {/if}
+  {#if distance !== undefined}
+    <p>Ihre Schätzung liegt um {getDistanceText(distance)} daneben.</p>
   {/if}
 </p>
