@@ -1,14 +1,10 @@
 <script lang="ts">
+  import NextButton from './NextButton.svelte';
+
   export let hasCover = false;
   export let isMultiQuiz = false;
   export let numberQuestions = 0;
   export let questionStep: number;
-
-  const nextQuestion = () => {
-    if (questionStep < numberQuestions - 1) {
-      questionStep += 1;
-    }
-  };
 </script>
 
 <header
@@ -23,15 +19,9 @@
         Frage {questionStep + 1} / {numberQuestions}
       {/if}
     </div>
-    <button
-      class:q-quiz-button--hidden={hasCover}
-      class="q-quiz-button q-quiz-button--horizontal s-font-note-s"
-      on:click={nextQuestion}
-    >
-      <div class="q-quiz-button__content">
-        <span class="s-color-primary-7">nächste Frage</span>
-      </div>
-    </button>
+    <div class="next-button">
+      <NextButton {hasCover} {numberQuestions} bind:questionStep />
+    </div>
   {/if}
 </header>
 
@@ -41,6 +31,11 @@
     margin-bottom: 16px;
     opacity: 1;
     transition: opacity 0.2s ease-in;
+
+    .next-button {
+      display: flex;
+      justify-content: flex-end;
+    }
   }
   .q-quiz-header--is-empty {
     border-bottom-color: transparent;

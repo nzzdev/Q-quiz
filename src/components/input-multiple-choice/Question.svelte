@@ -4,10 +4,16 @@
 
   export let element: MultipleChoice;
   export let toolBaseUrl: string;
+  export let togglenNextButton: () => void;
 
   let userAnswer: string;
 
   $: shuffledAnswers = shuffleArray(element.choices.concat([element.answer]));
+
+  function setAnswer(answer: string) {
+    userAnswer = answer;
+    togglenNextButton();
+  }
 
   function shuffleArray<T>(array: T[]): T[] {
     let currentIndex = array.length;
@@ -44,7 +50,7 @@
       <button
         class="s-button s-button--secondary s-button--small q-quiz-answer-button"
         value={answer}
-        on:click={() => (userAnswer = answer)}
+        on:click={() => setAnswer(answer)}
       >
         <span style="pointer-events: none;">{answer}</span>
       </button>

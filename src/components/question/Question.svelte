@@ -1,7 +1,6 @@
 <script lang="ts">
   import { QuizElementType } from '@src/enums';
   import type {
-    DBOptions,
     Enrico,
     MapConfiguration,
     MapPointGuess,
@@ -24,6 +23,7 @@
   export let enrico: Enrico;
   export let imageServiceUrl: string;
   export let toolBaseUrl: string;
+  export let togglenNextButton: () => void;
 </script>
 
 {#if element.introduction}
@@ -45,6 +45,6 @@
 {:else if element.type === QuizElementType.MapPointGuess}
   <InputMapPointGuess {element} {mapConfiguration} {enrico} {toolBaseUrl} />
 {:else if element.type === QuizElementType.MultipleChoice}
-  <QuestionInputMultipleChoice {element} {toolBaseUrl} />
+  <QuestionInputMultipleChoice {element} {toolBaseUrl} {togglenNextButton} />
 {/if}
 <!-- TODO: Result answer text-->
