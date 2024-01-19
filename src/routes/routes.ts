@@ -5,10 +5,8 @@ import health from './health';
 import locales from './locales';
 import fixtureData from './fixtures/data';
 import schema from './schema';
-import answers from './answer-service/stats';
+import answers from './answer-service/answers';
 
-// answer service
-// import statistic from './answer-service/statistics';
 const allRoutes = [
   web,
   stylesheet,
@@ -18,7 +16,6 @@ const allRoutes = [
   fixtureData,
   ...schema,
   answers,
-  // statistic,
 ];
 
 export default allRoutes;

@@ -2,7 +2,12 @@
   import L, { Marker } from 'leaflet';
   import { onMount } from 'svelte';
 
-  import type { MapPointGuess, Statistic } from '@src/interfaces';
+  import type {
+    MapPointGuess,
+    NumberOfAnswersPerChoice,
+    Statistic,
+    StatisticView,
+  } from '@src/interfaces';
   import { QuizElementType } from '@src/enums';
 
   import { StatisticCalculator } from '@src/services/statistic-calculator-service';
@@ -27,7 +32,7 @@
       `${toolBaseUrl}/answers/${QuizElementType.MapPointGuess}/${element.id}`
     )
       .then((response) => response.json())
-      .then((answers) => {
+      .then((answers: NumberOfAnswersPerChoice[]) => {
         statistic = StatisticCalculator.mapPointGuess(answers, distance);
       })
       .catch((error) => {

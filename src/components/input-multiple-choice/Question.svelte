@@ -1,7 +1,11 @@
 <script lang="ts">
   import type { MultipleChoice } from '@src/interfaces';
+  import Answer from './Answer.svelte';
 
   export let element: MultipleChoice;
+  export let toolBaseUrl: string;
+
+  let userAnswer: string;
 
   $: shuffledAnswers = shuffleArray(element.choices.concat([element.answer]));
 
@@ -26,13 +30,24 @@
   }
 </script>
 
-<div class="q-quiz-input">
-  {#each shuffledAnswers as answer}
-    <button
-      class="s-button s-button--secondary s-button--small q-quiz-answer-button"
-      value={answer}
-    >
-      <span style="pointer-events: none;">{answer}</span>
-    </button>
-  {/each}
-</div>
+{#if userAnswer}
+  <Answer
+    id={element.id}
+    answers={shuffledAnswers}
+    {userAnswer}
+    correctAnswer={element.answer}
+    {toolBaseUrl}
+  />
+{:else}
+  <div class="q-quiz-input">
+    {#each shuffledAnswers as answer}
+      <button
+        class="s-button s-button--secondary s-button--small q-quiz-answer-button"
+        value={answer}
+        on:click={() => (userAnswer = answer)}
+      >
+        <span style="pointer-events: none;">{answer}</span>
+      </button>
+    {/each}
+  </div>
+{/if}

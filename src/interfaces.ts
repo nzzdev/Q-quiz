@@ -167,7 +167,12 @@ export interface Statistic {
   betterThanCount?: number;
   diffPercentage?: number;
   numberOfSameAnswers?: number;
-  numberOfAnswersPerChoice?: number;
+  numberOfAnswersPerChoice?: NumberOfAnswersPerChoice[];
+}
+
+export interface NumberOfAnswersPerChoice {
+  key: string;
+  value: number;
 }
 
 export interface WebPayload {

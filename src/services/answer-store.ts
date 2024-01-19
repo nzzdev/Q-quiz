@@ -38,14 +38,19 @@ export class AnswerDatabase {
       });
   }
 
-  async getAnswer(type: QuizElementType, questionId: string) {
-    return this.db
+  async getAnswer(
+    type: QuizElementType,
+    questionId: string
+  ): Promise<StatisticView[]> {
+    return await this.db
       .query<StatisticView>(`stats/answers-${type}`, {
         startkey: [questionId],
         endkey: [questionId, {}],
         group: true,
       })
       .then((doc) => doc.rows)
-      .then((rows) => rows.map((row) => row.key[1]));
+      .then((rows) =>
+        rows.map((row) => ({ key: row.key[1], value: row.value }))
+      );
   }
 }

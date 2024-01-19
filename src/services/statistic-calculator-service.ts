@@ -1,4 +1,8 @@
-import type { Statistic } from '@src/interfaces';
+import type {
+  NumberOfAnswersPerChoice,
+  Statistic,
+  StatisticView,
+} from '@src/interfaces';
 import type { AnswerStatistic } from '@src/types';
 
 export class StatisticCalculator {
@@ -88,58 +92,35 @@ export class StatisticCalculator {
     };
   }
 
-  // @ts-ignore
-  // TODO
-  public static multipleChoiceStats(
-    answersStats: AnswerStatistic[], // @ts-ignore
-    correctAnswer, // @ts-ignore
-    userAnswer
-  ) {
-    let numberOfAnswersPerChoice = {};
-
-    // @ts-ignore
-    // TODO
-    let totalAnswers = answersStats.reduce((prev, current) => {
-      // @ts-ignore
-      return prev + current.count;
+  // TODO: Save answer first and then calculate stats, or calculate stats (and than calculate new answer too) and then save answer?
+  public static multipleChoiceStats(answersStats: NumberOfAnswersPerChoice[]) {
+    let totalAnswers = answersStats.reduce((prev: number, current) => {
+      return (prev += current.value);
     }, 0);
-
-    // @ts-ignore
-    // TODO
-    answersStats.map((answer) => {
-      // @ts-ignore
-      // TODO
-      numberOfAnswersPerChoice[answer.value] = answer.count;
-    });
-
     return {
       totalAnswers: totalAnswers,
-      numberOfAnswersPerChoice: numberOfAnswersPerChoice,
+      numberOfAnswersPerChoice: answersStats,
     };
   }
 
   // @ts-ignore
   // TODO
   public static mapPointGuess(
-    answersStats: AnswerStatistic[], // @ts-ignore
+    answersStats: NumberOfAnswersPerChoice[], // @ts-ignore
     userAnswer
   ): Statistic {
-    const answersStatsConvert = answersStats as number[];
     let betterThanCount = 0;
     let numberOfSameAnswers;
 
-    console.log('answersStats', answersStats);
-    console.log('userAnswer', userAnswer);
-
-    let totalAnswers = answersStatsConvert.length;
+    let totalAnswers = answersStats.reduce((prev: number, current) => {
+      return (prev += current.value);
+    }, 0);
 
     if (userAnswer) {
-      betterThanCount = answersStatsConvert.filter(
-        (answer: number) => answer > userAnswer
-      ).length;
-      numberOfSameAnswers = answersStatsConvert.filter(
-        (answer: number) => answer === userAnswer
-      ).length;
+      betterThanCount =
+        answersStats.find((answer) => answer.key > userAnswer)?.value || 0;
+      numberOfSameAnswers =
+        answersStats.find((answer) => answer.key === userAnswer)?.value || 0;
     }
 
     return {

@@ -22,14 +22,14 @@
   overflow: hidden;
 }
 
-.q-quiz-input,
-.q-quiz-result {
-  &.state-hidden {
-    visibility: hidden;
-    overflow: hidden;
-    height: 0;
-  }
-}
+// .q-quiz-input,
+// .q-quiz-result {
+//   &.state-hidden {
+//     visibility: hidden;
+//     overflow: hidden;
+//     height: 0;
+//   }
+// }
 
 .q-quiz-invalid-input-message {
   text-align: center;
@@ -37,18 +37,18 @@
   margin-bottom: 6px;
 }
 
-.q-quiz-result {
-  position: relative;
-  opacity: 0;
-  transition: opacity 0.3s ease-in;
-  &.state-visible {
-    opacity: 1;
-  }
-  svg {
-    position: relative;
-    z-index: 1;
-  }
-}
+// .q-quiz-result {
+//   position: relative;
+//   opacity: 0;
+//   transition: opacity 0.3s ease-in;
+//   &.state-visible {
+//     opacity: 1;
+//   }
+//   svg {
+//     position: relative;
+//     z-index: 1;
+//   }
+// }
 
 .q-quiz-answer-stats {
   margin-bottom: 8px;
@@ -76,7 +76,6 @@
 
 @import './mapStyle';
 @import './numberGuess';
-@import './multipleChoice';
 @import './q-quiz-multi-header';
 @import './q-quiz-multi-container';
 @import './cover';
