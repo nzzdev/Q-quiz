@@ -8,6 +8,7 @@ module.exports = [
     method: 'POST',
     path: '/answer',
     options: {
+      cors: true, // Enable CORS for this route
       tags: ['api'],
       payload: {
         allow: ['application/json'],

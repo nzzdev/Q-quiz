@@ -1,12 +1,19 @@
 <script lang="ts">
   import type { NumberPoll, SliderQuestion } from '@src/interfaces';
+  import Statistic from './Statistic.svelte';
 
-  export let question: SliderQuestion;
+  export let element: SliderQuestion;
+  export let toolBaseUrl: string;
 
-  let initialValue = (question.max - question.min) / 2 + question.min;
+  let isAnswered = false;
+  let initialValue = (element.max - element.min) / 2 + element.min;
   $: labelPosition = !initialValue
     ? 50
-    : ((initialValue - question.min) / (question.max - question.min)) * 100;
+    : ((initialValue - element.min) / (element.max - element.min)) * 100;
+
+  function getResult() {
+    isAnswered = true;
+  }
 </script>
 
 <div class="q-quiz-input">
@@ -26,9 +33,9 @@
     <input
       type="range"
       class="s-input-range s-input-range--large"
-      min={question.min}
-      max={question.max}
-      step={question.step}
+      min={element.min}
+      max={element.max}
+      step={element.step}
       bind:value={initialValue}
     />
     <div
@@ -38,11 +45,11 @@
         s-font-note--tabularnums
       "
     >
-      {question.min}
-      {#if question.unit}
-        {question.min === 1 && question.unit_sinpular
-          ? question.unit_sinpular
-          : question.unit}
+      {element.min}
+      {#if element.unit}
+        {element.min === 1 && element.unit_sinpular
+          ? element.unit_sinpular
+          : element.unit}
       {/if}
     </div>
     <div
@@ -52,17 +59,24 @@
         s-font-note--tabularnums
       "
     >
-      {question.max}
-      {#if question.unit}
-        {question.max === 1 && question.unit_sinpular
-          ? question.unit_sinpular
-          : question.unit}
+      {element.max}
+      {#if element.unit}
+        {element.max === 1 && element.unit_sinpular
+          ? element.unit_sinpular
+          : element.unit}
       {/if}
     </div>
   </div>
-  <button class="s-button s-button--small q-quiz-answer-button">
-    <span>Antworten</span>
-  </button>
+  {#if !isAnswered}
+    <button
+      class="s-button s-button--small q-quiz-answer-button"
+      on:click={getResult}
+    >
+      <span>Antworten</span>
+    </button>
+  {:else}
+    <Statistic {element} userAnswer={initialValue} {toolBaseUrl} />
+  {/if}
 </div>
 
 <style lang="scss">

@@ -21,19 +21,19 @@ export class AnswerDatabase {
 
   // TODO:
   // @ts-ignore
-  async saveAnswer(doc) {
+  async saveAnswer(doc): Promise<string | Boom> {
     return this.db
       .post(doc)
       .then((response) => {
         if (response.ok) {
-          return response;
+          return response.id;
         } else {
           // TODO: set boom text error
           return new Boom();
         }
       })
-      .catch(function (couchError) {
-        console.warn(couchError);
+      .catch((couchError) => {
+        console.log(couchError);
         return Boomm.badRequest(couchError.message);
       });
   }
@@ -41,7 +41,7 @@ export class AnswerDatabase {
   async getAnswer(
     type: QuizElementType,
     questionId: string
-  ): Promise<StatisticView[]> {
+  ): Promise<StatisticView[] | Boom> {
     return await this.db
       .query<StatisticView>(`stats/answers-${type}`, {
         startkey: [questionId],
@@ -51,6 +51,10 @@ export class AnswerDatabase {
       .then((doc) => doc.rows)
       .then((rows) =>
         rows.map((row) => ({ key: row.key[1], value: row.value }))
-      );
+      )
+      .catch((couchError) => {
+        console.warn(couchError);
+        return Boomm.badRequest(couchError.message);
+      });
   }
 }

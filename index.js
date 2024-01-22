@@ -7,6 +7,13 @@ const require = createRequire(import.meta.url);
 
 const server = Hapi.server({
   port: process.env.PORT || 3000,
+  // TODO: check if this is needed
+  routes: {
+    cors: {
+      origin: ['*'], // Allow all origins
+      additionalHeaders: ['cache-control', 'x-requested-with'],
+    },
+  },
 });
 
 async function init() {

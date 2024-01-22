@@ -87,8 +87,10 @@ export async function getNumberOfAnswers(
   });
 }
 
-export function getPrecision(n: number) {
-  var e = 1;
-  while (Math.round(n * e) / e !== n) e *= 10;
-  return Math.round(Math.log(e) / Math.LN10);
+export function getPrecision(value: number) {
+  // TODO: check magic number
+  let magicNumber = 1;
+  while (Math.round(value * magicNumber) / magicNumber !== value)
+    magicNumber *= 10;
+  return Math.round(Math.log(magicNumber) / Math.LN10);
 }

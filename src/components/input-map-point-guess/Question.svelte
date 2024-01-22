@@ -3,6 +3,8 @@
   import L, { Marker, type LatLng, type Map } from 'leaflet';
 
   import type {
+    DBAnswerData,
+    DBAnswerMapPointGuessValue,
     DBOptions,
     Enrico,
     MapConfiguration,
@@ -16,6 +18,7 @@
   export let mapConfiguration: MapConfiguration;
   export let enrico: Enrico;
   export let toolBaseUrl: string;
+  export let saveAnswer: (value: DBAnswerMapPointGuessValue) => void;
 
   const mapOptions = {
     boxZoom: false,
@@ -134,6 +137,10 @@
       // }
 
       // addHeatmapOverlayToMap(map);
+      saveAnswer({
+        latLng: { lat: userAnswerLatLng.lat, lng: userAnswerLatLng.lng },
+        distance: correctLatLng.distanceTo(userAnswerLatLng),
+      });
     }
   }
 

@@ -5,6 +5,7 @@
   export let element: MultipleChoice;
   export let toolBaseUrl: string;
   export let togglenNextButton: () => void;
+  export let saveAnswer: (value: string) => void;
 
   let userAnswer: string;
 
@@ -13,6 +14,7 @@
   function setAnswer(answer: string) {
     userAnswer = answer;
     togglenNextButton();
+    saveAnswer(answer);
   }
 
   function shuffleArray<T>(array: T[]): T[] {

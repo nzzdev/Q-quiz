@@ -1,47 +1,39 @@
-import type {
-  NumberOfAnswersPerChoice,
-  Statistic,
-  StatisticView,
-} from '@src/interfaces';
-import type { AnswerStatistic } from '@src/types';
+import type { NumberOfAnswersPerChoice, Statistic } from '@src/interfaces';
 
 export class StatisticCalculator {
-  // @ts-ignore
-  // TODO
   public static numberGuess(
-    answersStats: AnswerStatistic[], // @ts-ignore
-    correctAnswer, // @ts-ignore
-    userAnswer
-  ) {
-    const answersStatsConvert = answersStats as number[];
+    answersStats: NumberOfAnswersPerChoice[],
+    correctAnswer: number,
+    userAnswer: number
+  ): Statistic {
     let betterThanCount;
     let numberOfSameAnswers;
     let diffPercentage;
 
-    // @ts-ignore
-    // TODO
-    let totalAnswers = answersStats.length;
+    let totalAnswers = answersStats.reduce((prev, current) => {
+      return prev + current.value;
+    }, 0);
 
     if (userAnswer) {
-      // @ts-ignore
-      // TODO
-      betterThanCount = answersStatsConvert.filter(
-        (answer: number) =>
-          Math.abs(correctAnswer - answer) >
-          Math.abs(correctAnswer - userAnswer.value)
-      ).length;
+      betterThanCount = answersStats.reduce((prev, current) => {
+        if (
+          Math.abs(correctAnswer - current.value) >
+          Math.abs(correctAnswer - userAnswer)
+        ) {
+          return prev + current.value;
+        }
+        return prev;
+      }, 0);
 
-      // @ts-ignore
-      // TODO
-
-      numberOfSameAnswers = answersStatsConvert.filter(
-        (answers) => userAnswer.value === answers
-      ).length;
+      numberOfSameAnswers = answersStats.reduce((prev, current) => {
+        if (userAnswer === current.value) {
+          return prev + current.value - 1;
+        }
+        return prev;
+      }, 0);
 
       diffPercentage = Math.abs(
-        Math.round(
-          (Math.abs(correctAnswer - userAnswer.value) / correctAnswer) * 100
-        )
+        Math.round((Math.abs(correctAnswer - userAnswer) / correctAnswer) * 100)
       );
     }
 
@@ -57,30 +49,20 @@ export class StatisticCalculator {
     };
   }
 
-  // @ts-ignore
-  // TODO
   public static numberPoll(
-    answersStats: AnswerStatistic[], // @ts-ignore
-    correctAnswer, // @ts-ignore
-    userAnswer
-  ) {
+    answersStats: NumberOfAnswersPerChoice[],
+    userAnswer: number
+  ): Statistic {
     let numberOfSameAnswers;
 
-    // @ts-ignore
-    // TODO
     let totalAnswers = answersStats.reduce((prev, current) => {
-      // @ts-ignore
-      return prev + current.count;
+      return prev + current.value;
     }, 0);
 
     if (userAnswer) {
-      // @ts-ignore
-      // TODO
       numberOfSameAnswers = answersStats.reduce((prev, current) => {
-        // @ts-ignore
-        if (userAnswer.value === current.value) {
-          // @ts-ignore
-          return prev + current.count - 1;
+        if (userAnswer === current.value) {
+          return prev + current.value - 1;
         }
         return prev;
       }, 0);
@@ -93,7 +75,9 @@ export class StatisticCalculator {
   }
 
   // TODO: Save answer first and then calculate stats, or calculate stats (and than calculate new answer too) and then save answer?
-  public static multipleChoiceStats(answersStats: NumberOfAnswersPerChoice[]) {
+  public static multipleChoiceStats(
+    answersStats: NumberOfAnswersPerChoice[]
+  ): Statistic {
     let totalAnswers = answersStats.reduce((prev: number, current) => {
       return (prev += current.value);
     }, 0);

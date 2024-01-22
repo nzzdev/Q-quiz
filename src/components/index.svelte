@@ -32,6 +32,7 @@
     {#each item.questions as question, index}
       {#if questionStep === index}
         <Question
+          qItemId={componentConfiguration.id}
           element={question}
           {containerWidth}
           {imageServiceUrl}

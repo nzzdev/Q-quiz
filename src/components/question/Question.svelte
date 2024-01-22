@@ -1,6 +1,8 @@
 <script lang="ts">
   import { QuizElementType } from '@src/enums';
   import type {
+    DBAnswerData,
+    DBAnswerMapPointGuessValue,
     Enrico,
     MapConfiguration,
     MapPointGuess,
@@ -13,10 +15,11 @@
   import QuestionTitle from './QuestionTitle.svelte';
   import QuestionIntroduction from './QuestionIntroduction.svelte';
   import QuestionImage from './QuestionImage.svelte';
-  import QuestionNumberSlider from './QuestionNumberSlider.svelte';
+  import QuestionNumberSlider from '../number-slider/Question.svelte';
   import InputMapPointGuess from '../input-map-point-guess/Question.svelte';
   import QuestionInputMultipleChoice from '../input-multiple-choice/Question.svelte';
 
+  export let qItemId: string;
   export let element: MultipleChoice | MapPointGuess | NumberPoll | NumberGuess;
   export let containerWidth: number;
   export let mapConfiguration: MapConfiguration;
@@ -24,6 +27,24 @@
   export let imageServiceUrl: string;
   export let toolBaseUrl: string;
   export let togglenNextButton: () => void;
+
+  function saveAnswer(value: DBAnswerMapPointGuessValue | string) {
+    const data: DBAnswerData = {
+      itemId: qItemId,
+      questionId: element.id,
+      type: element.type,
+      value,
+    };
+    fetch(`${toolBaseUrl}/answer`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    }).then((response) => {
+      console.log('response', response);
+    });
+  }
 </script>
 
 {#if element.introduction}
@@ -39,12 +60,23 @@
   <QuestionSubtitle subtitle={element.questionSubTitle} />
 {/if}
 {#if element.type === QuizElementType.NumberPoll}
-  <QuestionNumberSlider question={element} />
+  <QuestionNumberSlider {element} {toolBaseUrl} />
 {:else if element.type === QuizElementType.NumberGuess}
-  <QuestionNumberSlider question={element} />
+  <QuestionNumberSlider {element} {toolBaseUrl} />
 {:else if element.type === QuizElementType.MapPointGuess}
-  <InputMapPointGuess {element} {mapConfiguration} {enrico} {toolBaseUrl} />
+  <InputMapPointGuess
+    {element}
+    {mapConfiguration}
+    {enrico}
+    {toolBaseUrl}
+    {saveAnswer}
+  />
 {:else if element.type === QuizElementType.MultipleChoice}
-  <QuestionInputMultipleChoice {element} {toolBaseUrl} {togglenNextButton} />
+  <QuestionInputMultipleChoice
+    {element}
+    {toolBaseUrl}
+    {togglenNextButton}
+    {saveAnswer}
+  />
 {/if}
 <!-- TODO: Result answer text-->

@@ -310,6 +310,25 @@ export interface DBAuthOptions {
   password: string;
 }
 
+export interface DBAnswerDoc {
+  data: DBAnswerData;
+  created_at: string;
+}
+
+export interface DBAnswerData {
+  itemId: string;
+  questionId: string;
+  type: QuizElementType;
+  value: DBAnswerMapPointGuessValue | string;
+}
+
+export interface DBAnswerMapPointGuessValue {
+  latLng: Coordinate;
+  distance: number;
+}
+
+export interface DBAnswerDataValue {}
+
 export interface AnswerQueryOptions {
   start_key?: number[];
   end_key?: (number | {})[];
@@ -321,8 +340,8 @@ export interface StatisticView {
   value: number;
 }
 
-// Backend
-export interface QQuizConfig {
+export // Backend
+interface QQuizConfig {
   _id: string;
   title: string;
   notes: string;
