@@ -3,6 +3,7 @@
   export let statisticAnswerCount: number;
   export let highestAnswerCount: number;
   export let totalAnswers: number;
+  export let disableGreyColor: boolean = false;
 
   $: barWidth = (statisticAnswerCount / highestAnswerCount) * 100;
   $: precent = (statisticAnswerCount / totalAnswers) * 100;
@@ -14,10 +15,13 @@
   style="--bar-width: {barWidth}%"
 >
   {#if precent > 0}
-    <div class="q-quiz-result__multiple-choice-bar s-color-gray-4"></div>
+    <div
+      class:s-color-gray-4={!disableGreyColor}
+      class="q-quiz-result__multiple-choice-bar s-color-gray-4"
+    ></div>
   {/if}
   <div class="precent s-font-note-s s-font-note--tabularnums">
-    {precent} %
+    {Math.round(precent)} %
   </div>
 </div>
 

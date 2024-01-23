@@ -73,15 +73,21 @@
             <div class="label__icon">{@html crossmaker}</div>
           {/if}
           <div>{answer}</div>
-          <div class="label__hint">
-            {answer === correctAnswer ? 'korrekte Antwort' : 'falsche Antwort'}
-          </div>
+          {#if answer == correctAnswer || (answer === userAnswer && correctAnswer !== userAnswer)}
+            <div class="label__hint">
+              {answer === correctAnswer
+                ? 'korrekte Antwort'
+                : 'falsche Antwort'}
+            </div>
+          {/if}
         </div>
         {#if statistic}
           <StatisticView
             statisticAnswerCount={statisticAnswerCount(answer)}
             highestAnswerCount={getHighestAnswerCount()}
             totalAnswers={statistic.totalAnswers}
+            disableGreyColor={answer == correctAnswer ||
+              (answer === userAnswer && correctAnswer !== userAnswer)}
           />
         {/if}
       </div>
