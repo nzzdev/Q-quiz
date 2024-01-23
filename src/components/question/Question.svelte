@@ -59,10 +59,8 @@
 {#if element.type === QuizElementType.NumberPoll}
   <QuestionSubtitle subtitle={element.questionSubTitle} />
 {/if}
-{#if element.type === QuizElementType.NumberPoll}
-  <QuestionNumberSlider {element} {toolBaseUrl} />
-{:else if element.type === QuizElementType.NumberGuess}
-  <QuestionNumberSlider {element} {toolBaseUrl} />
+{#if element.type === QuizElementType.NumberPoll || element.type === QuizElementType.NumberGuess}
+  <QuestionNumberSlider {element} {toolBaseUrl} {containerWidth} />
 {:else if element.type === QuizElementType.MapPointGuess}
   <InputMapPointGuess
     {element}

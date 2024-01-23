@@ -4,6 +4,7 @@
 
   export let element: SliderQuestion;
   export let toolBaseUrl: string;
+  export let containerWidth: number;
 
   let isAnswered = false;
   let initialValue = (element.max - element.min) / 2 + element.min;
@@ -17,57 +18,62 @@
 </script>
 
 <div class="q-quiz-input">
-  <div class="q-quiz-input-range-container">
-    <div class="q-quiz-input-range-position-label-container">
-      <div
-        class="q-quiz-input-range-position-label s-color-primary-5"
-        style="left: {labelPosition}%"
-      >
-        <span class="s-font-note s-font-note--tabularnums s-font-note--strong">
-          <span class="q-quiz-input-range-position-label__label s-color-gray-1">
-            {initialValue}
+  {#if !isAnswered}
+    <div class="q-quiz-input-range-container">
+      <div class="q-quiz-input-range-position-label-container">
+        <div
+          class="q-quiz-input-range-position-label s-color-primary-5"
+          style="left: {labelPosition}%"
+        >
+          <span
+            class="s-font-note s-font-note--tabularnums s-font-note--strong"
+          >
+            <span
+              class="q-quiz-input-range-position-label__label s-color-gray-1"
+            >
+              {initialValue}
+            </span>
           </span>
-        </span>
+        </div>
       </div>
-    </div>
-    <input
-      type="range"
-      class="s-input-range s-input-range--large"
-      min={element.min}
-      max={element.max}
-      step={element.step}
-      bind:value={initialValue}
-    />
-    <div
-      class="
+      <input
+        type="range"
+        class="s-input-range s-input-range--large"
+        min={element.min}
+        max={element.max}
+        step={element.step}
+        bind:value={initialValue}
+      />
+      <div
+        class="
         q-quiz-input-range-min
         s-font-note-s s-font-note-s--light
         s-font-note--tabularnums
       "
-    >
-      {element.min}
-      {#if element.unit}
-        {element.min === 1 && element.unit_sinpular
-          ? element.unit_sinpular
-          : element.unit}
-      {/if}
-    </div>
-    <div
-      class="
+      >
+        {element.min}
+        {#if element.unit}
+          {element.min === 1 && element.unit_sinpular
+            ? element.unit_sinpular
+            : element.unit}
+        {/if}
+      </div>
+      <div
+        class="
         q-quiz-input-range-max
         s-font-note-s s-font-note-s--light
         s-font-note--tabularnums
       "
-    >
-      {element.max}
-      {#if element.unit}
-        {element.max === 1 && element.unit_sinpular
-          ? element.unit_sinpular
-          : element.unit}
-      {/if}
+      >
+        {element.max}
+        {#if element.unit}
+          {element.max === 1 && element.unit_sinpular
+            ? element.unit_sinpular
+            : element.unit}
+        {/if}
+      </div>
     </div>
-  </div>
-  {#if !isAnswered}
+
     <button
       class="s-button s-button--small q-quiz-answer-button"
       on:click={getResult}
@@ -75,7 +81,12 @@
       <span>Antworten</span>
     </button>
   {:else}
-    <Statistic {element} userAnswer={initialValue} {toolBaseUrl} />
+    <Statistic
+      {element}
+      userAnswer={initialValue}
+      {toolBaseUrl}
+      {containerWidth}
+    />
   {/if}
 </div>
 

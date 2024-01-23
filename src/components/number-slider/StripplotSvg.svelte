@@ -20,10 +20,9 @@
       width = plotWidth - margin.left - margin.right,
       height = 90 - margin.top - margin.bottom;
 
+    const maxValue = max(statistics, (d) => d.value) as number;
     let xScale = scaleLinear().domain([data.min, data.max]).range([0, width]);
-    let yScale = scaleLinear()
-      .domain([0, max(statistics, (d) => d.value) as number])
-      .range([height, 0]);
+    let yScale = scaleLinear().domain([0, maxValue]).range([height, 0]);
 
     let svg = select(element)
       .append('svg')
@@ -88,8 +87,8 @@
       .attr('style', (d) => {
         return `opacity: ${0.1 * d.value > 0.9 ? 0.9 : 0.1 * d.value}`;
       })
-      .attr('x1', (d) => xScale(d.value))
-      .attr('x2', (d) => xScale(d.value))
+      .attr('x1', (d) => xScale(parseFloat(d.key)))
+      .attr('x2', (d) => xScale(parseFloat(d.key)))
       .attr('y1', margin.top)
       .attr('y2', margin.top + 60);
   });

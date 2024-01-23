@@ -94,3 +94,18 @@ export function getPrecision(value: number) {
     magicNumber *= 10;
   return Math.round(Math.log(magicNumber) / Math.LN10);
 }
+
+export function formatNumber(number: number) {
+  if (number.toString().length <= 4) {
+    return number;
+  }
+
+  const quarterSpace = ' ';
+  const formatter = new Intl.NumberFormat('de-CH');
+  const parts = formatter.formatToParts(number);
+  const formattedNumber = parts
+    .map((part) => (part.type === 'group' ? quarterSpace : part.value))
+    .join('');
+
+  return formattedNumber;
+}
