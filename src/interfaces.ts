@@ -75,24 +75,51 @@ export interface QuizElements {
   questionCount: number;
 }
 
-export interface QuizBaseQuestion {
+export interface QuizBaseQuestion extends BaseElement {
   articleRecommendations: ArticleRecommendation[];
-  id: string;
   question: string;
-  type: QuizElementType;
   image?: QuizImage;
   introduction?: string;
+  answerText?: string;
+  questionSubTitle?: string;
   notes?: string;
 }
 
-export interface Cover {
-  id: QuizQuestionId;
-  type: QuizElementType.Cover;
-  title: string;
+export interface QuizStore {
+  items: ElementItemStore[];
+  isMultiQuiz: boolean;
+  hasCover: boolean;
+  step: number;
+  numberQuestions: number;
+  configuration: {
+    imageServiceUrl: string;
+    enrico: Enrico;
+    mapConfiguration: MapConfiguration;
+    toolBaseUrl: string;
+  };
 }
 
-export interface QuizSubtitleElement {
-  questionSubTitle: string;
+export interface ElementItemStore {
+  item:
+    | Cover
+    | MultipleChoice
+    | MapPointGuess
+    | NumberPoll
+    | NumberGuess
+    | LastCard;
+  isAnswered: boolean;
+  isLastQuizElement: boolean;
+  progressIndex: number;
+}
+
+export interface BaseElement {
+  id: QuizQuestionId;
+  type: QuizElementType;
+}
+
+export interface Cover extends BaseElement {
+  type: QuizElementType.Cover;
+  title: string;
 }
 
 export interface MultipleChoice extends QuizBaseQuestion {
@@ -126,18 +153,17 @@ export interface SliderQuestion extends QuizBaseQuestion {
   unit_sinpular: string;
 }
 
-export interface NumberPoll extends SliderQuestion, QuizSubtitleElement {
+export interface NumberPoll extends SliderQuestion {
   type: QuizElementType.NumberPoll;
 }
 
 export interface NumberGuess extends SliderQuestion {
   type: QuizElementType.NumberGuess;
   answer: number;
-  answerText: string;
   unit: string;
 }
 
-export interface LastCard {
+export interface LastCard extends BaseElement {
   id: QuizQuestionId;
   type: QuizElementType.LastCard;
   title: string;
@@ -221,23 +247,6 @@ export interface QuizContext {
   quizContainerId: string;
   imageServiceUrl: string;
   width?: number;
-}
-
-export interface CoverElement {
-  id: QuizQuestionId;
-  type: QuizElementType.Cover;
-  title: string;
-}
-
-export interface LastCardElement {
-  id: QuizQuestionId;
-  type: QuizElementType.LastCard;
-  title: string;
-  isFinalScoreShown: boolean;
-  articleRecommendations?: ArticleRecommendations[];
-  text: string;
-  quizLink: string;
-  quizTitle: string;
 }
 
 export interface ArticleRecommendations {
@@ -357,7 +366,7 @@ export interface QQuizSvelteProperties {
   id: string;
   imageServiceUrl: string;
   enrico: Enrico;
-  mapConfigurtaion: MapConfiguration;
+  mapConfiguration: MapConfiguration;
   toolBaseUrl: string;
 }
 

@@ -13,12 +13,10 @@
   } from '@src/interfaces';
   import iconPinSvg from '../../resources/icon-pin.svg';
   import Statistic from './Statistic.svelte';
+  import BaseElement from '../quiz-base-elelement/BaseElement.svelte';
+  import { quizStore } from '@src/store/quiz.store';
 
   export let element: MapPointGuess;
-  export let mapConfiguration: MapConfiguration;
-  export let enrico: Enrico;
-  export let toolBaseUrl: string;
-  export let saveAnswer: (value: DBAnswerMapPointGuessValue) => void;
 
   const mapOptions = {
     boxZoom: false,
@@ -44,6 +42,8 @@
   let userAnswerLayer: L.Layer | null = null;
 
   let isAnswered = false;
+
+  $: mapConfiguration = $quizStore.configuration.mapConfiguration;
 
   onMount(() => {
     initialQuestion();
@@ -137,10 +137,10 @@
       // }
 
       // addHeatmapOverlayToMap(map);
-      saveAnswer({
-        latLng: { lat: userAnswerLatLng.lat, lng: userAnswerLatLng.lng },
-        distance: correctLatLng.distanceTo(userAnswerLatLng),
-      });
+      // saveAnswer({
+      //   latLng: { lat: userAnswerLatLng.lat, lng: userAnswerLatLng.lng },
+      //   distance: correctLatLng.distanceTo(userAnswerLatLng),
+      // });
     }
   }
 
@@ -206,29 +206,31 @@
   }
 </script>
 
-<div class="q-quiz-input" style="widht: 100%; height: 100%">
-  <div class="s-font-note-s s-font-note-s--light">
-    Klicken Sie auf die gewünschte Stelle auf der Karte, um Ihre Antwort
-    einzugeben.
+<BaseElement {element}>
+  <div class="q-quiz-input" style="widht: 100%; height: 100%">
+    <div class="s-font-note-s s-font-note-s--light">
+      Klicken Sie auf die gewünschte Stelle auf der Karte, um Ihre Antwort
+      einzugeben.
+    </div>
+    <div
+      id="map"
+      bind:this={mapContainer}
+      class="q-quiz-map-container"
+      style="height: 300px;"
+    ></div>
+    {#if !isAnswered}
+      <button
+        bind:this={answerButton}
+        on:click={getResult}
+        class="s-button s-button--small q-quiz-answer-button"
+        disabled
+        >Antworten
+      </button>
+    {:else if marker}
+      <Statistic {element} userAnswer={marker} />
+    {/if}
   </div>
-  <div
-    id="map"
-    bind:this={mapContainer}
-    class="q-quiz-map-container"
-    style="height: 300px;"
-  ></div>
-  {#if !isAnswered}
-    <button
-      bind:this={answerButton}
-      on:click={getResult}
-      class="s-button s-button--small q-quiz-answer-button"
-      disabled
-      >Antworten
-    </button>
-  {:else if marker}
-    <Statistic {element} userAnswer={marker} {toolBaseUrl} />
-  {/if}
-</div>
+</BaseElement>
 
 <style lang="scss">
   .q-quiz-map-container {

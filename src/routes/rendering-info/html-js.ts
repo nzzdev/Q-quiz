@@ -93,7 +93,7 @@ const route: ServerRoute = {
       noInteraction: payload.toolRuntimeConfig.noInteraction || false,
       id,
       imageServiceUrl: process.env.IMAGE_SERVICE_URL || '',
-      mapConfigurtaion: {
+      mapConfiguration: {
         styleUrl: process.env.MAP_STYLE_URL || '',
         attribution: process.env.MAP_ATTRIBUTION || '',
       },

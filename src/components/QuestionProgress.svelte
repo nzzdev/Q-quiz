@@ -1,26 +1,22 @@
 <script lang="ts">
+  import { quizStore } from '@src/store/quiz.store';
   import NextButton from './NextButton.svelte';
-
-  export let hasCover = false;
-  export let isMultiQuiz = false;
-  export let numberQuestions = 0;
-  export let questionStep: number;
 </script>
 
 <header
-  class:q-quiz-header--is-empty={hasCover}
-  class="q-quiz-header s-color-gray-4 {isMultiQuiz
+  class:q-quiz-header--is-empty={$quizStore.hasCover}
+  class="q-quiz-header s-color-gray-4 {$quizStore.isMultiQuiz
     ? 'q-quiz-multi-header'
     : 'q-quiz-single-header'}"
 >
-  {#if isMultiQuiz}
+  {#if $quizStore.isMultiQuiz}
     <div class="q-quiz-header__title s-font-note-s">
-      {#if !hasCover}
-        Frage {questionStep + 1} / {numberQuestions}
+      {#if !$quizStore.hasCover}
+        Frage {$quizStore.step} / {$quizStore.numberQuestions}
       {/if}
     </div>
     <div class="next-button">
-      <NextButton {hasCover} {numberQuestions} bind:questionStep />
+      <NextButton />
     </div>
   {/if}
 </header>

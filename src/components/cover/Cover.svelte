@@ -1,8 +1,8 @@
 <script lang="ts">
-  export let isCoverLeave: boolean;
+  import type { Cover } from '@src/interfaces';
+
+  export let element: Cover;
 </script>
 
-<div class="s-font-text">Cover</div>
-<button class="s-font-text" on:click={() => (isCoverLeave = true)}
-  >Start Quiz</button
->
+<div class="s-font-text">{element.title}</div>
+<button class="s-font-text">Start Quiz</button>

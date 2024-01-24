@@ -1,12 +1,17 @@
 <script lang="ts">
+  import { quizStore } from '@src/store/quiz.store';
+  import { containerWidthStore } from '@src/store/container.store';
+
   import type { QuizImage } from '@src/interfaces';
   import { getImageUrls } from '@src/services/images-service';
 
   export let image: QuizImage;
-  export let containerWidth: number;
-  export let imageServiceUrl: string;
 
-  $: images = getImageUrls(image, containerWidth, imageServiceUrl);
+  $: images = getImageUrls(
+    image,
+    $containerWidthStore,
+    $quizStore.configuration.imageServiceUrl
+  );
 </script>
 
 <div>

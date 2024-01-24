@@ -1,71 +1,58 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
+
+  import { quizStore } from '@src/store/quiz.store';
+
   import type { QQuizSvelteProperties } from '@src/interfaces';
+  import { containerWidthStore } from '@src/store/container.store';
+  import { QuizElementType } from '@src/enums';
+
   import QuestionProgress from './QuestionProgress.svelte';
-  import Question from './question/Question.svelte';
   import NextButton from './NextButton.svelte';
-  import Cover from './cover/Cover.svelte';
-  import LastCard from './last-card/LastCard.svelte';
+
+  import CoverComponent from './cover/Cover.svelte';
+  import LastCardComponent from './last-card/LastCard.svelte';
+  import MutliplieChoice from './input-multiple-choice/MultipleChoice.svelte';
+  import NumberSlider from './number-slider/NumberSlider.svelte';
+  import InputMapPoint from './input-map-point-guess/InputMapPoint.svelte';
 
   export let componentConfiguration: QQuizSvelteProperties;
 
-  let containerWidth;
-  let questionStep = 0;
-  let isCoverLeave = false;
-  let isLastCardActive = false;
-  let togglenNextButton = () => {};
+  let containerWidth: number;
 
-  $: item = componentConfiguration.item;
-  $: imageServiceUrl = componentConfiguration.imageServiceUrl;
-  $: enrico = componentConfiguration.enrico;
-  $: mapConfiguration = componentConfiguration.mapConfigurtaion;
-  $: toolBaseUrl = componentConfiguration.toolBaseUrl;
-  $: isMultiQuiz = item.questionCount > 1;
-  $: hasCover = item.hasCover;
-  $: numberQuestions = item.questionCount;
+  $: containerWidthStore.set(containerWidth);
 
-  function toggleLastCardView() {
-    isLastCardActive = !isLastCardActive;
-  }
+  onMount(() => {
+    quizStore.initialize(componentConfiguration);
+  });
 </script>
 
 <div bind:clientWidth={containerWidth}>
   {#if containerWidth}
-    {#if hasCover && !isCoverLeave}<Cover bind:isCoverLeave />{/if}
+    <QuestionProgress />
 
-    <QuestionProgress
-      bind:questionStep
-      {hasCover}
-      {isMultiQuiz}
-      {numberQuestions}
-    />
-
-    {#if !hasCover || isCoverLeave}
-      {#each item.questions as question, index}
-        {#if questionStep === index}
-          <Question
-            qItemId={componentConfiguration.id}
-            element={question}
-            {containerWidth}
-            {imageServiceUrl}
-            {enrico}
-            {mapConfiguration}
-            {toolBaseUrl}
-            {togglenNextButton}
-            {toggleLastCardView}
+    {#each $quizStore.items as element, index}
+      {#if $quizStore.step === index + 1}
+        {#if element.item.type === QuizElementType.Cover}
+          <CoverComponent element={element.item} />
+        {:else if element.item.type === QuizElementType.LastCard}
+          <LastCardComponent element={element.item} />
+        {:else if element.item.type === QuizElementType.MultipleChoice}
+          <MutliplieChoice
+            element={element.item}
+            toolBaseUrl={$quizStore.configuration.toolBaseUrl}
           />
+        {:else if element.item.type === QuizElementType.NumberGuess || element.item.type === QuizElementType.NumberPoll}
+          <NumberSlider
+            element={element.item}
+            toolBaseUrl={$quizStore.configuration.toolBaseUrl}
+          />
+        {:else if element.item.type === QuizElementType.MapPointGuess}
+          <InputMapPoint element={element.item} />
         {/if}
-      {/each}
-    {/if}
-    {#if isLastCardActive}
-      <LastCard />
-    {/if}
-    <NextButton
-      bind:questionStep
-      bind:togglenNextButton
-      {hasCover}
-      {numberQuestions}
-      isButtonWithIcon={true}
-      defaultVisibility={false}
-    />
+      {/if}
+    {/each}
+
+    <NextButton isButtonWithIcon={true} defaultVisibility={false} />
   {/if}
 </div>

@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
+  import { containerWidthStore } from '@src/store/container.store';
   import { QuizElementType } from '@src/enums';
   import type {
     NumberGuess,
@@ -15,7 +16,6 @@
   export let element: SliderQuestion;
   export let userAnswer: number;
   export let toolBaseUrl: string;
-  export let containerWidth: number;
 
   let answers: NumberOfAnswersPerChoice[];
   let numberOfPossibleAnswers: number;
@@ -25,7 +25,7 @@
   let userAnswerStyle: string = '';
 
   $: correctAnswer = (element as NumberGuess).answer;
-  $: setup(containerWidth);
+  $: setup($containerWidthStore);
 
   onMount(() => {
     fetch(`${toolBaseUrl}/answers/${element.type}/${element.id}`)
@@ -38,7 +38,8 @@
         } else {
           new Error('Wrong type of question');
         }
-        setup(containerWidth);
+        containerWidthStore;
+        setup($containerWidthStore);
       })
       .catch((error) => {
         console.log('error', error);
@@ -148,17 +149,9 @@
     </div>
     <div class="q-quiz-result__number-guess-visual__stats-graphic-container">
       {#if numberOfPossibleAnswers <= 100}
-        <BarchartSvg
-          data={element}
-          statistics={answers}
-          chartWidth={containerWidth}
-        />
+        <BarchartSvg data={element} statistics={answers} />
       {:else}
-        <StripplotSvg
-          data={element}
-          statistics={answers}
-          plotWidth={containerWidth}
-        />
+        <StripplotSvg data={element} statistics={answers} />
       {/if}
     </div>
     <p class="q-quiz-result-answer-text s-font-text-s"></p>

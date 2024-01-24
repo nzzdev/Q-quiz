@@ -2,6 +2,7 @@
   import L, { Marker } from 'leaflet';
   import { onMount } from 'svelte';
 
+  import { quizStore } from '@src/store/quiz.store';
   import type {
     MapPointGuess,
     NumberOfAnswersPerChoice,
@@ -15,7 +16,6 @@
 
   export let element: MapPointGuess;
   export let userAnswer: Marker<any>;
-  export let toolBaseUrl: string;
 
   let distance: number;
   let isCorrectAnswer: boolean;
@@ -29,7 +29,7 @@
     distance = Math.floor(userAnswer.getLatLng().distanceTo(correctLatLng));
     isCorrectAnswer = distance === 0;
     fetch(
-      `${toolBaseUrl}/answers/${QuizElementType.MapPointGuess}/${element.id}`
+      `${$quizStore.configuration.toolBaseUrl}/answers/${QuizElementType.MapPointGuess}/${element.id}`
     )
       .then((response) => response.json())
       .then((answers: NumberOfAnswersPerChoice[]) => {

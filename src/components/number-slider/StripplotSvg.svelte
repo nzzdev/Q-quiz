@@ -3,6 +3,7 @@
   import { scaleLinear } from 'd3-scale';
   import { select } from 'd3-selection';
 
+  import { containerWidthStore } from '@src/store/container.store';
   import type {
     NumberOfAnswersPerChoice,
     SliderQuestion,
@@ -10,12 +11,11 @@
 
   export let data: SliderQuestion;
   export let statistics: NumberOfAnswersPerChoice[];
-  export let plotWidth: number;
 
   let element: HTMLDivElement;
 
   $: if (element) {
-    buildChart(plotWidth);
+    buildChart($containerWidthStore);
   }
 
   function buildChart(plotWidth: number) {

@@ -1,20 +1,19 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+
+  import { quizStore } from '@src/store/quiz.store';
   import ChevronRight from '../resources/chevron-right.svg';
 
   export let defaultVisibility = true;
   export let isButtonWithIcon = false;
   // TODO: decision to header (parent component)
-  export let hasCover = false;
-  export let numberQuestions = 0;
-  export let questionStep: number;
   export const togglenNextButton = () => {
     isVisible = !isVisible;
   };
 
   const nextQuestion = () => {
-    if (questionStep < numberQuestions - 1) {
-      questionStep += 1;
+    if ($quizStore.step < $quizStore.numberQuestions) {
+      quizStore.updateStep();
     }
 
     if (!defaultVisibility) {
@@ -45,7 +44,7 @@
     </button>
   {:else}
     <button
-      class:q-quiz-button--hidden={hasCover}
+      class:q-quiz-button--hidden={$quizStore.hasCover}
       class="q-quiz-button q-quiz-button--horizontal s-font-note-s"
       on:click={nextQuestion}
     >
