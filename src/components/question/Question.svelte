@@ -27,6 +27,7 @@
   export let imageServiceUrl: string;
   export let toolBaseUrl: string;
   export let togglenNextButton: () => void;
+  export let toggleLastCardView: () => void;
 
   function saveAnswer(value: DBAnswerMapPointGuessValue | string) {
     const data: DBAnswerData = {
