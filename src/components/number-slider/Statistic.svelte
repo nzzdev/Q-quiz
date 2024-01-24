@@ -1,17 +1,16 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
-  // import { formatNumber } from '@src/helpers/utils';
   import { QuizElementType } from '@src/enums';
   import type {
     NumberGuess,
     NumberOfAnswersPerChoice,
     SliderQuestion,
   } from '@src/interfaces';
+  import Scale from '@src/services/scale';
 
   import BarchartSvg from './BarchartSvg.svelte';
   import StripplotSvg from './StripplotSvg.svelte';
-  import Scale from '@src/services/scale';
 
   export let element: SliderQuestion;
   export let userAnswer: number;
@@ -26,6 +25,7 @@
   let userAnswerStyle: string = '';
 
   $: correctAnswer = (element as NumberGuess).answer;
+  $: setup(containerWidth);
 
   onMount(() => {
     fetch(`${toolBaseUrl}/answers/${element.type}/${element.id}`)
@@ -38,31 +38,34 @@
         } else {
           new Error('Wrong type of question');
         }
-
-        numberOfPossibleAnswers = (element.max - element.min) / element.step;
-        // initial steppedValue
-        const factor = 100 / (element.max - element.min + 1);
-        for (let i = element.min; i <= element.max; i += element.step) {
-          steppedValues.push(factor * i);
-        }
-        stepWidth = containerWidth / steppedValues.length;
-
-        // set position of marker
-        let range = [];
-
-        for (let i = 0; i < steppedValues.length; i++) {
-          range.push(steppedValues[i] - 100 / steppedValues.length / 2);
-        }
-        let xScale = new Scale([element.min, element.max], range);
-        if (element.type === QuizElementType.NumberGuess) {
-          correctAnswerStyle = getAnswerPosition(correctAnswer, xScale);
-        }
-        userAnswerStyle = getAnswerPosition(userAnswer, xScale);
+        setup(containerWidth);
       })
       .catch((error) => {
         console.log('error', error);
       });
   });
+
+  function setup(containerWidth: number) {
+    numberOfPossibleAnswers = (element.max - element.min) / element.step;
+    // initial steppedValue
+    const factor = 100 / (element.max - element.min + 1);
+    for (let i = element.min; i <= element.max; i += element.step) {
+      steppedValues.push(factor * i);
+    }
+    stepWidth = containerWidth / steppedValues.length;
+
+    // set position of marker
+    let range = [];
+
+    for (let i = 0; i < steppedValues.length; i++) {
+      range.push(steppedValues[i] - 100 / steppedValues.length / 2);
+    }
+    let xScale = new Scale([element.min, element.max], range);
+    if (element.type === QuizElementType.NumberGuess) {
+      correctAnswerStyle = getAnswerPosition(correctAnswer, xScale);
+    }
+    userAnswerStyle = getAnswerPosition(userAnswer, xScale);
+  }
 
   function getAnswerPosition(answer: number, xScale: Scale) {
     if (answer - element.min > (element.max - element.min) / 2) {
