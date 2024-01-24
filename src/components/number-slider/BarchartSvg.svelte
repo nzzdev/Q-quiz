@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
   import { scaleBand, scaleLinear } from 'd3-scale';
   import { select } from 'd3-selection';
   import { max } from 'd3-array';
@@ -7,9 +6,7 @@
   import type {
     NumberOfAnswersPerChoice,
     SliderQuestion,
-    StatisticView,
   } from '@src/interfaces';
-  // import { getPrecision } from '@src/helpers/utils';
 
   export let data: SliderQuestion;
   export let statistics: NumberOfAnswersPerChoice[];
@@ -17,7 +14,11 @@
 
   let element: HTMLDivElement;
 
-  onMount(() => {
+  $: if (element) {
+    buildChart(chartWidth);
+  }
+
+  function buildChart(chartWidth: number) {
     try {
       let margin = {
         top: 0,
@@ -57,6 +58,7 @@
         ])
         .range([height, 0]);
 
+      element.innerHTML = '';
       let svg = select(element)
         .append('svg')
         .datum(statistics)
@@ -127,7 +129,7 @@
     } catch (err) {
       console.log(err);
     }
-  });
+  }
 </script>
 
 <div bind:this={element}></div>

@@ -1,13 +1,12 @@
 <script lang="ts">
-  import type {
-    NumberOfAnswersPerChoice,
-    SliderQuestion,
-    StatisticView,
-  } from '@src/interfaces';
   import { max } from 'd3-array';
   import { scaleLinear } from 'd3-scale';
   import { select } from 'd3-selection';
-  import { onMount } from 'svelte';
+
+  import type {
+    NumberOfAnswersPerChoice,
+    SliderQuestion,
+  } from '@src/interfaces';
 
   export let data: SliderQuestion;
   export let statistics: NumberOfAnswersPerChoice[];
@@ -15,7 +14,12 @@
 
   let element: HTMLDivElement;
 
-  onMount(() => {
+  $: if (element) {
+    buildChart(plotWidth);
+  }
+
+  function buildChart(plotWidth: number) {
+    if (!plotWidth) return;
     let margin = { top: 0, right: 0, bottom: 30, left: 0 },
       width = plotWidth - margin.left - margin.right,
       height = 90 - margin.top - margin.bottom;
@@ -24,6 +28,7 @@
     let xScale = scaleLinear().domain([data.min, data.max]).range([0, width]);
     let yScale = scaleLinear().domain([0, maxValue]).range([height, 0]);
 
+    element.innerHTML = '';
     let svg = select(element)
       .append('svg')
       .datum(statistics)
@@ -91,7 +96,7 @@
       .attr('x2', (d) => xScale(parseFloat(d.key)))
       .attr('y1', margin.top)
       .attr('y2', margin.top + 60);
-  });
+  }
 </script>
 
 <div bind:this={element}></div>
