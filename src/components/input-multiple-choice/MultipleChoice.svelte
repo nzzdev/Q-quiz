@@ -3,6 +3,7 @@
 
   import Answer from './Answer.svelte';
   import BaseElement from '../quiz-base-elelement/BaseElement.svelte';
+  import { quizStore } from '@src/store/quiz.store';
 
   export let element: MultipleChoice;
   export let toolBaseUrl: string;
@@ -13,8 +14,7 @@
 
   function setAnswer(answer: string) {
     userAnswer = answer;
-    // togglenNextButton();
-    // saveAnswer(answer);
+    quizStore.answerdQuestion();
   }
 
   function shuffleArray<T>(array: T[]): T[] {

@@ -41,9 +41,8 @@
   let marker: Marker<any> | null = null;
   let userAnswerLayer: L.Layer | null = null;
 
-  let isAnswered = false;
-
   $: mapConfiguration = $quizStore.configuration.mapConfiguration;
+  $: isAnswered = $quizStore.items[$quizStore.step];
 
   onMount(() => {
     initialQuestion();
@@ -82,7 +81,7 @@
 
   async function getResult() {
     const correctAnswer = element.answer;
-    isAnswered = true;
+    quizStore.answerdQuestion();
 
     if (marker) {
       map.removeLayer(marker);

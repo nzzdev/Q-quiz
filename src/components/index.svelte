@@ -21,6 +21,7 @@
   let containerWidth: number;
 
   $: containerWidthStore.set(containerWidth);
+  $: indexAdditional = $quizStore.hasCover ? 0 : 1;
 
   onMount(() => {
     quizStore.initialize(componentConfiguration);
@@ -32,7 +33,7 @@
     <QuestionProgress />
 
     {#each $quizStore.items as element, index}
-      {#if $quizStore.step === index + 1}
+      {#if $quizStore.step === index + indexAdditional}
         {#if element.item.type === QuizElementType.Cover}
           <CoverComponent element={element.item} />
         {:else if element.item.type === QuizElementType.LastCard}

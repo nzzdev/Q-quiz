@@ -13,7 +13,7 @@
 
   const nextQuestion = () => {
     if ($quizStore.step < $quizStore.numberQuestions) {
-      quizStore.updateStep();
+      quizStore.stepForward();
     }
 
     if (!defaultVisibility) {

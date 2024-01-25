@@ -3,24 +3,29 @@
 
   import BaseElement from '../quiz-base-elelement/BaseElement.svelte';
   import Statistic from './Statistic.svelte';
+  import { quizStore } from '@src/store/quiz.store';
 
   export let element: SliderQuestion;
   export let toolBaseUrl: string;
 
-  let isAnswered = false;
   let initialValue = (element.max - element.min) / 2 + element.min;
+  let isAnswered = false;
   $: labelPosition = !initialValue
     ? 50
     : ((initialValue - element.min) / (element.max - element.min)) * 100;
 
   function getResult() {
-    isAnswered = true;
+    console.log('getResult');
+    quizStore.answerdQuestion();
+    isAnswered = quizStore.isAnswered();
   }
 </script>
 
 <BaseElement {element}>
   <div class="q-quiz-input">
-    {#if !isAnswered}
+    {#if isAnswered}
+      <Statistic {element} userAnswer={initialValue} {toolBaseUrl} />
+    {:else}
       <div class="q-quiz-input-range-container">
         <div class="q-quiz-input-range-position-label-container">
           <div
@@ -48,10 +53,10 @@
         />
         <div
           class="
-          q-quiz-input-range-min
-          s-font-note-s s-font-note-s--light
-          s-font-note--tabularnums
-        "
+        q-quiz-input-range-min
+        s-font-note-s s-font-note-s--light
+        s-font-note--tabularnums
+      "
         >
           {element.min}
           {#if element.unit}
@@ -62,10 +67,10 @@
         </div>
         <div
           class="
-          q-quiz-input-range-max
-          s-font-note-s s-font-note-s--light
-          s-font-note--tabularnums
-        "
+        q-quiz-input-range-max
+        s-font-note-s s-font-note-s--light
+        s-font-note--tabularnums
+      "
         >
           {element.max}
           {#if element.unit}
@@ -82,8 +87,6 @@
       >
         <span>Antworten</span>
       </button>
-    {:else}
-      <Statistic {element} userAnswer={initialValue} {toolBaseUrl} />
     {/if}
   </div>
 </BaseElement>

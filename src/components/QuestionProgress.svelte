@@ -4,16 +4,14 @@
 </script>
 
 <header
-  class:q-quiz-header--is-empty={$quizStore.hasCover}
+  class:q-quiz-header--is-empty={$quizStore.hasCover && $quizStore.step === 0}
   class="q-quiz-header s-color-gray-4 {$quizStore.isMultiQuiz
     ? 'q-quiz-multi-header'
     : 'q-quiz-single-header'}"
 >
   {#if $quizStore.isMultiQuiz}
     <div class="q-quiz-header__title s-font-note-s">
-      {#if !$quizStore.hasCover}
-        Frage {$quizStore.step} / {$quizStore.numberQuestions}
-      {/if}
+      Frage {$quizStore.step} / {$quizStore.numberQuestions}
     </div>
     <div class="next-button">
       <NextButton />
@@ -56,10 +54,5 @@
 
   .q-quiz-header__title {
     text-align: center;
-  }
-
-  .q-quiz-button--hidden {
-    visibility: hidden;
-    pointer-events: none;
   }
 </style>

@@ -3,7 +3,7 @@ import type {
   QQuizSvelteProperties,
   QuizStore,
 } from '@src/interfaces';
-import { writable } from 'svelte/store';
+import { get, writable } from 'svelte/store';
 
 const store = () => {
   const state: QuizStore = {
@@ -67,11 +67,33 @@ const store = () => {
 
       update(() => quizStore);
     },
-    updateStep: () => {
+    stepForward: () => {
       update((state) => {
         state.step += 1;
         return state;
       });
+    },
+    answerdQuestion: () => {
+      update((state) => {
+        const step = state.step;
+        const foundedItem = state.items.find(
+          (item) => item.progressIndex === step
+        );
+        console.log('answer', step, foundedItem, state.items);
+        if (foundedItem) {
+          foundedItem.isAnswered = true;
+        }
+        return state;
+      });
+    },
+    isAnswered: () => {
+      const storeItems = get({ subscribe });
+      const step = storeItems.step;
+      const foundedItem = storeItems.items.find(
+        (item) => item.progressIndex === step
+      );
+      console.log('isAnswered', step, foundedItem);
+      return foundedItem?.isAnswered || false;
     },
   };
   return { subscribe, set, update, ...methods };
