@@ -8,15 +8,15 @@
   export let element: SliderQuestion;
   export let toolBaseUrl: string;
 
-  let initialValue = (element.max - element.min) / 2 + element.min;
+  let answer = (element.max - element.min) / 2 + element.min;
   let isAnswered = false;
-  $: labelPosition = !initialValue
+  $: labelPosition = !answer
     ? 50
-    : ((initialValue - element.min) / (element.max - element.min)) * 100;
+    : ((answer - element.min) / (element.max - element.min)) * 100;
 
   function getResult() {
     console.log('getResult');
-    quizStore.answerdQuestion();
+    quizStore.answerdQuestion($quizStore.qItemId, element, answer);
     isAnswered = quizStore.isAnswered();
   }
 </script>
@@ -24,7 +24,7 @@
 <BaseElement {element}>
   <div class="q-quiz-input">
     {#if isAnswered}
-      <Statistic {element} userAnswer={initialValue} {toolBaseUrl} />
+      <Statistic {element} userAnswer={answer} {toolBaseUrl} />
     {:else}
       <div class="q-quiz-input-range-container">
         <div class="q-quiz-input-range-position-label-container">
@@ -38,7 +38,7 @@
               <span
                 class="q-quiz-input-range-position-label__label s-color-gray-1"
               >
-                {initialValue}
+                {answer}
               </span>
             </span>
           </div>
@@ -49,7 +49,7 @@
           min={element.min}
           max={element.max}
           step={element.step}
-          bind:value={initialValue}
+          bind:value={answer}
         />
         <div
           class="

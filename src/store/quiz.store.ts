@@ -1,12 +1,19 @@
 import type {
+  DBAnswerData,
+  DBAnswerMapPointGuessValue,
   ElementItemStore,
+  MapPointGuess,
+  MapPointGuessAnswer,
+  MultipleChoice,
   QQuizSvelteProperties,
   QuizStore,
+  SliderQuestion,
 } from '@src/interfaces';
 import { get, writable } from 'svelte/store';
 
 const store = () => {
   const state: QuizStore = {
+    qItemId: '',
     items: [],
     isMultiQuiz: false,
     numberQuestions: 0,
@@ -25,6 +32,7 @@ const store = () => {
     initialize: (componentConfiguration: QQuizSvelteProperties) => {
       const componentItem = componentConfiguration.item;
       const storeItems: ElementItemStore[] = [];
+
       if (componentItem.cover) {
         storeItems.push({
           item: componentItem.cover,
@@ -52,6 +60,7 @@ const store = () => {
         });
       }
       const quizStore: QuizStore = {
+        qItemId: componentConfiguration.id,
         items: storeItems,
         isMultiQuiz: componentItem.questionCount > 1,
         numberQuestions: componentItem.questionCount,
@@ -73,18 +82,46 @@ const store = () => {
         return state;
       });
     },
-    answerdQuestion: () => {
-      update((state) => {
-        const step = state.step;
-        const foundedItem = state.items.find(
-          (item) => item.progressIndex === step
-        );
-        console.log('answer', step, foundedItem, state.items);
-        if (foundedItem) {
-          foundedItem.isAnswered = true;
-        }
-        return state;
-      });
+    answerdQuestion: (
+      qItemId: string,
+      element: MultipleChoice | SliderQuestion | MapPointGuess,
+      answer: DBAnswerMapPointGuessValue | string | number
+    ) => {
+      const data: DBAnswerData = {
+        itemId: qItemId,
+        questionId: element.id,
+        type: element.type,
+        value: answer,
+      };
+
+      // TODO: set base url and set localhost:3000 if is local
+      fetch(`http://localhost:3000/answer`, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({ data }),
+      })
+        .then((response) => {
+          if (response.ok) {
+            update((state) => {
+              const step = state.step;
+              const foundedItem = state.items.find(
+                (item) => item.progressIndex === step
+              );
+              if (foundedItem) {
+                foundedItem.isAnswered = true;
+              }
+              return state;
+            });
+          } else {
+            // TODO:
+            console.error('repsonse not ok', response.statusText);
+          }
+        })
+        .catch((error) => {
+          console.error('error', error);
+        });
     },
     isAnswered: () => {
       const storeItems = get({ subscribe });
@@ -92,7 +129,6 @@ const store = () => {
       const foundedItem = storeItems.items.find(
         (item) => item.progressIndex === step
       );
-      console.log('isAnswered', step, foundedItem);
       return foundedItem?.isAnswered || false;
     },
   };

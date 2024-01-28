@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { MultipleChoice } from '@src/interfaces';
+  import type { DBAnswerData, MultipleChoice } from '@src/interfaces';
 
   import Answer from './Answer.svelte';
   import BaseElement from '../quiz-base-elelement/BaseElement.svelte';
@@ -11,11 +11,6 @@
   let userAnswer: string;
 
   $: shuffledAnswers = shuffleArray(element.choices.concat([element.answer]));
-
-  function setAnswer(answer: string) {
-    userAnswer = answer;
-    quizStore.answerdQuestion();
-  }
 
   function shuffleArray<T>(array: T[]): T[] {
     let currentIndex = array.length;
@@ -53,7 +48,8 @@
         <button
           class="s-button s-button--secondary s-button--small q-quiz-answer-button"
           value={answer}
-          on:click={() => setAnswer(answer)}
+          on:click={() =>
+            quizStore.answerdQuestion($quizStore.qItemId, element, answer)}
         >
           <span style="pointer-events: none;">{answer}</span>
         </button>

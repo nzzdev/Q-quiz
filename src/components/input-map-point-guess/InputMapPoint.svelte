@@ -81,7 +81,6 @@
 
   async function getResult() {
     const correctAnswer = element.answer;
-    quizStore.answerdQuestion();
 
     if (marker) {
       map.removeLayer(marker);
@@ -136,10 +135,10 @@
       // }
 
       // addHeatmapOverlayToMap(map);
-      // saveAnswer({
-      //   latLng: { lat: userAnswerLatLng.lat, lng: userAnswerLatLng.lng },
-      //   distance: correctLatLng.distanceTo(userAnswerLatLng),
-      // });
+      quizStore.answerdQuestion($quizStore.qItemId, element, {
+        latLng: { lat: userAnswerLatLng.lat, lng: userAnswerLatLng.lng },
+        distance: correctLatLng.distanceTo(userAnswerLatLng),
+      });
     }
   }
 

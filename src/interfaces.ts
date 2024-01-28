@@ -86,6 +86,7 @@ export interface QuizBaseQuestion extends BaseElement {
 }
 
 export interface QuizStore {
+  qItemId: string;
   items: ElementItemStore[];
   isMultiQuiz: boolean;
   hasCover: boolean;
@@ -328,7 +329,7 @@ export interface DBAnswerData {
   itemId: string;
   questionId: string;
   type: QuizElementType;
-  value: DBAnswerMapPointGuessValue | string;
+  value: DBAnswerMapPointGuessValue | string | number;
 }
 
 export interface DBAnswerMapPointGuessValue {
