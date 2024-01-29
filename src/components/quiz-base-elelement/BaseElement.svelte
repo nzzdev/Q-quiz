@@ -10,31 +10,9 @@
   import Title from './Title.svelte';
   import Introduction from './Introduction.svelte';
   import Image from './Image.svelte';
+  import { quizStore } from '@src/store/quiz.store';
 
   export let element: QuizBaseQuestion;
-
-  // let isAnswered = false;
-
-  // function closeQuestion(value: DBAnswerMapPointGuessValue | string) {
-  //   const data: DBAnswerData = {
-  //     itemId: qItemId,
-  //     questionId: element.id,
-  //     type: element.type,
-  //     value,
-  //   };
-  //   fetch(`${toolBaseUrl}/answer`, {
-  //     method: 'POST',
-  //     headers: {
-  //       'content-type': 'application/json',
-  //     },
-  //     body: JSON.stringify(data),
-  //   }).then((response) => {
-  //     if (response.ok) {
-  //       isAnswered = true;
-  //     }
-  //     console.log('response', response);
-  //   });
-  // }
 </script>
 
 {#if element.introduction}
@@ -52,7 +30,7 @@
 
 <!-- Slot for quiz type element -->
 <slot />
-{#if element.answerText}
+{#if element.answerText && quizStore.isAnswered()}
   <div class="q-quiz-result-answer-text s-font-text-s">
     {element.answerText}
   </div>

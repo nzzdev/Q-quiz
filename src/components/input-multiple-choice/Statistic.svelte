@@ -1,5 +1,6 @@
 <script lang="ts">
-  // TODO: animation bar
+  import { onMount } from 'svelte';
+
   export let statisticAnswerCount: number;
   export let highestAnswerCount: number;
   export let totalAnswers: number;
@@ -7,6 +8,12 @@
 
   $: barWidth = (statisticAnswerCount / highestAnswerCount) * 100;
   $: precent = (statisticAnswerCount / totalAnswers) * 100;
+
+  onMount(() => {
+    barWidth = 0;
+    // TODO: animation precent from 0 to precent (nice to have)
+    precent = 0;
+  });
 </script>
 
 <div
@@ -14,12 +21,10 @@
   class="statistic statistic__animation"
   style="--bar-width: {barWidth}%"
 >
-  {#if precent > 0}
-    <div
-      class:s-color-gray-4={!disableGreyColor}
-      class="q-quiz-result__multiple-choice-bar s-color-gray-4"
-    ></div>
-  {/if}
+  <div
+    class:s-color-gray-4={!disableGreyColor}
+    class="q-quiz-result__multiple-choice-bar s-color-gray-4"
+  ></div>
   <div class="precent s-font-note-s s-font-note--tabularnums">
     {Math.round(precent)} %
   </div>

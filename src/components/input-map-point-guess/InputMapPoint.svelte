@@ -2,15 +2,7 @@
   import { onMount } from 'svelte';
   import L, { Marker, type LatLng, type Map } from 'leaflet';
 
-  import type {
-    DBAnswerData,
-    DBAnswerMapPointGuessValue,
-    DBOptions,
-    Enrico,
-    MapConfiguration,
-    MapPointGuess,
-    MapPointGuessAnswer,
-  } from '@src/interfaces';
+  import type { MapPointGuess, MapPointGuessAnswer } from '@src/interfaces';
   import iconPinSvg from '../../resources/icon-pin.svg';
   import Statistic from './Statistic.svelte';
   import BaseElement from '../quiz-base-elelement/BaseElement.svelte';
@@ -40,9 +32,9 @@
   let mapBounds: L.LatLngBounds;
   let marker: Marker<any> | null = null;
   let userAnswerLayer: L.Layer | null = null;
+  let isAnswered = false;
 
   $: mapConfiguration = $quizStore.configuration.mapConfiguration;
-  $: isAnswered = $quizStore.items[$quizStore.step];
 
   onMount(() => {
     initialQuestion();
@@ -77,6 +69,7 @@
     map.on('click', (event: L.LeafletMouseEvent) =>
       eventSetMarker(markerPinIcon, event)
     );
+    isAnswered = quizStore.isAnswered();
   }
 
   async function getResult() {
@@ -135,10 +128,14 @@
       // }
 
       // addHeatmapOverlayToMap(map);
-      quizStore.answerdQuestion($quizStore.qItemId, element, {
-        latLng: { lat: userAnswerLatLng.lat, lng: userAnswerLatLng.lng },
-        distance: correctLatLng.distanceTo(userAnswerLatLng),
-      });
+      quizStore
+        .answerdQuestion($quizStore.qItemId, element, {
+          latLng: { lat: userAnswerLatLng.lat, lng: userAnswerLatLng.lng },
+          distance: correctLatLng.distanceTo(userAnswerLatLng),
+        })
+        .then(() => {
+          isAnswered = quizStore.isAnswered();
+        });
     }
   }
 

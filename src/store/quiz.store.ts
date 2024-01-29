@@ -3,9 +3,9 @@ import type {
   DBAnswerMapPointGuessValue,
   ElementItemStore,
   MapPointGuess,
-  MapPointGuessAnswer,
   MultipleChoice,
   QQuizSvelteProperties,
+  QuizBaseQuestion,
   QuizStore,
   SliderQuestion,
 } from '@src/interfaces';
@@ -95,7 +95,7 @@ const store = () => {
       };
 
       // TODO: set base url and set localhost:3000 if is local
-      fetch(`http://localhost:3000/answer`, {
+      return fetch(`http://localhost:3000/answer`, {
         method: 'POST',
         headers: {
           'content-type': 'application/json',
@@ -110,6 +110,8 @@ const store = () => {
                 (item) => item.progressIndex === step
               );
               if (foundedItem) {
+                const question = foundedItem.item as QuizBaseQuestion;
+                question.userAnswer = answer;
                 foundedItem.isAnswered = true;
               }
               return state;

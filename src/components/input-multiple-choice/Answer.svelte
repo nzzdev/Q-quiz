@@ -28,7 +28,7 @@
       });
   });
 
-  function getHighestAnswerCount(): number {
+  $: getHighestAnswerCount = (): number => {
     if (!statistic || !statistic.numberOfAnswersPerChoice) {
       return 0;
     }
@@ -41,9 +41,9 @@
       },
       0
     );
-  }
+  };
 
-  function statisticAnswerCount(answer: string): number {
+  $: statisticAnswerCount = (answer: string): number => {
     const actualAnswers = statistic?.numberOfAnswersPerChoice?.find(
       (statisticAnswer) => statisticAnswer.key === answer
     );
@@ -52,7 +52,7 @@
       return actualAnswers.value;
     }
     return 0;
-  }
+  };
 </script>
 
 <div class="q-quiz-result">
@@ -81,15 +81,13 @@
             </div>
           {/if}
         </div>
-        {#if statistic}
-          <StatisticView
-            statisticAnswerCount={statisticAnswerCount(answer)}
-            highestAnswerCount={getHighestAnswerCount()}
-            totalAnswers={statistic.totalAnswers}
-            disableGreyColor={answer == correctAnswer ||
-              (answer === userAnswer && correctAnswer !== userAnswer)}
-          />
-        {/if}
+        <StatisticView
+          statisticAnswerCount={statisticAnswerCount(answer)}
+          highestAnswerCount={getHighestAnswerCount()}
+          totalAnswers={statistic?.totalAnswers || 0}
+          disableGreyColor={answer == correctAnswer ||
+            (answer === userAnswer && correctAnswer !== userAnswer)}
+        />
       </div>
     {/each}
   </div>
