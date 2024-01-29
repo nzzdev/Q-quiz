@@ -11,6 +11,8 @@
 
   export let data: SliderQuestion;
   export let statistics: NumberOfAnswersPerChoice[];
+  export let correctAnswer: number;
+  export let userAnswer: number;
 
   let element: HTMLDivElement;
 
@@ -20,30 +22,22 @@
 
   function buildChart(plotWidth: number) {
     if (!plotWidth) return;
-    let margin = { top: 0, right: 0, bottom: 30, left: 0 },
+    let margin = { top: 0, right: 0, bottom: 80, left: 0 },
       width = plotWidth - margin.left - margin.right,
-      height = 90 - margin.top - margin.bottom;
+      height = 150 - margin.top - margin.bottom;
 
     const maxValue = max(statistics, (d) => d.value) as number;
     let xScale = scaleLinear().domain([data.min, data.max]).range([0, width]);
-    let yScale = scaleLinear().domain([0, maxValue]).range([height, 0]);
-
     element.innerHTML = '';
     let svg = select(element)
       .append('svg')
       .datum(statistics)
-      .attr('width', width + margin.left + margin.right)
+      .attr('width', width + margin.left + margin.right + 1)
       .attr('height', height + margin.top + margin.bottom)
+      .attr('viewBox', [0, 0, width + 1, height])
+      .attr('style', 'max-width: 100%; height: auto;')
       .append('g')
       .attr('transform', `translate(${margin.left},${margin.top})`);
-
-    svg
-      .append('rect')
-      .attr('x', 0)
-      .attr('y', margin.top)
-      .attr('width', width)
-      .attr('height', 60)
-      .attr('fill', 'transparent');
 
     svg
       .append('text')
@@ -61,8 +55,8 @@
       .attr('class', 's-color-gray-6 q-quiz-answer-chart-min-line')
       .attr('x1', 0)
       .attr('x2', 0)
-      .attr('y1', margin.top + height + 2)
-      .attr('y2', margin.top + height + 8);
+      .attr('y1', margin.top + 60 + 2)
+      .attr('y2', margin.top + 60 + 8);
 
     svg
       .append('text')
@@ -80,8 +74,8 @@
       .attr('class', 's-color-gray-6 q-quiz-answer-chart-max-line')
       .attr('x1', width)
       .attr('x2', width)
-      .attr('y1', margin.top + height + 2)
-      .attr('y2', margin.top + height + 8);
+      .attr('y1', margin.top + 60 + 2)
+      .attr('y2', margin.top + 60 + 8);
 
     let lines = svg
       .selectAll('line.q-quiz-answer-chart-line')
@@ -96,7 +90,92 @@
       .attr('x2', (d) => xScale(parseFloat(d.key)))
       .attr('y1', margin.top)
       .attr('y2', margin.top + 60);
+
+    // correct answer marker
+    if (correctAnswer) {
+      svg
+        .append('line')
+        .attr('class', 'q-quiz-answer-chart-line-marker s-color-gray-8')
+        .attr('stroke-width', 4)
+        .attr('x1', xScale(correctAnswer))
+        .attr('x2', xScale(correctAnswer))
+        .attr('y1', margin.top)
+        .attr('y2', margin.top + 60);
+
+      svg
+        .append('line')
+        .attr('class', 'q-quiz-answer-chart-line s-font-note s-color-gray-8')
+        .attr('stroke-width', 4)
+        .attr('x1', xScale(correctAnswer))
+        .attr('x2', xScale(correctAnswer))
+        .attr('y1', margin.top + 63)
+        .attr('y2', margin.top + 70);
+
+      svg
+        .append('text')
+        .text('Korrekte Antwort')
+        .attr('class', 's-color-gray-8 s-font-note q-quiz-marker-text')
+        .attr('x', xScale(correctAnswer))
+        .attr('dx', correctAnswer < data.max / 2 ? -2 : 0)
+        .attr('y', margin.top + 85)
+        .attr('text-anchor', correctAnswer < data.max / 2 ? 'start' : 'end');
+
+      svg
+        .append('text')
+        .text(`${correctAnswer}`)
+        .attr(
+          'class',
+          's-color-gray-8 s-font-note s-font-note--strong s-font-note--tabularnums q-quiz-marker-text'
+        )
+        .attr('x', xScale(correctAnswer))
+        .attr('dx', correctAnswer < data.max / 2 ? -2 : 0)
+        .attr('y', margin.top + 100)
+        .attr('text-anchor', correctAnswer < data.max / 2 ? 'start' : 'end');
+    }
+
+    // user answer marker
+    svg
+      .append('line')
+      .attr('class', 'q-quiz-answer-chart-line-marker s-color-primary-7')
+      .attr('stroke-width', 4)
+      .attr('x1', xScale(userAnswer))
+      .attr('x2', xScale(userAnswer))
+      .attr('y1', margin.top)
+      .attr('y2', margin.top + 60);
+
+    svg
+      .append('line')
+      .attr('class', 'q-quiz-answer-chart-line s-color-primary-7')
+      .attr('stroke-width', 4)
+      .attr('x1', xScale(userAnswer))
+      .attr('x2', xScale(userAnswer))
+      .attr('y1', margin.top - 3)
+      .attr('y2', margin.top - 10);
+
+    svg
+      .append('text')
+      .text('Ihre Schätzung')
+      .attr('class', 's-font-note s-color-primary-7 q-quiz-marker-text')
+      .attr('x', xScale(userAnswer))
+      .attr('dx', userAnswer < data.max / 2 ? -2 : 0)
+      .attr('y', margin.top - 15)
+      .attr('text-anchor', userAnswer < data.max / 2 ? 'start' : 'end');
+
+    svg
+      .append('text')
+      .text(`${userAnswer}`)
+      .attr(
+        'class',
+        's-font-note s-font-note--strong s-font-note--tabularnums s-color-primary-7 q-quiz-marker-text'
+      )
+      .attr('x', xScale(userAnswer))
+      .attr('dx', userAnswer < data.max / 2 ? -2 : 0)
+      .attr('y', margin.top - 30)
+      .attr('text-anchor', userAnswer < data.max / 2 ? 'start' : 'end');
   }
 </script>
 
 <div bind:this={element}></div>
+
+<style lang="scss">
+</style>

@@ -8,9 +8,12 @@
     NumberOfAnswersPerChoice,
     SliderQuestion,
   } from '@src/interfaces';
+  import { getPrecision } from '@src/helpers/utils';
 
   export let data: SliderQuestion;
   export let statistics: NumberOfAnswersPerChoice[];
+  export let correctAnswer: number;
+  export let userAnswer: number;
 
   let element: HTMLDivElement;
 
@@ -23,19 +26,19 @@
       let margin = {
         top: 0,
         right: 0,
-        bottom: 30,
+        bottom: 80,
         left: 0,
       };
       let width = chartWidth - margin.left - margin.right;
-      let height = 90 - margin.top - margin.bottom;
+      let height = 150 - margin.top - margin.bottom;
 
-      // let precision = getPrecision(data.step);
+      let precision = getPrecision(data.step);
 
       let xDomain = [];
       for (
         let i = data.min;
         i <= data.max;
-        i = parseFloat((i + data.step).toFixed(10))
+        i = parseFloat((i + data.step).toFixed(precision))
       ) {
         xDomain.push(i);
       }
@@ -46,34 +49,25 @@
         // .paddingInner(0.1)
         .range([0, width]);
 
-      let yScale = scaleLinear()
-        .domain([
-          0,
-          Math.max(
-            200 / statistics.length,
-            max(statistics, (statistic) =>
-              parseInt(statistic.value.toString(), 10)
-            ) as number
-          ),
-        ])
-        .range([height, 0]);
+      const maxYValue = Math.max(
+        200 / statistics.length,
+        max(statistics, (statistic) =>
+          parseInt(statistic.value.toString(), 10)
+        ) as number
+      );
+
+      let yScale = scaleLinear().domain([0, maxYValue]).range([height, 0]);
 
       element.innerHTML = '';
       let svg = select(element)
         .append('svg')
         .datum(statistics)
-        .attr('width', width + margin.left + margin.right)
+        .attr('width', width + margin.left + margin.right + 1)
         .attr('height', height + margin.top + margin.bottom)
+        .attr('viewBox', [0, 0, width + 1, height])
+        .attr('style', 'max-width: 100%; height: auto;')
         .append('g')
         .attr('transform', `translate(${margin.left},${margin.top})`);
-
-      svg
-        .append('rect')
-        .attr('x', 0)
-        .attr('y', margin.top)
-        .attr('width', width)
-        .attr('height', 60)
-        .attr('fill', 'transparent');
 
       svg
         .append('text')
@@ -91,8 +85,8 @@
         .attr('class', 's-color-gray-6 q-quiz-answer-chart-min-line')
         .attr('x1', 0)
         .attr('x2', 0)
-        .attr('y1', margin.top + height + 2)
-        .attr('y2', margin.top + height + 8);
+        .attr('y1', margin.top + 60 + 2)
+        .attr('y2', margin.top + 60 + 8);
 
       svg
         .append('text')
@@ -110,8 +104,8 @@
         .attr('class', 's-color-gray-6 q-quiz-answer-chart-max-line')
         .attr('x1', width)
         .attr('x2', width)
-        .attr('y1', margin.top + height + 2)
-        .attr('y2', margin.top + height + 8);
+        .attr('y1', margin.top + 60 + 2)
+        .attr('y2', margin.top + 60 + 8);
 
       let bars = svg
         .selectAll('.bar')
@@ -126,6 +120,119 @@
         .attr('height', function (statistic) {
           return Math.max(1, height - yScale(statistic.value));
         });
+
+      // correct answer marker
+      if (correctAnswer) {
+        svg
+          .append('rect')
+          .attr('class', 's-color-gray-8')
+          .attr('fill', 'currentColor')
+          .attr('x', String(xScale(correctAnswer.toString())))
+          .attr('width', xScale.bandwidth())
+          .attr('y', yScale(1))
+          .attr('height', Math.max(1, height - yScale(1)));
+        svg
+          .append('line')
+          .attr('class', 'q-quiz-answer-chart-line s-font-note s-color-gray-8')
+          .attr('stroke-width', 4)
+          .attr(
+            'x1',
+            String(
+              (xScale(correctAnswer.toString()) || 0) + xScale.bandwidth() / 2
+            )
+          )
+          .attr(
+            'x2',
+            String(
+              (xScale(correctAnswer.toString()) || 0) + xScale.bandwidth() / 2
+            )
+          )
+          .attr('dx', xScale.bandwidth() / 2)
+          .attr('y1', yScale(1) + 5)
+          .attr('y2', yScale(1) + 5 + 8);
+        svg
+          .append('text')
+          .text('Korrekte Antwort')
+          .attr('class', 's-color-gray-8 s-font-note q-quiz-marker-text')
+          .attr(
+            'x',
+            String(
+              (xScale(correctAnswer.toString()) || 0) + xScale.bandwidth() / 2
+            )
+          )
+          .attr('dx', correctAnswer < data.max / 2 ? -2 : 0)
+          .attr('y', yScale(1) + 5 + 8 + 15)
+          .attr('text-anchor', correctAnswer < data.max / 2 ? 'start' : 'end');
+
+        svg
+          .append('text')
+          .text(`${correctAnswer}`)
+          .attr(
+            'class',
+            's-color-gray-8 s-font-note s-font-note--strong s-font-note--tabularnums q-quiz-marker-text'
+          )
+          .attr(
+            'x',
+            String(
+              (xScale(correctAnswer.toString()) || 0) + xScale.bandwidth() / 2
+            )
+          )
+          .attr('dx', correctAnswer < data.max / 2 ? -2 : 0)
+          .attr('y', yScale(1) + 5 + 8 + 15 + 15)
+          .attr('text-anchor', correctAnswer < data.max / 2 ? 'start' : 'end');
+      }
+
+      // user answer marker
+      svg
+        .append('rect')
+        .attr('class', 's-color-primary-7')
+        .attr('fill', 'currentColor')
+        .attr('x', String(xScale(userAnswer.toString())))
+        .attr('width', xScale.bandwidth())
+        .attr('y', yScale(1))
+        .attr('height', Math.max(1, height - yScale(1)));
+
+      svg
+        .append('line')
+        .attr('class', 'q-quiz-answer-chart-line s-font-note s-color-primary-7')
+        .attr('stroke-width', 4)
+        .attr(
+          'x1',
+          String((xScale(userAnswer.toString()) || 0) + xScale.bandwidth() / 2)
+        )
+        .attr(
+          'x2',
+          String((xScale(userAnswer.toString()) || 0) + xScale.bandwidth() / 2)
+        )
+        .attr('dx', xScale.bandwidth() / 2)
+        .attr('y1', yScale(1) + 5)
+        .attr('y2', yScale(1) + 5 + 8);
+      svg
+        .append('text')
+        .text('Ihre Schätzung')
+        .attr('class', 's-color-primary-7 s-font-note q-quiz-marker-text')
+        .attr(
+          'x',
+          String((xScale(userAnswer.toString()) || 0) + xScale.bandwidth() / 2)
+        )
+        .attr('dx', userAnswer < data.max / 2 ? -2 : 0)
+        .attr('y', yScale(1) + 5 + 8 + 15)
+        .attr('text-anchor', userAnswer < data.max / 2 ? 'start' : 'end');
+
+      svg
+        .append('text')
+        .text(`${userAnswer}`)
+        .attr(
+          'class',
+          's-color-primary-7 s-font-note s-font-note--strong s-font-note--tabularnums q-quiz-marker-text'
+        )
+        .attr(
+          'x',
+          String((xScale(userAnswer.toString()) || 0) + xScale.bandwidth() / 2)
+        )
+        .attr('dx', userAnswer < data.max / 2 ? -2 : 0)
+        .attr('y', yScale(1) + 5 + 8 + 15 + 15)
+        .attr('text-anchor', userAnswer < data.max / 2 ? 'start' : 'end');
     } catch (err) {
       console.log(err);
     }

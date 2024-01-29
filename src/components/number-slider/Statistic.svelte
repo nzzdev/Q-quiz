@@ -103,57 +103,57 @@
 
 {#if answers}
   <div class="q-quiz-result__number-guess-visual q-quiz-result">
-    {#if element.type === QuizElementType.NumberGuess}
-      <div
-        class:q-quiz-result__number-guess-visual__text--right={correctAnswerStyle.startsWith(
-          'right'
-        )}
-        class="q-quiz-result__number-guess-visual__text q-quiz-result__number-guess-visual__text--bottom s-color-gray-8"
-        style={correctAnswerStyle}
-      >
-        <div
-          class="q-quiz-result__number-guess-visual__text__label s-font-note s-color-gray-8"
-        >
-          Korrekte Antwort
-          <div class="s-font-note--strong">{correctAnswer}</div>
-        </div>
-        <div
-          class:q-quiz-result__number-guess-visual__text__marker--few-answers={steppedValues.length <=
-            100}
-          class="q-quiz-result__number-guess-visual__text__marker"
-          style="width: {steppedValues.length <= 100 ? stepWidth : 'unset'}px"
-        ></div>
-      </div>
+    {#if numberOfPossibleAnswers <= 100}
+      <BarchartSvg
+        data={element}
+        statistics={answers}
+        {correctAnswer}
+        {userAnswer}
+      />
+    {:else}
+      <StripplotSvg
+        data={element}
+        statistics={answers}
+        {correctAnswer}
+        {userAnswer}
+      />
     {/if}
-    <div
-      class:q-quiz-result__number-guess-visual__text--right={userAnswerStyle.startsWith(
-        'right'
-      )}
-      class="q-quiz-result__number-guess-visual__text q-quiz-result__number-guess-visual__text--top s-color-primary-7"
-      style="position: absolute; {userAnswerStyle}"
-    >
-      <div
-        class="q-quiz-result__number-guess-visual__text__label s-font-note s-color-primary-7"
-      >
-        Ihre Schätzung
-        <div class="s-font-note--strong s-font-note--tabularnums">
-          {userAnswer}
-        </div>
-      </div>
-      <div
-        class:q-quiz-result__number-guess-visual__text__marker--few-answers={steppedValues.length <=
-          100}
-        class="q-quiz-result__number-guess-visual__text__marker"
-        style="width: {steppedValues.length <= 100 ? stepWidth : 'unset'}px"
-      ></div>
-    </div>
-    <div class="q-quiz-result__number-guess-visual__stats-graphic-container">
-      {#if numberOfPossibleAnswers <= 100}
-        <BarchartSvg data={element} statistics={answers} />
-      {:else}
-        <StripplotSvg data={element} statistics={answers} />
-      {/if}
-    </div>
     <p class="q-quiz-result-answer-text s-font-text-s"></p>
   </div>
 {/if}
+
+<style lang="scss">
+  $q-quiz-result__number-guess-visual__stats-graphic-height: 60px;
+  $q-quiz-result__number-guess-visual__stats-graphic-top: 55px;
+
+  .q-quiz-result__number-guess-visual__text__marker--few-answers {
+    height: 3px;
+    top: $q-quiz-result__number-guess-visual__stats-graphic-top + 57px;
+
+    transform: translateX(-50%);
+  }
+
+  .q-quiz-result__number-guess-visual__text__marker {
+    position: relative;
+
+    display: block;
+    width: 3px;
+    height: $q-quiz-result__number-guess-visual__stats-graphic-height;
+    background: currentColor;
+    position: absolute;
+    top: $q-quiz-result__number-guess-visual__stats-graphic-top;
+    left: -1px;
+
+    // contains the small line towards the correct answer / user answer line
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      width: 1px;
+      height: 8px;
+      background-color: currentColor;
+      top: -16px;
+      left: 50%;
+    }
+  }
+</style>
