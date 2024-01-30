@@ -78,15 +78,15 @@
         )
         .attr('text-anchor', 'start')
         .attr('x', 3)
-        .attr('y', margin.top + 60)
+        .attr('y', height)
         .attr('dy', '1em');
       svg
         .append('line')
         .attr('class', 's-color-gray-6 q-quiz-answer-chart-min-line')
         .attr('x1', 0)
         .attr('x2', 0)
-        .attr('y1', margin.top + 60 + 2)
-        .attr('y2', margin.top + 60 + 8);
+        .attr('y1', height + 2)
+        .attr('y2', height + 8);
 
       svg
         .append('text')
@@ -97,15 +97,15 @@
         )
         .attr('text-anchor', 'end')
         .attr('x', width - 3)
-        .attr('y', margin.top + 60)
+        .attr('y', height)
         .attr('dy', '1em');
       svg
         .append('line')
         .attr('class', 's-color-gray-6 q-quiz-answer-chart-max-line')
         .attr('x1', width)
         .attr('x2', width)
-        .attr('y1', margin.top + 60 + 2)
-        .attr('y2', margin.top + 60 + 8);
+        .attr('y1', height + 2)
+        .attr('y2', height + 8);
 
       let bars = svg
         .selectAll('.bar')
@@ -149,7 +149,7 @@
           )
           .attr('dx', xScale.bandwidth() / 2)
           .attr('y1', yScale(1) + 5)
-          .attr('y2', yScale(1) + 5 + 8);
+          .attr('y2', yScale(1) + 5 + 6);
         svg
           .append('text')
           .text('Korrekte Antwort')
@@ -161,7 +161,7 @@
             )
           )
           .attr('dx', correctAnswer < data.max / 2 ? -2 : 0)
-          .attr('y', yScale(1) + 5 + 8 + 15)
+          .attr('y', yScale(1) + 5 + 8 + 12)
           .attr('text-anchor', correctAnswer < data.max / 2 ? 'start' : 'end');
 
         svg
@@ -178,11 +178,15 @@
             )
           )
           .attr('dx', correctAnswer < data.max / 2 ? -2 : 0)
-          .attr('y', yScale(1) + 5 + 8 + 15 + 15)
+          .attr('y', yScale(1) + 5 + 8 + 12 + 15)
           .attr('text-anchor', correctAnswer < data.max / 2 ? 'start' : 'end');
       }
 
       // user answer marker
+      const maxValueOfUserAnswer = statistics.find(
+        (statistic) => userAnswer === parseFloat(statistic.key)
+      );
+
       svg
         .append('rect')
         .attr('class', 's-color-primary-7')
@@ -205,8 +209,9 @@
           String((xScale(userAnswer.toString()) || 0) + xScale.bandwidth() / 2)
         )
         .attr('dx', xScale.bandwidth() / 2)
-        .attr('y1', yScale(1) + 5)
-        .attr('y2', yScale(1) + 5 + 8);
+        .attr('y1', yScale(maxValueOfUserAnswer?.value || 1) - 2)
+        .attr('y2', -11);
+
       svg
         .append('text')
         .text('Ihre Schätzung')
@@ -216,7 +221,7 @@
           String((xScale(userAnswer.toString()) || 0) + xScale.bandwidth() / 2)
         )
         .attr('dx', userAnswer < data.max / 2 ? -2 : 0)
-        .attr('y', yScale(1) + 5 + 8 + 15)
+        .attr('y', -27)
         .attr('text-anchor', userAnswer < data.max / 2 ? 'start' : 'end');
 
       svg
@@ -231,7 +236,8 @@
           String((xScale(userAnswer.toString()) || 0) + xScale.bandwidth() / 2)
         )
         .attr('dx', userAnswer < data.max / 2 ? -2 : 0)
-        .attr('y', yScale(1) + 5 + 8 + 15 + 15)
+        .attr('y', -13)
+        // .attr('y', yScale(1) + 5 + 8 + 15 + 15)
         .attr('text-anchor', userAnswer < data.max / 2 ? 'start' : 'end');
     } catch (err) {
       console.log(err);
