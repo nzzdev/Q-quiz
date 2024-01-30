@@ -1,4 +1,3 @@
-import { ImageFormat } from '@src/enums';
 import type { QuizImage } from '@src/interfaces';
 
 export function getImageUrls(

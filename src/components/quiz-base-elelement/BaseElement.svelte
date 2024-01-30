@@ -1,18 +1,14 @@
 <script lang="ts">
-  import { QuizElementType } from '@src/enums';
-  import type {
-    DBAnswerData,
-    DBAnswerMapPointGuessValue,
-    QuizBaseQuestion,
-  } from '@src/interfaces';
+  import type { QuizBaseQuestion } from '@src/interfaces';
 
   import Subtitle from './Subtitle.svelte';
   import Title from './Title.svelte';
   import Introduction from './Introduction.svelte';
   import Image from './Image.svelte';
-  import { quizStore } from '@src/store/quiz.store';
+  import ArticleRecommendations from './ArticleRecommendations.svelte';
 
   export let element: QuizBaseQuestion;
+  export let isAnswered: boolean;
 </script>
 
 {#if element.introduction}
@@ -30,9 +26,13 @@
 
 <!-- Slot for quiz type element -->
 <slot />
-{#if element.answerText && quizStore.isAnswered()}
-  <div class="q-quiz-result-answer-text s-font-text-s">
-    {element.answerText}
-  </div>
+{#if isAnswered}
+  {#if element.answerText}
+    <div class="q-quiz-result-answer-text s-font-text-s">
+      {element.answerText}
+    </div>
+  {/if}
+  {#if element.articleRecommendations}
+    <ArticleRecommendations recommendations={element.articleRecommendations} />
+  {/if}
 {/if}
-<!-- TODO: Result answer text-->

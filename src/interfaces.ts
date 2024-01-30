@@ -380,3 +380,114 @@ export interface MapConfiguration {
   styleUrl: string;
   attribution: string;
 }
+// enrico api
+export interface Root {
+  metadata: Metadata;
+}
+
+export interface Metadata {
+  language: Language;
+  title: string;
+  nzzAuthors: NzzAuthor[];
+  designName: string;
+  exclude: Exclude;
+  department: DepartmentLD;
+  publicationDate: string;
+  slug: string;
+  firstPublicationDate: string;
+  nzzCharacterCount: number;
+  authorLine: string;
+  lastProofreadRevision: number;
+  indexedAt: string;
+  numberOfContentComponents: number;
+  designVersion: string;
+  leadText: string;
+  germanyRelevant: boolean;
+  publicationLastUpdated: string;
+  urlPath: string;
+  nzzId: string;
+  teaserImage: TeaserImage;
+  url: string;
+  dependencies: Dependencies;
+  layout: string;
+  embeds: Embeds;
+  teaserCaption: string;
+  breadcrumbs: Breadcrumb[];
+  documentId: string;
+  product: string;
+}
+
+export interface Language {
+  label: string;
+  locale: string;
+}
+
+export interface NzzAuthor {
+  name: string;
+  id: number;
+}
+
+export interface Exclude {
+  app: boolean;
+  amp: boolean;
+}
+
+export interface DepartmentLD {
+  path: string;
+  level: number;
+  name: string;
+}
+
+export interface TeaserImage {
+  imageService: string;
+  width: number;
+  originalUrl: string;
+  crops: Crop[];
+  url: string;
+  height: number;
+}
+
+export interface Crop {
+  name: string;
+  x: number;
+  width: number;
+  y: number;
+  url: string;
+  height: number;
+}
+
+export interface Dependencies {
+  js: J[];
+}
+
+export interface J {
+  componentIds: string[];
+  src: string;
+  namespace: string;
+}
+
+export interface Embeds {
+  images: Image[];
+  q_embeds: QEmbed[];
+  videos: any[];
+}
+
+export interface Image {
+  caption: string;
+  origins: Origin[];
+  url: string;
+}
+
+export interface Origin {
+  identifier: string;
+  name: string;
+}
+
+export interface QEmbed {
+  id: string;
+}
+
+export interface Breadcrumb {
+  path: string;
+  name: string;
+}

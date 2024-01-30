@@ -38,7 +38,7 @@
   }
 </script>
 
-<BaseElement {element}>
+<BaseElement {element} isAnswered={!!userAnswer}>
   {#if userAnswer}
     <Answer
       id={element.id}

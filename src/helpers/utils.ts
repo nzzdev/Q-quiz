@@ -88,8 +88,6 @@
 // }
 
 export function getPrecision(value: number) {
-  // TODO: check magic number
-  console.log('value', value);
   let magicNumber = 1;
   while (Math.round(value * magicNumber) / magicNumber !== value) {
     magicNumber *= 10;
