@@ -12,7 +12,7 @@
   };
 
   const nextQuestion = () => {
-    if ($quizStore.step < $quizStore.numberQuestions) {
+    if ($quizStore.step <= $quizStore.numberQuestions) {
       quizStore.stepForward();
     }
 

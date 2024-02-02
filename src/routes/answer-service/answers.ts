@@ -18,7 +18,7 @@ const route: ServerRoute = {
       return await database.getAnswer(type, questionId);
     } catch (e) {
       console.log(`error in stats route: ${e}`);
-      // TODO:
+      // TODO
       // @ts-ignore
       return Boom.badRequest(e);
     }

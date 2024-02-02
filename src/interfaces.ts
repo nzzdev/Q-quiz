@@ -81,8 +81,14 @@ export interface QuizBaseQuestion extends BaseElement {
   image?: QuizImage;
   introduction?: string;
   answerText?: string;
+  userAnswer?: UserAnswer;
   questionSubTitle?: string;
   notes?: string;
+}
+
+export interface UserAnswer {
+  answer?: string | number | AnswerGeoData;
+  isCorrect: boolean;
 }
 
 export interface QuizStore {

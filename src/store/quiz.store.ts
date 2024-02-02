@@ -111,8 +111,11 @@ const store = () => {
               );
               if (foundedItem) {
                 const question = foundedItem.item as QuizBaseQuestion;
-                question.userAnswer = answer;
                 foundedItem.isAnswered = true;
+                question.userAnswer = {
+                  answer: answer,
+                  isCorrect: true,
+                };
               }
               return state;
             });

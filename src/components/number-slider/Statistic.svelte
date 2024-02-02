@@ -40,9 +40,6 @@
         }
         containerWidthStore;
         setup($containerWidthStore);
-      })
-      .catch((error) => {
-        console.log('error', error);
       });
   });
 

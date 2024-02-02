@@ -201,7 +201,7 @@
   }
 </script>
 
-<BaseElement {element}>
+<BaseElement {element} {isAnswered}>
   <div class="q-quiz-input" style="widht: 100%; height: 100%">
     <div class="s-font-note-s s-font-note-s--light">
       Klicken Sie auf die gewünschte Stelle auf der Karte, um Ihre Antwort

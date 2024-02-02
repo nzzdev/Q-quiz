@@ -23,7 +23,7 @@
   }
 </script>
 
-<BaseElement {element}>
+<BaseElement {element} {isAnswered}>
   <div class="q-quiz-input">
     {#if isAnswered}
       <Statistic {element} {userAnswer} {toolBaseUrl} />

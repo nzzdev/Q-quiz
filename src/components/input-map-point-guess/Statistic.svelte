@@ -34,9 +34,6 @@
       .then((response) => response.json())
       .then((answers: NumberOfAnswersPerChoice[]) => {
         statistic = StatisticCalculator.mapPointGuess(answers, distance);
-      })
-      .catch((error) => {
-        console.log('error', error);
       });
   });
 

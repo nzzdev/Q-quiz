@@ -240,7 +240,7 @@
         // .attr('y', yScale(1) + 5 + 8 + 15 + 15)
         .attr('text-anchor', userAnswer < data.max / 2 ? 'start' : 'end');
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   }
 </script>

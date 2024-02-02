@@ -22,10 +22,7 @@
       .then(
         (answers: NumberOfAnswersPerChoice[]) =>
           (statistic = StatisticCalculator.multipleChoiceStats(answers))
-      )
-      .catch((error) => {
-        console.log('error', error);
-      });
+      );
   });
 
   $: getHighestAnswerCount = (): number => {
