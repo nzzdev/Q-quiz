@@ -5,7 +5,7 @@ import svelte from 'rollup-plugin-svelte';
 import sveltePreprocess from 'svelte-preprocess';
 import typescript from '@rollup/plugin-typescript';
 import svg from 'rollup-plugin-svg';
-import commonjs from 'rollup-plugin-commonjs';
+import commonjs from '@rollup/plugin-commonjs';
 
 import terser from '@rollup/plugin-terser';
 
@@ -38,14 +38,14 @@ const frontendConfig = {
     format: 'iife',
   },
   plugins: [
-    typescript(),
+    typescript({ sourceMap: true }),
     json(),
     svg(),
     commonjs({
       include: 'node_modules/**', // Default: undefined
     }),
     svelte({
-      preprocess: sveltePreprocess(),
+      preprocess: sveltePreprocess({ sourceMap: true }),
       emitCss: false,
       compilerOptions: {},
       onwarn: (warning, handler) => {
@@ -58,7 +58,7 @@ const frontendConfig = {
       },
     }),
     nodeResolve({ browser: true }),
-    terser(),
+    // terser(),
 
     alias({
       entries: [
