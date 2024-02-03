@@ -127,6 +127,9 @@ export interface BaseElement {
 export interface Cover extends BaseElement {
   type: QuizElementType.Cover;
   title: string;
+  themeTitle?: string;
+  themeSubtitle?: string;
+  image?: QuizImage;
 }
 
 export interface MultipleChoice extends QuizBaseQuestion {

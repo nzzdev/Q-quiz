@@ -1,6 +1,8 @@
 <script lang="ts">
+  import chevroRight from '../../resources/chevron-right.svg';
   import type { Cover } from '@src/interfaces';
   import { quizStore } from '@src/store/quiz.store';
+  import Image from '../quiz-base-elelement/Image.svelte';
 
   export let element: Cover;
 </script>
@@ -9,37 +11,59 @@
   class="q-quiz-element-container q-quiz__cover s-color-primary-1 q-quiz-element-container--is-active"
   style="width: 100%;"
 >
+  {#if element.themeTitle || element.themeSubtitle}
+    <div class="cover-theme">
+      {#if element.themeTitle}
+        <h3 class="s-font-title">
+          {element.themeTitle}
+        </h3>
+      {/if}
+      {#if element.themeSubtitle}
+        <h4 class="s-font-title-s">
+          {element.themeSubtitle}
+        </h4>
+      {/if}
+    </div>
+  {/if}
+  {#if element.image && element.image.url}
+    <Image image={element.image} />
+  {:else}
+    Default Image
+  {/if}
   <h3 class="q-quiz__cover-title s-font-title">
     {#if element.title}{element.title}{/if}
   </h3>
-  <button
-    class="q-quiz-button q-quiz-button__icon s-button s-button--big s-button--circular"
-    on:click={() => quizStore.stepForward()}
-  >
-    <!-- does not really work with max width/height -->
-    <svg
-      class="s-button__icon"
-      width="28"
-      height="28"
-      viewBox="0 0 28 28"
-      xmlns="http://www.w3.org/2000/svg"
+  <div class="cover-button">
+    <button
+      class="q-quiz-button q-quiz-button__icon s-button"
+      on:click={() => quizStore.stepForward()}
     >
-      <g fill="none" fill-rule="evenodd">
-        <path
-          fill="currentColor"
-          d="M9.8 22.4l1.4 1.4L21 14l-9.8-9.8-1.4 1.4 8.4 8.4z"
-        ></path>
-      </g>
-    </svg>
-  </button>
-  <div class="s-font-note-s">Das Quiz starten</div>
+      {@html chevroRight}
+      <div class="s-font-note-s cover-button-text">Das Quiz starten</div>
+    </button>
+  </div>
 </div>
 
 <style lang="scss">
+  .cover {
+    &-theme {
+      padding: 30px 0;
+      text-align: center;
+    }
+    &-button {
+      width: 90%;
+      display: flex;
+      justify-content: center;
+      padding-bottom: 30px;
+
+      &-text {
+        color: white;
+      }
+    }
+  }
   .q-quiz__cover {
     background-color: currentColor;
     text-align: center;
-    padding: 50px 0 60px 0;
 
     opacity: 1;
     transition: opacity 0.1s ease-out;

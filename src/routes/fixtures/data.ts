@@ -1,5 +1,6 @@
 import type { ServerRoute } from '@hapi/hapi';
 
+import allCoverWithImageAndThemeTitle from '../../../resources/fixtures/data/all-cover-with-image-and-theme-title.json';
 import all from '../../../resources/fixtures/data/all.json';
 import allQuestionTypesWithImages from '../../../resources/fixtures/data/all-question-types-with-images.json';
 import coverWithTitleNoLastCard from '../../../resources/fixtures/data/cover-with-title-no-last-card.json';
@@ -18,6 +19,7 @@ import singleNumberPoll from '../../../resources/fixtures/data/single-number-pol
 import stripPlotNumberGuess from '../../../resources/fixtures/data/strip-plot-number-guess.json';
 
 const fixtureData = [
+  allCoverWithImageAndThemeTitle,
   allQuestionTypesWithImages,
   all,
   coverWithTitleNoLastCard,
@@ -43,6 +45,7 @@ const route: ServerRoute = {
     tags: ['api'],
   },
   handler: () => {
+    console.log('GET /fixtures/data', fixtureData);
     return fixtureData;
   },
 };
