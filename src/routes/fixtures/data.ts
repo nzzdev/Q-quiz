@@ -1,7 +1,7 @@
 import type { ServerRoute } from '@hapi/hapi';
 
-import allQuestionTypesWithImages from '../../../resources/fixtures/data/all-question-types-with-images.json';
 import all from '../../../resources/fixtures/data/all.json';
+import allQuestionTypesWithImages from '../../../resources/fixtures/data/all-question-types-with-images.json';
 import coverWithTitleNoLastCard from '../../../resources/fixtures/data/cover-with-title-no-last-card.json';
 import singleBigNumberGuess from '../../../resources/fixtures/data/single-big-number-guess.json';
 import singleBigNumberPoll from '../../../resources/fixtures/data/single-big-number-poll.json';
