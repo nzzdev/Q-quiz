@@ -1,6 +1,9 @@
 # Use following version of node alpine as the base image
 FROM node:18-alpine
 
+RUN apk add --no-cache libc6-compat
+RUN apk update
+
 # Set work directory for run/cmd
 WORKDIR /app
 
