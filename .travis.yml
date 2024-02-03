@@ -6,7 +6,6 @@ language: node_js
 node_js:
   - '18'
 install:
-  - npm pkg delete scripts.prepare
   - npm install
 before_script:
   - DOCKER_IMAGE_NAME="q-quiz"

@@ -35,11 +35,11 @@
     "jest": "NODE_OPTIONS='--experimental-vm-modules --experimental-specifier-resolution=node' jest --runInBand --config jest.config.ts",
     "lint": "eslint --fix --ext .svelte,.ts --config src/.eslintrc.cjs src",
     "lint:all": "run-s -c lint ts-check svelte-check",
-    "prepare": "husky install",
     "start": "nodemon --exec \"npm run dev\"",
     "svelte-check": "svelte-check --threshold error",
     "test": "npm run build && npm run jest",
-    "ts-check": "tsc --noEmit"
+    "ts-check": "tsc --noEmit",
+    "eslint": "TIMING=1 eslint src"
   },
   "dependencies": {
     "@hapi/boom": "^10.0.1",

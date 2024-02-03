@@ -1,5 +1,5 @@
 # Use following version of node as the base image
-FROM node:18-bullseye
+FROM node:18-alpine
 
 # Set work directory for run/cmd
 WORKDIR /app
@@ -7,6 +7,8 @@ WORKDIR /app
 # Copy package.json and package-lock.json into work directory and install dependencies
 COPY package.json /app/package.json
 COPY package-lock.json /app/package-lock.json
+RUN npm --version
+RUN node --version
 RUN npm install --production
 
 # Copy everthing else in work directory
