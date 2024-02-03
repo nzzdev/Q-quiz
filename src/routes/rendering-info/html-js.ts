@@ -12,7 +12,7 @@ import type {
   WebPayload,
 } from '@src/interfaces';
 import getExactPixelWidth from '@src/helpers/toolRuntimeConfig';
-import { transform } from '@src/helpers/quizService';
+import { transform } from '@src/services/quiz-service';
 
 const ajv = new Ajv({
   strict: false,

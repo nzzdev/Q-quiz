@@ -1,6 +1,6 @@
 import { QuizElementType } from '@src/enums';
 import type {
-  CoverElement,
+  Cover,
   LastCard,
   MapPointGuess,
   MultipleChoice,
@@ -14,7 +14,7 @@ export function transform(item: QuizDoc): QuizElements {
   // extract only one of the possibly existing cover elements, undefined otherwise
   const coverElement = item.elements.find(
     (element) => element.type === QuizElementType.Cover
-  ) as CoverElement | undefined;
+  ) as Cover | undefined;
   const hasCover = coverElement !== undefined;
 
   // extract only one of the possibly existing last card elements, undefined otherwise
