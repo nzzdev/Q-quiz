@@ -19,7 +19,7 @@ const route: ServerRoute = {
     },
   },
   handler: function (request: Request, h: ResponseToolkit) {
-    var doc = request.payload;
+    let doc = request.payload;
     if (typeof request.payload !== 'object') {
       doc = JSON.parse(request.payload);
     }

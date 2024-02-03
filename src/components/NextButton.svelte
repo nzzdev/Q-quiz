@@ -7,11 +7,11 @@
   export let defaultVisibility = true;
   export let isButtonWithIcon = false;
   // TODO: decision to header (parent component)
-  export const togglenNextButton = () => {
+  export const togglenNextButton = (): void => {
     isVisible = !isVisible;
   };
 
-  const nextQuestion = () => {
+  const nextQuestion = (): void => {
     if ($quizStore.step <= $quizStore.numberQuestions) {
       quizStore.stepForward();
     }

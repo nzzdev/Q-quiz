@@ -32,9 +32,9 @@
       .then((response) => response.json())
       .then((results: NumberOfAnswersPerChoice[]) => {
         if (element.type === QuizElementType.NumberGuess) {
-          answers = results as NumberOfAnswersPerChoice[];
+          answers = results ;
         } else if (element.type === QuizElementType.NumberPoll) {
-          answers = results as NumberOfAnswersPerChoice[];
+          answers = results ;
         } else {
           new Error('Wrong type of question');
         }

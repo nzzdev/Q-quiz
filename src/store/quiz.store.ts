@@ -95,7 +95,7 @@ const store = () => {
       };
 
       // TODO: set base url and set localhost:3000 if is local
-      return fetch(`http://localhost:3000/answer`, {
+      return fetch('http://localhost:3000/answer', {
         method: 'POST',
         headers: {
           'content-type': 'application/json',

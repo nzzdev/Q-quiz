@@ -2,7 +2,7 @@ export default class Scale {
   constructor(private domain: number[], public range: number[]) {}
 
   public getValueOnScale(value: number) {
-    let indexOnScale = this.getIndexOnScale(value);
+    const indexOnScale = this.getIndexOnScale(value);
     if (indexOnScale) {
       return this.range[indexOnScale];
     }
@@ -10,10 +10,10 @@ export default class Scale {
   }
 
   public getIndexOnScale(value: number) {
-    let ratio =
+    const ratio =
       (this.range[this.range.length - 1] - this.range[0]) /
       (this.domain[1] - this.domain[0]);
-    let result = this.range[0] + ratio * (value - this.domain[0]);
+    const result = this.range[0] + ratio * (value - this.domain[0]);
 
     let indexOnScale = 0;
     this.range.forEach((possibleValue, index) => {

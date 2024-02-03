@@ -10,7 +10,7 @@ export class StatisticCalculator {
     let numberOfSameAnswers;
     let diffPercentage;
 
-    let totalAnswers = answersStats.reduce((prev, current) => {
+    const totalAnswers = answersStats.reduce((prev, current) => {
       return prev + current.value;
     }, 0);
 
@@ -55,7 +55,7 @@ export class StatisticCalculator {
   ): Statistic {
     let numberOfSameAnswers;
 
-    let totalAnswers = answersStats.reduce((prev, current) => {
+    const totalAnswers = answersStats.reduce((prev, current) => {
       return prev + current.value;
     }, 0);
 
@@ -78,7 +78,7 @@ export class StatisticCalculator {
   public static multipleChoiceStats(
     answersStats: NumberOfAnswersPerChoice[]
   ): Statistic {
-    let totalAnswers = answersStats.reduce((prev: number, current) => {
+    const totalAnswers = answersStats.reduce((prev: number, current) => {
       return (prev += current.value);
     }, 0);
     return {
@@ -96,7 +96,7 @@ export class StatisticCalculator {
     let betterThanCount = 0;
     let numberOfSameAnswers;
 
-    let totalAnswers = answersStats.reduce((prev: number, current) => {
+    const totalAnswers = answersStats.reduce((prev: number, current) => {
       return (prev += current.value);
     }, 0);
 

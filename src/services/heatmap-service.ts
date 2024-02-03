@@ -108,7 +108,7 @@ export class SimpleHeat {
       this.gradient(this.defaultGradient);
     }
 
-    var ctx = this._ctx;
+    const ctx = this._ctx;
 
     ctx.clearRect(0, 0, this._width, this._height);
 
@@ -123,7 +123,7 @@ export class SimpleHeat {
     }
 
     // colorize the heatmap, using opacity value of each pixel to get the right color from our gradient
-    var colored = ctx.getImageData(0, 0, this._width, this._height);
+    const colored = ctx.getImageData(0, 0, this._width, this._height);
     this._colorize(colored.data, this._grad);
     ctx.putImageData(colored, 0, 0);
 

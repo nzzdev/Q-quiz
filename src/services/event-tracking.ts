@@ -1,6 +1,6 @@
 export class EventTrackingService {
   public static trackNextScreen(element: HTMLElement) {
-    let quizControlEvent = new CustomEvent('q-tracking-event', {
+    const quizControlEvent = new CustomEvent('q-tracking-event', {
       bubbles: true,
       detail: {
         eventInfo: {

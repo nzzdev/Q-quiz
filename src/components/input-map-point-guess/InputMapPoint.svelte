@@ -171,9 +171,9 @@
     if (!isAnswered) {
       // Add type annotation for the event parameter
       if (marker) {
-        marker.setLatLng(e.latlng as LatLng); // Add type assertion for the latlng parameter
+        marker.setLatLng(e.latlng ); // Add type assertion for the latlng parameter
       } else {
-        marker = new L.Marker(e.latlng as LatLng, {
+        marker = new L.Marker(e.latlng , {
           // Add type assertion for the latlng parameter
           icon: markerPinIcon,
           draggable: true,

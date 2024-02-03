@@ -157,7 +157,7 @@ export class ScoreService {
     question: QuizBaseQuestion,
     answer: string | number | MapPointGuessAnswer | undefined = undefined
   ) {
-    let worstAnswerDifference = this.calculateWorstAnswerDifference(question);
+    const worstAnswerDifference = this.calculateWorstAnswerDifference(question);
 
     if (question.userAnswer && question.userAnswer.answer) {
       if (
@@ -197,7 +197,7 @@ export class ScoreService {
   }
 
   public calculateScore(questions: QuizBaseQuestion[]) {
-    let score: QuizeScore = {
+    const score: QuizeScore = {
       maxScore: 0,
       achievedScore: 0,
     };
@@ -229,7 +229,7 @@ export class ScoreService {
       score.achievedScore = score.maxScore;
     }
 
-    let scorePercentage = score.achievedScore / score.maxScore;
+    const scorePercentage = score.achievedScore / score.maxScore;
     score.lastCardTitle = this.getScoreTitle(scorePercentage);
     return score;
   }

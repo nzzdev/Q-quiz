@@ -29,7 +29,7 @@ export function transform(item: QuizDoc): QuizElements {
       element.type !== QuizElementType.Cover &&
       element.type !== QuizElementType.LastCard
   ) as (MultipleChoice | MapPointGuess | NumberPoll | NumberGuess)[];
-  let numberElements = questionElements.length;
+  const numberElements = questionElements.length;
 
   // prepare data for server side rendering
   return {
