@@ -18,6 +18,8 @@ const store = () => {
     isMultiQuiz: false,
     numberQuestions: 0,
     hasCover: false,
+    hasLastCard: false,
+    hasScore: false,
     step: 0,
     configuration: {
       imageServiceUrl: '',
@@ -65,6 +67,9 @@ const store = () => {
         isMultiQuiz: componentItem.questionCount > 1,
         numberQuestions: componentItem.questionCount,
         hasCover: componentItem.hasCover,
+        hasLastCard: componentItem.hasLastCard,
+        hasScore:
+          componentConfiguration.item.lastCard?.isFinalScoreShown || false,
         step: componentItem.hasCover ? 0 : 1,
         configuration: {
           imageServiceUrl: componentConfiguration.imageServiceUrl,

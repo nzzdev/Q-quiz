@@ -1,6 +1,7 @@
 <script lang="ts">
   import { quizStore } from '@src/store/quiz.store';
-  import NextButton from './NextButton.svelte';
+  import NextButton from './next-button/NextButton.svelte';
+  import { number } from 'joi';
 </script>
 
 <header
@@ -11,7 +12,13 @@
 >
   {#if $quizStore.isMultiQuiz}
     <div class="q-quiz-header__title s-font-note-s">
-      Frage {$quizStore.step} / {$quizStore.numberQuestions}
+      {#if $quizStore.step > $quizStore.numberQuestions}
+        Fertig!
+      {:else if $quizStore.step === $quizStore.numberQuestions}
+        letzte Frage
+      {:else}
+        Frage {$quizStore.step} / {$quizStore.numberQuestions}
+      {/if}
     </div>
     <div class="next-button">
       <NextButton />

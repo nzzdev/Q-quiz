@@ -8,7 +8,7 @@
   import { QuizElementType } from '@src/enums';
 
   import QuestionProgress from './QuestionProgress.svelte';
-  import NextButton from './NextButton.svelte';
+  import NextButton from './next-button/NextButton.svelte';
 
   import CoverComponent from './cover/Cover.svelte';
   import LastCardComponent from './last-card/LastCard.svelte';

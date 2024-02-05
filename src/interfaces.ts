@@ -96,6 +96,8 @@ export interface QuizStore {
   items: ElementItemStore[];
   isMultiQuiz: boolean;
   hasCover: boolean;
+  hasLastCard: boolean;
+  hasScore: boolean;
   step: number;
   numberQuestions: number;
   configuration: {
