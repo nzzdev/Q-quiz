@@ -1,7 +1,7 @@
 import type { Request, ResponseToolkit, ServerRoute } from '@hapi/hapi';
 import Boom from '@hapi/boom';
 
-import type { QuizElementType } from '@src/enums';
+import { QuizElementType } from '@src/enums';
 import { AnswerDatabase } from '@src/services/answer-store';
 
 const route: ServerRoute = {
@@ -15,6 +15,9 @@ const route: ServerRoute = {
       const type = request.params.type as QuizElementType;
       const questionId = request.params.questionId;
       const database = new AnswerDatabase();
+      if (type === QuizElementType.MapPointGuess) {
+        return await database.getMapPointGuessAnswer(questionId);
+      }
       return await database.getAnswer(type, questionId);
     } catch (e) {
       console.log(`error in stats route: ${e}`);

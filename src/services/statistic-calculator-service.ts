@@ -1,4 +1,8 @@
-import type { NumberOfAnswersPerChoice, Statistic } from '@src/interfaces';
+import type {
+  MapPointGuessStatistic,
+  NumberOfAnswersPerChoice,
+  Statistic,
+} from '@src/interfaces';
 
 export class StatisticCalculator {
   public static numberGuess(
@@ -90,21 +94,22 @@ export class StatisticCalculator {
   // @ts-ignore
   // TODO
   public static mapPointGuess(
-    answersStats: NumberOfAnswersPerChoice[], // @ts-ignore
+    answersStats: MapPointGuessStatistic[], // @ts-ignore
     userAnswer
   ): Statistic {
     let betterThanCount = 0;
     let numberOfSameAnswers;
 
     const totalAnswers = answersStats.reduce((prev: number, current) => {
-      return (prev += current.value);
+      return (prev += current.count);
     }, 0);
 
     if (userAnswer) {
       betterThanCount =
-        answersStats.find((answer) => answer.key > userAnswer)?.value || 0;
+        answersStats.find((answer) => answer.distance > userAnswer)?.count || 0;
       numberOfSameAnswers =
-        answersStats.find((answer) => answer.key === userAnswer)?.value || 0;
+        answersStats.find((answer) => answer.distance === userAnswer)?.count ||
+        0;
     }
 
     return {

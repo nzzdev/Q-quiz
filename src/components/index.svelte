@@ -15,6 +15,7 @@
   import MutliplieChoice from './input-multiple-choice/MultipleChoice.svelte';
   import NumberSlider from './number-slider/NumberSlider.svelte';
   import InputMapPoint from './input-map-point-guess/InputMapPoint.svelte';
+  import Heatmap from './Heatmap.svelte';
 
   export let componentConfiguration: QQuizSvelteProperties;
 

@@ -7,6 +7,7 @@
   import Statistic from './Statistic.svelte';
   import BaseElement from '../quiz-base-elelement/BaseElement.svelte';
   import { quizStore } from '@src/store/quiz.store';
+  import Heatmap from '../Heatmap.svelte';
 
   export let element: MapPointGuess;
 
@@ -171,9 +172,9 @@
     if (!isAnswered) {
       // Add type annotation for the event parameter
       if (marker) {
-        marker.setLatLng(e.latlng ); // Add type assertion for the latlng parameter
+        marker.setLatLng(e.latlng); // Add type assertion for the latlng parameter
       } else {
-        marker = new L.Marker(e.latlng , {
+        marker = new L.Marker(e.latlng, {
           // Add type assertion for the latlng parameter
           icon: markerPinIcon,
           draggable: true,
@@ -222,7 +223,7 @@
         >Antworten
       </button>
     {:else if marker}
-      <Statistic {element} userAnswer={marker} />
+      <Statistic {element} {map} userAnswer={marker} />
     {/if}
   </div>
 </BaseElement>
