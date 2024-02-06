@@ -4,7 +4,11 @@ import type {
   QuizElementType,
   ToolType,
 } from './enums';
-import type { QuizQuestionId, StatisticViewKey } from './types';
+import type {
+  MapPointGuessStatisticViewKey,
+  QuizQuestionId,
+  StatisticViewKey,
+} from './types';
 
 export interface QDoc {
   _id?: string;
@@ -358,6 +362,17 @@ export interface AnswerQueryOptions {
 export interface StatisticView {
   key: StatisticViewKey;
   value: number;
+}
+
+export interface MapPointGuessStatisticView {
+  key: MapPointGuessStatisticViewKey;
+  value: number;
+}
+
+export interface MapPointGuessStatistic {
+  distance: number;
+  latLng: Coordinate;
+  count: number;
 }
 
 export // Backend
