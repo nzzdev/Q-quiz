@@ -45,7 +45,6 @@ const route: ServerRoute = {
     tags: ['api'],
   },
   handler: () => {
-    console.log('GET /fixtures/data', fixtureData);
     return fixtureData;
   },
 };

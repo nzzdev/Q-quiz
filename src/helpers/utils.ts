@@ -1,5 +1,7 @@
 // import fetch from 'node-fetch';
 
+import { QuizElementType } from '@src/enums';
+
 // import { quizDb } from './db';
 // import type {
 //   AnswerNumberOption,
@@ -86,6 +88,14 @@
 //     return data.rows[0].value;
 //   });
 // }
+
+export function checkIsScoreQuestion(itemType: QuizElementType) {
+  return (
+    itemType !== QuizElementType.Cover &&
+    itemType !== QuizElementType.LastCard &&
+    itemType !== QuizElementType.NumberPoll
+  );
+}
 
 export function getPrecision(value: number) {
   let magicNumber = 1;

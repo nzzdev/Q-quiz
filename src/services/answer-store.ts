@@ -33,7 +33,7 @@ export class AnswerDatabase {
         }
       })
       .catch((couchError) => {
-        console.log(couchError);
+        console.error(couchError);
         return Boomm.badRequest(couchError.message);
       });
   }

@@ -2,12 +2,13 @@
   import { onMount } from 'svelte';
 
   import type { LastCard, QuizBaseQuestion, QuizeScore } from '@src/interfaces';
-  import { QuizElementType } from '@src/enums';
+
   import { quizStore } from '@src/store/quiz.store';
   import { ScoreService } from '@src/services/score-service';
 
   import QuestionIcon from '../../resources/question.svg';
   import ArticleRecommendations from '../quiz-base-elelement/ArticleRecommendations.svelte';
+  import { checkIsScoreQuestion } from '@src/helpers/utils';
 
   export let element: LastCard;
 
@@ -16,11 +17,7 @@
   onMount(() => {
     const scoreService = new ScoreService();
     const questions = $quizStore.items
-      .filter(
-        (item) =>
-          item.item.type !== QuizElementType.Cover &&
-          item.item.type !== QuizElementType.LastCard
-      )
+      .filter((item) => checkIsScoreQuestion(item.item.type))
       .map((item) => item.item as QuizBaseQuestion);
     score = scoreService.calculateScore(questions);
   });
@@ -31,9 +28,10 @@
   style="width: 100%;"
 >
   <h3 class="s-q-item__title q-quiz-last-card-title">
-    {#if element.isFinalScoreShown && score && score.achievedScore}
+    {#if element.isFinalScoreShown && score}
       <div class="s-font-text-s q-quiz-final-score">
-        Sie haben {score.achievedScore} von {score.maxScore} möglichen Punkten erzielt.
+        {score.lastCardTitle} Sie haben {score.achievedScore} von {score.maxScore}
+        möglichen Punkten erzielt.
       </div>
     {:else}
       {element.title || ''}

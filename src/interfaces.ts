@@ -313,7 +313,6 @@ export interface Multiplicators {
   multipleChoice: number;
   numberGuess: number;
   mapPointGuess: number;
-  numberPoll: number;
 }
 
 export interface AnswerNumberOption {

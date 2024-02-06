@@ -1,15 +1,22 @@
 import { distance, point, type Units } from '@turf/turf';
+
 import { multiplicators } from '@src/constants';
 import { QuizElementType } from '@src/enums';
 import type {
   AnswerGeoData,
   MapPointGuess,
-  MapPointGuessAnswer,
+  MultipleChoice,
   NumberGuess,
   QuizBaseQuestion,
   QuizeScore,
 } from '@src/interfaces';
+import type { QuestionScoreTypes } from '@src/types';
 
+/**
+ * Represents a service for calculating scores in a quiz
+ * for question types like multiple choice, number guess and map point guess.
+ *
+ */
 export class ScoreService {
   private calculateWorstAnswerDifference(question: QuizBaseQuestion) {
     if (question.type === QuizElementType.NumberGuess) {
@@ -18,9 +25,6 @@ export class ScoreService {
         numberGuestQuestion.answer - numberGuestQuestion.min,
         numberGuestQuestion.max - numberGuestQuestion.answer
       );
-    }
-    if (question.type === QuizElementType.NumberPoll) {
-      return 1;
     }
     if (question.type === QuizElementType.MapPointGuess) {
       const mapPointAnswer = question as MapPointGuess;
@@ -55,7 +59,7 @@ export class ScoreService {
 
   private calculateAchievedScore(
     answerQuality: number,
-    questionType: QuizElementType
+    questionType: QuestionScoreTypes
   ): number {
     const turningPoint = 0.6; // x=y
     // slope was pre-calculated with a defined point of worst estimation quality of (0.08, 0)
@@ -68,33 +72,24 @@ export class ScoreService {
 
     const lowerBoundX = (0 - lowerConstant) / lowerSlope; // 0 = ax + b, for a = lowerSlope, b = lowerConstant and y = 0 -> no negative values
     const upperBoundX = (1 - upperConstant) / upperSlope; // 0 = ax + b, for a = upperSlope, b = upperConstant and y = 1 -> no values over 1
+    const multiplicator = multiplicators[questionType];
 
-    if (
-      questionType !== QuizElementType.Cover &&
-      questionType !== QuizElementType.LastCard
-    ) {
-      const multiplicator = multiplicators[questionType];
-
-      if (answerQuality < lowerBoundX) {
-        return 0;
-      } else if (
-        lowerBoundX <= answerQuality &&
-        answerQuality <= turningPoint
-      ) {
-        return (
-          multiplicator *
-          (lowerSlope * answerQuality -
-            (lowerSlope * turningPoint - turningPoint))
-        );
-      } else if (turningPoint < answerQuality && answerQuality <= upperBoundX) {
-        return (
-          multiplicator *
-          (upperSlope * answerQuality -
-            (upperSlope * turningPoint - turningPoint))
-        );
-      } else if (answerQuality > upperBoundX) {
-        return multiplicator;
-      }
+    if (answerQuality < lowerBoundX) {
+      return 0;
+    } else if (lowerBoundX <= answerQuality && answerQuality <= turningPoint) {
+      return (
+        multiplicator *
+        (lowerSlope * answerQuality -
+          (lowerSlope * turningPoint - turningPoint))
+      );
+    } else if (turningPoint < answerQuality && answerQuality <= upperBoundX) {
+      return (
+        multiplicator *
+        (upperSlope * answerQuality -
+          (upperSlope * turningPoint - turningPoint))
+      );
+    } else if (answerQuality > upperBoundX) {
+      return multiplicator;
     }
     // TODO: new, check if this is correct
     return 0;
@@ -155,7 +150,7 @@ export class ScoreService {
   // Get the quality of the answer of mulitple choice, number poll and map point guess questions.
   private getAnswerQuality(
     question: QuizBaseQuestion,
-    answer: string | number | MapPointGuessAnswer | undefined = undefined
+    answer: string | number | AnswerGeoData | undefined
   ) {
     const worstAnswerDifference = this.calculateWorstAnswerDifference(question);
 
@@ -164,9 +159,6 @@ export class ScoreService {
         question.type === QuizElementType.MultipleChoice &&
         question.userAnswer.answer === answer
       ) {
-        return 1;
-      }
-      if (question.type === QuizElementType.NumberPoll) {
         return 1;
       }
       if (
@@ -202,27 +194,36 @@ export class ScoreService {
       achievedScore: 0,
     };
 
-    questions.forEach((question) => {
-      if (
-        question.type !== QuizElementType.Cover &&
-        question.type !== QuizElementType.LastCard &&
-        // TODO: check .userAnswer
-        question.userAnswer !== undefined
-      ) {
-        score.maxScore += multiplicators[question.type];
+    questions
+      .filter(
+        (question) =>
+          question.type !== QuizElementType.Cover &&
+          question.type !== QuizElementType.LastCard
+      )
+      .forEach((question) => {
+        const questionTyped = question as
+          | NumberGuess
+          | MultipleChoice
+          | MapPointGuess;
+        score.maxScore += multiplicators[questionTyped.type];
 
-        if (question.type === QuizElementType.NumberGuess) {
-          const numberGuessQuestion = question as NumberGuess;
-          score.achievedScore += this.getNumberGuessResult(numberGuessQuestion);
-        } else {
-          const answerQuality = this.getAnswerQuality(question);
-          score.achievedScore += this.calculateAchievedScore(
-            answerQuality,
-            question.type
-          );
+        if (questionTyped.userAnswer !== undefined) {
+          if (questionTyped.type === QuizElementType.NumberGuess) {
+            const numberGuessQuestion = questionTyped as NumberGuess;
+            score.achievedScore +=
+              this.getNumberGuessResult(numberGuessQuestion);
+          } else {
+            const answerQuality = this.getAnswerQuality(
+              questionTyped,
+              questionTyped.userAnswer.answer
+            );
+            score.achievedScore += this.calculateAchievedScore(
+              answerQuality,
+              questionTyped.type
+            );
+          }
         }
-      }
-    });
+      });
 
     score.achievedScore = Math.round(score.achievedScore);
     if (score.achievedScore > score.maxScore) {
