@@ -136,6 +136,7 @@ export interface Cover extends BaseElement {
   themeTitle?: string;
   themeSubtitle?: string;
   image?: QuizImage;
+  color?: string;
 }
 
 export interface MultipleChoice extends QuizBaseQuestion {
