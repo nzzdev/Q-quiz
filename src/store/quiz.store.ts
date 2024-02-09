@@ -92,6 +92,7 @@ const store = () => {
       element: MultipleChoice | SliderQuestion | MapPointGuess,
       answer: DBAnswerMapPointGuessValue | string | number
     ) => {
+      const storeItems = get({ subscribe });
       const data: DBAnswerData = {
         itemId: qItemId,
         questionId: element.id,
@@ -99,7 +100,7 @@ const store = () => {
         value: answer,
       };
 
-      return fetch(`${state.configuration.toolBaseUrl}/answer`, {
+      return fetch(`${storeItems.configuration.toolBaseUrl}/answer`, {
         method: 'POST',
         headers: {
           'content-type': 'application/json',

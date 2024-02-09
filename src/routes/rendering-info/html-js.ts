@@ -86,6 +86,10 @@ const route: ServerRoute = {
     const options = config.options;
     const width = getExactPixelWidth(toolRuntimeConfig);
 
+    if (process.env.APP_ENV === 'localhost') {
+      toolRuntimeConfig.toolBaseUrl = 'http://localhost:3000';
+    }
+
     const props: QQuizSvelteProperties = {
       item: transform(config), // To make renderingInfoScripts working. refactor later.
       config,
