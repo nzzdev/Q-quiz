@@ -325,6 +325,13 @@ export interface AnswerNumberOption {
   reduce?: boolean;
 }
 
+export interface ButtonColorStyle {
+  Text: string;
+  Background: string;
+  Hover: string;
+  Disabled: string;
+}
+
 // DB
 export interface DBOptions {
   auth?: DBAuthOptions;

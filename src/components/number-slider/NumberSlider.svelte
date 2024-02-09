@@ -4,6 +4,7 @@
   import BaseElement from '../quiz-base-elelement/BaseElement.svelte';
   import Statistic from './Statistic.svelte';
   import { quizStore } from '@src/store/quiz.store';
+  import Button from '../atomic/Button.svelte';
 
   export let element: SliderQuestion;
   export let toolBaseUrl: string;
@@ -83,12 +84,7 @@
         </div>
       </div>
 
-      <button
-        class="s-button s-button--small q-quiz-answer-button"
-        on:click={getResult}
-      >
-        <span>Antworten</span>
-      </button>
+      <Button on:action={getResult}>Antworten</Button>
     {/if}
   </div>
 </BaseElement>

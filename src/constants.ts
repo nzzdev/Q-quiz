@@ -7,6 +7,26 @@ export const multiplicators: Multiplicators = {
 };
 
 export const ColorDefaults = {
-  CoverBackgroundColor: '#5A5ED1',
-  CoverTextColor: '#fff',
+  Cover: {
+    Color: {
+      Background: '#5A5ED1',
+      Text: '#ffffff',
+    },
+    Button: {
+      Color: {
+        Text: '#2C32BD',
+        Background: '#ffffff',
+        Hover: '#fafafa',
+        Disabled: '#f7f7f7',
+      },
+    },
+  },
+  Button: {
+    Color: {
+      Text: '#ffffff',
+      Background: '#000000',
+      Hover: '#333333',
+      Disabled: '#999999',
+    },
+  },
 };

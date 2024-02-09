@@ -4,6 +4,7 @@
   import Answer from './Answer.svelte';
   import BaseElement from '../quiz-base-elelement/BaseElement.svelte';
   import { quizStore } from '@src/store/quiz.store';
+  import Button from '../atomic/Button.svelte';
 
   export let element: MultipleChoice;
   export let toolBaseUrl: string;
@@ -50,13 +51,7 @@
   {:else}
     <div class="q-quiz-input">
       {#each shuffledAnswers as answer}
-        <button
-          class="s-button s-button--secondary s-button--small q-quiz-answer-button"
-          value={answer}
-          on:click={() => getResult(answer)}
-        >
-          <span style="pointer-events: none;">{answer}</span>
-        </button>
+        <Button on:action={() => getResult(answer)}>{answer}</Button>
       {/each}
     </div>
   {/if}

@@ -8,7 +8,7 @@
 
   export let element: Cover;
 
-  $: coverColor = element.color || ColorDefaults.CoverBackgroundColor;
+  $: coverColor = element.color || ColorDefaults.Cover.Color.Background;
 </script>
 
 <div
@@ -19,13 +19,13 @@
     <div class="cover-theme">
       {#if element.themeTitle}
         <div class="nzz-title">
-          <h3 class="s-font-title" style:color={ColorDefaults.CoverTextColor}>
+          <h3 class="s-font-title" style:color={ColorDefaults.Cover.Color.Text}>
             {element.themeTitle}
           </h3>
         </div>
       {/if}
       {#if element.themeSubtitle}
-        <h4 class="s-font-title-s" style:color={ColorDefaults.CoverTextColor}>
+        <h4 class="s-font-title-s" style:color={ColorDefaults.Cover.Color.Text}>
           {element.themeSubtitle}
         </h4>
       {/if}
@@ -38,16 +38,17 @@
   {/if}
   <h3
     class="quiz-title s-font-title"
-    style:color={ColorDefaults.CoverTextColor}
+    style:color={ColorDefaults.Cover.Color.Background}
   >
     {#if element.title}{element.title}{/if}
   </h3>
-  <Button
-    showArrowRight={true}
-    on:action={() => quizStore.stepForward()}
-    backgroundColor={'#fff'}
-    color={'#2C32BD'}>Das Quiz starten</Button
-  >
+  <div class="cover-button">
+    <Button
+      showArrowRight={true}
+      on:action={() => quizStore.stepForward()}
+      colorStyle={ColorDefaults.Cover.Button.Color}>Das Quiz starten</Button
+    >
+  </div>
 </div>
 
 <style lang="scss">
@@ -58,6 +59,10 @@
     &-theme {
       padding: 25px 0;
       text-align: center;
+    }
+
+    &-button {
+      padding: 0 25px;
     }
   }
   .q-quiz__cover {

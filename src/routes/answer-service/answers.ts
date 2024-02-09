@@ -19,11 +19,9 @@ const route: ServerRoute = {
         return await database.getMapPointGuessAnswer(questionId);
       }
       return await database.getAnswer(type, questionId);
-    } catch (e) {
-      console.log(`error in stats route: ${e}`);
-      // TODO
-      // @ts-ignore
-      return Boom.badRequest(e);
+    } catch (error) {
+      console.error(`error in stats route: ${error}`);
+      return Boom.badRequest(error as Error);
     }
   },
 };

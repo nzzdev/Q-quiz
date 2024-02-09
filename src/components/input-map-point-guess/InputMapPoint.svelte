@@ -7,7 +7,7 @@
   import Statistic from './Statistic.svelte';
   import BaseElement from '../quiz-base-elelement/BaseElement.svelte';
   import { quizStore } from '@src/store/quiz.store';
-  import Heatmap from '../Heatmap.svelte';
+  import Button from '../atomic/Button.svelte';
 
   export let element: MapPointGuess;
 
@@ -29,6 +29,7 @@
 
   let mapContainer: HTMLElement;
   let answerButton: HTMLButtonElement;
+  let buttonDisabled = true;
   let map: Map;
   let mapBounds: L.LatLngBounds;
   let marker: Marker<any> | null = null;
@@ -182,6 +183,7 @@
       }
       map.addLayer(marker);
       answerButton.disabled = false;
+      buttonDisabled = false;
     }
   }
 
@@ -215,13 +217,9 @@
       style="height: 300px;"
     ></div>
     {#if !isAnswered}
-      <button
-        bind:this={answerButton}
-        on:click={getResult}
-        class="s-button s-button--small q-quiz-answer-button"
-        disabled
-        >Antworten
-      </button>
+      <Button on:action={() => getResult()} bind:disabled={buttonDisabled}
+        >Antworten</Button
+      >
     {:else if marker}
       <Statistic {element} {map} userAnswer={marker} />
     {/if}
