@@ -28,7 +28,6 @@
   );
 
   let mapContainer: HTMLElement;
-  let answerButton: HTMLButtonElement;
   let buttonDisabled = true;
   let map: Map;
   let mapBounds: L.LatLngBounds;
@@ -182,7 +181,6 @@
         });
       }
       map.addLayer(marker);
-      answerButton.disabled = false;
       buttonDisabled = false;
     }
   }

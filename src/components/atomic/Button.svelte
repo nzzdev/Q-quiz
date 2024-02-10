@@ -8,7 +8,6 @@
   export let colorStyle: ButtonColorStyle = ColorDefaults.Button.Color;
   export let disabled: boolean = false;
 
-  $: console.log(disabled);
   const dispatch = createEventDispatcher();
 
   function action() {

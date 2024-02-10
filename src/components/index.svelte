@@ -36,7 +36,7 @@
         {#if element.item.type === QuizElementType.Cover}
           <CoverComponent element={element.item} />
         {/if}
-        <div in:fly={{ x: '100%', delay: 350 }} out:fly={{ x: '-100%' }}>
+        <div in:fly={{ x: '100%', delay: 380 }} out:fly={{ x: '-100%' }}>
           <QuestionProgress />
           {#if element.item.type === QuizElementType.LastCard}
             <LastCardComponent element={element.item} />
