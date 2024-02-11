@@ -7,6 +7,7 @@ export const multiplicators: Multiplicators = {
 };
 
 export const ColorDefaults = {
+  Background: '#ECEDF2',
   Cover: {
     Color: {
       Background: '#5A5ED1',
@@ -19,6 +20,11 @@ export const ColorDefaults = {
         Hover: '#fafafa',
         Disabled: '#f7f7f7',
       },
+    },
+  },
+  QuizProgress: {
+    Color: {
+      Text: '#707070',
     },
   },
   Button: {

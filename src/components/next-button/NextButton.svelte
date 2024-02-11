@@ -2,8 +2,9 @@
   import { onMount } from 'svelte';
 
   import { quizStore } from '@src/store/quiz.store';
-  import ChevronRight from '../../resources/chevron-right.svg';
+
   import Text from './Text.svelte';
+  import Button from '../atomic/Button.svelte';
 
   export let defaultVisibility = true;
   export let isButtonWithIcon = false;
@@ -36,25 +37,9 @@
   class="button-container"
 >
   {#if isButtonWithIcon}
-    <button
-      class="q-quiz-button q-quiz-button--horizontal q-quiz-button--right s-font-note-s"
-      on:click={nextQuestion}
+    <Button showArrowRight={true} on:action={() => nextQuestion()}
+      >Nächste Frage anzeigen</Button
     >
-      <div class="q-quiz-button__content">
-        <span>
-          <Text
-            actualStep={$quizStore.step}
-            totalSteps={$quizStore.numberQuestions}
-            hasScore={$quizStore.hasScore}
-          />
-        </span>
-        <div
-          class="q-quiz-button__icon q-quiz-button__icon s-button s-button--small s-button--circular"
-        >
-          {@html ChevronRight}
-        </div>
-      </div>
-    </button>
   {:else}
     <button
       class:q-quiz-button--hidden={$quizStore.hasCover}

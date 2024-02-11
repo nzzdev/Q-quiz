@@ -1,17 +1,23 @@
 <script lang="ts">
   import { quizStore } from '@src/store/quiz.store';
+  import { ColorDefaults } from '@src/constants';
+
   import NextButton from './next-button/NextButton.svelte';
-  import { number } from 'joi';
+
+  export let isShowNextButton = true;
 </script>
 
-<header
+<nav
   class:q-quiz-header--is-empty={$quizStore.hasCover && $quizStore.step === 0}
-  class="q-quiz-header s-color-gray-4 {$quizStore.isMultiQuiz
+  class="q-quiz-container q-quiz-header s-color-gray-4 {$quizStore.isMultiQuiz
     ? 'q-quiz-multi-header'
     : 'q-quiz-single-header'}"
 >
   {#if $quizStore.isMultiQuiz}
-    <div class="q-quiz-header__title s-font-note-s">
+    <div
+      class="q-quiz-header__title s-font-note-s"
+      style:color={ColorDefaults.QuizProgress.Color.Text}
+    >
       {#if $quizStore.step > $quizStore.numberQuestions}
         Fertig!
       {:else if $quizStore.step === $quizStore.numberQuestions}
@@ -20,23 +26,20 @@
         Frage {$quizStore.step} / {$quizStore.numberQuestions}
       {/if}
     </div>
-    <div class="next-button">
-      <NextButton />
-    </div>
+    {#if isShowNextButton}
+      <div class="next-button">
+        <NextButton />
+      </div>
+    {/if}
   {/if}
-</header>
+</nav>
 
 <style lang="scss">
   .q-quiz-header {
-    border-bottom: 1px solid currentColor;
-    margin-bottom: 16px;
+    // TODO: 25px to variable as global gap
+    padding-bottom: 25px;
     opacity: 1;
     transition: opacity 0.2s ease-in;
-
-    .next-button {
-      display: flex;
-      justify-content: flex-end;
-    }
   }
   .q-quiz-header--is-empty {
     border-bottom-color: transparent;
@@ -48,18 +51,7 @@
   .q-quiz-multi-header {
     display: flex;
 
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
-
-    > * {
-      width: 33.3333%;
-      flex-grow: 0;
-    }
-
-    padding-bottom: 8px;
-  }
-
-  .q-quiz-header__title {
-    text-align: center;
   }
 </style>

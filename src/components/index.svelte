@@ -9,13 +9,13 @@
   import { QuizElementType } from '@src/enums';
 
   import QuestionProgress from './QuestionProgress.svelte';
-  import NextButton from './next-button/NextButton.svelte';
 
   import CoverComponent from './cover/Cover.svelte';
   import LastCardComponent from './last-card/LastCard.svelte';
   import MutliplieChoice from './input-multiple-choice/MultipleChoice.svelte';
   import NumberSlider from './number-slider/NumberSlider.svelte';
   import InputMapPoint from './input-map-point-guess/InputMapPoint.svelte';
+  import { ColorDefaults } from '@src/constants';
 
   export let componentConfiguration: QQuizSvelteProperties;
 
@@ -36,8 +36,11 @@
         {#if element.item.type === QuizElementType.Cover}
           <CoverComponent element={element.item} />
         {/if}
-        <div in:fly={{ x: '100%', delay: 380 }} out:fly={{ x: '-100%' }}>
-          <QuestionProgress />
+        <div
+          in:fly={{ x: '100%', delay: 380 }}
+          out:fly={{ x: '-100%' }}
+          style:background-color={ColorDefaults.Background}
+        >
           {#if element.item.type === QuizElementType.LastCard}
             <LastCardComponent element={element.item} />
           {:else if element.item.type === QuizElementType.MultipleChoice}
@@ -56,7 +59,5 @@
         </div>
       {/if}
     {/each}
-
-    <NextButton isButtonWithIcon={true} defaultVisibility={false} />
   {/if}
 </div>
