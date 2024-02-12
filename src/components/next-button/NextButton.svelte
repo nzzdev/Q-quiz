@@ -19,6 +19,12 @@
     if (!defaultVisibility) {
       togglenNextButton();
     }
+
+    const mainContainer = document.querySelector('#q-quiz-elements');
+
+    if (mainContainer) {
+      mainContainer.scrollIntoView();
+    }
   };
 
   const togglenNextButton = (): void => {

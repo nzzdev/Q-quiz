@@ -37,7 +37,7 @@
           <CoverComponent element={element.item} />
         {/if}
         <div
-          class="question-container"
+          id="q-quiz-elements"
           in:fly={{ x: '100%', delay: 380 }}
           out:fly={{ x: '-100%' }}
         >
@@ -64,7 +64,7 @@
 
 <style lang="scss">
   @import '../styles/variables.scss';
-  .question-container {
+  #q-quiz-elements {
     background-color: $questionBackground;
   }
 </style>
