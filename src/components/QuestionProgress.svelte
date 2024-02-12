@@ -36,8 +36,6 @@
 
 <style lang="scss">
   .q-quiz-header {
-    // TODO: 25px to variable as global gap
-    padding-bottom: 25px;
     opacity: 1;
     transition: opacity 0.2s ease-in;
   }

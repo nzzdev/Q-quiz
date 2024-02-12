@@ -47,6 +47,7 @@
     display: flex;
     align-items: safe;
     width: 100%;
+    padding: 12px;
     cursor: pointer;
     background-color: var(--q-quiz-button-bg-color);
 

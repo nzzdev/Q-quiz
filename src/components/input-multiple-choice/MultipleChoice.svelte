@@ -1,10 +1,10 @@
 <script lang="ts">
   import type { MultipleChoice } from '@src/interfaces';
-
-  import Answer from './Answer.svelte';
-  import BaseElement from '../quiz-base-elelement/BaseElement.svelte';
   import { quizStore } from '@src/store/quiz.store';
+
   import Button from '../atomic/Button.svelte';
+  import BaseElement from '../quiz-base-elelement/BaseElement.svelte';
+  import Answer from './Answer.svelte';
 
   export let element: MultipleChoice;
   export let toolBaseUrl: string;
@@ -50,9 +50,18 @@
     />
   {:else}
     <div class="q-quiz-input">
-      {#each shuffledAnswers as answer}
-        <Button on:action={() => getResult(answer)}>{answer}</Button>
+      {#each shuffledAnswers as answer, idx}
+        <div class:answer-button={idx < shuffledAnswers.length - 1}>
+          <Button on:action={() => getResult(answer)}>{answer}</Button>
+        </div>
       {/each}
     </div>
   {/if}
 </BaseElement>
+
+<style lang="scss">
+  @import '../../styles/variables';
+  .answer-button {
+    margin-bottom: $atomicGap;
+  }
+</style>
