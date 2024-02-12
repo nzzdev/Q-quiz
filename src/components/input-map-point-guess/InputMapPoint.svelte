@@ -208,12 +208,7 @@
       Klicken Sie auf die gewünschte Stelle auf der Karte, um Ihre Antwort
       einzugeben.
     </div>
-    <div
-      id="map"
-      bind:this={mapContainer}
-      class="q-quiz-map-container"
-      style="height: 300px;"
-    ></div>
+    <div id="map" bind:this={mapContainer} class="q-quiz-map-container"></div>
     {#if !isAnswered}
       <Button on:action={() => getResult()} bind:disabled={buttonDisabled}
         >Antworten</Button
@@ -226,6 +221,7 @@
 
 <style lang="scss">
   .q-quiz-map-container {
+    height: 300px;
     margin: 8px 0 16px 0;
   }
 </style>

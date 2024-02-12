@@ -34,14 +34,11 @@
 </div>
 
 <style lang="scss">
+  @import '../../styles/variables';
   .button-container {
     width: 100%;
     display: flex;
     justify-content: center;
-  }
-  .button__disabled {
-    background-color: var(--q-quiz-button-disabled-color);
-    cursor: not-allowed;
   }
   .button {
     display: flex;
@@ -54,6 +51,13 @@
     &:hover {
       opacity: 1;
       background-color: var(--q-quiz-button-hover-color);
+    }
+
+    &:disabled,
+    &:disabled:hover {
+      background-color: var(--q-quiz-button-disabled-color);
+      border-color: #848484;
+      cursor: not-allowed;
     }
 
     &-icon {
