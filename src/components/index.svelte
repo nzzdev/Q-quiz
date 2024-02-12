@@ -37,9 +37,9 @@
           <CoverComponent element={element.item} />
         {/if}
         <div
+          class="question-container"
           in:fly={{ x: '100%', delay: 380 }}
           out:fly={{ x: '-100%' }}
-          style:background-color={ColorDefaults.Background}
         >
           {#if element.item.type === QuizElementType.LastCard}
             <LastCardComponent element={element.item} />
@@ -61,3 +61,10 @@
     {/each}
   {/if}
 </div>
+
+<style lang="scss">
+  @import '../styles/variables.scss';
+  .question-container {
+    background-color: $questionBackground;
+  }
+</style>

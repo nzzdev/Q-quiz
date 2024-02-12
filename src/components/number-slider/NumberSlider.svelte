@@ -9,7 +9,10 @@
   export let element: SliderQuestion;
   export let toolBaseUrl: string;
 
-  let userAnswer = (element.max - element.min) / 2 + element.min;
+  let userAnswer = round(
+    (element.max - element.min) / 2 + element.min,
+    countDecimalPlaces(element.step)
+  );
   let isAnswered = false;
   $: labelPosition = !userAnswer
     ? 50
@@ -21,6 +24,20 @@
       .then(() => {
         isAnswered = quizStore.isAnswered();
       });
+  }
+
+  function round(value: number, exponent: number) {
+    let roundCount = 1;
+    if (exponent > 0) {
+      roundCount = Math.pow(10, exponent);
+    }
+    return Math.floor((value * roundCount) / roundCount);
+  }
+
+  function countDecimalPlaces(num: number): number {
+    const str = num.toString();
+    const index = str.indexOf('.');
+    return index !== -1 ? str.length - index - 1 : 0;
   }
 </script>
 
@@ -57,7 +74,7 @@
         <div
           class="
         q-quiz-input-range-min
-        s-font-note-s s-font-note-s--light
+        s-font-note-s s-font-note-s--strong
         s-font-note--tabularnums
       "
         >
@@ -71,7 +88,7 @@
         <div
           class="
         q-quiz-input-range-max
-        s-font-note-s s-font-note-s--light
+        s-font-note-s s-font-note-s--strong
         s-font-note--tabularnums
       "
         >
@@ -90,18 +107,43 @@
 </BaseElement>
 
 <style lang="scss">
+  @import '../../styles/variables.scss';
   $basis-margin: 4px;
+
   .q-quiz-input-range-container {
     position: relative;
     padding-top: 1em;
-  }
 
+    input[type='range'] {
+      -webkit-appearance: none;
+      appearance: none;
+      background: transparent;
+    }
+
+    /***** Track Styles *****/
+    input[type='range']::-webkit-slider-runnable-track,
+    input[type='range']::-moz-range-track {
+      background-color: $darkerGray;
+    }
+
+    /***** Thumb Styles *****/
+    input[type='range']::-webkit-slider-thumb,
+    input[type='range']::-moz-range-thumb {
+      background-color: $primaryColor;
+      border: 2px solid $questionBackground;
+      border-radius: 50%;
+    }
+  }
   .q-quiz-input-range-container::after {
     content: '';
     display: table;
     clear: left;
   }
 
+  .q-quiz-input-range-min,
+  .q-quiz-input-range-max {
+    color: $darkerGray;
+  }
   .q-quiz-input-range-min {
     float: left;
     padding-top: 8px;
@@ -114,31 +156,19 @@
 
   .q-quiz-input-range-position-label-container {
     position: relative;
-    margin: 0 14px 9px 14px;
     height: 1em;
-  }
-
-  .q-quiz-input-range-position-label-container {
     margin: 0 14px (9px + ($basis-margin * 3));
   }
 
   .q-quiz-input-range-position-label {
     position: absolute;
-    width: 200px;
+    max-width: 200px;
+    width: max-content;
     text-align: center;
     transform: translateX(-50%);
-  }
-
-  .q-quiz-input-range-position-label-container {
-    margin: 0 14px (9px + ($basis-margin * 3));
-  }
-
-  .q-quiz-input-range-position-label {
-    background-color: currentColor;
-    width: max-content;
-    max-width: 200px;
     border-radius: 4px;
     text-align: center;
+    background-color: $primaryColor;
   }
 
   .q-quiz-input-range-position-label__label {

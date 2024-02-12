@@ -9,15 +9,12 @@
 
 <nav
   class:q-quiz-header--is-empty={$quizStore.hasCover && $quizStore.step === 0}
-  class="q-quiz-container q-quiz-header s-color-gray-4 {$quizStore.isMultiQuiz
+  class="q-quiz-container q-quiz-header {$quizStore.isMultiQuiz
     ? 'q-quiz-multi-header'
     : 'q-quiz-single-header'}"
 >
   {#if $quizStore.isMultiQuiz}
-    <div
-      class="q-quiz-header__title s-font-note-s"
-      style:color={ColorDefaults.QuizProgress.Color.Text}
-    >
+    <div class="question-state s-font-note-s">
       {#if $quizStore.step > $quizStore.numberQuestions}
         Fertig!
       {:else if $quizStore.step === $quizStore.numberQuestions}
@@ -35,6 +32,10 @@
 </nav>
 
 <style lang="scss">
+  @import '../styles/variables.scss';
+  .question-state {
+    color: $darkerGray;
+  }
   .q-quiz-header {
     opacity: 1;
     transition: opacity 0.2s ease-in;
