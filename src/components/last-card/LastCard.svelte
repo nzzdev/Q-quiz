@@ -65,3 +65,13 @@
     </div>
   {/if}
 </div>
+
+<style lang="scss">
+  .q-quiz__last-card {
+    padding: 20px;
+    // TODO: checkout with design
+    // border-radius: 8px;
+    // background-color: white;
+    // box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+</style>

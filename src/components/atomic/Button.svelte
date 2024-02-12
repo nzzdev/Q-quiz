@@ -38,13 +38,14 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    padding-bottom: 30px;
   }
   .button__disabled {
     background-color: var(--q-quiz-button-disabled-color);
     cursor: not-allowed;
   }
   .button {
+    display: flex;
+    align-items: safe;
     width: 100%;
     cursor: pointer;
     background-color: var(--q-quiz-button-bg-color);

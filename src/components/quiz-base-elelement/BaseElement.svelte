@@ -31,7 +31,6 @@
     <Subtitle subtitle={element.questionSubTitle} />
   </div>
 {/if}
-
 <!-- Slot for quiz type element -->
 <div class="q-quiz-container">
   <slot />
@@ -50,9 +49,11 @@
     </div>
   {/if}
 {/if}
+<!-- TODO: Find a better solution -->
 {#if isAnswered}
   <div class="q-quiz-container">
     <NextButton isButtonWithIcon={true} />
   </div>
 {/if}
 <QuestionProgress isShowNextButton={!isAnswered} />
+<!-- /Find a better solution -->

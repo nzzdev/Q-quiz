@@ -1,4 +1,18 @@
+@import 'variables';
+
 .q-quiz {
+  // new stuff
+  &-gap-column {
+    margin-right: $gap;
+    margin-left: $gap;
+  }
+
+  &-gap-row {
+    margin-bottom: $gap;
+  }
+
+  // /new stuff
+
   *,
   *::after,
   *::before {
