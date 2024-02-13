@@ -1,10 +1,14 @@
 <script lang="ts">
+  import CollapseText from '../atomic/CollapseText.svelte';
+
   export let introduction: string;
 </script>
 
-<h3 class="s-font-text-s q-quiz-question-introduction">
-  {introduction}
-</h3>
+<CollapseText>
+  <h3 class="s-font-text-s q-quiz-question-introduction">
+    {introduction}
+  </h3>
+</CollapseText>
 
 <style lang="scss">
   .q-quiz-question-introduction {

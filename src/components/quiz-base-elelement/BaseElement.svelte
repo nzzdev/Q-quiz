@@ -8,6 +8,7 @@
   import ArticleRecommendations from './ArticleRecommendations.svelte';
   import NextButton from '../next-button/NextButton.svelte';
   import QuestionProgress from '../QuestionProgress.svelte';
+  import CollapseText from '../atomic/CollapseText.svelte';
 
   export let element: QuizBaseQuestion;
   export let isAnswered: boolean;
@@ -38,10 +39,12 @@
   </div>
   {#if isAnswered}
     {#if element.answerText}
-      <div
-        class="q-quiz-gap-column q-quiz-gap-row q-quiz-result-answer-text s-font-text-s"
-      >
-        {element.answerText}
+      <div class="q-quiz-gap-column q-quiz-gap-row">
+        <CollapseText>
+          <div class="q-quiz-result-answer-text s-font-text-s">
+            {element.answerText}
+          </div>
+        </CollapseText>
       </div>
     {/if}
     {#if element.articleRecommendations}

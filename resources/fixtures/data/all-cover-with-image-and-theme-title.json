@@ -58,6 +58,7 @@
     {
       "id": "quiz-0-1503673375520-572013568",
       "type": "numberGuess",
+      "introduction": "Short introduction",
       "image": {},
       "articleRecommendations": [],
       "question": "Temperatur",
