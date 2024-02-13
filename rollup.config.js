@@ -58,7 +58,7 @@ const frontendConfig = {
       },
     }),
     nodeResolve({ browser: true }),
-    // terser(),
+    terser(),
 
     alias({
       entries: [
