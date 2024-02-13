@@ -32,6 +32,7 @@ const route: ServerRoute = {
         const item = payloadTyped.item;
         const toolRuntimeConfig = payloadTyped.toolRuntimeConfig;
 
+        console.log('payloadTyped', payloadTyped);
         if (
           typeof payloadTyped !== 'object' ||
           typeof item !== 'object' ||
