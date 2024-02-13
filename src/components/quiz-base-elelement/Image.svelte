@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { quizStores } from '@src/store/quiz.store';
+  import { quizStores, storeUuid } from '@src/store/quiz.store';
   import { containerWidthStore } from '@src/store/container.store';
 
   import type { QuizImage } from '@src/interfaces';
@@ -7,7 +7,7 @@
 
   export let image: QuizImage;
 
-  const quizStore = quizStores.main;
+  const quizStore = quizStores[storeUuid];
 
   $: images = getImageUrls(
     image,

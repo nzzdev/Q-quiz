@@ -2,7 +2,7 @@
   import L, { Marker } from 'leaflet';
   import { onMount } from 'svelte';
 
-  import { quizStores } from '@src/store/quiz.store';
+  import { quizStores, storeUuid } from '@src/store/quiz.store';
   import type {
     MapPointGuess,
     MapPointGuessStatistic,
@@ -18,7 +18,7 @@
   export let userAnswer: Marker<any>;
   export let map: L.Map;
 
-  const quizStore = quizStores.main;
+  const quizStore = quizStores[storeUuid];
 
   let distance: number;
   let isCorrectAnswer: boolean;

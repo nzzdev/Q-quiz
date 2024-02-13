@@ -3,7 +3,7 @@
 
   import type { LastCard, QuizBaseQuestion, QuizeScore } from '@src/interfaces';
 
-  import { quizStores } from '@src/store/quiz.store';
+  import { quizStores, storeUuid } from '@src/store/quiz.store';
   import { ScoreService } from '@src/services/score-service';
 
   import QuestionIcon from '../../resources/question.svg';
@@ -12,7 +12,7 @@
 
   export let element: LastCard;
 
-  const quizStore = quizStores.main;
+  const quizStore = quizStores[storeUuid];
 
   let score: QuizeScore;
 

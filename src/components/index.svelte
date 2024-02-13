@@ -2,7 +2,7 @@
   import { onMount } from 'svelte';
   import { fly } from 'svelte/transition';
 
-  import { quizStores } from '@src/store/quiz.store';
+  import { quizStores, storeUuid } from '@src/store/quiz.store';
 
   import type { QQuizSvelteProperties } from '@src/interfaces';
   import { containerWidthStore } from '@src/store/container.store';
@@ -19,7 +19,7 @@
 
   export let componentConfiguration: QQuizSvelteProperties;
 
-  const quizStore = quizStores.main;
+  const quizStore = quizStores[storeUuid];
 
   let containerWidth: number;
 

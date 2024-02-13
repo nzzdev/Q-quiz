@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
-  import { quizStores } from '@src/store/quiz.store';
+  import { quizStores, storeUuid } from '@src/store/quiz.store';
 
   import Text from './Text.svelte';
   import Button from '../atomic/Button.svelte';
@@ -10,7 +10,7 @@
   export let isButtonWithIcon = false;
 
   let isVisible = true;
-  let quizStore = quizStores.main;
+  const quizStore = quizStores[storeUuid];
 
   const nextQuestion = (): void => {
     if ($quizStore.step <= $quizStore.numberQuestions) {

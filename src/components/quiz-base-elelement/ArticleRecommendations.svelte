@@ -1,10 +1,10 @@
 <script lang="ts">
   import type { ArticleRecommendations, Metadata } from '@src/interfaces';
-  import { quizStores } from '@src/store/quiz.store';
+  import { quizStores, storeUuid } from '@src/store/quiz.store';
 
   export let recommendations: ArticleRecommendations[];
 
-  const quizStore = quizStores.main;
+  const quizStore = quizStores[storeUuid];
 
   async function getLDArticle(articleId: string): Promise<Metadata> {
     return await fetch(
