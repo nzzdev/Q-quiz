@@ -1,14 +1,12 @@
 <script lang="ts">
   import type { Cover } from '@src/interfaces';
   import { ColorDefaults } from '@src/constants';
-  import { quizStores, storeUuid } from '@src/store/quiz.store';
 
   import Image from '../quiz-base-elelement/Image.svelte';
   import Button from '../atomic/Button.svelte';
+  import { quizStore } from '../store.svelte';
 
   export let element: Cover;
-
-  const quizStore = quizStores[storeUuid];
 
   $: coverColor = element.color || ColorDefaults.Cover.Color.Background;
 </script>

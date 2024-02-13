@@ -2,9 +2,17 @@
   import { onMount } from 'svelte';
   import { fly } from 'svelte/transition';
 
-  import { quizStores, storeUuid } from '@src/store/quiz.store';
-
-  import type { QQuizSvelteProperties } from '@src/interfaces';
+  import type {
+    QQuizSvelteProperties,
+    DBAnswerData,
+    DBAnswerMapPointGuessValue,
+    ElementItemStore,
+    MapPointGuess,
+    MultipleChoice,
+    QuizBaseQuestion,
+    QuizStore,
+    SliderQuestion,
+  } from '@src/interfaces';
   import { containerWidthStore } from '@src/store/container.store';
   import { QuizElementType } from '@src/enums';
 
@@ -16,10 +24,9 @@
   import NumberSlider from './number-slider/NumberSlider.svelte';
   import InputMapPoint from './input-map-point-guess/InputMapPoint.svelte';
   import { ColorDefaults } from '@src/constants';
+  import { quizStore } from './store.svelte';
 
   export let componentConfiguration: QQuizSvelteProperties;
-
-  const quizStore = quizStores[storeUuid];
 
   let containerWidth: number;
 

@@ -1,15 +1,13 @@
 <script lang="ts">
   import type { MultipleChoice } from '@src/interfaces';
-  import { quizStores, storeUuid } from '@src/store/quiz.store';
 
   import Button from '../atomic/Button.svelte';
   import BaseElement from '../quiz-base-elelement/BaseElement.svelte';
   import Answer from './Answer.svelte';
+  import { quizStore } from '../store.svelte';
 
   export let element: MultipleChoice;
   export let toolBaseUrl: string;
-
-  const quizStore = quizStores[storeUuid];
 
   let userAnswer: string;
   let shuffledAnswers = shuffleArray(element.choices.concat([element.answer]));

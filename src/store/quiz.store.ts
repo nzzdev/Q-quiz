@@ -1,5 +1,3 @@
-import { v4 as uuid } from 'uuid';
-
 import type {
   DBAnswerData,
   DBAnswerMapPointGuessValue,
@@ -148,6 +146,3 @@ const store = () => {
 };
 
 // export const quizStore = store();
-
-export const storeUuid = uuid();
-export const quizStores = { [storeUuid]: store() };

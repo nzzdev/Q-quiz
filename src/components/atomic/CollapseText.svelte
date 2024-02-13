@@ -1,6 +1,17 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
+
   let isOpen = false;
   let accordingElement: HTMLDivElement;
+  let container: HTMLDivElement;
+
+  export let textHeight = 0;
+
+  onMount(() => {
+    console.log('container', container.offsetHeight);
+    console.log('accordingElement', accordingElement.offsetHeight);
+    console.log('textHeight', textHeight);
+  });
 
   function accordion(node: HTMLDivElement, isOpen: boolean) {
     let initialHeight = node.offsetHeight;
@@ -34,7 +45,7 @@
   }
 </script>
 
-<div class="q-quiz-long-text">
+<div bind:this={container} class="q-quiz-long-text">
   <div bind:this={accordingElement} class="q-quiz-long-text-content">
     <slot />
   </div>

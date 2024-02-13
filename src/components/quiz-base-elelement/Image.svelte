@@ -1,13 +1,11 @@
 <script lang="ts">
-  import { quizStores, storeUuid } from '@src/store/quiz.store';
   import { containerWidthStore } from '@src/store/container.store';
 
   import type { QuizImage } from '@src/interfaces';
   import { getImageUrls } from '@src/services/images-service';
+  import { quizStore } from '../store.svelte';
 
   export let image: QuizImage;
-
-  const quizStore = quizStores[storeUuid];
 
   $: images = getImageUrls(
     image,

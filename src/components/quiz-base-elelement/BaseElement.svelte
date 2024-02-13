@@ -12,6 +12,8 @@
 
   export let element: QuizBaseQuestion;
   export let isAnswered: boolean;
+
+  let answerText: HTMLDivElement;
 </script>
 
 <div class="question-container">
@@ -40,8 +42,11 @@
   {#if isAnswered}
     {#if element.answerText}
       <div class="q-quiz-gap-column q-quiz-gap-row">
-        <CollapseText>
-          <div class="q-quiz-result-answer-text s-font-text-s">
+        <CollapseText textHeight={answerText.offsetHeight}>
+          <div
+            bind:this={answerText}
+            class="q-quiz-result-answer-text s-font-text-s"
+          >
             {element.answerText}
           </div>
         </CollapseText>

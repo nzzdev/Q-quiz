@@ -28,11 +28,25 @@ const route: ServerRoute = {
         allowUnknown: true,
       },
       payload: (payload) => {
+        // payloadTyped {
+        //   item: {
+        //     acronym: 'las.',
+        //     title: 'TEST quiz s-q-item',
+        //     elements: [ [Object], [Object], [Object], [Object] ]
+        //   },
+        //   itemStateInDb: true,
+        //   toolRuntimeConfig: {
+        //     fileRequestBaseUrl: 'https://qserverstaging-2cac.kxcdn.com/file',
+        //     toolBaseUrl: 'https://qserverstaging-2cac.kxcdn.com/tools/quiz',
+        //     id: '787d2006bd53e81fa469569796019d44',
+        //     size: { width: [Array] },
+        //     requestId: '4fff662ca0d4ba4bf11551cae58cb50da0ff93e9'
+        //   }
+        // }
         const payloadTyped = payload as WebPayload;
         const item = payloadTyped.item;
         const toolRuntimeConfig = payloadTyped.toolRuntimeConfig;
 
-        console.log('payloadTyped', payloadTyped);
         if (
           typeof payloadTyped !== 'object' ||
           typeof item !== 'object' ||

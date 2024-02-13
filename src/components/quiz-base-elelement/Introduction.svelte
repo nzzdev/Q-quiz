@@ -2,9 +2,11 @@
   import CollapseText from '../atomic/CollapseText.svelte';
 
   export let introduction: string;
+
+  let title: HTMLDivElement;
 </script>
 
-<CollapseText>
+<CollapseText textHeight={title.offsetHeight}>
   <h3 class="s-font-text-s q-quiz-question-introduction">
     {introduction}
   </h3>

@@ -3,16 +3,14 @@
 
   import type { LastCard, QuizBaseQuestion, QuizeScore } from '@src/interfaces';
 
-  import { quizStores, storeUuid } from '@src/store/quiz.store';
   import { ScoreService } from '@src/services/score-service';
 
   import QuestionIcon from '../../resources/question.svg';
   import ArticleRecommendations from '../quiz-base-elelement/ArticleRecommendations.svelte';
   import { checkIsScoreQuestion } from '@src/helpers/utils';
+  import { quizStore } from '../store.svelte';
 
   export let element: LastCard;
-
-  const quizStore = quizStores[storeUuid];
 
   let score: QuizeScore;
 

@@ -1,12 +1,10 @@
 <script lang="ts">
-  import { quizStores, storeUuid } from '@src/store/quiz.store';
   import { ColorDefaults } from '@src/constants';
 
   import NextButton from './next-button/NextButton.svelte';
+  import { quizStore } from './store.svelte';
 
   export let isShowNextButton = true;
-
-  const quizStore = quizStores[storeUuid];
 </script>
 
 <nav

@@ -1,16 +1,13 @@
 <script lang="ts">
   import type { SliderQuestion } from '@src/interfaces';
 
-  import { quizStores, storeUuid } from '@src/store/quiz.store';
-
   import BaseElement from '../quiz-base-elelement/BaseElement.svelte';
   import Statistic from './Statistic.svelte';
   import Button from '../atomic/Button.svelte';
+  import { quizStore } from '../store.svelte';
 
   export let element: SliderQuestion;
   export let toolBaseUrl: string;
-
-  const quizStore = quizStores[storeUuid];
 
   let userAnswer = round(
     (element.max - element.min) / 2 + element.min,
