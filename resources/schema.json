@@ -51,9 +51,18 @@
             "hideInEditor": true
           }
         },
+        "image": { "$ref": "#/definitions/image" },
         "title": {
           "type": "string",
           "title": "Titel des Quiz"
+        },
+        "themeLogo": {
+          "type": "string",
+          "title": "Logo des Quiz"
+        },
+        "themeTitle": {
+          "type": "string",
+          "title": "Themen Titel"
         }
       }
     },

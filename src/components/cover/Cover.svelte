@@ -15,18 +15,18 @@
   class="cover q-quiz-element-container--is-active"
   style="--q-quiz-cover-color: {coverColor}"
 >
-  {#if element.themeTitle || element.themeSubtitle}
+  {#if element.themeLogo || element.themeTitle}
     <div class="cover-theme q-quiz-gap-column q-quiz-gap-row">
-      {#if element.themeTitle}
+      {#if element.themeLogo}
         <div class="nzz-title">
           <h3 class="s-font-title" style:color={ColorDefaults.Cover.Color.Text}>
-            {element.themeTitle}
+            {element.themeLogo}
           </h3>
         </div>
       {/if}
-      {#if element.themeSubtitle}
+      {#if element.themeTitle}
         <h4 class="s-font-text" style:color={ColorDefaults.Cover.Color.Text}>
-          {element.themeSubtitle}
+          {element.themeTitle}
         </h4>
       {/if}
     </div>

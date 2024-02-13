@@ -1,4 +1,4 @@
-import allImageAndThemeTitle from './all-cover-with-image-and-theme-title.json';
+import allImageAndthemeLogo from './all-cover-with-image-and-theme-title.json';
 import allQuestionTypesWithImages from './all-question-types-with-images.json';
 import all from './all.json';
 import coverWithTitleNoLastCard from './cover-with-title-no-last-card.json';
@@ -17,7 +17,7 @@ import singleNumberPoll from './single-number-poll.json';
 import stripPlotNumberGuess from './strip-plot-number-guess.json';
 
 export default {
-  allImageAndThemeTitle,
+  allImageAndthemeLogo,
   allQuestionTypesWithImages,
   all,
   coverWithTitleNoLastCard,

@@ -133,8 +133,8 @@ export interface BaseElement {
 export interface Cover extends BaseElement {
   type: QuizElementType.Cover;
   title: string;
+  themeLogo?: string;
   themeTitle?: string;
-  themeSubtitle?: string;
   image?: QuizImage;
   color?: string;
 }
