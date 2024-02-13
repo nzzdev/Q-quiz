@@ -1,11 +1,10 @@
 <script lang="ts">
   import type { ArticleRecommendations, Metadata } from '@src/interfaces';
-  import { quizStore } from '@src/store/quiz.store';
-  import { onMount } from 'svelte';
+  import { quizStores } from '@src/store/quiz.store';
 
   export let recommendations: ArticleRecommendations[];
 
-  onMount(() => {});
+  const quizStore = quizStores.main;
 
   async function getLDArticle(articleId: string): Promise<Metadata> {
     return await fetch(

@@ -2,15 +2,18 @@
   import { onMount } from 'svelte';
   import L, { Marker, type LatLng, type Map } from 'leaflet';
 
+  import { quizStores } from '@src/store/quiz.store';
   import type { MapPointGuess, MapPointGuessAnswer } from '@src/interfaces';
+
   import iconPinSvg from '../../resources/icon-pin.svg';
+
   import Statistic from './Statistic.svelte';
   import BaseElement from '../quiz-base-elelement/BaseElement.svelte';
-  import { quizStore } from '@src/store/quiz.store';
   import Button from '../atomic/Button.svelte';
 
   export let element: MapPointGuess;
 
+  const quizStore = quizStores.main;
   const mapOptions = {
     boxZoom: false,
     doubleClickZoom: false,

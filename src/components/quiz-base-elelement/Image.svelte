@@ -1,11 +1,13 @@
 <script lang="ts">
-  import { quizStore } from '@src/store/quiz.store';
+  import { quizStores } from '@src/store/quiz.store';
   import { containerWidthStore } from '@src/store/container.store';
 
   import type { QuizImage } from '@src/interfaces';
   import { getImageUrls } from '@src/services/images-service';
 
   export let image: QuizImage;
+
+  const quizStore = quizStores.main;
 
   $: images = getImageUrls(
     image,

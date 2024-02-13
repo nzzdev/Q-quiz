@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { MultipleChoice } from '@src/interfaces';
-  import { quizStore } from '@src/store/quiz.store';
+  import { quizStores } from '@src/store/quiz.store';
 
   import Button from '../atomic/Button.svelte';
   import BaseElement from '../quiz-base-elelement/BaseElement.svelte';
@@ -8,6 +8,8 @@
 
   export let element: MultipleChoice;
   export let toolBaseUrl: string;
+
+  const quizStore = quizStores.main;
 
   let userAnswer: string;
   let shuffledAnswers = shuffleArray(element.choices.concat([element.answer]));

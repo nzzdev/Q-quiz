@@ -1,10 +1,12 @@
 <script lang="ts">
-  import { quizStore } from '@src/store/quiz.store';
+  import { quizStores } from '@src/store/quiz.store';
   import { ColorDefaults } from '@src/constants';
 
   import NextButton from './next-button/NextButton.svelte';
 
   export let isShowNextButton = true;
+
+  const quizStore = quizStores.main;
 </script>
 
 <nav
