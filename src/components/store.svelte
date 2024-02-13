@@ -32,6 +32,10 @@
 
     const methods = {
       initialize: (componentConfiguration: QQuizSvelteProperties) => {
+        console.log(
+          'store svelte componentConfiguration',
+          componentConfiguration
+        );
         const componentItem = componentConfiguration.item;
         const storeItems: ElementItemStore[] = [];
 

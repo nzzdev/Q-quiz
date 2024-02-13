@@ -42,7 +42,7 @@
   {#if isAnswered}
     {#if element.answerText}
       <div class="q-quiz-gap-column q-quiz-gap-row">
-        <CollapseText textHeight={answerText.offsetHeight}>
+        <CollapseText textHeight={answerText}>
           <div
             bind:this={answerText}
             class="q-quiz-result-answer-text s-font-text-s"

@@ -5,12 +5,16 @@
   let accordingElement: HTMLDivElement;
   let container: HTMLDivElement;
 
-  export let textHeight = 0;
+  export let textHeight: HTMLDivElement;
+
+  $: if (textHeight) {
+    console.log(textHeight);
+  }
 
   onMount(() => {
     console.log('container', container.offsetHeight);
     console.log('accordingElement', accordingElement.offsetHeight);
-    console.log('textHeight', textHeight);
+    console.log('textHeight', textHeight?.offsetHeight);
   });
 
   function accordion(node: HTMLDivElement, isOpen: boolean) {

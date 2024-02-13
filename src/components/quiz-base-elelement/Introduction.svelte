@@ -4,10 +4,11 @@
   export let introduction: string;
 
   let title: HTMLDivElement;
+  $: console.log(title);
 </script>
 
-<CollapseText textHeight={title.offsetHeight}>
-  <h3 class="s-font-text-s q-quiz-question-introduction">
+<CollapseText textHeight={title}>
+  <h3 bind:this={title} class="s-font-text-s q-quiz-question-introduction">
     {introduction}
   </h3>
 </CollapseText>
