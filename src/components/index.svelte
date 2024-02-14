@@ -11,7 +11,6 @@
     QuizStoreContext,
   } from '@src/interfaces';
   import { containerWidthStore } from '@src/store/container.store';
-  import { questionContainerStoreClass } from '@src/store/htmlContainer.store';
   import { QuizElementType } from '@src/enums';
 
   import CoverComponent from './cover/Cover.svelte';
@@ -33,9 +32,6 @@
 
   let containerWidth: number;
   let questionContainer: HTMLDivElement | undefined = undefined;
-  // setContext(key, {
-  //   questionContainer: writable<HTMLDivElement>(questionContainer),
-  // });
 
   $: containerWidthStore.set(containerWidth);
   $: indexAdditional = $quizStore.hasCover ? 0 : 1;

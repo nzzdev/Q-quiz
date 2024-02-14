@@ -26,6 +26,8 @@
 
     if ($questionContainerStore) {
       $questionContainerStore.scrollIntoView();
+      $questionContainerStore.scrollTop;
+      window.scroll(0, $questionContainerStore.scrollTop + 90);
     }
   };
 
