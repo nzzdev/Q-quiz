@@ -60,33 +60,36 @@
       <div
         class:s-font-note--strong={answer === correctAnswer ||
           (answer === userAnswer && correctAnswer !== userAnswer)}
-        class:s-color-positive={answer == correctAnswer}
-        class:s-color-negative={answer === userAnswer &&
-          correctAnswer !== userAnswer}
         class="q-quiz-result__answer s-font-note"
       >
-        <div class="label">
-          {#if answer == correctAnswer && correctAnswer === userAnswer}
-            <div class="label__icon">{@html checkmark}</div>
-          {:else if answer === userAnswer && correctAnswer !== userAnswer}
-            <div class="label__icon">{@html crossmaker}</div>
-          {/if}
-          <div>{answer}</div>
-          {#if answer == correctAnswer || (answer === userAnswer && correctAnswer !== userAnswer)}
-            <div class="label__hint">
-              {answer === correctAnswer
-                ? 'korrekte Antwort'
-                : 'falsche Antwort'}
-            </div>
-          {/if}
+        <div
+          class:s-color-positive={answer == correctAnswer}
+          class:s-color-negative={answer === userAnswer &&
+            correctAnswer !== userAnswer}
+        >
+          <div class="label">
+            {#if answer == correctAnswer && correctAnswer === userAnswer}
+              <div class="label__icon">{@html checkmark}</div>
+            {:else if answer === userAnswer && correctAnswer !== userAnswer}
+              <div class="label__icon">{@html crossmaker}</div>
+            {/if}
+            <div>{answer}</div>
+            {#if answer == correctAnswer || (answer === userAnswer && correctAnswer !== userAnswer)}
+              <div class="label__hint">
+                {answer === correctAnswer
+                  ? 'korrekte Antwort'
+                  : 'falsche Antwort'}
+              </div>
+            {/if}
+          </div>
+          <StatisticView
+            statisticAnswerCount={statisticAnswerCount(answer)}
+            highestAnswerCount={getHighestAnswerCount()}
+            totalAnswers={statistic?.totalAnswers || 0}
+            disableGreyColor={answer == correctAnswer ||
+              (answer === userAnswer && correctAnswer !== userAnswer)}
+          />
         </div>
-        <StatisticView
-          statisticAnswerCount={statisticAnswerCount(answer)}
-          highestAnswerCount={getHighestAnswerCount()}
-          totalAnswers={statistic?.totalAnswers || 0}
-          disableGreyColor={answer == correctAnswer ||
-            (answer === userAnswer && correctAnswer !== userAnswer)}
-        />
       </div>
     {/each}
   </div>
