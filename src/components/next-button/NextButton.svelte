@@ -14,6 +14,8 @@
 
   let isVisible = true;
 
+  console.log('svelteStore', $svelteStore.step);
+
   const nextQuestion = (): void => {
     if ($svelteStore.step <= $svelteStore.numberQuestions) {
       svelteStore.stepForward();
