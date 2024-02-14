@@ -1,12 +1,17 @@
 <script lang="ts">
   import { getContext, onMount, setContext } from 'svelte';
+  import { writable } from 'svelte/store';
   import { fly } from 'svelte/transition';
 
   import key from '../services/key-service';
   import { quizStoreClass } from '@src/store/quiz.store';
 
-  import type { QQuizSvelteProperties, QuizStoreFn } from '@src/interfaces';
+  import type {
+    QQuizSvelteProperties,
+    QuizStoreContext,
+  } from '@src/interfaces';
   import { containerWidthStore } from '@src/store/container.store';
+  import { questionContainerStoreClass } from '@src/store/htmlContainer.store';
   import { QuizElementType } from '@src/enums';
 
   import CoverComponent from './cover/Cover.svelte';
@@ -17,20 +22,31 @@
 
   export let componentConfiguration: QQuizSvelteProperties;
 
-  setContext(key, quizStoreClass());
-  const quizStore = getContext(key) as QuizStoreFn;
+  setContext(key, {
+    quizStore: quizStoreClass(),
+    questionContainerStore: writable<HTMLDivElement>(undefined),
+  });
+
+  const { quizStore, questionContainerStore } = getContext(
+    key
+  ) as QuizStoreContext;
+
   let containerWidth: number;
+  let questionContainer: HTMLDivElement | undefined = undefined;
+  // setContext(key, {
+  //   questionContainer: writable<HTMLDivElement>(questionContainer),
+  // });
 
   $: containerWidthStore.set(containerWidth);
   $: indexAdditional = $quizStore.hasCover ? 0 : 1;
 
   onMount(() => {
     quizStore.initialize(componentConfiguration);
-    quizStore.initialize(componentConfiguration);
+    questionContainerStore.set(questionContainer);
   });
 </script>
 
-<div bind:clientWidth={containerWidth}>
+<div bind:this={questionContainer} bind:clientWidth={containerWidth}>
   {#if containerWidth}
     {#each $quizStore.items as element, index}
       {#if $quizStore.step === index + indexAdditional}

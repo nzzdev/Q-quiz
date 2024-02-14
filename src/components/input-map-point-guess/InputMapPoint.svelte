@@ -5,7 +5,7 @@
   import type {
     MapPointGuess,
     MapPointGuessAnswer,
-    QuizStoreFn,
+    QuizStoreContext,
   } from '@src/interfaces';
 
   import iconPinSvg from '../../resources/icon-pin.svg';
@@ -17,7 +17,7 @@
 
   export let element: MapPointGuess;
 
-  const quizStore = getContext(key) as QuizStoreFn;
+  const { quizStore } = getContext(key) as QuizStoreContext;
   const mapOptions = {
     boxZoom: false,
     doubleClickZoom: false,

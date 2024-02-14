@@ -2,7 +2,7 @@
   import { getContext } from 'svelte';
 
   import key from '../../services/key-service';
-  import type { Cover, QuizStoreFn } from '@src/interfaces';
+  import type { Cover, QuizStoreContext } from '@src/interfaces';
   import { ColorDefaults } from '@src/constants';
 
   import Image from '../quiz-base-elelement/Image.svelte';
@@ -10,7 +10,7 @@
 
   export let element: Cover;
 
-  const quizStore = getContext(key) as QuizStoreFn;
+  const { quizStore } = getContext(key) as QuizStoreContext;
 
   $: coverColor = element.color || ColorDefaults.Cover.Color.Background;
 </script>

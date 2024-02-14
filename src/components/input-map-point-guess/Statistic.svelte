@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, getContext } from 'svelte';
   import L, { Marker } from 'leaflet';
 
   import type {
     MapPointGuess,
     MapPointGuessStatistic,
     Statistic,
-    QuizStoreFn,
+    QuizStoreContext,
   } from '@src/interfaces';
   import { QuizElementType } from '@src/enums';
 
@@ -14,8 +14,8 @@
   import AnswerText from '../AnswerText.svelte';
   import Heatmap from '../Heatmap.svelte';
   import key from '../../services/key-service';
-  import { getContext } from 'svelte';
-  const quizStore = getContext(key) as QuizStoreFn;
+
+  const { quizStore } = getContext(key) as QuizStoreContext;
 
   export let element: MapPointGuess;
   export let userAnswer: Marker<any>;

@@ -1,14 +1,16 @@
 <script lang="ts">
+  import { getContext } from 'svelte';
+
   import type {
     ArticleRecommendations,
     Metadata,
-    QuizStoreFn,
+    QuizStoreContext,
   } from '@src/interfaces';
   import key from '../../services/key-service';
-  import { getContext } from 'svelte';
-  const quizStore = getContext(key) as QuizStoreFn;
 
   export let recommendations: ArticleRecommendations[];
+
+  const { quizStore } = getContext(key) as QuizStoreContext;
 
   async function getLDArticle(
     articleId: string,

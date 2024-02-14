@@ -5,7 +5,7 @@
     LastCard,
     QuizBaseQuestion,
     QuizeScore,
-    QuizStoreFn,
+    QuizStoreContext,
   } from '@src/interfaces';
   import key from '../../services/key-service';
   import { checkIsScoreQuestion } from '@src/helpers/utils';
@@ -16,7 +16,7 @@
 
   export let element: LastCard;
 
-  const quizStore = getContext(key) as QuizStoreFn;
+  const { quizStore } = getContext(key) as QuizStoreContext;
 
   let score: QuizeScore;
 

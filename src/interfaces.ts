@@ -96,6 +96,10 @@ export interface UserAnswer {
   isCorrect: boolean;
 }
 
+export interface QuizStoreContext {
+  quizStore: QuizStoreFn;
+  questionContainerStore: Writable<HTMLDivElement | undefined>;
+}
 export interface QuizStoreFn extends Writable<QuizStore> {
   initialize: (componentConfiguration: QQuizSvelteProperties) => void;
   stepForward: () => void;

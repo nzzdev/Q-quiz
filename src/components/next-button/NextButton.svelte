@@ -2,7 +2,7 @@
   import { onMount } from 'svelte';
   import { getContext } from 'svelte';
 
-  import type { QuizStoreFn } from '@src/interfaces';
+  import type { QuizStoreContext } from '@src/interfaces';
   import key from '../../services/key-service';
 
   import Button from '../atomic/Button.svelte';
@@ -11,7 +11,9 @@
   export let defaultVisibility = true;
   export let isButtonWithIcon = false;
 
-  const quizStore = getContext(key) as QuizStoreFn;
+  const { quizStore, questionContainerStore } = getContext(
+    key
+  ) as QuizStoreContext;
 
   const nextQuestion = (): void => {
     if ($quizStore.step <= $quizStore.numberQuestions) {
@@ -22,10 +24,8 @@
       togglenNextButton();
     }
 
-    const mainContainer = document.querySelector('#q-quiz-elements');
-
-    if (mainContainer) {
-      mainContainer.scrollIntoView();
+    if ($questionContainerStore) {
+      $questionContainerStore.scrollIntoView();
     }
   };
 
