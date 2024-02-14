@@ -1,10 +1,12 @@
 <script lang="ts">
-  import type { MultipleChoice } from '@src/interfaces';
+  import type { MultipleChoice, QuizStoreFn } from '@src/interfaces';
 
   import Button from '../atomic/Button.svelte';
   import BaseElement from '../quiz-base-elelement/BaseElement.svelte';
   import Answer from './Answer.svelte';
-  import { quizStore } from '../store.svelte';
+  import key from '../../services/key-service';
+  import { getContext } from 'svelte';
+  const quizStore = getContext(key) as QuizStoreFn;
 
   export let element: MultipleChoice;
   export let toolBaseUrl: string;

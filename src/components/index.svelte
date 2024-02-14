@@ -1,33 +1,24 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { getContext, onMount, setContext } from 'svelte';
   import { fly } from 'svelte/transition';
 
-  import type {
-    QQuizSvelteProperties,
-    DBAnswerData,
-    DBAnswerMapPointGuessValue,
-    ElementItemStore,
-    MapPointGuess,
-    MultipleChoice,
-    QuizBaseQuestion,
-    QuizStore,
-    SliderQuestion,
-  } from '@src/interfaces';
+  import type { QQuizSvelteProperties, QuizStoreFn } from '@src/interfaces';
   import { containerWidthStore } from '@src/store/container.store';
   import { QuizElementType } from '@src/enums';
-
-  import QuestionProgress from './QuestionProgress.svelte';
 
   import CoverComponent from './cover/Cover.svelte';
   import LastCardComponent from './last-card/LastCard.svelte';
   import MutliplieChoice from './input-multiple-choice/MultipleChoice.svelte';
   import NumberSlider from './number-slider/NumberSlider.svelte';
   import InputMapPoint from './input-map-point-guess/InputMapPoint.svelte';
-  import { ColorDefaults } from '@src/constants';
-  import { quizStore } from './store.svelte';
+  import { store } from './store.svelte';
+  import type { Writable } from 'svelte/store';
 
   export let componentConfiguration: QQuizSvelteProperties;
 
+  setContext(key, store());
+  import key from '../services/key-service';
+  const quizStore = getContext(key) as QuizStoreFn;
   let containerWidth: number;
 
   $: containerWidthStore.set(containerWidth);

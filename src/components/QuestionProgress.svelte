@@ -1,8 +1,11 @@
 <script lang="ts">
   import { ColorDefaults } from '@src/constants';
 
+  import type { QuizStoreFn } from '@src/interfaces';
   import NextButton from './next-button/NextButton.svelte';
-  import { quizStore } from './store.svelte';
+  import key from '../services/key-service';
+  import { getContext } from 'svelte';
+  const quizStore = getContext(key) as QuizStoreFn;
 
   export let isShowNextButton = true;
 </script>

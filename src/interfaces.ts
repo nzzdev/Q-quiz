@@ -1,3 +1,4 @@
+import type { Writable } from 'svelte/store';
 import type {
   Department,
   Publication,
@@ -93,6 +94,17 @@ export interface QuizBaseQuestion extends BaseElement {
 export interface UserAnswer {
   answer?: string | number | AnswerGeoData;
   isCorrect: boolean;
+}
+
+export interface QuizStoreFn extends Writable<QuizStore> {
+  initialize: (componentConfiguration: QQuizSvelteProperties) => void;
+  stepForward: () => void;
+  answerdQuestion: (
+    qItemId: string,
+    element: MultipleChoice | SliderQuestion | MapPointGuess,
+    answer: DBAnswerMapPointGuessValue | string | number
+  ) => Promise<void>;
+  isAnswered: () => boolean;
 }
 
 export interface QuizStore {

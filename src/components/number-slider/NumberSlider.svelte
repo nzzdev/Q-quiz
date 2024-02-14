@@ -1,10 +1,12 @@
 <script lang="ts">
-  import type { SliderQuestion } from '@src/interfaces';
+  import type { SliderQuestion, QuizStoreFn } from '@src/interfaces';
 
   import BaseElement from '../quiz-base-elelement/BaseElement.svelte';
   import Statistic from './Statistic.svelte';
   import Button from '../atomic/Button.svelte';
-  import { quizStore } from '../store.svelte';
+  import key from '../../services/key-service';
+  import { getContext } from 'svelte';
+  const quizStore = getContext(key) as QuizStoreFn;
 
   export let element: SliderQuestion;
   export let toolBaseUrl: string;

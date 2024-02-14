@@ -1,6 +1,12 @@
 <script lang="ts">
-  import type { ArticleRecommendations, Metadata } from '@src/interfaces';
-  import { quizStore } from '../store.svelte';
+  import type {
+    ArticleRecommendations,
+    Metadata,
+    QuizStoreFn,
+  } from '@src/interfaces';
+  import key from '../../services/key-service';
+  import { getContext } from 'svelte';
+  const quizStore = getContext(key) as QuizStoreFn;
 
   export let recommendations: ArticleRecommendations[];
 

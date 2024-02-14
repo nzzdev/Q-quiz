@@ -8,8 +8,10 @@
   export let textHeight: HTMLDivElement;
 
   $: if (textHeight) {
-    console.log(textHeight);
+    console.log('bla', textHeight);
   }
+
+  const MAX_CONTAINER_SIZE = 115;
 
   onMount(() => {
     console.log('container', container.offsetHeight);
@@ -19,7 +21,7 @@
 
   function accordion(node: HTMLDivElement, isOpen: boolean) {
     let initialHeight = node.offsetHeight;
-    node.style.height = isOpen ? 'auto' : '115px';
+    node.style.height = isOpen ? 'auto' : `${MAX_CONTAINER_SIZE}px`;
     node.style.webkitBoxOrient = isOpen ? 'unset' : 'vertical';
     node.style.webkitLineClamp = isOpen ? 'unset' : '3';
     node.style.overflow = 'hidden';
@@ -50,14 +52,20 @@
 </script>
 
 <div bind:this={container} class="q-quiz-long-text">
-  <div bind:this={accordingElement} class="q-quiz-long-text-content">
+  <div
+    bind:this={accordingElement}
+    class="q-quiz-long-text-content"
+    style="--MAX_CONTAINER_SIZE:{MAX_CONTAINER_SIZE}px"
+  >
     <slot />
   </div>
-  <button
-    on:click={() => accordion(accordingElement, (isOpen = !isOpen))}
-    class="q-quiz-long-text-read-more s-font-note"
-    >{#if isOpen}Weniger{:else}Mehr{/if} anzeigen</button
-  >
+  {#if textHeight?.offsetHeight > container?.offsetHeight}
+    <button
+      on:click={() => accordion(accordingElement, (isOpen = !isOpen))}
+      class="q-quiz-long-text-read-more s-font-note"
+      >{#if isOpen}Weniger{:else}Mehr{/if} anzeigen</button
+    >
+  {/if}
 </div>
 
 <style lang="scss">
@@ -67,7 +75,7 @@
   }
 
   .q-quiz-long-text-content {
-    height: 115px;
+    height: var(--MAX_CONTAINER_SIZE, 115px);
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;

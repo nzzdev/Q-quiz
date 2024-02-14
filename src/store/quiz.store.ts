@@ -145,4 +145,4 @@ const store = () => {
   return { subscribe, set, update, ...methods };
 };
 
-// export const quizStore = store();
+export const quizStore = store;

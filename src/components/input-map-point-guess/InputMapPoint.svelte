@@ -2,14 +2,20 @@
   import { onMount } from 'svelte';
   import L, { Marker, type LatLng, type Map } from 'leaflet';
 
-  import type { MapPointGuess, MapPointGuessAnswer } from '@src/interfaces';
+  import type {
+    MapPointGuess,
+    MapPointGuessAnswer,
+    QuizStoreFn,
+  } from '@src/interfaces';
 
   import iconPinSvg from '../../resources/icon-pin.svg';
 
   import Statistic from './Statistic.svelte';
   import BaseElement from '../quiz-base-elelement/BaseElement.svelte';
   import Button from '../atomic/Button.svelte';
-  import { quizStore } from '../store.svelte';
+  import key from '../../services/key-service';
+  import { getContext } from 'svelte';
+  const quizStore = getContext(key) as QuizStoreFn;
 
   export let element: MapPointGuess;
 

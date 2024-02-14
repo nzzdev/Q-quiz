@@ -11,7 +11,7 @@
     SliderQuestion,
   } from '@src/interfaces';
   import { get, writable } from 'svelte/store';
-  const store = () => {
+  export const store = () => {
     const state: QuizStore = {
       qItemId: '',
       items: [],
@@ -148,5 +148,4 @@
     };
     return { subscribe, set, update, ...methods };
   };
-  export const quizStore = store();
 </script>

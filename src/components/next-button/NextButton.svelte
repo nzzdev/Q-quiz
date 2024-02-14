@@ -1,9 +1,12 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
+  import type { QuizStoreFn } from '@src/interfaces';
   import Text from './Text.svelte';
   import Button from '../atomic/Button.svelte';
-  import { quizStore } from '../store.svelte';
+  import key from '../../services/key-service';
+  import { getContext } from 'svelte';
+  const quizStore = getContext(key) as QuizStoreFn;
 
   export let defaultVisibility = true;
   export let isButtonWithIcon = false;

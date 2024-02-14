@@ -1,10 +1,14 @@
 <script lang="ts">
-  import type { Cover } from '@src/interfaces';
+  import type { Cover, QuizStoreFn } from '@src/interfaces';
   import { ColorDefaults } from '@src/constants';
 
   import Image from '../quiz-base-elelement/Image.svelte';
   import Button from '../atomic/Button.svelte';
-  import { quizStore } from '../store.svelte';
+  import key from '../../services/key-service';
+  import { getContext } from 'svelte';
+  const quizStore = getContext(key) as QuizStoreFn;
+
+  console.log('cover key', key);
 
   export let element: Cover;
 
