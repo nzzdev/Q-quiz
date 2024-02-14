@@ -6,9 +6,11 @@
   import Button from '../atomic/Button.svelte';
   import key from '../../services/key-service';
   import { getContext } from 'svelte';
+  import { svelteStore } from '../store.svelte';
   const quizStore = getContext(key) as QuizStoreFn;
 
   console.log('cover key', key);
+  console.log('svelteStore');
 
   export let element: Cover;
 
@@ -50,7 +52,7 @@
     <div class="q-quiz-gap-column">
       <Button
         showArrowRight={true}
-        on:action={() => quizStore.stepForward()}
+        on:action={() => svelteStore.stepForward()}
         colorStyle={ColorDefaults.Cover.Button.Color}>Das Quiz starten</Button
       >
     </div>
