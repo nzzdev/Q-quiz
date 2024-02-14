@@ -42,7 +42,11 @@
   });
 </script>
 
-<div bind:this={questionContainer} bind:clientWidth={containerWidth}>
+<div
+  class="quiz-elements"
+  bind:this={questionContainer}
+  bind:clientWidth={containerWidth}
+>
   {#if containerWidth}
     {#each $quizStore.items as element, index}
       {#if $quizStore.step === index + indexAdditional}
@@ -50,7 +54,7 @@
           <CoverComponent element={element.item} />
         {/if}
         <div
-          id="q-quiz-elements"
+          class="element-card"
           in:fly={{ x: '100%', delay: 380 }}
           out:fly={{ x: '-100%' }}
         >
@@ -77,7 +81,10 @@
 
 <style lang="scss">
   @import '../styles/variables.scss';
-  #q-quiz-elements {
-    background-color: $questionBackground;
+  .quiz-elements {
+    scroll-margin: 90px;
+    .element-card {
+      background-color: $questionBackground;
+    }
   }
 </style>
