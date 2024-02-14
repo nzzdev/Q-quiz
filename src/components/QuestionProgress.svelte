@@ -5,25 +5,27 @@
   import NextButton from './next-button/NextButton.svelte';
   import key from '../services/key-service';
   import { getContext } from 'svelte';
+  import { svelteStore } from './store.svelte';
   const quizStore = getContext(key) as QuizStoreFn;
 
   export let isShowNextButton = true;
 </script>
 
 <nav
-  class:q-quiz-header--is-empty={$quizStore.hasCover && $quizStore.step === 0}
-  class="q-quiz-container q-quiz-header {$quizStore.isMultiQuiz
+  class:q-quiz-header--is-empty={$svelteStore.hasCover &&
+    $svelteStore.step === 0}
+  class="q-quiz-container q-quiz-header {$svelteStore.isMultiQuiz
     ? 'q-quiz-multi-header'
     : 'q-quiz-single-header'}"
 >
-  {#if $quizStore.isMultiQuiz}
+  {#if $svelteStore.isMultiQuiz}
     <div class="question-state s-font-note-s">
-      {#if $quizStore.step > $quizStore.numberQuestions}
+      {#if $svelteStore.step > $svelteStore.numberQuestions}
         Fertig!
-      {:else if $quizStore.step === $quizStore.numberQuestions}
+      {:else if $svelteStore.step === $svelteStore.numberQuestions}
         letzte Frage
       {:else}
-        Frage {$quizStore.step} / {$quizStore.numberQuestions}
+        Frage {$svelteStore.step} / {$svelteStore.numberQuestions}
       {/if}
     </div>
     {#if isShowNextButton}

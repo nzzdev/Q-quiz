@@ -11,8 +11,7 @@
   import MutliplieChoice from './input-multiple-choice/MultipleChoice.svelte';
   import NumberSlider from './number-slider/NumberSlider.svelte';
   import InputMapPoint from './input-map-point-guess/InputMapPoint.svelte';
-  import { store } from './store.svelte';
-  import type { Writable } from 'svelte/store';
+  import { store, svelteStore } from './store.svelte';
 
   export let componentConfiguration: QQuizSvelteProperties;
 
@@ -22,7 +21,7 @@
   let containerWidth: number;
 
   $: containerWidthStore.set(containerWidth);
-  $: indexAdditional = $quizStore.hasCover ? 0 : 1;
+  $: indexAdditional = $svelteStore.hasCover ? 0 : 1;
 
   onMount(() => {
     quizStore.initialize(componentConfiguration);
@@ -31,8 +30,8 @@
 
 <div bind:clientWidth={containerWidth}>
   {#if containerWidth}
-    {#each $quizStore.items as element, index}
-      {#if $quizStore.step === index + indexAdditional}
+    {#each $svelteStore.items as element, index}
+      {#if $svelteStore.step === index + indexAdditional}
         {#if element.item.type === QuizElementType.Cover}
           <CoverComponent element={element.item} />
         {/if}

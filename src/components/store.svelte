@@ -148,4 +148,6 @@
     };
     return { subscribe, set, update, ...methods };
   };
+
+  export const svelteStore = store();
 </script>
