@@ -6,6 +6,7 @@
   import Button from '../atomic/Button.svelte';
   import key from '../../services/key-service';
   import { getContext } from 'svelte';
+  import { svelteStore } from '../store.svelte';
   const quizStore = getContext(key) as QuizStoreFn;
 
   export let defaultVisibility = true;
@@ -14,8 +15,8 @@
   let isVisible = true;
 
   const nextQuestion = (): void => {
-    if ($quizStore.step <= $quizStore.numberQuestions) {
-      quizStore.stepForward();
+    if ($svelteStore.step <= $svelteStore.numberQuestions) {
+      svelteStore.stepForward();
     }
 
     if (!defaultVisibility) {
@@ -40,30 +41,31 @@
 
 <div
   class:button-container--hidden={!isVisible ||
-    $quizStore.step > $quizStore.numberQuestions ||
-    ($quizStore.step === $quizStore.numberQuestions && !$quizStore.hasLastCard)}
+    $svelteStore.step > $svelteStore.numberQuestions ||
+    ($svelteStore.step === $svelteStore.numberQuestions &&
+      !$svelteStore.hasLastCard)}
   class="button-container"
 >
   {#if isButtonWithIcon}
     <Button showArrowRight={true} on:action={() => nextQuestion()}
       ><Text
-        actualStep={$quizStore.step}
-        totalSteps={$quizStore.numberQuestions}
-        hasScore={$quizStore.hasScore}
+        actualStep={$svelteStore.step}
+        totalSteps={$svelteStore.numberQuestions}
+        hasScore={$svelteStore.hasScore}
       /></Button
     >
   {:else}
     <button
-      class:q-quiz-button--hidden={$quizStore.hasCover}
+      class:q-quiz-button--hidden={$svelteStore.hasCover}
       class="q-quiz-button q-quiz-button--horizontal s-font-note-s"
       on:click={nextQuestion}
     >
       <div class="q-quiz-button__content">
         <span class="s-color-primary-7"
           ><Text
-            actualStep={$quizStore.step}
-            totalSteps={$quizStore.numberQuestions}
-            hasScore={$quizStore.hasScore}
+            actualStep={$svelteStore.step}
+            totalSteps={$svelteStore.numberQuestions}
+            hasScore={$svelteStore.hasScore}
           /></span
         >
       </div>
