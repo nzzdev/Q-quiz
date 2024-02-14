@@ -68,18 +68,14 @@
             correctAnswer !== userAnswer}
         >
           <div class="label">
-            {#if answer == correctAnswer && correctAnswer === userAnswer}
+            {#if answer == correctAnswer}
               <div class="label__icon">{@html checkmark}</div>
-            {:else if answer === userAnswer && correctAnswer !== userAnswer}
+            {:else}
               <div class="label__icon">{@html crossmaker}</div>
             {/if}
             <div>{answer}</div>
-            {#if answer == correctAnswer || (answer === userAnswer && correctAnswer !== userAnswer)}
-              <div class="label__hint">
-                {answer === correctAnswer
-                  ? 'korrekte Antwort'
-                  : 'falsche Antwort'}
-              </div>
+            {#if answer === userAnswer}
+              <div class="label__hint s-font-note-s">(ihre Antwort)</div>
             {/if}
           </div>
           <StatisticView
@@ -120,6 +116,7 @@
     }
 
     &__hint {
+      color: #707070;
       margin-left: 5px;
     }
   }
