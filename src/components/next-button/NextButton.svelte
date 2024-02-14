@@ -46,7 +46,11 @@
 >
   {#if isButtonWithIcon}
     <Button showArrowRight={true} on:action={() => nextQuestion()}
-      >Nächste Frage anzeigen</Button
+      ><Text
+        actualStep={$quizStore.step}
+        totalSteps={$quizStore.numberQuestions}
+        hasScore={$quizStore.hasScore}
+      /></Button
     >
   {:else}
     <button

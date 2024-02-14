@@ -11,5 +11,5 @@
     Thema vertiefen
   {/if}
 {:else}
-  nächste Frage
+  nächste Frage anzeigen
 {/if}
