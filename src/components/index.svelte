@@ -25,6 +25,7 @@
 
   onMount(() => {
     quizStore.initialize(componentConfiguration);
+    svelteStore.initialize(componentConfiguration);
   });
 </script>
 
