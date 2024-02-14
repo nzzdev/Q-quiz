@@ -10,9 +10,12 @@
 
   export let recommendations: ArticleRecommendations[];
 
-  async function getLDArticle(articleId: string): Promise<Metadata> {
+  async function getLDArticle(
+    articleId: string,
+    enricoProduct: string
+  ): Promise<Metadata> {
     return await fetch(
-      `${$quizStore.configuration.enrico.url}?product=${$quizStore.configuration.enrico.products}&articleid=${articleId}`
+      `${$quizStore.configuration.enrico.url}?product=${enricoProduct}&articleid=${articleId}`
     )
       .then(async (response) => await response.json())
       .then(async (json) => json.metadata);
@@ -21,11 +24,13 @@
 
 <div>
   {#each recommendations as recommendation}
-    {#await getLDArticle(recommendation.articleId) then metadata}
-      <span class="s-font-text-s">{recommendation.text}</span>
-      <a class="s-font-text-s" href={metadata.url} target="_blank"
-        >{metadata.title}</a
-      >
-    {/await}
+    {#each $quizStore.configuration.enrico.products as enricoProduct}
+      {#await getLDArticle(recommendation.articleId, enricoProduct) then metadata}
+        <span class="s-font-text-s">{recommendation.text}</span>
+        <a class="s-font-text-s" href={metadata.url} target="_blank"
+          >{metadata.title}</a
+        >
+      {/await}
+    {/each}
   {/each}
 </div>
