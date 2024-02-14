@@ -14,7 +14,7 @@ export function getImageUrls(
 }
 
 function getImageUrl(image: QuizImage, width: number, imageServiceUrl: string) {
-  if (imageServiceUrl && image.key)
+  if (imageServiceUrl && image.key && width)
     return `${imageServiceUrl
       .replace('{key}', image.key)
       .replace('{width}', width.toString())
