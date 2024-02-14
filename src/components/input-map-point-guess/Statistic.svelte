@@ -1,6 +1,6 @@
 <script lang="ts">
-  import L, { Marker } from 'leaflet';
   import { onMount } from 'svelte';
+  import L, { Marker } from 'leaflet';
 
   import type {
     MapPointGuess,

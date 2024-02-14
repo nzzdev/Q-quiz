@@ -1,18 +1,16 @@
 <script lang="ts">
+  import { getContext } from 'svelte';
+
+  import key from '../../services/key-service';
   import type { Cover, QuizStoreFn } from '@src/interfaces';
   import { ColorDefaults } from '@src/constants';
 
   import Image from '../quiz-base-elelement/Image.svelte';
   import Button from '../atomic/Button.svelte';
-  import key from '../../services/key-service';
-  import { getContext } from 'svelte';
-  import { svelteStore } from '../store.svelte';
-  const quizStore = getContext(key) as QuizStoreFn;
-
-  console.log('cover key', key);
-  console.log('svelteStore');
 
   export let element: Cover;
+
+  const quizStore = getContext(key) as QuizStoreFn;
 
   $: coverColor = element.color || ColorDefaults.Cover.Color.Background;
 </script>
@@ -52,7 +50,7 @@
     <div class="q-quiz-gap-column">
       <Button
         showArrowRight={true}
-        on:action={() => svelteStore.stepForward()}
+        on:action={() => quizStore.stepForward()}
         colorStyle={ColorDefaults.Cover.Button.Color}>Das Quiz starten</Button
       >
     </div>

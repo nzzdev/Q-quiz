@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, getContext } from 'svelte';
 
   import type {
     LastCard,
@@ -7,17 +7,16 @@
     QuizeScore,
     QuizStoreFn,
   } from '@src/interfaces';
-
+  import key from '../../services/key-service';
+  import { checkIsScoreQuestion } from '@src/helpers/utils';
   import { ScoreService } from '@src/services/score-service';
 
   import QuestionIcon from '../../resources/question.svg';
   import ArticleRecommendations from '../quiz-base-elelement/ArticleRecommendations.svelte';
-  import { checkIsScoreQuestion } from '@src/helpers/utils';
-  import key from '../../services/key-service';
-  import { getContext } from 'svelte';
-  const quizStore = getContext(key) as QuizStoreFn;
 
   export let element: LastCard;
+
+  const quizStore = getContext(key) as QuizStoreFn;
 
   let score: QuizeScore;
 

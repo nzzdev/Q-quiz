@@ -1,24 +1,21 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import { getContext } from 'svelte';
 
   import type { QuizStoreFn } from '@src/interfaces';
-  import Text from './Text.svelte';
-  import Button from '../atomic/Button.svelte';
   import key from '../../services/key-service';
-  import { getContext } from 'svelte';
-  import { svelteStore } from '../store.svelte';
-  const quizStore = getContext(key) as QuizStoreFn;
+
+  import Button from '../atomic/Button.svelte';
+  import Text from './Text.svelte';
 
   export let defaultVisibility = true;
   export let isButtonWithIcon = false;
 
-  let isVisible = true;
-
-  console.log('svelteStore', $svelteStore.step);
+  const quizStore = getContext(key) as QuizStoreFn;
 
   const nextQuestion = (): void => {
-    if ($svelteStore.step <= $svelteStore.numberQuestions) {
-      svelteStore.stepForward();
+    if ($quizStore.step <= $quizStore.numberQuestions) {
+      quizStore.stepForward();
     }
 
     if (!defaultVisibility) {
@@ -36,6 +33,8 @@
     isVisible = !isVisible;
   };
 
+  let isVisible = true;
+
   onMount(() => {
     isVisible = defaultVisibility;
   });
@@ -43,31 +42,30 @@
 
 <div
   class:button-container--hidden={!isVisible ||
-    $svelteStore.step > $svelteStore.numberQuestions ||
-    ($svelteStore.step === $svelteStore.numberQuestions &&
-      !$svelteStore.hasLastCard)}
+    $quizStore.step > $quizStore.numberQuestions ||
+    ($quizStore.step === $quizStore.numberQuestions && !$quizStore.hasLastCard)}
   class="button-container"
 >
   {#if isButtonWithIcon}
     <Button showArrowRight={true} on:action={() => nextQuestion()}
       ><Text
-        actualStep={$svelteStore.step}
-        totalSteps={$svelteStore.numberQuestions}
-        hasScore={$svelteStore.hasScore}
+        actualStep={$quizStore.step}
+        totalSteps={$quizStore.numberQuestions}
+        hasScore={$quizStore.hasScore}
       /></Button
     >
   {:else}
     <button
-      class:q-quiz-button--hidden={$svelteStore.hasCover}
+      class:q-quiz-button--hidden={$quizStore.hasCover}
       class="q-quiz-button q-quiz-button--horizontal s-font-note-s"
       on:click={nextQuestion}
     >
       <div class="q-quiz-button__content">
         <span class="s-color-primary-7"
           ><Text
-            actualStep={$svelteStore.step}
-            totalSteps={$svelteStore.numberQuestions}
-            hasScore={$svelteStore.hasScore}
+            actualStep={$quizStore.step}
+            totalSteps={$quizStore.numberQuestions}
+            hasScore={$quizStore.hasScore}
           /></span
         >
       </div>

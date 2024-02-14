@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, getContext } from 'svelte';
   import L, { Marker, type LatLng, type Map } from 'leaflet';
 
   import type {
@@ -14,11 +14,10 @@
   import BaseElement from '../quiz-base-elelement/BaseElement.svelte';
   import Button from '../atomic/Button.svelte';
   import key from '../../services/key-service';
-  import { getContext } from 'svelte';
-  const quizStore = getContext(key) as QuizStoreFn;
 
   export let element: MapPointGuess;
 
+  const quizStore = getContext(key) as QuizStoreFn;
   const mapOptions = {
     boxZoom: false,
     doubleClickZoom: false,

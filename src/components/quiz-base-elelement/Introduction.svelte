@@ -4,7 +4,6 @@
   export let introduction: string;
 
   let title: HTMLDivElement;
-  $: console.log(title);
 </script>
 
 <CollapseText textHeight={title}>

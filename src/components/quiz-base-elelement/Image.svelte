@@ -1,15 +1,14 @@
 <script lang="ts">
-  import { containerWidthStore } from '@src/store/container.store';
-
-  import type { QuizImage, QuizStoreFn } from '@src/interfaces';
-  import { getImageUrls } from '@src/services/images-service';
   import { getContext } from 'svelte';
-  import key from '../../services/key-service';
-  const quizStore = getContext(key) as QuizStoreFn;
 
-  console.log('image key', key);
+  import { containerWidthStore } from '@src/store/container.store';
+  import { getImageUrls } from '@src/services/images-service';
+  import type { QuizImage, QuizStoreFn } from '@src/interfaces';
+  import key from '../../services/key-service';
 
   export let image: QuizImage;
+
+  const quizStore = getContext(key) as QuizStoreFn;
 
   $: images = getImageUrls(
     image,

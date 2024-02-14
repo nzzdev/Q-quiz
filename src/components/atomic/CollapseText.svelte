@@ -1,23 +1,11 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  export let textHeight: HTMLDivElement;
+
+  const MAX_CONTAINER_SIZE = 115;
 
   let isOpen = false;
   let accordingElement: HTMLDivElement;
   let container: HTMLDivElement;
-
-  export let textHeight: HTMLDivElement;
-
-  $: if (textHeight) {
-    console.log('bla', textHeight);
-  }
-
-  const MAX_CONTAINER_SIZE = 115;
-
-  onMount(() => {
-    console.log('container', container.offsetHeight);
-    console.log('accordingElement', accordingElement.offsetHeight);
-    console.log('textHeight', textHeight?.offsetHeight);
-  });
 
   function accordion(node: HTMLDivElement, isOpen: boolean) {
     let initialHeight = node.offsetHeight;

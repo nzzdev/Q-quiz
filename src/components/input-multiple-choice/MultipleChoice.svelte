@@ -1,15 +1,17 @@
 <script lang="ts">
+  import { getContext } from 'svelte';
+
   import type { MultipleChoice, QuizStoreFn } from '@src/interfaces';
+  import key from '../../services/key-service';
 
   import Button from '../atomic/Button.svelte';
   import BaseElement from '../quiz-base-elelement/BaseElement.svelte';
   import Answer from './Answer.svelte';
-  import key from '../../services/key-service';
-  import { getContext } from 'svelte';
-  const quizStore = getContext(key) as QuizStoreFn;
 
   export let element: MultipleChoice;
   export let toolBaseUrl: string;
+
+  const quizStore = getContext(key) as QuizStoreFn;
 
   let userAnswer: string;
   let shuffledAnswers = shuffleArray(element.choices.concat([element.answer]));

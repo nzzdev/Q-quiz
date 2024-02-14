@@ -2,6 +2,9 @@
   import { getContext, onMount, setContext } from 'svelte';
   import { fly } from 'svelte/transition';
 
+  import key from '../services/key-service';
+  import { quizStoreClass } from '@src/store/quiz.store';
+
   import type { QQuizSvelteProperties, QuizStoreFn } from '@src/interfaces';
   import { containerWidthStore } from '@src/store/container.store';
   import { QuizElementType } from '@src/enums';
@@ -11,28 +14,26 @@
   import MutliplieChoice from './input-multiple-choice/MultipleChoice.svelte';
   import NumberSlider from './number-slider/NumberSlider.svelte';
   import InputMapPoint from './input-map-point-guess/InputMapPoint.svelte';
-  import { store, svelteStore } from './store.svelte';
 
   export let componentConfiguration: QQuizSvelteProperties;
 
-  setContext(key, store());
-  import key from '../services/key-service';
+  setContext(key, quizStoreClass());
   const quizStore = getContext(key) as QuizStoreFn;
   let containerWidth: number;
 
   $: containerWidthStore.set(containerWidth);
-  $: indexAdditional = $svelteStore.hasCover ? 0 : 1;
+  $: indexAdditional = $quizStore.hasCover ? 0 : 1;
 
   onMount(() => {
     quizStore.initialize(componentConfiguration);
-    svelteStore.initialize(componentConfiguration);
+    quizStore.initialize(componentConfiguration);
   });
 </script>
 
 <div bind:clientWidth={containerWidth}>
   {#if containerWidth}
-    {#each $svelteStore.items as element, index}
-      {#if $svelteStore.step === index + indexAdditional}
+    {#each $quizStore.items as element, index}
+      {#if $quizStore.step === index + indexAdditional}
         {#if element.item.type === QuizElementType.Cover}
           <CoverComponent element={element.item} />
         {/if}

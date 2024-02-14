@@ -18,15 +18,6 @@
 
   let statistic: Statistic;
 
-  onMount(() => {
-    fetch(`${toolBaseUrl}/answers/${QuizElementType.MultipleChoice}/${id}`)
-      .then((response) => response.json())
-      .then(
-        (answers: NumberOfAnswersPerChoice[]) =>
-          (statistic = StatisticCalculator.multipleChoiceStats(answers))
-      );
-  });
-
   $: getHighestAnswerCount = (): number => {
     if (!statistic || !statistic.numberOfAnswersPerChoice) {
       return 0;
@@ -52,6 +43,15 @@
     }
     return 0;
   };
+
+  onMount(() => {
+    fetch(`${toolBaseUrl}/answers/${QuizElementType.MultipleChoice}/${id}`)
+      .then((response) => response.json())
+      .then(
+        (answers: NumberOfAnswersPerChoice[]) =>
+          (statistic = StatisticCalculator.multipleChoiceStats(answers))
+      );
+  });
 </script>
 
 <div class="q-quiz-result">

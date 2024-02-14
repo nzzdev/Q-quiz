@@ -1,8 +1,10 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
-  import chevroRight from '../../resources/chevron-right.svg';
+
   import { ColorDefaults } from '@src/constants';
   import type { ButtonColorStyle } from '@src/interfaces';
+
+  import chevroRight from '../../resources/chevron-right.svg';
 
   export let showArrowRight = false;
   export let colorStyle: ButtonColorStyle = ColorDefaults.Button.Color;
