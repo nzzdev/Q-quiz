@@ -7,6 +7,7 @@
   import Button from '../atomic/Button.svelte';
   import BaseElement from '../quiz-base-elelement/BaseElement.svelte';
   import Answer from './Answer.svelte';
+  import { EventTrackingService } from '@src/services/event-tracking';
 
   export let element: MultipleChoice;
   export let toolBaseUrl: string;
@@ -16,9 +17,22 @@
   let userAnswer: string;
   let shuffledAnswers = shuffleArray(element.choices.concat([element.answer]));
 
-  function getResult(answer: string) {
+  function getResult(answer: string, event: CustomEvent) {
     quizStore.answerdQuestion($quizStore.qItemId, element, answer).then(() => {
       userAnswer = answer;
+      const detail = EventTrackingService.getDetails(
+        $quizStore.items,
+        $quizStore.qItemId,
+        event
+      );
+      const step = $quizStore.step;
+      const countStep = $quizStore.numberQuestions;
+      EventTrackingService.trackAnswer(
+        detail.title,
+        step,
+        countStep,
+        detail.element
+      );
     });
   }
 
@@ -56,7 +70,9 @@
     <div class="q-quiz-input">
       {#each shuffledAnswers as answer, idx}
         <div class:answer-button={idx < shuffledAnswers.length - 1}>
-          <Button on:action={() => getResult(answer)}>{answer}</Button>
+          <Button on:action={(event) => getResult(answer, event)}
+            >{answer}</Button
+          >
         </div>
       {/each}
     </div>

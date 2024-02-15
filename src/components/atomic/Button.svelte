@@ -12,8 +12,8 @@
 
   const dispatch = createEventDispatcher();
 
-  function action() {
-    dispatch('action');
+  function action(event: Event) {
+    dispatch('action', { event });
   }
 </script>
 

@@ -7,6 +7,7 @@
     QuizStoreContext,
   } from '@src/interfaces';
   import key from '../../services/key-service';
+  import { EventTrackingService } from '@src/services/event-tracking';
 
   export let recommendations: ArticleRecommendations[];
 
@@ -22,6 +23,22 @@
       .then(async (response) => await response.json())
       .then(async (json) => json.metadata);
   }
+
+  function trackEvent(link: string, event: Event) {
+    const detail = EventTrackingService.getDetails(
+      $quizStore.items,
+      $quizStore.qItemId,
+      event
+    );
+    const step = $quizStore.step;
+
+    EventTrackingService.trackClickLink(
+      detail.title,
+      link,
+      step,
+      detail.element
+    );
+  }
 </script>
 
 <div>
@@ -29,8 +46,11 @@
     {#each $quizStore.configuration.enrico.products as enricoProduct}
       {#await getLDArticle(recommendation.articleId, enricoProduct) then metadata}
         <span class="s-font-text-s">{recommendation.text}</span>
-        <a class="s-font-text-s" href={metadata.url} target="_blank"
-          >{metadata.title}</a
+        <a
+          class="s-font-text-s"
+          on:click={(event) => trackEvent(metadata.url, event)}
+          href={metadata.url}
+          target="_blank">{metadata.title}</a
         >
       {/await}
     {/each}

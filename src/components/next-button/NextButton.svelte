@@ -7,6 +7,7 @@
 
   import Button from '../atomic/Button.svelte';
   import Text from './Text.svelte';
+  import { EventTrackingService } from '@src/services/event-tracking';
 
   export let defaultVisibility = true;
   export let isButtonWithIcon = false;
@@ -15,9 +16,17 @@
     key
   ) as QuizStoreContext;
 
-  const nextQuestion = (): void => {
+  const nextQuestion = (event: Event): void => {
     if ($quizStore.step <= $quizStore.numberQuestions) {
+      const detail = EventTrackingService.getDetails(
+        $quizStore.items,
+        $quizStore.qItemId,
+        event
+      );
+
       quizStore.stepForward();
+
+      EventTrackingService.trackNextScreen(detail.element);
     }
 
     if (!defaultVisibility) {
@@ -47,7 +56,7 @@
   class="button-container"
 >
   {#if isButtonWithIcon}
-    <Button showArrowRight={true} on:action={() => nextQuestion()}
+    <Button showArrowRight={true} on:action={nextQuestion}
       ><Text
         actualStep={$quizStore.step}
         totalSteps={$quizStore.numberQuestions}
