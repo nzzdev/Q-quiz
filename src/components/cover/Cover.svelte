@@ -7,6 +7,7 @@
 
   import Image from '../quiz-base-elelement/Image.svelte';
   import Button from '../atomic/Button.svelte';
+  import nzzLogo from '@src/resources/nzz_logo.svg';
 
   export let element: Cover;
 
@@ -24,9 +25,7 @@
     class="cover-theme q-quiz-gap-column q-quiz-gap-row"
   >
     <div class="nzz-title">
-      <h3 class="s-font-title" style:color={ColorDefaults.Cover.Color.Text}>
-        Hier kommt das nzz logo hin
-      </h3>
+      {@html nzzLogo}
     </div>
 
     <h4 class="s-font-text" style:color={ColorDefaults.Cover.Color.Text}>
