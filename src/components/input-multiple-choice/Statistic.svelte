@@ -53,6 +53,6 @@
 
   .precent {
     white-space: nowrap;
-    text-align: right;
+    margin-left: 5px;
   }
 </style>
