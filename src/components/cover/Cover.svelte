@@ -19,41 +19,38 @@
   class="cover q-quiz-element-container--is-active"
   style="--q-quiz-cover-color: {coverColor}"
 >
-  {#if element.themeLogo || element.themeTitle}
-    <div class="cover-theme q-quiz-gap-column q-quiz-gap-row">
-      {#if element.themeLogo}
-        <div class="nzz-title">
-          <h3 class="s-font-title" style:color={ColorDefaults.Cover.Color.Text}>
-            {element.themeLogo}
-          </h3>
-        </div>
-      {/if}
-      {#if element.themeTitle}
-        <h4 class="s-font-text" style:color={ColorDefaults.Cover.Color.Text}>
-          {element.themeTitle}
-        </h4>
-      {/if}
+  <div
+    class:cover-layout-without-image={!element.image || !element.image.url}
+    class="cover-theme q-quiz-gap-column q-quiz-gap-row"
+  >
+    <div class="nzz-title">
+      <h3 class="s-font-title" style:color={ColorDefaults.Cover.Color.Text}>
+        Hier kommt das nzz logo hin
+      </h3>
     </div>
-  {/if}
+
+    <h4 class="s-font-text" style:color={ColorDefaults.Cover.Color.Text}>
+      {element.themeTitle ? element.themeTitle : 'Quiz'}
+    </h4>
+  </div>
   {#if element.image && element.image.url}
     <div class="q-quiz-gap-row">
       <Image image={element.image} />
     </div>
   {/if}
-  <div class:cover-layout-without-image={!element.image || !element.image.url}>
-    <h3
-      class="cover-title q-quiz-gap-column q-quiz-gap-row s-font-title"
-      style:color={ColorDefaults.Cover.Color.Text}
+  <h3
+    class:cover-layout-without-image={!element.image || !element.image.url}
+    class="cover-title q-quiz-gap-column q-quiz-gap-row s-font-title"
+    style:color={ColorDefaults.Cover.Color.Text}
+  >
+    {#if element.title}{element.title}{/if}
+  </h3>
+  <div class="q-quiz-gap-column">
+    <Button
+      showArrowRight={true}
+      on:action={() => quizStore.stepForward()}
+      colorStyle={ColorDefaults.Cover.Button.Color}>Das Quiz starten</Button
     >
-      {#if element.title}{element.title}{/if}
-    </h3>
-    <div class="q-quiz-gap-column">
-      <Button
-        showArrowRight={true}
-        on:action={() => quizStore.stepForward()}
-        colorStyle={ColorDefaults.Cover.Button.Color}>Das Quiz starten</Button
-      >
-    </div>
   </div>
 </div>
 
@@ -81,7 +78,6 @@
     }
 
     &-layout-without-image {
-      padding-top: 150px;
       padding-bottom: 150px;
     }
   }
