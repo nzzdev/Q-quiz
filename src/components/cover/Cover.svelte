@@ -64,7 +64,7 @@
   }
   .cover {
     width: 100%;
-    padding-top: $smallGap;
+    padding-top: $gap;
     padding-bottom: $gap;
     background-color: currentColor;
     text-align: center;
