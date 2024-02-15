@@ -1,13 +1,14 @@
 <script lang="ts">
   export let textHeight: HTMLDivElement;
 
-  const MAX_CONTAINER_SIZE = 115;
+  const MAX_CONTAINER_SIZE = 90;
 
   let isOpen = false;
   let accordingElement: HTMLDivElement;
   let container: HTMLDivElement;
 
   function accordion(node: HTMLDivElement, isOpen: boolean) {
+    console.log('isOpen', isOpen);
     let initialHeight = node.offsetHeight;
     node.style.height = isOpen ? 'auto' : `${MAX_CONTAINER_SIZE}px`;
     node.style.webkitBoxOrient = isOpen ? 'unset' : 'vertical';
@@ -43,11 +44,13 @@
   <div
     bind:this={accordingElement}
     class="q-quiz-long-text-content"
-    style="--MAX_CONTAINER_SIZE:{MAX_CONTAINER_SIZE}px"
+    style={textHeight?.offsetHeight > container?.offsetHeight
+      ? `--MAX_CONTAINER_SIZE:${MAX_CONTAINER_SIZE}px`
+      : 'height:unset'}
   >
     <slot />
   </div>
-  {#if textHeight?.offsetHeight > container?.offsetHeight}
+  {#if textHeight?.offsetHeight > container?.offsetHeight || isOpen}
     <button
       on:click={() => accordion(accordingElement, (isOpen = !isOpen))}
       class="q-quiz-long-text-read-more s-font-note"
@@ -63,7 +66,7 @@
   }
 
   .q-quiz-long-text-content {
-    height: var(--MAX_CONTAINER_SIZE, 115px);
+    height: var(--MAX_CONTAINER_SIZE);
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
