@@ -5,6 +5,7 @@
   import { getImageUrls } from '@src/services/images-service';
   import type { QuizImage, QuizStoreContext } from '@src/interfaces';
   import key from '../../services/key-service';
+  import { calculat16To9Height } from '@src/helpers/utils';
 
   export let image: QuizImage;
 
@@ -17,7 +18,10 @@
   );
 </script>
 
-<div>
+<div
+  class="image-container"
+  style:max-height="{calculat16To9Height($containerWidthStore)}px"
+>
   <img
     class="q-quiz-question-image"
     src={images.image2x}
@@ -28,6 +32,10 @@
 </div>
 
 <style lang="scss">
+  .image-container {
+    width: 100%;
+    overflow: hidden;
+  }
   .q-quiz-question-image {
     width: 100%;
   }

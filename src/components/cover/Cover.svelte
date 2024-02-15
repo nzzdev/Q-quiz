@@ -22,12 +22,11 @@
 >
   <div
     class:cover-layout-without-image={!element.image || !element.image.url}
-    class="cover-theme q-quiz-gap-column q-quiz-gap-row"
+    class="cover-theme q-quiz-gap-column q-quiz-gap-row__small"
   >
-    <div class="nzz-title">
+    <div class="nzz-logo">
       {@html nzzLogo}
     </div>
-
     <h4 class="s-font-text" style:color={ColorDefaults.Cover.Color.Text}>
       {element.themeTitle ? element.themeTitle : 'Quiz'}
     </h4>
@@ -55,12 +54,17 @@
 
 <style lang="scss">
   @import '../../styles/variables';
-  .nzz-title {
-    height: 16px;
+  .nzz-logo {
+    display: flex;
+    justify-content: center;
+
+    :global(svg) {
+      height: 14px;
+    }
   }
   .cover {
     width: 100%;
-    padding-top: $gap;
+    padding-top: $smallGap;
     padding-bottom: $gap;
     background-color: currentColor;
     text-align: center;
