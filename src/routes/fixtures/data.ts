@@ -1,5 +1,6 @@
 import type { ServerRoute } from '@hapi/hapi';
 
+import lastCardt from '../../../resources/fixtures/data/last-card.json';
 import allCoverWithImageAndthemeLogo from '../../../resources/fixtures/data/all-cover-with-image-and-theme-title.json';
 import all from '../../../resources/fixtures/data/all.json';
 import allQuestionTypesWithImages from '../../../resources/fixtures/data/all-question-types-with-images.json';
@@ -19,6 +20,7 @@ import singleNumberPoll from '../../../resources/fixtures/data/single-number-pol
 import stripPlotNumberGuess from '../../../resources/fixtures/data/strip-plot-number-guess.json';
 
 const fixtureData = [
+  lastCardt,
   allCoverWithImageAndthemeLogo,
   allQuestionTypesWithImages,
   all,

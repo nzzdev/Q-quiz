@@ -2,14 +2,14 @@
   import { getContext } from 'svelte';
 
   import type {
-    ArticleRecommendations,
+    UrlRecommendations,
     Metadata,
     QuizStoreContext,
   } from '@src/interfaces';
   import key from '../../services/key-service';
-  import { EventTrackingService } from '@src/services/event-tracking';
+  import ArticleRecommendation from './ArticleRecommendation.svelte';
 
-  export let recommendations: ArticleRecommendations[];
+  export let recommendations: UrlRecommendations;
 
   const { quizStore } = getContext(key) as QuizStoreContext;
 
@@ -23,36 +23,39 @@
       .then(async (response) => await response.json())
       .then(async (json) => json.metadata);
   }
-
-  function trackEvent(link: string, event: Event) {
-    const detail = EventTrackingService.getDetails(
-      $quizStore.items,
-      $quizStore.qItemId,
-      event
-    );
-    const step = $quizStore.step;
-
-    EventTrackingService.trackClickLink(
-      detail.title,
-      link,
-      step,
-      detail.element
-    );
-  }
 </script>
 
 <div>
-  {#each recommendations as recommendation}
-    {#each $quizStore.configuration.enrico.products as enricoProduct}
-      {#await getLDArticle(recommendation.articleId, enricoProduct) then metadata}
-        <span class="s-font-text-s">{recommendation.text}</span>
-        <a
-          class="s-font-text-s"
-          on:click={(event) => trackEvent(metadata.url, event)}
-          href={metadata.url}
-          target="_blank">{metadata.title}</a
-        >
-      {/await}
+  <div class="more-themes s-font-title">
+    Mehr zu dem Thema {#if recommendations.themaAddText}{recommendations.themaAddText}{/if}
+  </div>
+  <div class="links">
+    {#each recommendations.links as link}
+      {#each $quizStore.configuration.enrico.products as enricoProduct}
+        {#if link.url.startsWith('ld.')}
+          {#await getLDArticle(link.url, enricoProduct) then metadata}
+            <ArticleRecommendation
+              url={metadata.url}
+              text={metadata.title}
+              {metadata}
+            />
+          {/await}
+        {:else}
+          <ArticleRecommendation url={link.url} text={link.text} />
+        {/if}
+      {/each}
     {/each}
-  {/each}
+  </div>
 </div>
+
+<style lang="scss">
+  @import '../../styles/variables.scss';
+  .more-themes {
+    margin-bottom: 10px;
+  }
+  .links {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+</style>

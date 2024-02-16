@@ -1,0 +1,24 @@
+{
+  "title": "FIXTURE: NEU Nur letzte Karte",
+  "elements": [
+    {
+      "id": "quiz-0-1503673750136-872919612",
+      "type": "lastCard",
+      "title": "Geschafft. Danke fürs Mitspielen.",
+      "quizLink": "https://www.nzz.ch/feuilleton/nzz-quizz-twin-peaks-kehrt-zurueck-ld.1294313",
+      "quizTitle": "Was wissen Sie über Twin Peaks",
+      "isFinalScoreShown": true,
+      "articleRecommendations": [
+        {
+          "text": "Bild Artikelkopf 1",
+          "articleId": "ld.1814199"
+        },
+        {
+          "text": "Bild Artikelkopf 2",
+          "articleId": "ld.1773461"
+        }
+      ],
+      "text": "Ui so ein Spass"
+    }
+  ]
+}

@@ -1,7 +1,6 @@
 <script lang="ts">
   import { getContext } from 'svelte';
 
-  import { containerWidthStore } from '@src/store/container.store';
   import { getImageUrls } from '@src/services/images-service';
   import type { QuizImage, QuizStoreContext } from '@src/interfaces';
   import key from '../../services/key-service';
@@ -9,7 +8,9 @@
 
   export let image: QuizImage;
 
-  const { quizStore } = getContext(key) as QuizStoreContext;
+  const { quizStore, containerWidthStore } = getContext(
+    key
+  ) as QuizStoreContext;
 
   $: images = getImageUrls(
     image,

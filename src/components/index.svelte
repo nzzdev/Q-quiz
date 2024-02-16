@@ -10,7 +10,6 @@
     QQuizSvelteProperties,
     QuizStoreContext,
   } from '@src/interfaces';
-  import { containerWidthStore } from '@src/store/container.store';
   import { QuizElementType } from '@src/enums';
 
   import CoverComponent from './cover/Cover.svelte';
@@ -24,9 +23,10 @@
   setContext(key, {
     quizStore: quizStoreClass(),
     questionContainerStore: writable<HTMLDivElement>(undefined),
+    containerWidthStore: writable<number>(0),
   });
 
-  const { quizStore, questionContainerStore } = getContext(
+  const { quizStore, questionContainerStore, containerWidthStore } = getContext(
     key
   ) as QuizStoreContext;
 

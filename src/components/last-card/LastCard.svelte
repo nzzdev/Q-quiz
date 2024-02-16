@@ -13,6 +13,7 @@
 
   import QuestionIcon from '../../resources/question.svg';
   import ArticleRecommendations from '../quiz-base-elelement/ArticleRecommendations.svelte';
+  import Divider from '../atomic/Divider.svelte';
 
   export let element: LastCard;
 
@@ -49,10 +50,15 @@
   {#if element.text}
     <p class="s-font-text-s">{element.text}</p>
   {/if}
-  {#if element.articleRecommendations}
-    <ArticleRecommendations recommendations={element.articleRecommendations} />
+  {#if element.urlRecommendations}
+    <Divider />
+    <ArticleRecommendations recommendations={element.urlRecommendations} />
+    {#if !element.quizLink}
+      <Divider />
+    {/if}
   {/if}
   {#if element.quizLink}
+    <Divider />
     <div
       class="s-color-gray-4 q-quiz-play-another-container q-quiz-play-another-container--separator"
     >
@@ -72,6 +78,7 @@
         </button>
       </a>
     </div>
+    <Divider />
   {/if}
 </div>
 

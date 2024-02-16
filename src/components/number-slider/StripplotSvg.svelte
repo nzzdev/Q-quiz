@@ -1,19 +1,23 @@
 <script lang="ts">
+  import { getContext } from 'svelte';
   import { max } from 'd3-array';
   import { scaleLinear } from 'd3-scale';
   import { select } from 'd3-selection';
 
-  import { containerWidthStore } from '@src/store/container.store';
   import type {
     NumberOfAnswersPerChoice,
     SliderQuestion,
+    QuizStoreContext,
   } from '@src/interfaces';
+  import key from '../../services/key-service';
 
   export let data: SliderQuestion;
   export let statistics: NumberOfAnswersPerChoice[];
   export let correctAnswer: number;
   export let userAnswer: number;
   export let labelText: string;
+
+  const { containerWidthStore } = getContext(key) as QuizStoreContext;
 
   let element: HTMLDivElement;
 

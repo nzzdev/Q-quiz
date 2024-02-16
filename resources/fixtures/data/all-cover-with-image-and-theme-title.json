@@ -26,6 +26,7 @@
         "height": 168
       },
       "choices": ["vielleicht", "falsch", "absolut falsch"],
+      "articleRecommendationThema": "Kochen",
       "articleRecommendations": [
         {
           "text": "Bild Artikelkopf 1",
@@ -34,6 +35,10 @@
         {
           "text": "Bild Artikelkopf 2",
           "articleId": "ld.1773461"
+        },
+        {
+          "text": "Externer Link",
+          "articleId": "https://www.nzz.ch/neueste-artikel"
         }
       ],
       "question": "Was ist die richtige Antwort?",
@@ -133,7 +138,7 @@
       "articleRecommendations": [
         {
           "text": "Bild Artikelkopf 1",
-          "articleId": "ld.1773461"
+          "articleId": "ld.1814199"
         },
         {
           "text": "Bild Artikelkopf 2",

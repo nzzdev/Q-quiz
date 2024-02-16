@@ -52,11 +52,9 @@
         </CollapseText>
       </div>
     {/if}
-    {#if element.articleRecommendations}
+    {#if element.urlRecommendations}
       <div class="q-quiz-gap-column q-quiz-gap-row">
-        <ArticleRecommendations
-          recommendations={element.articleRecommendations}
-        />
+        <ArticleRecommendations recommendations={element.urlRecommendations} />
       </div>
     {/if}
   {/if}

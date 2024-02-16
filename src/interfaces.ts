@@ -68,7 +68,44 @@ export interface TrackingComponent {
 }
 
 export interface QuizDoc extends QDoc {
-  elements: QuizBaseQuestion[];
+  elements: QuizDocElements[];
+}
+
+export interface QuizDocElements extends QuizBaseQuestion {
+  articleRecommendationThema?: string;
+  articleRecommendations?: ArticleRecommendationDoc[];
+}
+
+export interface MultipleChoiceDoc extends MultipleChoice {
+  articleRecommendationThema?: string;
+  articleRecommendations?: ArticleRecommendationDoc[];
+}
+
+export interface NumberPollDoc extends NumberPoll {
+  articleRecommendationThema?: string;
+  articleRecommendations?: ArticleRecommendationDoc[];
+}
+
+export interface NumberGuessDoc extends NumberGuess {
+  articleRecommendationThema?: string;
+  articleRecommendations?: ArticleRecommendationDoc[];
+}
+
+export interface MapPointGuessDoc extends MapPointGuess {
+  articleRecommendationThema?: string;
+  articleRecommendations?: ArticleRecommendationDoc[];
+}
+
+export interface LastCardDoc extends LastCard {
+  articleRecommendationThema?: string;
+  articleRecommendations?: ArticleRecommendationDoc[];
+}
+
+// ArticleRecommendation can now be an simple url or a ld article
+// REVIEW: You would have to see whether you want to migrate the data to the new structure
+export interface ArticleRecommendationDoc {
+  articleId: string;
+  text: string;
 }
 
 export interface QuizElements {
@@ -81,7 +118,7 @@ export interface QuizElements {
 }
 
 export interface QuizBaseQuestion extends BaseElement {
-  articleRecommendations: ArticleRecommendation[];
+  urlRecommendations?: UrlRecommendations;
   question: string;
   image?: QuizImage;
   introduction?: string;
@@ -99,6 +136,7 @@ export interface UserAnswer {
 export interface QuizStoreContext {
   quizStore: QuizStoreFn;
   questionContainerStore: Writable<HTMLDivElement | undefined>;
+  containerWidthStore: Writable<number>;
 }
 export interface QuizStoreFn extends Writable<QuizStore> {
   initialize: (componentConfiguration: QQuizSvelteProperties) => void;
@@ -203,7 +241,7 @@ export interface LastCard extends BaseElement {
   quizLink?: string;
   quizTitle?: string;
   text?: string;
-  articleRecommendations?: ArticleRecommendation[];
+  urlRecommendations?: UrlRecommendations;
 }
 
 export interface QuizImage {
@@ -214,8 +252,13 @@ export interface QuizImage {
   width?: number;
 }
 
-export interface ArticleRecommendation {
-  articleId: string;
+export interface UrlRecommendations {
+  themaAddText?: string;
+  links: UrlRecommendation[];
+}
+
+export interface UrlRecommendation {
+  url: string;
   text: string;
 }
 

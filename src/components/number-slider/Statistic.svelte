@@ -1,14 +1,15 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { getContext, onMount } from 'svelte';
 
-  import { containerWidthStore } from '@src/store/container.store';
   import { QuizElementType } from '@src/enums';
   import type {
     NumberGuess,
     NumberOfAnswersPerChoice,
     SliderQuestion,
+    QuizStoreContext,
   } from '@src/interfaces';
   import Scale from '@src/services/scale';
+  import key from '../../services/key-service';
 
   import BarchartSvg from './BarchartSvg.svelte';
   import StripplotSvg from './StripplotSvg.svelte';
@@ -16,6 +17,8 @@
   export let element: SliderQuestion;
   export let userAnswer: number;
   export let toolBaseUrl: string;
+
+  const { containerWidthStore } = getContext(key) as QuizStoreContext;
 
   let answers: NumberOfAnswersPerChoice[];
   let numberOfPossibleAnswers: number;
