@@ -52,10 +52,6 @@
           }
         },
         "image": { "$ref": "#/definitions/image" },
-        "title": {
-          "type": "string",
-          "title": "Titel des Quiz"
-        },
         "themeTitle": {
           "type": "string",
           "title": "Themen Titel"
@@ -104,15 +100,16 @@
             "placeholder": "Sagt dem Nutzer in Prosa, welche Antwort richtig ist und liefert idealerweise noch etwas Erklärung dazu."
           }
         },
-        "articleRecommendationThema": {
-          "type": "string",
-          "title": "Thema anhängen",
-          "Q:options": {
-            "placeholder": "Optionales Text für Mehr zum Thema THEMA-TEXT"
-          }
-        },
+
         "articleRecommendations": {
           "$ref": "#/definitions/articleRecommendations"
+        },
+        "articleRecommendationThema": {
+          "type": "string",
+          "title": "Artikelempfehlung: Thema anhängen",
+          "Q:options": {
+            "placeholder": "Optionales Text für Mehr zum Thema HIER-IHR-THEMA-TEXT"
+          }
         }
       },
       "required": ["question", "answer"]
