@@ -2,6 +2,7 @@
   export let actualStep: number;
   export let totalSteps: number;
   export let hasScore: boolean;
+  export let isJumpAnswer: boolean = false;
 </script>
 
 {#if actualStep === totalSteps}
@@ -10,6 +11,8 @@
   {:else}
     Thema vertiefen
   {/if}
+{:else if isJumpAnswer}
+  Frage überspringen
 {:else}
   nächste Frage anzeigen
 {/if}

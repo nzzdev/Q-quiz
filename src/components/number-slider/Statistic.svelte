@@ -23,18 +23,23 @@
   let stepWidth: number;
   let correctAnswerStyle: string = '';
   let userAnswerStyle: string = '';
+  let labelText = 'Ihre Antwort';
 
   $: correctAnswer = (element as NumberGuess).answer;
   $: setup($containerWidthStore);
 
   onMount(() => {
+    if (element.type === QuizElementType.NumberPoll) {
+      labelText = 'Ihre Schätzung';
+    }
+
     fetch(`${toolBaseUrl}/answers/${element.type}/${element.id}`)
       .then((response) => response.json())
       .then((results: NumberOfAnswersPerChoice[]) => {
         if (element.type === QuizElementType.NumberGuess) {
-          answers = results ;
+          answers = results;
         } else if (element.type === QuizElementType.NumberPoll) {
-          answers = results ;
+          answers = results;
         } else {
           new Error('Wrong type of question');
         }
@@ -106,6 +111,7 @@
         statistics={answers}
         {correctAnswer}
         {userAnswer}
+        {labelText}
       />
     {:else}
       <StripplotSvg
@@ -113,6 +119,7 @@
         statistics={answers}
         {correctAnswer}
         {userAnswer}
+        {labelText}
       />
     {/if}
     <p class="q-quiz-result-answer-text s-font-text-s"></p>

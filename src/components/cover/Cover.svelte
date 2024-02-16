@@ -27,7 +27,7 @@
     <div class="nzz-logo">
       {@html nzzLogo}
     </div>
-    <h4 class="s-font-text" style:color={ColorDefaults.Cover.Color.Text}>
+    <h4 class="s-font-text-s" style:color={ColorDefaults.Cover.Color.Text}>
       {element.themeTitle ? element.themeTitle : 'Quiz'}
     </h4>
   </div>
@@ -38,7 +38,7 @@
   {/if}
   <h3
     class:cover-layout-without-image={!element.image || !element.image.url}
-    class="cover-title q-quiz-gap-column q-quiz-gap-row s-font-title"
+    class="cover-title q-quiz-gap-column q-quiz-gap-row s-font-text"
     style:color={ColorDefaults.Cover.Color.Text}
   >
     {#if element.title}{element.title}{/if}
@@ -59,7 +59,7 @@
     justify-content: center;
 
     :global(svg) {
-      height: 14px;
+      height: 20px;
     }
   }
   .cover {

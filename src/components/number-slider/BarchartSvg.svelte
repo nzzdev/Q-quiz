@@ -14,6 +14,7 @@
   export let statistics: NumberOfAnswersPerChoice[];
   export let correctAnswer: number;
   export let userAnswer: number;
+  export let labelText: string;
 
   let element: HTMLDivElement;
 
@@ -214,7 +215,7 @@
 
       svg
         .append('text')
-        .text('Ihre Schätzung')
+        .text(labelText)
         .attr('class', 's-color-primary-7 s-font-note q-quiz-marker-text')
         .attr(
           'x',

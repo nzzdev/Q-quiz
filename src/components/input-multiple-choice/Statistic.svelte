@@ -43,6 +43,7 @@
     &__column {
       display: grid;
       grid-template-columns: 100% 40px;
+      align-items: center;
     }
   }
 

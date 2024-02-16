@@ -104,10 +104,6 @@
             "placeholder": "Sagt dem Nutzer in Prosa, welche Antwort richtig ist und liefert idealerweise noch etwas Erklärung dazu."
           }
         },
-        "notes": {
-          "type": "string",
-          "title": "Anmerkungen"
-        },
         "articleRecommendations": {
           "$ref": "#/definitions/articleRecommendations"
         }

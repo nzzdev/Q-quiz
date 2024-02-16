@@ -63,8 +63,8 @@
         class="q-quiz-result__answer s-font-note"
       >
         <div
-          class:s-color-positive={answer == correctAnswer}
-          class:s-color-negative={answer === userAnswer &&
+          class:color-positive={answer == correctAnswer}
+          class:color-negative={answer === userAnswer &&
             correctAnswer !== userAnswer}
         >
           <div class="label">
@@ -73,7 +73,7 @@
             {:else}
               <div class="label__icon">{@html crossmaker}</div>
             {/if}
-            <div>{answer}</div>
+            <div class="answer-value">{answer}</div>
             {#if answer === userAnswer}
               <div class="label__hint s-font-note-s">(ihre Antwort)</div>
             {/if}
@@ -100,6 +100,18 @@
     span {
       margin-right: 5px;
     }
+  }
+
+  .color-positive {
+    color: #374e8e;
+  }
+
+  .color-negative {
+    color: #ce4631;
+  }
+
+  .answer-value {
+    margin-top: 0.5px;
   }
 
   .label {

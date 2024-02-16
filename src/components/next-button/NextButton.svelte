@@ -75,6 +75,7 @@
             actualStep={$quizStore.step}
             totalSteps={$quizStore.numberQuestions}
             hasScore={$quizStore.hasScore}
+            isJumpAnswer={true}
           /></span
         >
       </div>

@@ -35,8 +35,11 @@
 >
   <h3 class="s-q-item__title q-quiz-last-card-title">
     {#if element.isFinalScoreShown && score}
-      <div class="s-font-text-s q-quiz-final-score">
-        {score.lastCardTitle} Sie haben {score.achievedScore} von {score.maxScore}
+      <div class="s-font-text q-quiz-final-score">
+        {score.lastCardTitle} Sie haben
+        <span class="s-font-text s-font-text--strong"
+          >{score.achievedScore} von {score.maxScore}</span
+        >
         möglichen Punkten erzielt.
       </div>
     {:else}
