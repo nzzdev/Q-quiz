@@ -8,7 +8,6 @@
   let container: HTMLDivElement;
 
   function accordion(node: HTMLDivElement, isOpen: boolean) {
-    console.log('isOpen', isOpen);
     let initialHeight = node.offsetHeight;
     node.style.height = isOpen ? 'auto' : `${MAX_CONTAINER_SIZE}px`;
     node.style.webkitBoxOrient = isOpen ? 'unset' : 'vertical';

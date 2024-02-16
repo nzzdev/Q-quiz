@@ -93,8 +93,6 @@ export function transform(item: QuizDoc): QuizElements {
 
     return element;
   });
-
-  console.log('questionElements', questionElements, questionElementsDoc);
   // prepare data for server side rendering
   return {
     questions: questionElements,

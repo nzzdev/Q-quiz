@@ -14,8 +14,6 @@
   export let text: string;
   export let metadata: Metadata | undefined = undefined;
 
-  console.log('metadata', metadata);
-
   const { quizStore, containerWidthStore } = getContext(
     key
   ) as QuizStoreContext;
