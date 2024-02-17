@@ -94,8 +94,8 @@ export class StatisticCalculator {
   // @ts-ignore
   // TODO
   public static mapPointGuess(
-    answersStats: MapPointGuessStatistic[], // @ts-ignore
-    userAnswer
+    answersStats: MapPointGuessStatistic[],
+    userAnswer: number
   ): Statistic {
     let betterThanCount = 0;
     let numberOfSameAnswers;
@@ -105,11 +105,18 @@ export class StatisticCalculator {
     }, 0);
 
     if (userAnswer) {
-      betterThanCount =
-        answersStats.find((answer) => answer.distance > userAnswer)?.count || 0;
-      numberOfSameAnswers =
-        answersStats.find((answer) => answer.distance === userAnswer)?.count ||
-        0;
+      betterThanCount = answersStats.reduce((prev, current) => {
+        if (current.distance > userAnswer) {
+          return prev + current.count;
+        }
+        return prev;
+      }, 0);
+      numberOfSameAnswers = answersStats.reduce((prev, current) => {
+        if (current.distance === userAnswer) {
+          return prev + current.count - 1;
+        }
+        return prev;
+      }, 0);
     }
 
     return {
