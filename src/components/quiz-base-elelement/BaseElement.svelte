@@ -54,7 +54,7 @@
         </CollapseText>
       </div>
     {/if}
-    {#if element.urlRecommendations}
+    {#if element.urlRecommendations && element.urlRecommendations.links.length > 0}
       <div class="q-quiz-gap-column q-quiz-gap-row">
         <ArticleRecommendations recommendations={element.urlRecommendations} />
       </div>
