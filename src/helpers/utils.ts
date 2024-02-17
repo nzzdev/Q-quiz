@@ -119,7 +119,3 @@ export function formatNumber(number: number) {
 
   return formattedNumber;
 }
-
-export function calculat16To9Height(width: number) {
-  return (width / 16) * 9;
-}
