@@ -23,7 +23,9 @@
     </div>
   {/if}
   {#if element.image && element.image.url}
-    <Image image={element.image} />
+    <div class="q-quiz-gap-row">
+      <Image image={element.image} />
+    </div>
   {/if}
   {#if element.question}
     <div class="q-quiz-gap-column q-quiz-gap-row">

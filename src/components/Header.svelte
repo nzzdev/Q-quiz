@@ -9,8 +9,9 @@
 </div>
 
 <style lang="scss">
+  @import '../styles/variables.scss';
   .layout-header {
     text-align: center;
-    padding-top: 5px;
+    padding-top: $borderinnerPadding;
   }
 </style>
