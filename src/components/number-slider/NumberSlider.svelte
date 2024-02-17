@@ -1,5 +1,6 @@
 <script lang="ts">
   import { getContext } from 'svelte';
+  import { formatNumber } from '@nzz/et-utils-number';
 
   import type { SliderQuestion, QuizStoreContext } from '@src/interfaces';
   import { EventTrackingService } from '@src/services/event-tracking';
@@ -76,7 +77,7 @@
               <span
                 class="q-quiz-input-range-position-label__label s-color-gray-1"
               >
-                {userAnswer}
+                {formatNumber(userAnswer)}
               </span>
             </span>
           </div>
@@ -93,10 +94,10 @@
           class="
         q-quiz-input-range-min
         s-font-note-s s-font-note-s--strong
-        s-font-note--tabularnums
+        s-font-note-s--tabularnums
       "
         >
-          {element.min}
+          {formatNumber(element.min)}
           {#if element.unit}
             {element.min === 1 && element.unit_sinpular
               ? element.unit_sinpular
@@ -107,10 +108,10 @@
           class="
         q-quiz-input-range-max
         s-font-note-s s-font-note-s--strong
-        s-font-note--tabularnums
+        s-font-note-s--tabularnums
       "
         >
-          {element.max}
+          {formatNumber(element.max)}
           {#if element.unit}
             {element.max === 1 && element.unit_sinpular
               ? element.unit_sinpular
