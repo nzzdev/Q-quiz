@@ -2,11 +2,12 @@
   import { getContext } from 'svelte';
 
   import type { SliderQuestion, QuizStoreContext } from '@src/interfaces';
+  import { EventTrackingService } from '@src/services/event-tracking';
+  import key from '@src/services/key-service';
 
   import BaseElement from '../quiz-base-elelement/BaseElement.svelte';
   import Statistic from './Statistic.svelte';
   import Button from '../atomic/Button.svelte';
-  import key from '../../services/key-service';
 
   export let element: SliderQuestion;
   export let toolBaseUrl: string;
@@ -22,11 +23,24 @@
     ? 50
     : ((userAnswer - element.min) / (element.max - element.min)) * 100;
 
-  function getResult() {
+  function getResult(event: CustomEvent) {
     quizStore
       .answerdQuestion($quizStore.qItemId, element, userAnswer)
       .then(() => {
         isAnswered = quizStore.isAnswered();
+        const step = $quizStore.step;
+        const countStep = $quizStore.numberQuestions;
+        const detail = EventTrackingService.getDetails(
+          $quizStore.items,
+          $quizStore.qItemId,
+          event
+        );
+        EventTrackingService.trackAnswer(
+          detail.title,
+          step,
+          countStep,
+          detail.element
+        );
       });
   }
 

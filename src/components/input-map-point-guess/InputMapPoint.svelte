@@ -7,13 +7,14 @@
     MapPointGuessAnswer,
     QuizStoreContext,
   } from '@src/interfaces';
+  import { EventTrackingService } from '@src/services/event-tracking';
+  import key from '@src/services/key-service';
 
-  import iconPinSvg from '../../resources/icon-pin.svg';
+  import iconPinSvg from '@src/resources/icon-pin.svg';
 
   import Statistic from './Statistic.svelte';
   import BaseElement from '../quiz-base-elelement/BaseElement.svelte';
   import Button from '../atomic/Button.svelte';
-  import key from '../../services/key-service';
 
   export let element: MapPointGuess;
 
@@ -80,7 +81,7 @@
     isAnswered = quizStore.isAnswered();
   }
 
-  async function getResult() {
+  async function getResult(event: CustomEvent) {
     const correctAnswer = element.answer;
 
     if (marker) {
@@ -143,6 +144,19 @@
         })
         .then(() => {
           isAnswered = quizStore.isAnswered();
+          const step = $quizStore.step;
+          const countStep = $quizStore.numberQuestions;
+          const detail = EventTrackingService.getDetails(
+            $quizStore.items,
+            $quizStore.qItemId,
+            event
+          );
+          EventTrackingService.trackAnswer(
+            detail.title,
+            step,
+            countStep,
+            detail.element
+          );
         });
     }
   }
@@ -217,8 +231,9 @@
     </div>
     <div id="map" bind:this={mapContainer} class="q-quiz-map-container"></div>
     {#if !isAnswered}
-      <Button on:action={() => getResult()} bind:disabled={buttonDisabled}
-        >Antworten</Button
+      <Button
+        on:action={(event) => getResult(event)}
+        bind:disabled={buttonDisabled}>Antworten</Button
       >
     {:else if marker}
       <Statistic {element} {map} userAnswer={marker} />
