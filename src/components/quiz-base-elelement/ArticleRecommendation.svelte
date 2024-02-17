@@ -1,23 +1,24 @@
 <script lang="ts">
   import { getContext } from 'svelte';
-  import { createFromToLabel, dayjs, Formats } from '@nzz/et-utils-date';
+  import { dayjs } from '@nzz/et-utils-date';
 
-  import type {
-    ArticleRecommendations,
-    Metadata,
-    QuizStoreContext,
-  } from '@src/interfaces';
-  import key from '../../services/key-service';
+  import type { Metadata, QuizStoreContext } from '@src/interfaces';
+  import { ImageSizeFomat } from '@src/enums';
+  import key from '@src/services/key-service';
   import { EventTrackingService } from '@src/services/event-tracking';
+
+  import Image from './Image.svelte';
 
   export let url: string;
   export let text: string;
   export let metadata: Metadata | undefined = undefined;
 
+  console.log('metadata', metadata);
+
   const { quizStore, containerWidthStore } = getContext(
     key
   ) as QuizStoreContext;
-  const isSmall = $containerWidthStore < 500 ? true : false;
+  $: isSmall = $containerWidthStore < 500 ? true : false;
 
   function trackEvent(link: string, event: Event) {
     const detail = EventTrackingService.getDetails(
@@ -51,8 +52,16 @@
         class:reccomendation-link-teaser--small={isSmall}
         class="reccomendation-link-teaser"
       >
-        <!-- svelte-ignore a11y-missing-attribute -->
-        <img src={metadata?.teaserImage.url} />
+        <Image
+          image={{
+            width: metadata?.teaserImage.width,
+            height: metadata?.teaserImage.height,
+            url: metadata?.teaserImage.url,
+          }}
+          format={isSmall
+            ? ImageSizeFomat.FORMAT_16_9
+            : ImageSizeFomat.FORMAT_1_1}
+        />
       </div>
     {/if}
 
@@ -87,7 +96,7 @@
     }
 
     &-teaser {
-      width: 55%;
+      flex: 0 0 100px;
 
       &--small {
         width: 100%;

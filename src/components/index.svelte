@@ -35,7 +35,9 @@
   let containerWidth: number;
   let questionContainer: HTMLDivElement | undefined = undefined;
 
-  $: containerWidthStore.set(containerWidth);
+  $: {
+    containerWidthStore.set(containerWidth);
+  }
   $: indexAdditional = $quizStore.hasCover ? 0 : 1;
   $: title = () => {
     const cover = $quizStore.items.find(

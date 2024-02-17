@@ -15,6 +15,11 @@ export enum ImageFormat {
   WEBPLY = 'webply',
 }
 
+export enum ImageSizeFomat {
+  FORMAT_16_9 = '16:9',
+  FORMAT_1_1 = '1:1',
+}
+
 export enum Department {
   // Historically the value 'default' was used to
   // indicate that no department was selected.

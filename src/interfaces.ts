@@ -479,6 +479,7 @@ export interface Root {
 export interface Metadata {
   language: Language;
   title: string;
+  firstTitle: string;
   nzzAuthors: NzzAuthor[];
   designName: string;
   exclude: Exclude;
