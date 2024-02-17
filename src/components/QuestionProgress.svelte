@@ -13,7 +13,7 @@
 
 <nav
   class:q-quiz-header--is-empty={$quizStore.hasCover && $quizStore.step === 0}
-  class="q-quiz-container q-quiz-header {$quizStore.isMultiQuiz
+  class="q-quiz-container q-quiz-header q-quiz-gap-column {$quizStore.isMultiQuiz
     ? 'q-quiz-multi-header'
     : 'q-quiz-single-header'}"
 >
