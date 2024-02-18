@@ -76,7 +76,7 @@
             totalSteps={$quizStore.numberQuestions}
             hasScore={$quizStore.hasScore}
             isJumpAnswer={true}
-          /></span
+          />{$questionContainerStore?.scrollTop}</span
         >
       </div>
     </button>
