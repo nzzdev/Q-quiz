@@ -17,24 +17,26 @@
   ) as QuizStoreContext;
 
   const nextQuestion = (event: Event): void => {
-    if ($quizStore.step <= $quizStore.numberQuestions) {
-      const detail = EventTrackingService.getDetails(
-        $quizStore.items,
-        $quizStore.qItemId,
-        event
-      );
+    // if ($quizStore.step <= $quizStore.numberQuestions) {
+    //   const detail = EventTrackingService.getDetails(
+    //     $quizStore.items,
+    //     $quizStore.qItemId,
+    //     event
+    //   );
 
-      quizStore.stepForward();
+    //   quizStore.stepForward();
 
-      EventTrackingService.trackNextScreen(detail.element);
-    }
+    //   EventTrackingService.trackNextScreen(detail.element);
+    // }
 
-    if (!defaultVisibility) {
-      togglenNextButton();
-    }
+    // if (!defaultVisibility) {
+    //   togglenNextButton();
+    // }
 
     if ($questionContainerStore) {
-      window.scrollTo(0, 0);
+      window.scrollTo({
+        top: 0,
+      });
     }
   };
 
