@@ -3,12 +3,12 @@
 
   export let introduction: string;
 
-  let title: HTMLDivElement;
+  let title: HTMLSpanElement;
 </script>
 
 <CollapseText textHeight={title}>
-  <h3 bind:this={title} class="s-font-text-s q-quiz-question-introduction">
-    {introduction}
+  <h3 class="s-font-text-s q-quiz-question-introduction">
+    <span bind:this={title}>{introduction}</span>
   </h3>
 </CollapseText>
 

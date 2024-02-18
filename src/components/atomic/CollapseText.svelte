@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let textHeight: HTMLDivElement;
+  export let textHeight: HTMLElement;
 
   const MAX_CONTAINER_SIZE = 90;
 
