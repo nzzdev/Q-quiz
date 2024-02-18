@@ -146,7 +146,12 @@
     }
 
     /***** Thumb Styles *****/
-    input[type='range']::-webkit-slider-thumb,
+    input[type='range']::-webkit-slider-thumb {
+      background-color: $primaryColor;
+      border: 2px solid $questionBackground;
+      border-radius: 50%;
+    }
+
     input[type='range']::-moz-range-thumb {
       background-color: $primaryColor;
       border: 2px solid $questionBackground;
