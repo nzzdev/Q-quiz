@@ -34,7 +34,7 @@
     }
 
     if ($questionContainerStore) {
-      $questionContainerStore.scrollIntoView();
+      window.scrollTo(0, $questionContainerStore.scrollTop);
     }
   };
 
