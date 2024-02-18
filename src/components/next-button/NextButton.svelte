@@ -56,7 +56,9 @@
   class="button-container"
 >
   {#if isButtonWithIcon}
-    <Button showArrowRight={true} on:action={nextQuestion}
+    <Button
+      showArrowRight={true}
+      on:action={(event) => nextQuestion(event.detail.event)}
       ><Text
         actualStep={$quizStore.step}
         totalSteps={$quizStore.numberQuestions}

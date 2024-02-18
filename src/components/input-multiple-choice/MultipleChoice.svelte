@@ -70,7 +70,7 @@
     <div class="q-quiz-input">
       {#each shuffledAnswers as answer, idx}
         <div class:answer-button={idx < shuffledAnswers.length - 1}>
-          <Button on:action={(event) => getResult(answer, event)}
+          <Button on:action={(event) => getResult(answer, event.detail.event)}
             >{answer}</Button
           >
         </div>

@@ -34,7 +34,7 @@
         const detail = EventTrackingService.getDetails(
           $quizStore.items,
           $quizStore.qItemId,
-          event
+          event.detail.event
         );
         EventTrackingService.trackAnswer(
           detail.title,
