@@ -35,7 +35,7 @@
 
     if ($questionContainerStore) {
       window.scrollTo({
-        top: $questionContainerStore.scrollTop,
+        top: $questionContainerStore.getBoundingClientRect().top,
       });
     }
   };
