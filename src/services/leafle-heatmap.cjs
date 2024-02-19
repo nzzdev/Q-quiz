@@ -178,13 +178,13 @@ L.HeatLayer = (L.Layer ? L.Layer : L.Class).extend({
     try {
       for (i = 0, len = this._latlngs.length; i < len; i++) {
         p = this._map.latLngToContainerPoint(this._latlngs[i]);
-        message += 'bounds: ' + bounds + '\n';
+        message += 'bounds: ' + JSON.stringify(bounds) + '\n';
         message += 'p: ' + p + '\n';
         message += 'p--------';
-        message += 'p.x: ' + p ? p.x : 'no x :(' + '\n';
+        message += 'p.x: ' + (p ? p.x : 'no x :(') + '\n';
         message += '--------p';
         if (bounds.contains(p)) {
-          console.log('offsetX', offsetX);
+          console.log('bounds.contains(p) true');
           x = Math.floor((p.x - offsetX) / cellSize) + 2;
           y = Math.floor((p.y - offsetY) / cellSize) + 2;
 
@@ -207,9 +207,10 @@ L.HeatLayer = (L.Layer ? L.Layer : L.Class).extend({
             cell[2] += k; // cumulated intensity value
           }
         }
+        console.log('-------End');
       }
     } catch (err) {
-      alert('3 message: ' + message + ' err: ' + err);
+      alert('4 message: ' + message + ' err: ' + err);
     }
     console.log('message', message);
     for (i = 0, len = grid.length; i < len; i++) {
