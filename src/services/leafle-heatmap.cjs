@@ -185,7 +185,7 @@ L.HeatLayer = (L.Layer ? L.Layer : L.Class).extend({
         message += 'bounds: ' + bounds + '\n';
         message += 'p: ' + p + '\n';
         if (bounds.contains(p)) {
-          message += 'p.x: ' + p.x + '\n';
+          message += 'p.x: ' + p?.x + '\n';
           x = Math.floor((p.x - offsetX) / cellSize) + 2;
           y = Math.floor((p.y - offsetY) / cellSize) + 2;
 
@@ -212,6 +212,7 @@ L.HeatLayer = (L.Layer ? L.Layer : L.Class).extend({
     } catch (err) {
       alert('redraw ' + err + ', message: ' + message + ' Stack: ' + err.stack);
     }
+    console.log('message', message);
     for (i = 0, len = grid.length; i < len; i++) {
       if (grid[i]) {
         for (j = 0, len2 = grid[i].length; j < len2; j++) {
