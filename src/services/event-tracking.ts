@@ -56,6 +56,7 @@ export class EventTrackingService {
     } catch (err) {
       return 'err ' + err;
     }
+    return 'ok';
   }
 
   // TODO: rename
