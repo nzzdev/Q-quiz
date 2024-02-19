@@ -18,7 +18,9 @@
   export let userAnswer: number;
   export let toolBaseUrl: string;
 
-  const { containerWidthStore } = getContext(key) as QuizStoreContext;
+  const { containerWidthStore, logMSGStore } = getContext(
+    key
+  ) as QuizStoreContext;
 
   let answers: NumberOfAnswersPerChoice[];
   let numberOfPossibleAnswers: number;
@@ -32,23 +34,31 @@
   $: setup($containerWidthStore);
 
   onMount(() => {
-    if (element.type === QuizElementType.NumberPoll) {
-      labelText = 'Ihre Schätzung';
-    }
+    logMSGStore.set('1 number statistic onMount');
+    try {
+      if (element.type === QuizElementType.NumberPoll) {
+        labelText = 'Ihre Schätzung';
+      }
 
-    fetch(`${toolBaseUrl}/answers/${element.type}/${element.id}`)
-      .then((response) => response.json())
-      .then((results: NumberOfAnswersPerChoice[]) => {
-        if (element.type === QuizElementType.NumberGuess) {
-          answers = results;
-        } else if (element.type === QuizElementType.NumberPoll) {
-          answers = results;
-        } else {
-          new Error('Wrong type of question');
-        }
-        containerWidthStore;
-        setup($containerWidthStore);
-      });
+      fetch(`${toolBaseUrl}/answers/${element.type}/${element.id}`)
+        .then((response) => response.json())
+        .then((results: NumberOfAnswersPerChoice[]) => {
+          logMSGStore.set('2 number statistic onMount');
+          if (element.type === QuizElementType.NumberGuess) {
+            answers = results;
+          } else if (element.type === QuizElementType.NumberPoll) {
+            answers = results;
+          } else {
+            new Error('Wrong type of question');
+          }
+
+          logMSGStore.set('2 number statistic onMount');
+          setup($containerWidthStore);
+          logMSGStore.set('3 number statistic onMount');
+        });
+    } catch (err) {
+      logMSGStore.set('1 number statistic onMount error: ' + err);
+    }
   });
 
   function setup(containerWidth: number) {

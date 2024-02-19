@@ -46,6 +46,7 @@
             countStep,
             detail.element
           );
+          logMSGStore.set('---->Tracking answer event');
         });
     } catch (err) {
       logMSGStore.set('Error in getResult: ' + err);
@@ -127,7 +128,7 @@
         </div>
       </div>
 
-      <Button on:action={getResult}>Antworten</Button>
+      <Button on:action={getResult} disabled={false}>Antworten</Button>
     {/if}
   </div>
 </BaseElement>
