@@ -12,7 +12,7 @@
   export let defaultVisibility = true;
   export let isButtonWithIcon = false;
 
-  const { quizStore, questionContainerStore } = getContext(
+  const { quizStore, questionContainerStore, containerWidthStore } = getContext(
     key
   ) as QuizStoreContext;
 
@@ -34,7 +34,9 @@
     }
 
     if ($questionContainerStore) {
-      const nzzHeader = 56;
+      const appActive: boolean =
+        !!(window as any).NZZ && (window as any).NZZ.metadata;
+      const nzzHeader = appActive ? 100 : 56;
       var offsetPosition =
         $questionContainerStore.getBoundingClientRect().top +
         window.scrollY -
