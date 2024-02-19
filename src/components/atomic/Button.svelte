@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { createEventDispatcher, getContext } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
 
   import { ColorDefaults } from '@src/constants';
   import type { ButtonColorStyle } from '@src/interfaces';
@@ -12,11 +12,7 @@
 
   const dispatch = createEventDispatcher();
 
-  import type { QuizStoreContext } from '@src/interfaces';
-  import key from '@src/services/key-service';
-  const { logMSGStore } = getContext(key) as QuizStoreContext;
   function action(event: Event) {
-    logMSGStore.set('Button dispatch action');
     dispatch('action', { event });
   }
 </script>

@@ -137,7 +137,6 @@ export interface QuizStoreContext {
   quizStore: QuizStoreFn;
   questionContainerStore: Writable<HTMLDivElement | undefined>;
   containerWidthStore: Writable<number>;
-  logMSGStore: Writable<string>;
 }
 export interface QuizStoreFn extends Writable<QuizStore> {
   initialize: (componentConfiguration: QQuizSvelteProperties) => void;

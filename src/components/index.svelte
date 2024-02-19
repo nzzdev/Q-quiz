@@ -26,15 +26,11 @@
     quizStore: quizStoreClass(),
     questionContainerStore: writable<HTMLDivElement>(undefined),
     containerWidthStore: writable<number>(0),
-    logMSGStore: writable<string>(''),
   });
 
-  const {
-    quizStore,
-    questionContainerStore,
-    containerWidthStore,
-    logMSGStore,
-  } = getContext(key) as QuizStoreContext;
+  const { quizStore, questionContainerStore, containerWidthStore } = getContext(
+    key
+  ) as QuizStoreContext;
 
   let containerWidth: number;
   let questionContainer: HTMLDivElement | undefined = undefined;
@@ -62,12 +58,6 @@
   bind:this={questionContainer}
   bind:clientWidth={containerWidth}
 >
-  {#if $logMSGStore.length > 0}
-    <div style="padding: 20px; boder: 1px solid red; background-color: red;">
-      {$logMSGStore}
-    </div>
-  {/if}
-  <div></div>
   {#if containerWidth}
     {#each $quizStore.items as element, index}
       {#if $quizStore.step === index + indexAdditional}

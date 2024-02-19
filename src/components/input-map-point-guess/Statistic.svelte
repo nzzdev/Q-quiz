@@ -15,7 +15,7 @@
   import Heatmap from '../Heatmap.svelte';
   import key from '../../services/key-service';
 
-  const { quizStore, logMSGStore } = getContext(key) as QuizStoreContext;
+  const { quizStore } = getContext(key) as QuizStoreContext;
 
   export let element: MapPointGuess;
   export let userAnswer: Marker<any>;
@@ -27,7 +27,6 @@
   let data: MapPointGuessStatistic[];
 
   onMount(() => {
-    // logMSGStore.set('MapPointGuess Statistic onMount');
     const correctLatLng = new L.LatLng(
       element.answer.geometry.coordinates[1],
       element.answer.geometry.coordinates[0]
@@ -40,9 +39,7 @@
       .then((response) => response.json())
       .then((answers: MapPointGuessStatistic[]) => {
         data = answers;
-        // logMSGStore.set('2 MapPointGuess Statistic onMount');
         statistic = StatisticCalculator.mapPointGuess(answers, distance);
-        // logMSGStore.set('3 MapPointGuess Statistic onMount');
       });
   });
 
