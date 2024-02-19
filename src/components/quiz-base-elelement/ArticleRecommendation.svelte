@@ -66,7 +66,7 @@
     {/if}
 
     <div>
-      <div>
+      <div class="reccomendation-link-text">
         {text}
       </div>
       <div class="q-metadata s-font-note-s">
@@ -85,6 +85,12 @@
   @import '../../styles/variables.scss';
   .reccomendation-link {
     text-decoration: none;
+
+    :hover {
+      .reccomendation-link-text {
+        opacity: 0.8; // same as nzz front site
+      }
+    }
 
     &-container {
       display: flex;
