@@ -24,9 +24,10 @@
   <div
     class:s-color-gray-4={!disableGreyColor}
     class="q-quiz-result__multiple-choice-bar s-color-gray-4"
-  ></div>
-  <div class="precent s-font-note s-font-note--tabularnums">
-    {Math.round(precent)}%
+  >
+    <div class="precent s-font-note s-font-note--tabularnums">
+      {Math.round(precent)}%
+    </div>
   </div>
 </div>
 
@@ -50,10 +51,13 @@
   .q-quiz-result__multiple-choice-bar {
     height: 16px;
     background: currentColor;
+    position: relative;
   }
 
   .precent {
     white-space: nowrap;
-    margin-left: 5px;
+    position: absolute;
+    top: -3px;
+    right: -30px;
   }
 </style>

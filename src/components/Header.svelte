@@ -4,7 +4,7 @@
 </script>
 
 <div class="layout-header q-quiz-gap-column">
-  <div class="s-font-note-s">{title}</div>
+  <div class="layout-header-text s-font-note-s">{title}</div>
   <Divider />
 </div>
 
@@ -13,5 +13,9 @@
   .layout-header {
     text-align: center;
     padding-top: $borderinnerPadding;
+
+    &-text {
+      font-weight: 400;
+    }
   }
 </style>

@@ -48,7 +48,7 @@
     {/if}
   </h3>
   {#if element.text}
-    <p class="s-font-text-s">{element.text}</p>
+    <p class="s-font-text">{element.text}</p>
   {/if}
   {#if element.urlRecommendations}
     <Divider />

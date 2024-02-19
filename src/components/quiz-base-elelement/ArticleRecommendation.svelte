@@ -64,16 +64,48 @@
     {/if}
 
     <div>
-      <div class="reccomendation-link-text">
+      <div class="reccomendation-link-text teaser__title-name">
         {text}
       </div>
-      <div class="q-metadata s-font-note-s">
-        {#if metadata?.authorLine}
-          <div>{metadata?.authorLine}</div>
-        {/if}
-        {#if metadata?.publicationDate}
-          <div>{dayjs(metadata?.publicationDate).format('DD.MM.YYYY')}</div>
-        {/if}
+      <div class="metainfo__main s-font-note-s">
+        <div class="metainfo__main metainfo__main--longformstandard">
+          <!---->
+          <div class="metainfo__wrapper">
+            {#if metadata?.authorLine}
+              <span class="metainfo__item metainfo__item--author"
+                >{metadata?.authorLine}</span
+              >
+            {/if}
+            {#if metadata?.publicationDate}
+              <time class="metainfo__item metainfo__item--date"
+                >{dayjs(metadata?.publicationDate).format('DD.MM.YYYY')}</time
+              >
+            {/if}
+            <!-- <span
+              data-tooltip="Lesezeit 6 min"
+              class="metainfo__item metainfo__item--reading-time"
+              ><svg
+                version="1.1"
+                viewBox="0 0 24 24"
+                class="reading-time__icon nzz-icons--small nzz-icons--icon nzz-icons--fill"
+                ><path
+                  stroke="currentColor"
+                  fill="none"
+                  stroke-linecap="round"
+                  d="M11.77 7.39v5.62l3.8 1.32"
+                ></path><circle
+                  stroke="currentColor"
+                  fill="none"
+                  cx="12"
+                  cy="12"
+                  r="8.5"
+                  stroke-linecap="round"
+                ></circle></svg
+              > <span>6 min</span></span
+            > -->
+          </div>
+          <!---->
+        </div>
       </div>
     </div>
   </div>
@@ -83,12 +115,6 @@
   @import '../../styles/variables.scss';
   .reccomendation-link {
     text-decoration: none;
-
-    :hover {
-      .reccomendation-link-text {
-        opacity: 0.6; // same as nzz front site
-      }
-    }
 
     &-container {
       display: flex;

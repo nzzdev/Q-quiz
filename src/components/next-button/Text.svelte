@@ -14,5 +14,5 @@
 {:else if isJumpAnswer}
   Frage überspringen
 {:else}
-  nächste Frage anzeigen
+  nächste Frage
 {/if}
