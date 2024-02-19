@@ -27,7 +27,7 @@
   let data: MapPointGuessStatistic[];
 
   onMount(() => {
-    logMSGStore.set('MapPointGuess Statistic onMount');
+    // logMSGStore.set('MapPointGuess Statistic onMount');
     const correctLatLng = new L.LatLng(
       element.answer.geometry.coordinates[1],
       element.answer.geometry.coordinates[0]
@@ -40,9 +40,9 @@
       .then((response) => response.json())
       .then((answers: MapPointGuessStatistic[]) => {
         data = answers;
-        logMSGStore.set('2 MapPointGuess Statistic onMount');
+        // logMSGStore.set('2 MapPointGuess Statistic onMount');
         statistic = StatisticCalculator.mapPointGuess(answers, distance);
-        logMSGStore.set('3 MapPointGuess Statistic onMount');
+        // logMSGStore.set('3 MapPointGuess Statistic onMount');
       });
   });
 

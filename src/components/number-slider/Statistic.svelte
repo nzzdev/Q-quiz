@@ -34,7 +34,7 @@
   $: setup($containerWidthStore);
 
   onMount(() => {
-    logMSGStore.set('1 number statistic onMount');
+    // logMSGStore.set('1 number statistic onMount');
     try {
       if (element.type === QuizElementType.NumberPoll) {
         labelText = 'Ihre Schätzung';
@@ -52,9 +52,9 @@
             new Error('Wrong type of question');
           }
 
-          logMSGStore.set('2 number statistic onMount');
+          // logMSGStore.set('2 number statistic onMount');
           setup($containerWidthStore);
-          logMSGStore.set('3 number statistic onMount');
+          // logMSGStore.set('3 number statistic onMount');
         });
     } catch (err) {
       logMSGStore.set('1 number statistic onMount error: ' + err);

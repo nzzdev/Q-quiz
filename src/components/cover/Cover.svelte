@@ -27,7 +27,7 @@
     <div class="nzz-logo">
       {@html nzzLogo}
     </div>
-    <h4 class="s-font-text-s" style:color={ColorDefaults.Cover.Color.Text}>
+    <h4 class="s-font-title-l" style:color={ColorDefaults.Cover.Color.Text}>
       {element.themeTitle ? element.themeTitle : 'Quiz'}
     </h4>
   </div>
