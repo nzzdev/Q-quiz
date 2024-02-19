@@ -85,30 +85,34 @@ L.HeatLayer = (L.Layer ? L.Layer : L.Class).extend({
   },
 
   _initCanvas: function () {
-    var canvas = (this._canvas = L.DomUtil.create(
-      'canvas',
-      'leaflet-heatmap-layer leaflet-layer'
-    ));
+    try {
+      var canvas = (this._canvas = L.DomUtil.create(
+        'canvas',
+        'leaflet-heatmap-layer leaflet-layer'
+      ));
 
-    var originProp = L.DomUtil.testProp([
-      'transformOrigin',
-      'WebkitTransformOrigin',
-      'msTransformOrigin',
-    ]);
-    canvas.style[originProp] = '50% 50%';
+      var originProp = L.DomUtil.testProp([
+        'transformOrigin',
+        'WebkitTransformOrigin',
+        'msTransformOrigin',
+      ]);
+      canvas.style[originProp] = '50% 50%';
 
-    var size = this._map.getSize();
-    canvas.width = size.x;
-    canvas.height = size.y;
+      var size = this._map.getSize();
+      canvas.width = size.x;
+      canvas.height = size.y;
 
-    var animated = this._map.options.zoomAnimation && L.Browser.any3d;
-    L.DomUtil.addClass(
-      canvas,
-      'leaflet-zoom-' + (animated ? 'animated' : 'hide')
-    );
+      var animated = this._map.options.zoomAnimation && L.Browser.any3d;
+      L.DomUtil.addClass(
+        canvas,
+        'leaflet-zoom-' + (animated ? 'animated' : 'hide')
+      );
 
-    this._heat = this.simpleheat(canvas);
-    this._updateOptions();
+      this._heat = this.simpleheat(canvas);
+      this._updateOptions();
+    } catch (err) {
+      alert('initCanvas ' + err + ' ' + err.stack);
+    }
   },
 
   _updateOptions: function () {
