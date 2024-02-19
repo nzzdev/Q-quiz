@@ -11,15 +11,11 @@
   export let map: L.Map;
 
   onMount(() => {
-    try {
-      L.heatLayer(
-        simpleheat,
-        data.map((p) => {
-          return [p.latLng.lat, p.latLng.lng];
-        })
-      ).addTo(map);
-    } catch (err) {
-      alert('Heatmap could not be created ' + err);
-    }
+    L.heatLayer(
+      simpleheat,
+      data.map((p) => {
+        return [p.latLng.lat, p.latLng.lng];
+      })
+    ).addTo(map);
   });
 </script>

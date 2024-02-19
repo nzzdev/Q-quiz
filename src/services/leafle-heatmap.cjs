@@ -85,34 +85,30 @@ L.HeatLayer = (L.Layer ? L.Layer : L.Class).extend({
   },
 
   _initCanvas: function () {
-    try {
-      var canvas = (this._canvas = L.DomUtil.create(
-        'canvas',
-        'leaflet-heatmap-layer leaflet-layer'
-      ));
+    var canvas = (this._canvas = L.DomUtil.create(
+      'canvas',
+      'leaflet-heatmap-layer leaflet-layer'
+    ));
 
-      var originProp = L.DomUtil.testProp([
-        'transformOrigin',
-        'WebkitTransformOrigin',
-        'msTransformOrigin',
-      ]);
-      canvas.style[originProp] = '50% 50%';
+    var originProp = L.DomUtil.testProp([
+      'transformOrigin',
+      'WebkitTransformOrigin',
+      'msTransformOrigin',
+    ]);
+    canvas.style[originProp] = '50% 50%';
 
-      var size = this._map.getSize();
-      canvas.width = size.x;
-      canvas.height = size.y;
+    var size = this._map.getSize();
+    canvas.width = size.x;
+    canvas.height = size.y;
 
-      var animated = this._map.options.zoomAnimation && L.Browser.any3d;
-      L.DomUtil.addClass(
-        canvas,
-        'leaflet-zoom-' + (animated ? 'animated' : 'hide')
-      );
+    var animated = this._map.options.zoomAnimation && L.Browser.any3d;
+    L.DomUtil.addClass(
+      canvas,
+      'leaflet-zoom-' + (animated ? 'animated' : 'hide')
+    );
 
-      this._heat = this.simpleheat(canvas);
-      this._updateOptions();
-    } catch (err) {
-      alert('initCanvas ' + err + ' ' + err.stack);
-    }
+    this._heat = this.simpleheat(canvas);
+    this._updateOptions();
   },
 
   _updateOptions: function () {
@@ -211,7 +207,7 @@ L.HeatLayer = (L.Layer ? L.Layer : L.Class).extend({
         }
       }
     } catch (err) {
-      alert('1 message: ' + message + ' err: ' + err);
+      alert('2 message: ' + message + ' err: ' + err);
     }
     console.log('message', message);
     for (i = 0, len = grid.length; i < len; i++) {
