@@ -50,16 +50,10 @@
   .q-quiz-question-image {
     position: absolute;
     top: 50%;
-    left: 0; /* 16:9 Aspect Ratio */
-    transform: translateY(-50%); /* 16:9 Aspect Ratio */
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 100%;
-    height: auto; /* 16:9 Aspect Ratio */
-
-    &--format-1-1 {
-      left: 50%;
-      transform: translate(-50%, -50%);
-      height: 100%;
-      object-fit: cover;
-    }
+    height: 100%;
+    object-fit: cover;
   }
 </style>
