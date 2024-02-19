@@ -55,7 +55,7 @@
 <p class="q-quiz-result-answer-text s-font-text-s">
   {#if statistic}
     <AnswerText {statistic} {isCorrectAnswer} />
-    <!-- <Heatmap {map} {data} /> -->
+    <Heatmap {map} {data} />
   {/if}
   {#if distance !== undefined}
     <p>Ihre Schätzung liegt um {getDistanceText(distance)} daneben.</p>

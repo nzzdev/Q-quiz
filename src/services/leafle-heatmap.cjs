@@ -173,33 +173,36 @@ L.HeatLayer = (L.Layer ? L.Layer : L.Class).extend({
       k;
 
     // console.time('process');
-    for (i = 0, len = this._latlngs.length; i < len; i++) {
-      p = this._map.latLngToContainerPoint(this._latlngs[i]);
-      if (bounds.contains(p)) {
-        x = Math.floor((p.x - offsetX) / cellSize) + 2;
-        y = Math.floor((p.y - offsetY) / cellSize) + 2;
+    try {
+      for (i = 0, len = this._latlngs.length; i < len; i++) {
+        p = this._map.latLngToContainerPoint(this._latlngs[i]);
+        if (bounds.contains(p)) {
+          x = Math.floor((p.x - offsetX) / cellSize) + 2;
+          y = Math.floor((p.y - offsetY) / cellSize) + 2;
 
-        var alt =
-          this._latlngs[i].alt !== undefined
-            ? this._latlngs[i].alt
-            : this._latlngs[i][2] !== undefined
-            ? +this._latlngs[i][2]
-            : 1;
-        k = alt * v;
+          var alt =
+            this._latlngs[i].alt !== undefined
+              ? this._latlngs[i].alt
+              : this._latlngs[i][2] !== undefined
+              ? +this._latlngs[i][2]
+              : 1;
+          k = alt * v;
 
-        grid[y] = grid[y] || [];
-        cell = grid[y][x];
+          grid[y] = grid[y] || [];
+          cell = grid[y][x];
 
-        if (!cell) {
-          grid[y][x] = [p.x, p.y, k];
-        } else {
-          cell[0] = (cell[0] * cell[2] + p.x * k) / (cell[2] + k); // x
-          cell[1] = (cell[1] * cell[2] + p.y * k) / (cell[2] + k); // y
-          cell[2] += k; // cumulated intensity value
+          if (!cell) {
+            grid[y][x] = [p.x, p.y, k];
+          } else {
+            cell[0] = (cell[0] * cell[2] + p.x * k) / (cell[2] + k); // x
+            cell[1] = (cell[1] * cell[2] + p.y * k) / (cell[2] + k); // y
+            cell[2] += k; // cumulated intensity value
+          }
         }
       }
+    } catch (err) {
+      alert('redraw ' + err + ' ' + err.stack);
     }
-
     for (i = 0, len = grid.length; i < len; i++) {
       if (grid[i]) {
         for (j = 0, len2 = grid[i].length; j < len2; j++) {
@@ -214,12 +217,7 @@ L.HeatLayer = (L.Layer ? L.Layer : L.Class).extend({
         }
       }
     }
-    // console.timeEnd('process');
-
-    // console.time('draw ' + data.length);
     this._heat.data(data).draw(this.options.minOpacity);
-    // console.timeEnd('draw ' + data.length);
-
     this._frame = null;
   },
 
