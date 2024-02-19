@@ -17,6 +17,7 @@
   ) as QuizStoreContext;
 
   const nextQuestion = (event: Event): void => {
+    alert('nextQuestion');
     if ($quizStore.step <= $quizStore.numberQuestions) {
       const detail = EventTrackingService.getDetails(
         $quizStore.items,
