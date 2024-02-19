@@ -185,10 +185,10 @@ L.HeatLayer = (L.Layer ? L.Layer : L.Class).extend({
         message += 'bounds: ' + bounds + '\n';
         message += 'p: ' + p + '\n';
         if (bounds.contains(p)) {
+          message += 'p.x: ' + p.x + '\n';
           x = Math.floor((p.x - offsetX) / cellSize) + 2;
           y = Math.floor((p.y - offsetY) / cellSize) + 2;
 
-          message += 'x: ' + x + '\n';
           var alt =
             this._latlngs[i].alt !== undefined
               ? this._latlngs[i].alt
