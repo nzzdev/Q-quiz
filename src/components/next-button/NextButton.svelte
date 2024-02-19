@@ -34,9 +34,10 @@
     }
 
     if ($questionContainerStore) {
-      alert(JSON.stringify($questionContainerStore.getBoundingClientRect()));
+      var offsetPosition =
+        $questionContainerStore.getBoundingClientRect().top + window.scrollY;
       window.scrollTo({
-        top: $questionContainerStore.getBoundingClientRect().top,
+        top: offsetPosition,
       });
     }
   };
