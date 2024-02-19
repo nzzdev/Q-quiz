@@ -186,6 +186,7 @@ L.HeatLayer = (L.Layer ? L.Layer : L.Class).extend({
         message += 'p: ' + p + '\n';
         message += 'p.x: ' + p ? p.x : 'no x :(' + '\n';
         if (bounds.contains(p)) {
+          console.log('offsetX', offsetX);
           x = Math.floor((p.x - offsetX) / cellSize) + 2;
           y = Math.floor((p.y - offsetY) / cellSize) + 2;
 
@@ -210,7 +211,7 @@ L.HeatLayer = (L.Layer ? L.Layer : L.Class).extend({
         }
       }
     } catch (err) {
-      alert('message: ' + message);
+      alert('1 message: ' + message + ' err: ' + err);
     }
     console.log('message', message);
     for (i = 0, len = grid.length; i < len; i++) {
