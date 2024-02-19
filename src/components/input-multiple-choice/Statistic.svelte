@@ -26,7 +26,7 @@
     class="q-quiz-result__multiple-choice-bar s-color-gray-4"
   ></div>
   <div class="precent s-font-note s-font-note--tabularnums">
-    {Math.round(precent)} %
+    {Math.round(precent)}%
   </div>
 </div>
 

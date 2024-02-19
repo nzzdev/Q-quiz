@@ -13,8 +13,6 @@
   export let text: string;
   export let metadata: Metadata | undefined = undefined;
 
-  console.log('metadata', metadata);
-
   const { quizStore, containerWidthStore } = getContext(
     key
   ) as QuizStoreContext;
@@ -88,7 +86,7 @@
 
     :hover {
       .reccomendation-link-text {
-        opacity: 0.8; // same as nzz front site
+        opacity: 0.6; // same as nzz front site
       }
     }
 

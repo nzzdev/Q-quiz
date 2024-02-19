@@ -22,9 +22,9 @@
       {#if $quizStore.step > $quizStore.numberQuestions}
         Fertig!
       {:else if $quizStore.step === $quizStore.numberQuestions}
-        letzte Frage
+        Letzte Frage
       {:else}
-        Frage {$quizStore.step} / {$quizStore.numberQuestions}
+        Frage {$quizStore.step}/{$quizStore.numberQuestions}
       {/if}
     </div>
     {#if isShowNextButton}

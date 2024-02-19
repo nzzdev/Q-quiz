@@ -75,7 +75,7 @@
             {/if}
             <div class="answer-value">{answer}</div>
             {#if answer === userAnswer}
-              <div class="label__hint s-font-note-s">(ihre Antwort)</div>
+              <div class="label__hint s-font-note-s">(Ihre Antwort)</div>
             {/if}
           </div>
           <StatisticView

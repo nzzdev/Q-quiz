@@ -27,7 +27,7 @@
 
 <div>
   <div class="more-themes s-font-title">
-    Mehr zu dem Thema {#if recommendations.themaAddText}{recommendations.themaAddText}{/if}
+    Mehr zum Thema {#if recommendations.themaAddText}{recommendations.themaAddText}{/if}
   </div>
   <div class="links">
     {#each recommendations.links as link}
