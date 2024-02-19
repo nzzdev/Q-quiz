@@ -25,10 +25,12 @@
     : ((userAnswer - element.min) / (element.max - element.min)) * 100;
 
   function getResult(event: CustomEvent) {
+    logMSGStore.set('getResult');
     try {
       quizStore
         .answerdQuestion($quizStore.qItemId, element, userAnswer)
         .then(() => {
+          logMSGStore.set('Answered question');
           isAnswered = quizStore.isAnswered();
           const step = $quizStore.step;
           const countStep = $quizStore.numberQuestions;
@@ -37,6 +39,7 @@
             $quizStore.qItemId,
             event.detail.event
           );
+          logMSGStore.set('Tracking answer event');
           EventTrackingService.trackAnswer(
             detail.title,
             step,
