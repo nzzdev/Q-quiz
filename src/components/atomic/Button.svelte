@@ -13,6 +13,7 @@
   const dispatch = createEventDispatcher();
 
   function action(event: Event) {
+    alert('Button clicked');
     dispatch('action', { event });
   }
 </script>
@@ -63,7 +64,7 @@
     }
 
     &-icon {
-      margin-top: 4px;
+      margin-top: 7px;
     }
 
     &-text {
