@@ -54,7 +54,7 @@ export class EventTrackingService {
       });
       element.dispatchEvent(event);
     } catch (err) {
-      return err;
+      return 'err ' + err;
     }
   }
 
