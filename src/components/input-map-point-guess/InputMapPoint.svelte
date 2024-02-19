@@ -146,8 +146,10 @@
           })
           .then(() => {
             isAnswered = quizStore.isAnswered();
+            logMSGStore.set('map isAnswered ' + isAnswered);
             const step = $quizStore.step;
             const countStep = $quizStore.numberQuestions;
+            logMSGStore.set('map EventTrackingService.getDetails ');
             const detail = EventTrackingService.getDetails(
               $quizStore.items,
               $quizStore.qItemId,

@@ -32,6 +32,7 @@
         .then(() => {
           logMSGStore.set('Answered question');
           isAnswered = quizStore.isAnswered();
+          logMSGStore.set('numberSlicer isAnswered ' + isAnswered);
           const step = $quizStore.step;
           const countStep = $quizStore.numberQuestions;
           const detail = EventTrackingService.getDetails(
