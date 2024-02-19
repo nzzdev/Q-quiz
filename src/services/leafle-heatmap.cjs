@@ -172,47 +172,30 @@ L.HeatLayer = (L.Layer ? L.Layer : L.Class).extend({
       len2,
       k;
 
-    // console.time('process');
+    for (i = 0, len = this._latlngs.length; i < len; i++) {
+      p = this._map.latLngToContainerPoint(this._latlngs[i]);
+      x = Math.floor((p.x - offsetX) / cellSize) + 2;
+      y = Math.floor((p.y - offsetY) / cellSize) + 2;
 
-    let message = '';
-    try {
-      for (i = 0, len = this._latlngs.length; i < len; i++) {
-        p = this._map.latLngToContainerPoint(this._latlngs[i]);
-        message += 'bounds: ' + JSON.stringify(bounds) + '\n';
-        message += 'p: ' + p + '\n';
-        message += 'p--------';
-        message += 'p.x: ' + (p ? p.x : 'no x :(') + '\n';
-        message += '--------p';
-        // if (bounds.contains(p)) {
-        console.log('bounds.contains(p) true');
-        x = Math.floor((p.x - offsetX) / cellSize) + 2;
-        y = Math.floor((p.y - offsetY) / cellSize) + 2;
+      var alt =
+        this._latlngs[i].alt !== undefined
+          ? this._latlngs[i].alt
+          : this._latlngs[i][2] !== undefined
+          ? +this._latlngs[i][2]
+          : 1;
+      k = alt * v;
 
-        var alt =
-          this._latlngs[i].alt !== undefined
-            ? this._latlngs[i].alt
-            : this._latlngs[i][2] !== undefined
-            ? +this._latlngs[i][2]
-            : 1;
-        k = alt * v;
+      grid[y] = grid[y] || [];
+      cell = grid[y][x];
 
-        grid[y] = grid[y] || [];
-        cell = grid[y][x];
-
-        if (!cell) {
-          grid[y][x] = [p.x, p.y, k];
-        } else {
-          cell[0] = (cell[0] * cell[2] + p.x * k) / (cell[2] + k); // x
-          cell[1] = (cell[1] * cell[2] + p.y * k) / (cell[2] + k); // y
-          cell[2] += k; // cumulated intensity value
-        }
-        // }
-        console.log('-------End');
+      if (!cell) {
+        grid[y][x] = [p.x, p.y, k];
+      } else {
+        cell[0] = (cell[0] * cell[2] + p.x * k) / (cell[2] + k); // x
+        cell[1] = (cell[1] * cell[2] + p.y * k) / (cell[2] + k); // y
+        cell[2] += k; // cumulated intensity value
       }
-    } catch (err) {
-      alert('4 message: ' + message + ' err: ' + err);
     }
-    console.log('message', message);
     for (i = 0, len = grid.length; i < len; i++) {
       if (grid[i]) {
         for (j = 0, len2 = grid[i].length; j < len2; j++) {
