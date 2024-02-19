@@ -48,7 +48,7 @@
         });
       }
     } catch (err) {
-      logMSGStore.set(err as string);
+      logMSGStore.set('Error in nextQuestion: ' + err);
     }
   };
 

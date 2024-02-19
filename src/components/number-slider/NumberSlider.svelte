@@ -13,7 +13,7 @@
   export let element: SliderQuestion;
   export let toolBaseUrl: string;
 
-  const { quizStore } = getContext(key) as QuizStoreContext;
+  const { quizStore, logMSGStore } = getContext(key) as QuizStoreContext;
 
   let userAnswer = round(
     (element.max - element.min) / 2 + element.min,
@@ -25,24 +25,28 @@
     : ((userAnswer - element.min) / (element.max - element.min)) * 100;
 
   function getResult(event: CustomEvent) {
-    quizStore
-      .answerdQuestion($quizStore.qItemId, element, userAnswer)
-      .then(() => {
-        isAnswered = quizStore.isAnswered();
-        const step = $quizStore.step;
-        const countStep = $quizStore.numberQuestions;
-        const detail = EventTrackingService.getDetails(
-          $quizStore.items,
-          $quizStore.qItemId,
-          event.detail.event
-        );
-        EventTrackingService.trackAnswer(
-          detail.title,
-          step,
-          countStep,
-          detail.element
-        );
-      });
+    try {
+      quizStore
+        .answerdQuestion($quizStore.qItemId, element, userAnswer)
+        .then(() => {
+          isAnswered = quizStore.isAnswered();
+          const step = $quizStore.step;
+          const countStep = $quizStore.numberQuestions;
+          const detail = EventTrackingService.getDetails(
+            $quizStore.items,
+            $quizStore.qItemId,
+            event.detail.event
+          );
+          EventTrackingService.trackAnswer(
+            detail.title,
+            step,
+            countStep,
+            detail.element
+          );
+        });
+    } catch (err) {
+      logMSGStore.set('Error in getResult: ' + err);
+    }
   }
 
   function round(value: number, exponent: number) {
