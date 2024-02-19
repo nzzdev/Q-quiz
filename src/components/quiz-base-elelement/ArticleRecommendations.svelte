@@ -45,7 +45,7 @@
           <ArticleRecommendation url={link.url} text={link.text} />
         {/if}
       {/each}
-      {#if idx !== recommendations.links.length - 1}
+      {#if idx < recommendations.links.length - 1}
         <Divider />
       {/if}
     {/each}
