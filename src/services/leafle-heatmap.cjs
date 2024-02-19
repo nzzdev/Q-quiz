@@ -177,13 +177,18 @@ L.HeatLayer = (L.Layer ? L.Layer : L.Class).extend({
       k;
 
     // console.time('process');
+
+    let message = '';
     try {
       for (i = 0, len = this._latlngs.length; i < len; i++) {
         p = this._map.latLngToContainerPoint(this._latlngs[i]);
+        message += 'bounds: ' + bounds + '\n';
+        message += 'p: ' + p + '\n';
         if (bounds.contains(p)) {
           x = Math.floor((p.x - offsetX) / cellSize) + 2;
           y = Math.floor((p.y - offsetY) / cellSize) + 2;
 
+          message += 'x: ' + x + '\n';
           var alt =
             this._latlngs[i].alt !== undefined
               ? this._latlngs[i].alt
@@ -205,7 +210,7 @@ L.HeatLayer = (L.Layer ? L.Layer : L.Class).extend({
         }
       }
     } catch (err) {
-      alert('redraw ' + err + ' ' + err.stack);
+      alert('redraw ' + err + ', message: ' + message + ' Stack: ' + err.stack);
     }
     for (i = 0, len = grid.length; i < len; i++) {
       if (grid[i]) {
