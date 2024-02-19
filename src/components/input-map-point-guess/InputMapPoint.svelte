@@ -237,7 +237,10 @@
     <div id="map" bind:this={mapContainer} class="q-quiz-map-container"></div>
     {#if !isAnswered}
       <Button
-        on:action={(event) => getResult(event)}
+        on:action={(event) => {
+          logMSGStore.set('Map HTML ELEMENT: Button dispatch action');
+          getResult(event);
+        }}
         bind:disabled={buttonDisabled}>Antworten</Button
       >
     {:else if marker}

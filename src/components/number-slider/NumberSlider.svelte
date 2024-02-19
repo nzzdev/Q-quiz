@@ -40,13 +40,14 @@
             event.detail.event
           );
           logMSGStore.set('Tracking answer event');
-          EventTrackingService.trackAnswer(
+          // TODO: revert
+          const err = EventTrackingService.trackAnswer(
             detail.title,
             step,
             countStep,
             detail.element
           );
-          logMSGStore.set('---->Tracking answer event');
+          logMSGStore.set('---->Tracking answer event ' + err);
         });
     } catch (err) {
       logMSGStore.set('Error in getResult: ' + err);

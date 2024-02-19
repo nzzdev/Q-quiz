@@ -41,17 +41,21 @@ export class EventTrackingService {
     countSteps: number,
     element: HTMLElement
   ) {
-    const event = new CustomEvent('q-tracking-event', {
-      bubbles: true,
-      detail: {
-        eventInfo: {
-          componentName: 'q-quiz',
-          eventAction: `answer-${title}-${step}-${countSteps}`,
-          eventNonInteractive: false,
+    try {
+      const event = new CustomEvent('q-tracking-event', {
+        bubbles: true,
+        detail: {
+          eventInfo: {
+            componentName: 'q-quiz',
+            eventAction: `answer-${title}-${step}-${countSteps}`,
+            eventNonInteractive: false,
+          },
         },
-      },
-    });
-    element.dispatchEvent(event);
+      });
+      element.dispatchEvent(event);
+    } catch (err) {
+      return err;
+    }
   }
 
   // TODO: rename
