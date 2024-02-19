@@ -83,6 +83,7 @@
 
   async function getResult(event: CustomEvent) {
     try {
+      alert('getResult');
       const correctAnswer = element.answer;
 
       if (marker) {
