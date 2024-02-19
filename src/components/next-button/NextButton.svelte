@@ -12,38 +12,43 @@
   export let defaultVisibility = true;
   export let isButtonWithIcon = false;
 
-  const { quizStore, questionContainerStore, containerWidthStore } = getContext(
+  const { quizStore, questionContainerStore, logMSGStore } = getContext(
     key
   ) as QuizStoreContext;
 
   const nextQuestion = (event: Event): void => {
-    if ($quizStore.step <= $quizStore.numberQuestions) {
-      const detail = EventTrackingService.getDetails(
-        $quizStore.items,
-        $quizStore.qItemId,
-        event
-      );
+    try {
+      logMSGStore.set('test');
+      if ($quizStore.step <= $quizStore.numberQuestions) {
+        const detail = EventTrackingService.getDetails(
+          $quizStore.items,
+          $quizStore.qItemId,
+          event
+        );
 
-      quizStore.stepForward();
+        quizStore.stepForward();
 
-      EventTrackingService.trackNextScreen(detail.element);
-    }
+        EventTrackingService.trackNextScreen(detail.element);
+      }
 
-    if (!defaultVisibility) {
-      togglenNextButton();
-    }
+      if (!defaultVisibility) {
+        togglenNextButton();
+      }
 
-    if ($questionContainerStore) {
-      const appActive: boolean =
-        !!(window as any).NZZ && (window as any).NZZ.metadata;
-      const nzzHeader = appActive ? 100 : 56;
-      var offsetPosition =
-        $questionContainerStore.getBoundingClientRect().top +
-        window.scrollY -
-        nzzHeader;
-      window.scrollTo({
-        top: offsetPosition,
-      });
+      if ($questionContainerStore) {
+        const appActive: boolean =
+          !!(window as any).NZZ && (window as any).NZZ.metadata;
+        const nzzHeader = appActive ? 100 : 56;
+        var offsetPosition =
+          $questionContainerStore.getBoundingClientRect().top +
+          window.scrollY -
+          nzzHeader;
+        window.scrollTo({
+          top: offsetPosition,
+        });
+      }
+    } catch (err) {
+      logMSGStore.set(err as string);
     }
   };
 
