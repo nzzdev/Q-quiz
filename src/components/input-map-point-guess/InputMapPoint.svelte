@@ -82,82 +82,86 @@
   }
 
   async function getResult(event: CustomEvent) {
-    const correctAnswer = element.answer;
+    try {
+      const correctAnswer = element.answer;
 
-    if (marker) {
-      map.removeLayer(marker);
-      // if (answer && answer.latLng) {
-      // add the correct point and the users input point
-      let west = mapBounds.getWest();
-      let east = mapBounds.getEast();
-      let correctAnswerLabel = '';
+      if (marker) {
+        map.removeLayer(marker);
+        // if (answer && answer.latLng) {
+        // add the correct point and the users input point
+        let west = mapBounds.getWest();
+        let east = mapBounds.getEast();
+        let correctAnswerLabel = '';
 
-      const userAnswerLatLng = marker.getLatLng();
-      const labelPositions = getLabelPositionAnswers(
-        correctAnswer,
-        userAnswerLatLng,
-        east,
-        west
-      );
+        const userAnswerLatLng = marker.getLatLng();
+        const labelPositions = getLabelPositionAnswers(
+          correctAnswer,
+          userAnswerLatLng,
+          east,
+          west
+        );
 
-      if (
-        correctAnswer.properties.pointLabel &&
-        correctAnswer.properties.pointLabel.length &&
-        correctAnswer.properties.pointLabel.length > 0
-      ) {
-        correctAnswerLabel = correctAnswer.properties.pointLabel;
+        if (
+          correctAnswer.properties.pointLabel &&
+          correctAnswer.properties.pointLabel.length &&
+          correctAnswer.properties.pointLabel.length > 0
+        ) {
+          correctAnswerLabel = correctAnswer.properties.pointLabel;
+        }
+        let correctAnswerMarker = L.marker(
+          [
+            correctAnswer.geometry.coordinates[1],
+            correctAnswer.geometry.coordinates[0],
+          ],
+          {
+            icon: L.divIcon({
+              className: 'q-quiz-map-marker s-font-note-s s-color-grey-8',
+              iconSize: [8, 8],
+              html: `<div class="q-quiz-map-marker__label q-quiz-map-marker__label--${labelPositions.correctAnswer} s-font-note s-font-note--strong s-color-grey-8">${correctAnswerLabel}</div>`,
+            }),
+          }
+        );
+
+        let answerMarker = L.marker(
+          [userAnswerLatLng.lat, userAnswerLatLng.lng],
+          {
+            icon: L.divIcon({
+              className: 'q-quiz-map-marker s-font-note-s s-color-primary-7',
+              iconSize: [8, 8],
+              html: `<div class="q-quiz-map-marker__label q-quiz-map-marker__label--${labelPositions.userAnswer} s-font-note s-font-note--strong s-color-primary-7">Ihre Schätzung</div>`,
+            }),
+          }
+        );
+
+        map.addLayer(correctAnswerMarker);
+        map.addLayer(answerMarker);
+        // }
+
+        // addHeatmapOverlayToMap(map);
+        quizStore
+          .answerdQuestion($quizStore.qItemId, element, {
+            latLng: { lat: userAnswerLatLng.lat, lng: userAnswerLatLng.lng },
+            distance: correctLatLng.distanceTo(userAnswerLatLng),
+          })
+          .then(() => {
+            isAnswered = quizStore.isAnswered();
+            const step = $quizStore.step;
+            const countStep = $quizStore.numberQuestions;
+            const detail = EventTrackingService.getDetails(
+              $quizStore.items,
+              $quizStore.qItemId,
+              event.detail.event
+            );
+            EventTrackingService.trackAnswer(
+              detail.title,
+              step,
+              countStep,
+              detail.element
+            );
+          });
       }
-      let correctAnswerMarker = L.marker(
-        [
-          correctAnswer.geometry.coordinates[1],
-          correctAnswer.geometry.coordinates[0],
-        ],
-        {
-          icon: L.divIcon({
-            className: 'q-quiz-map-marker s-font-note-s s-color-grey-8',
-            iconSize: [8, 8],
-            html: `<div class="q-quiz-map-marker__label q-quiz-map-marker__label--${labelPositions.correctAnswer} s-font-note s-font-note--strong s-color-grey-8">${correctAnswerLabel}</div>`,
-          }),
-        }
-      );
-
-      let answerMarker = L.marker(
-        [userAnswerLatLng.lat, userAnswerLatLng.lng],
-        {
-          icon: L.divIcon({
-            className: 'q-quiz-map-marker s-font-note-s s-color-primary-7',
-            iconSize: [8, 8],
-            html: `<div class="q-quiz-map-marker__label q-quiz-map-marker__label--${labelPositions.userAnswer} s-font-note s-font-note--strong s-color-primary-7">Ihre Schätzung</div>`,
-          }),
-        }
-      );
-
-      map.addLayer(correctAnswerMarker);
-      map.addLayer(answerMarker);
-      // }
-
-      // addHeatmapOverlayToMap(map);
-      quizStore
-        .answerdQuestion($quizStore.qItemId, element, {
-          latLng: { lat: userAnswerLatLng.lat, lng: userAnswerLatLng.lng },
-          distance: correctLatLng.distanceTo(userAnswerLatLng),
-        })
-        .then(() => {
-          isAnswered = quizStore.isAnswered();
-          const step = $quizStore.step;
-          const countStep = $quizStore.numberQuestions;
-          const detail = EventTrackingService.getDetails(
-            $quizStore.items,
-            $quizStore.qItemId,
-            event.detail.event
-          );
-          EventTrackingService.trackAnswer(
-            detail.title,
-            step,
-            countStep,
-            detail.element
-          );
-        });
+    } catch (err) {
+      alert(err);
     }
   }
 
