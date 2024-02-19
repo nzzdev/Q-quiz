@@ -184,8 +184,8 @@ L.HeatLayer = (L.Layer ? L.Layer : L.Class).extend({
         p = this._map.latLngToContainerPoint(this._latlngs[i]);
         message += 'bounds: ' + bounds + '\n';
         message += 'p: ' + p + '\n';
+        message += 'p.x: ' + p ? p.x : 'no x :(' + '\n';
         if (bounds.contains(p)) {
-          message += 'p.x: ' + p?.x + '\n';
           x = Math.floor((p.x - offsetX) / cellSize) + 2;
           y = Math.floor((p.y - offsetY) / cellSize) + 2;
 
@@ -210,7 +210,7 @@ L.HeatLayer = (L.Layer ? L.Layer : L.Class).extend({
         }
       }
     } catch (err) {
-      alert('redraw ' + err + ', message: ' + message + ' Stack: ' + err.stack);
+      alert('message: ' + message);
     }
     console.log('message', message);
     for (i = 0, len = grid.length; i < len; i++) {
