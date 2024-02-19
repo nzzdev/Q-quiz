@@ -28,6 +28,8 @@
     containerWidthStore: writable<number>(0),
   });
 
+  alert('Hello from index.svelte');
+
   const { quizStore, questionContainerStore, containerWidthStore } = getContext(
     key
   ) as QuizStoreContext;
