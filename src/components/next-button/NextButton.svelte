@@ -34,6 +34,7 @@
     }
 
     if ($questionContainerStore) {
+      alert(JSON.stringify($questionContainerStore.getBoundingClientRect()));
       window.scrollTo({
         top: $questionContainerStore.getBoundingClientRect().top,
       });
@@ -80,7 +81,8 @@
             totalSteps={$quizStore.numberQuestions}
             hasScore={$quizStore.hasScore}
             isJumpAnswer={true}
-          />{$questionContainerStore?.scrollTop}</span
+          />{$questionContainerStore?.scrollTop}
+          {$questionContainerStore?.getBoundingClientRect().top}</span
         >
       </div>
     </button>
