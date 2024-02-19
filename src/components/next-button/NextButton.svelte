@@ -34,8 +34,11 @@
     }
 
     if ($questionContainerStore) {
+      const nzzHeader = 56;
       var offsetPosition =
-        $questionContainerStore.getBoundingClientRect().top + window.scrollY;
+        $questionContainerStore.getBoundingClientRect().top +
+        window.scrollY -
+        nzzHeader;
       window.scrollTo({
         top: offsetPosition,
       });
