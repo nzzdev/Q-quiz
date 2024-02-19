@@ -155,12 +155,13 @@
               $quizStore.qItemId,
               event.detail.event
             );
-            EventTrackingService.trackAnswer(
+            const err = EventTrackingService.trackAnswer(
               detail.title,
               step,
               countStep,
               detail.element
             );
+            logMSGStore.set('---->Map Tracking answer event ' + err);
           });
       }
     } catch (err) {
