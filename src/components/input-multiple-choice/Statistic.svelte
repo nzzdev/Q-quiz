@@ -66,7 +66,7 @@
   }
 
   .q-zero-precent {
-    right: -36px;
+    right: -35px;
   }
 
   .q-houndert-precent {
