@@ -57,9 +57,10 @@
   .nzz-logo {
     display: flex;
     justify-content: center;
+    margin-bottom: 1px;
 
     :global(svg) {
-      height: 20px;
+      height: 22px;
     }
   }
   .cover {
@@ -73,6 +74,7 @@
 
     &-title {
       font-size: 22px;
+      font-weight: 450;
       line-height: 30px;
     }
 

@@ -25,7 +25,11 @@
     class:s-color-gray-4={!disableGreyColor}
     class="q-quiz-result__multiple-choice-bar s-color-gray-4"
   >
-    <div class="precent s-font-note s-font-note--tabularnums">
+    <div
+      class:q-houndert-precent={precent >= 100}
+      class:q-zero-precent={precent <= 0}
+      class="precent s-font-note s-font-note--tabularnums"
+    >
       {Math.round(precent)}%
     </div>
   </div>
@@ -59,5 +63,13 @@
     position: absolute;
     top: -3px;
     right: -30px;
+  }
+
+  .q-zero-precent {
+    right: -36px;
+  }
+
+  .q-houndert-precent {
+    right: -40px;
   }
 </style>

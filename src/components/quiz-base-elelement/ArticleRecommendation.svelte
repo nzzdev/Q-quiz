@@ -65,24 +65,23 @@
     {/if}
 
     <div>
-      <div class="reccomendation-link-text teaser__title-name">
+      <h2 class="reccomendation-link-text">
         {text}
-      </div>
-      <div class="metainfo__main s-font-note-s">
-        <div class="metainfo__main metainfo__main--longformstandard">
-          <div class="metainfo__wrapper">
-            {#if metadata?.authorLine}
-              <span class="metainfo__item metainfo__item--author"
-                >{metadata?.authorLine}</span
-              >
-            {/if}
-            {#if metadata?.publicationDate}
-              <time class="metainfo__item metainfo__item--date"
-                >{dayjs(metadata?.publicationDate).format('DD.MM.YYYY')}</time
-              >
-            {/if}
-            <!-- TODO: check up by webit -->
-            <!-- <span
+      </h2>
+      <div class="reccomendation-link-meta-info">
+        <div>
+          {#if metadata?.authorLine}
+            <span class="reccomendation-link-meta-info-item"
+              >{metadata?.authorLine}</span
+            >
+          {/if}
+          {#if metadata?.publicationDate}
+            <time class=""
+              >{dayjs(metadata?.publicationDate).format('DD.MM.YYYY')}</time
+            >
+          {/if}
+          <!-- TODO: check up by webit -->
+          <!-- <span
               data-tooltip="Lesezeit 6 min"
               class="metainfo__item metainfo__item--reading-time"
               ><svg
@@ -104,9 +103,8 @@
                 ></circle></svg
               > <span>6 min</span></span
             > -->
-          </div>
-          <!---->
         </div>
+        <!---->
       </div>
     </div>
   </div>
@@ -116,6 +114,13 @@
   @import '../../styles/variables.scss';
   .reccomendation-link {
     text-decoration: none;
+    opacity: 1;
+
+    &:hover {
+      .reccomendation-link-text {
+        opacity: 0.6;
+      }
+    }
 
     &-container {
       display: flex;
@@ -124,6 +129,30 @@
       &--small {
         flex-direction: column;
       }
+    }
+
+    &-text {
+      font-family: nzz-serif, Georgia;
+      font-weight: 400;
+      font-size: 1.125rem;
+      line-height: 1.33;
+    }
+
+    &-meta-info {
+      display: flex;
+      flex-grow: 1;
+      flex-wrap: wrap;
+      line-height: 1rem;
+      color: $darkerGray;
+      font-family: nzz-sans-serif, Arial;
+      font-size: 0.75rem;
+    }
+
+    &-meta-info-item {
+      display: inline;
+      margin-right: 8px;
+      max-width: 100%;
+      padding: 0;
     }
 
     &-teaser {

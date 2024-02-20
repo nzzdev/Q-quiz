@@ -119,8 +119,8 @@
     align-items: center;
 
     &__icon {
-      width: 13px;
-      height: 13px;
+      width: 12px;
+      height: 12px;
       margin-right: 5px;
       margin-top: 4px;
       display: flex;
