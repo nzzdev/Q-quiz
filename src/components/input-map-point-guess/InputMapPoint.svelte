@@ -2,19 +2,19 @@
   import { onMount, getContext } from 'svelte';
   import L, { Marker, type LatLng, type Map } from 'leaflet';
 
+  import { EventTrackingService } from '@src/services/event-tracking';
+  import key from '@src/services/key-service';
   import type {
     MapPointGuess,
     MapPointGuessAnswer,
     QuizStoreContext,
   } from '@src/interfaces';
-  import { EventTrackingService } from '@src/services/event-tracking';
-  import key from '@src/services/key-service';
 
   import iconPinSvg from '@src/resources/icon-pin.svg';
 
-  import Statistic from './Statistic.svelte';
   import BaseElement from '../quiz-base-elelement/BaseElement.svelte';
   import Button from '../atomic/Button.svelte';
+  import Statistic from './Statistic.svelte';
 
   export let element: MapPointGuess;
 

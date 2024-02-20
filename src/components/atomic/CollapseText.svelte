@@ -55,10 +55,6 @@
       class="q-quiz-long-text-read-more s-font-note"
       >{#if isOpen}Weniger{:else}Mehr{/if} anzeigen</button
     >
-  {:else}
-    Hier sollte ein Button sein {textHeight?.offsetHeight}
-    {container?.offsetHeight}
-    {isOpen}
   {/if}
 </div>
 

@@ -1,12 +1,15 @@
 <script lang="ts">
   import Divider from './atomic/Divider.svelte';
-  export let title: string;
+
+  export let title: string | undefined;
 </script>
 
-<div class="layout-header q-quiz-gap-column">
-  <div class="layout-header-text s-font-note-s">{title}</div>
-  <Divider />
-</div>
+{#if title}
+  <div class="layout-header q-quiz-gap-column">
+    <div class="layout-header-text s-font-note-s">{title}</div>
+    <Divider />
+  </div>
+{/if}
 
 <style lang="scss">
   @import '../styles/variables.scss';

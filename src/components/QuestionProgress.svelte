@@ -1,9 +1,10 @@
 <script lang="ts">
   import { getContext } from 'svelte';
 
-  import key from '../services/key-service';
+  import key from '@src/services/key-service';
 
   import type { QuizStoreContext } from '@src/interfaces';
+
   import NextButton from './next-button/NextButton.svelte';
 
   const { quizStore } = getContext(key) as QuizStoreContext;

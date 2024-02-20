@@ -1,14 +1,15 @@
 <script lang="ts">
   import type { QuizBaseQuestion } from '@src/interfaces';
 
-  import Subtitle from './Subtitle.svelte';
-  import Title from './Title.svelte';
-  import Introduction from './Introduction.svelte';
-  import Image from './Image.svelte';
-  import ArticleRecommendations from './ArticleRecommendations.svelte';
+  import CollapseText from '../atomic/CollapseText.svelte';
   import NextButton from '../next-button/NextButton.svelte';
   import QuestionProgress from '../QuestionProgress.svelte';
-  import CollapseText from '../atomic/CollapseText.svelte';
+
+  import Introduction from './Introduction.svelte';
+  import Title from './Title.svelte';
+  import Subtitle from './Subtitle.svelte';
+  import Image from './Image.svelte';
+  import ArticleRecommendations from './ArticleRecommendations.svelte';
 
   export let element: QuizBaseQuestion;
   export let isAnswered: boolean;

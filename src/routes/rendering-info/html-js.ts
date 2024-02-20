@@ -4,6 +4,9 @@ import type { Request, ServerRoute } from '@hapi/hapi';
 import { readFileSync } from 'fs';
 
 import schemaString from '../../../resources/schema.json';
+
+import { transform } from '@src/services/quiz-service';
+import getExactPixelWidth from '@src/helpers/toolRuntimeConfig';
 import type {
   DisplayOptions,
   QQuizSvelteProperties,
@@ -11,8 +14,6 @@ import type {
   StyleHashMap,
   WebPayload,
 } from '@src/interfaces';
-import getExactPixelWidth from '@src/helpers/toolRuntimeConfig';
-import { transform } from '@src/services/quiz-service';
 
 const ajv = new Ajv({
   strict: false,
@@ -28,21 +29,6 @@ const route: ServerRoute = {
         allowUnknown: true,
       },
       payload: (payload) => {
-        // payloadTyped {
-        //   item: {
-        //     acronym: 'las.',
-        //     title: 'TEST quiz s-q-item',
-        //     elements: [ [Object], [Object], [Object], [Object] ]
-        //   },
-        //   itemStateInDb: true,
-        //   toolRuntimeConfig: {
-        //     fileRequestBaseUrl: 'https://qserverstaging-2cac.kxcdn.com/file',
-        //     toolBaseUrl: 'https://qserverstaging-2cac.kxcdn.com/tools/quiz',
-        //     id: '787d2006bd53e81fa469569796019d44',
-        //     size: { width: [Array] },
-        //     requestId: '4fff662ca0d4ba4bf11551cae58cb50da0ff93e9'
-        //   }
-        // }
         const payloadTyped = payload as WebPayload;
         const item = payloadTyped.item;
         const toolRuntimeConfig = payloadTyped.toolRuntimeConfig;
@@ -98,8 +84,6 @@ const route: ServerRoute = {
     const toolRuntimeConfig = payload.toolRuntimeConfig || {};
     const displayOptions =
       toolRuntimeConfig.displayOptions || ({} as DisplayOptions);
-    const options = config.options;
-    const width = getExactPixelWidth(toolRuntimeConfig);
 
     if (process.env.APP_ENV === 'localhost') {
       toolRuntimeConfig.toolBaseUrl = 'http://localhost:3000';

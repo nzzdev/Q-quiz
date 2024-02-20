@@ -1,15 +1,15 @@
 <script lang="ts">
   import { getContext, onMount } from 'svelte';
 
-  import { QuizElementType } from '@src/enums';
+  import Scale from '@src/services/scale';
+  import key from '@src/services/key-service';
   import type {
     NumberGuess,
     NumberOfAnswersPerChoice,
     SliderQuestion,
     QuizStoreContext,
   } from '@src/interfaces';
-  import Scale from '@src/services/scale';
-  import key from '../../services/key-service';
+  import { QuizElementType } from '@src/enums';
 
   import BarchartSvg from './BarchartSvg.svelte';
   import StripplotSvg from './StripplotSvg.svelte';
@@ -88,20 +88,6 @@
       ).toFixed(1);
       return `left: ${leftPos}px`;
     }
-    return '';
-  }
-
-  // TODO:
-  function getUnit(correctAnswer: number) {
-    let unit = element.unit;
-    if (
-      correctAnswer === 1 &&
-      element.unit_sinpular &&
-      element.unit_sinpular !== ''
-    ) {
-      unit = element.unit_sinpular;
-    }
-    return unit;
   }
 </script>
 

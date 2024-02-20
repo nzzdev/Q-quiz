@@ -2,10 +2,10 @@
   import { getContext } from 'svelte';
   import { dayjs } from '@nzz/et-utils-date';
 
+  import { EventTrackingService } from '@src/services/event-tracking';
+  import key from '@src/services/key-service';
   import type { Metadata, QuizStoreContext } from '@src/interfaces';
   import { ImageSizeFomat } from '@src/enums';
-  import key from '@src/services/key-service';
-  import { EventTrackingService } from '@src/services/event-tracking';
 
   import Image from './Image.svelte';
 
@@ -16,6 +16,7 @@
   const { quizStore, containerWidthStore } = getContext(
     key
   ) as QuizStoreContext;
+
   $: isSmall = $containerWidthStore < 500 ? true : false;
 
   function trackEvent(link: string, event: Event) {
@@ -69,7 +70,6 @@
       </div>
       <div class="metainfo__main s-font-note-s">
         <div class="metainfo__main metainfo__main--longformstandard">
-          <!---->
           <div class="metainfo__wrapper">
             {#if metadata?.authorLine}
               <span class="metainfo__item metainfo__item--author"
@@ -81,6 +81,7 @@
                 >{dayjs(metadata?.publicationDate).format('DD.MM.YYYY')}</time
               >
             {/if}
+            <!-- TODO: check up by webit -->
             <!-- <span
               data-tooltip="Lesezeit 6 min"
               class="metainfo__item metainfo__item--reading-time"

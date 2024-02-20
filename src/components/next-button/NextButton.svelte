@@ -2,12 +2,12 @@
   import { onMount } from 'svelte';
   import { getContext } from 'svelte';
 
+  import { EventTrackingService } from '@src/services/event-tracking';
+  import key from '@src/services/key-service';
   import type { QuizStoreContext } from '@src/interfaces';
-  import key from '../../services/key-service';
 
   import Button from '../atomic/Button.svelte';
   import Text from './Text.svelte';
-  import { EventTrackingService } from '@src/services/event-tracking';
 
   export let defaultVisibility = true;
   export let isButtonWithIcon = false;

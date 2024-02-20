@@ -2,10 +2,10 @@
   import { onMount } from 'svelte';
   import L from 'leaflet';
 
-  import type { MapPointGuessStatistic } from '@src/interfaces';
-
   import '../services/leafle-heatmap.cjs';
   import simpleheat from '../services/simpleheat.cjs';
+
+  import type { MapPointGuessStatistic } from '@src/interfaces';
 
   export let data: MapPointGuessStatistic[];
   export let map: L.Map;

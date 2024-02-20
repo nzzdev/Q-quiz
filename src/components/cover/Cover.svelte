@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getContext } from 'svelte';
 
-  import key from '../../services/key-service';
+  import key from '@src/services/key-service';
   import type { Cover, QuizStoreContext } from '@src/interfaces';
   import { ColorDefaults } from '@src/constants';
 

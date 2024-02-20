@@ -1,14 +1,15 @@
 <script lang="ts">
   import { getContext } from 'svelte';
 
+  import key from '@src/services/key-service';
   import type {
     UrlRecommendations,
     Metadata,
     QuizStoreContext,
   } from '@src/interfaces';
-  import key from '../../services/key-service';
-  import ArticleRecommendation from './ArticleRecommendation.svelte';
+
   import Divider from '../atomic/Divider.svelte';
+  import ArticleRecommendation from './ArticleRecommendation.svelte';
 
   export let recommendations: UrlRecommendations;
 

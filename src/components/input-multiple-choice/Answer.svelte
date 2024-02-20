@@ -1,12 +1,12 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
-  import checkmark from '../../resources/checkmark.svg';
-  import crossmaker from '../../resources/crossmark.svg';
-
-  import { QuizElementType } from '@src/enums';
-  import type { NumberOfAnswersPerChoice, Statistic } from '@src/interfaces';
   import { StatisticCalculator } from '@src/services/statistic-calculator-service';
+  import type { NumberOfAnswersPerChoice, Statistic } from '@src/interfaces';
+  import { QuizElementType } from '@src/enums';
+
+  import checkmark from '@src/resources/checkmark.svg';
+  import crossmaker from '@src/resources/crossmark.svg';
 
   import StatisticView from './Statistic.svelte';
 

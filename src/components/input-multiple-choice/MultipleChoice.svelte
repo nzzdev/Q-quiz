@@ -1,13 +1,13 @@
 <script lang="ts">
   import { getContext } from 'svelte';
 
-  import type { MultipleChoice, QuizStoreContext } from '@src/interfaces';
-  import key from '../../services/key-service';
-
-  import Button from '../atomic/Button.svelte';
-  import BaseElement from '../quiz-base-elelement/BaseElement.svelte';
-  import Answer from './Answer.svelte';
   import { EventTrackingService } from '@src/services/event-tracking';
+  import key from '@src/services/key-service';
+  import type { MultipleChoice, QuizStoreContext } from '@src/interfaces';
+
+  import BaseElement from '../quiz-base-elelement/BaseElement.svelte';
+  import Button from '../atomic/Button.svelte';
+  import Answer from './Answer.svelte';
 
   export let element: MultipleChoice;
   export let toolBaseUrl: string;

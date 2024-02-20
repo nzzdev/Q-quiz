@@ -1,19 +1,20 @@
 <script lang="ts">
   import { onMount, getContext } from 'svelte';
 
+  import key from '@src/services/key-service';
+  import { ScoreService } from '@src/services/score-service';
+  import { checkIsScoreQuestion } from '@src/helpers/utils';
   import type {
     LastCard,
     QuizBaseQuestion,
     QuizeScore,
     QuizStoreContext,
   } from '@src/interfaces';
-  import key from '../../services/key-service';
-  import { checkIsScoreQuestion } from '@src/helpers/utils';
-  import { ScoreService } from '@src/services/score-service';
 
-  import QuestionIcon from '../../resources/question.svg';
-  import ArticleRecommendations from '../quiz-base-elelement/ArticleRecommendations.svelte';
+  import QuestionIcon from '@src/resources/question.svg';
+
   import Divider from '../atomic/Divider.svelte';
+  import ArticleRecommendations from '../quiz-base-elelement/ArticleRecommendations.svelte';
 
   export let element: LastCard;
 

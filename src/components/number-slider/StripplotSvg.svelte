@@ -4,12 +4,12 @@
   import { scaleLinear } from 'd3-scale';
   import { select } from 'd3-selection';
 
+  import key from '@src/services/key-service';
   import type {
     NumberOfAnswersPerChoice,
     SliderQuestion,
     QuizStoreContext,
   } from '@src/interfaces';
-  import key from '../../services/key-service';
 
   export let data: SliderQuestion;
   export let statistics: NumberOfAnswersPerChoice[];

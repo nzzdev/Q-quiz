@@ -1,10 +1,10 @@
 <script lang="ts">
   import { getContext } from 'svelte';
 
-  import { ImageSizeFomat } from '@src/enums';
   import { getImageUrls } from '@src/services/images-service';
-  import type { QuizImage, QuizStoreContext } from '@src/interfaces';
   import key from '@src/services/key-service';
+  import type { QuizImage, QuizStoreContext } from '@src/interfaces';
+  import { ImageSizeFomat } from '@src/enums';
 
   export let image: QuizImage;
   export let format: ImageSizeFomat = ImageSizeFomat.FORMAT_16_9;

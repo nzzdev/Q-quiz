@@ -3,22 +3,22 @@
   import { writable } from 'svelte/store';
   import { fly } from 'svelte/transition';
 
-  import key from '../services/key-service';
+  import key from '@src/services/key-service';
   import { quizStoreClass } from '@src/store/quiz.store';
 
   import type {
     QQuizSvelteProperties,
     QuizStoreContext,
+    Cover,
   } from '@src/interfaces';
   import { QuizElementType } from '@src/enums';
 
-  import Header from './Header.svelte';
   import CoverComponent from './cover/Cover.svelte';
   import LastCardComponent from './last-card/LastCard.svelte';
   import MutliplieChoice from './input-multiple-choice/MultipleChoice.svelte';
   import NumberSlider from './number-slider/NumberSlider.svelte';
   import InputMapPoint from './input-map-point-guess/InputMapPoint.svelte';
-  import Cover from './cover/Cover.svelte';
+  import Header from './Header.svelte';
 
   export let componentConfiguration: QQuizSvelteProperties;
 

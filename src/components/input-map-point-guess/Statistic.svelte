@@ -2,6 +2,8 @@
   import { onMount, getContext } from 'svelte';
   import L, { Marker } from 'leaflet';
 
+  import { StatisticCalculator } from '@src/services/statistic-calculator-service';
+  import key from '@src/services/key-service';
   import type {
     MapPointGuess,
     MapPointGuessStatistic,
@@ -10,10 +12,8 @@
   } from '@src/interfaces';
   import { QuizElementType } from '@src/enums';
 
-  import { StatisticCalculator } from '@src/services/statistic-calculator-service';
   import AnswerText from '../AnswerText.svelte';
   import Heatmap from '../Heatmap.svelte';
-  import key from '../../services/key-service';
 
   const { quizStore } = getContext(key) as QuizStoreContext;
 

@@ -4,13 +4,13 @@
   import { select } from 'd3-selection';
   import { max } from 'd3-array';
 
+  import key from '@src/services/key-service';
+  import { getPrecision } from '@src/helpers/utils';
   import type {
     NumberOfAnswersPerChoice,
     SliderQuestion,
     QuizStoreContext,
   } from '@src/interfaces';
-  import key from '../../services/key-service';
-  import { getPrecision } from '@src/helpers/utils';
 
   export let data: SliderQuestion;
   export let statistics: NumberOfAnswersPerChoice[];

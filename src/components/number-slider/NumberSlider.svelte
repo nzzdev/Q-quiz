@@ -2,13 +2,13 @@
   import { getContext } from 'svelte';
   import { formatNumber } from '@nzz/et-utils-number';
 
-  import type { SliderQuestion, QuizStoreContext } from '@src/interfaces';
   import { EventTrackingService } from '@src/services/event-tracking';
   import key from '@src/services/key-service';
+  import type { SliderQuestion, QuizStoreContext } from '@src/interfaces';
 
+  import Button from '../atomic/Button.svelte';
   import BaseElement from '../quiz-base-elelement/BaseElement.svelte';
   import Statistic from './Statistic.svelte';
-  import Button from '../atomic/Button.svelte';
 
   export let element: SliderQuestion;
   export let toolBaseUrl: string;
@@ -46,20 +46,6 @@
           detail.element
         );
       });
-  }
-
-  function round(value: number, exponent: number) {
-    let roundCount = 1;
-    if (exponent > 0) {
-      roundCount = Math.pow(10, exponent);
-    }
-    return Math.floor((value * roundCount) / roundCount);
-  }
-
-  function countDecimalPlaces(num: number): number {
-    const str = num.toString();
-    const index = str.indexOf('.');
-    return index !== -1 ? str.length - index - 1 : 0;
   }
 </script>
 
