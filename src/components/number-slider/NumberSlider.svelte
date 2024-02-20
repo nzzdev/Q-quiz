@@ -24,7 +24,10 @@
   function getDefaultAnswer() {
     const middleValue = (element.max - element.min) / 2;
     const exponent = Math.round(middleValue / element.step);
-    return element.step * exponent + element.min;
+    return round(
+      element.step * exponent + element.min,
+      countDecimalPlaces(element.step)
+    );
   }
 
   function getResult(event: CustomEvent) {
@@ -46,6 +49,20 @@
           detail.element
         );
       });
+  }
+
+  function round(value: number, exponent: number) {
+    let roundCount = 1;
+    if (exponent > 0) {
+      roundCount = Math.pow(10, exponent);
+    }
+    return Math.floor(value * roundCount) / roundCount;
+  }
+
+  function countDecimalPlaces(num: number): number {
+    const str = num.toString();
+    const index = str.indexOf('.');
+    return index !== -1 ? str.length - index - 1 : 0;
   }
 </script>
 
