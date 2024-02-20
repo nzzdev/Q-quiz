@@ -15,14 +15,17 @@
 
   const { quizStore } = getContext(key) as QuizStoreContext;
 
-  let userAnswer = round(
-    (element.max - element.min) / 2 + element.min,
-    countDecimalPlaces(element.step)
-  );
+  let userAnswer = getDefaultAnswer();
   let isAnswered = false;
   $: labelPosition = !userAnswer
     ? 50
     : ((userAnswer - element.min) / (element.max - element.min)) * 100;
+
+  function getDefaultAnswer() {
+    const middleValue = (element.max - element.min) / 2;
+    const exponent = Math.round(middleValue / element.step);
+    return element.step * exponent + element.min;
+  }
 
   function getResult(event: CustomEvent) {
     quizStore
