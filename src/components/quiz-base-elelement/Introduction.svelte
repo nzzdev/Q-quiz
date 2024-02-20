@@ -7,9 +7,9 @@
 </script>
 
 <CollapseText textHeight={title}>
-  <div bind:this={title} class="s-font-text-s q-quiz-question-introduction">
-    {introduction}
-  </div>
+  <h3 class="s-font-text-s q-quiz-question-introduction">
+    <span bind:this={title}>{introduction}</span>
+  </h3>
 </CollapseText>
 
 <style lang="scss">

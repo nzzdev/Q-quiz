@@ -13,7 +13,7 @@
   export let element: QuizBaseQuestion;
   export let isAnswered: boolean;
 
-  let answerText: HTMLDivElement;
+  let answerText: HTMLSpanElement;
 </script>
 
 <div class="question-container">
@@ -45,11 +45,8 @@
     {#if element.answerText}
       <div class="q-quiz-gap-column q-quiz-gap-row">
         <CollapseText textHeight={answerText}>
-          <div
-            bind:this={answerText}
-            class="q-quiz-result-answer-text s-font-text-s"
-          >
-            {element.answerText}
+          <div class="q-quiz-result-answer-text s-font-text-s">
+            <span bind:this={answerText}>{element.answerText}</span>
           </div>
         </CollapseText>
       </div>
