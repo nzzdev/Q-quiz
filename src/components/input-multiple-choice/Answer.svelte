@@ -122,7 +122,7 @@
       width: 12px;
       height: 12px;
       margin-right: 5px;
-      margin-top: 4px;
+      margin-top: 2px;
       display: flex;
       justify-content: center;
       align-items: center;
