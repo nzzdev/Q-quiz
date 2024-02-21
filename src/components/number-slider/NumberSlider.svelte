@@ -24,7 +24,7 @@
 
   let userAnswer = getDefaultAnswer();
   let isAnswered = false;
-  $: log = '1. ';
+  $: log = '2. ';
   $: isArticle = document.querySelector('.ld-1741686');
   $: labelPosition = !userAnswer
     ? 50
@@ -51,34 +51,15 @@
       value: userAnswer,
     };
 
-    await fetch(`${$quizStore.configuration.toolBaseUrl}/answer`, {
+    const blam = await fetch(`${$quizStore.configuration.toolBaseUrl}/answer`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
       },
       body: JSON.stringify({ data }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          const step = $quizStore.step;
-          const foundedItem = $quizStore.items.find(
-            (item) => item.progressIndex === step
-          );
-          //TODO: remove
-          log += 'foundedItem: ' + foundedItem + '\n';
-        } else {
-          // TODO:
-          console.error('repsonse not ok', response.statusText);
-          //TODO: remove
-          return 'repsonse not ok: ' + response.statusText + ' ' + log;
-        }
-        return log;
-      })
-      .catch((error) => {
-        //TODO: remove
-        return 'error: ' + error;
-        console.error('error', error);
-      });
+    });
+
+    log += 'answeredQuestion blam: ' + blam + '\n';
 
     const bla = await quizStore
       .answerdQuestion($quizStore.qItemId, element, userAnswer)
