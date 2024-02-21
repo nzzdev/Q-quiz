@@ -36,19 +36,19 @@
       .answerdQuestion($quizStore.qItemId, element, userAnswer)
       .then(() => {
         isAnswered = quizStore.isAnswered();
-        const step = $quizStore.step;
-        const countStep = $quizStore.numberQuestions;
-        const detail = EventTrackingService.getDetails(
-          $quizStore.items,
-          $quizStore.qItemId,
-          event.detail.event
-        );
-        EventTrackingService.trackAnswer(
-          detail.title,
-          step,
-          countStep,
-          detail.element
-        );
+        // const step = $quizStore.step;
+        // const countStep = $quizStore.numberQuestions;
+        // const detail = EventTrackingService.getDetails(
+        //   $quizStore.items,
+        //   $quizStore.qItemId,
+        //   event.detail.event
+        // );
+        // EventTrackingService.trackAnswer(
+        //   detail.title,
+        //   step,
+        //   countStep,
+        //   detail.element
+        // );
       });
   }
 
