@@ -24,7 +24,7 @@
 
   let userAnswer = getDefaultAnswer();
   let isAnswered = false;
-  $: log = '2. ';
+  $: log = '3. ';
   $: isArticle = document.querySelector('.ld-1741686');
   $: labelPosition = !userAnswer
     ? 50
@@ -51,6 +51,8 @@
       value: userAnswer,
     };
 
+    log += `element: ${$quizStore.qItemId} ${element.id} \n`;
+    log += `element: ${$quizStore.configuration.toolBaseUrl}/answer \n`;
     const blam = await fetch(`${$quizStore.configuration.toolBaseUrl}/answer`, {
       method: 'POST',
       headers: {
@@ -58,7 +60,6 @@
       },
       body: JSON.stringify({ data }),
     });
-
     log += 'answeredQuestion blam: ' + blam + '\n';
 
     const bla = await quizStore
