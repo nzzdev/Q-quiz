@@ -127,7 +127,9 @@
         </div>
       </div>
 
-      <Button on:action={getResult} disabled={false}>Antworten</Button>
+      <Button on:action={(event) => getResult(event)} disabled={false}
+        >Antworten</Button
+      >
     {/if}
   </div>
 </BaseElement>
