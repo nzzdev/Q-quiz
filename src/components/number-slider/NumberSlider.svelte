@@ -24,7 +24,7 @@
 
   let userAnswer = getDefaultAnswer();
   let isAnswered = false;
-  $: log = '3. ';
+  $: log = '4. ';
   $: isArticle = document.querySelector('.ld-1741686');
   $: labelPosition = !userAnswer
     ? 50
@@ -42,56 +42,41 @@
   async function getResult(event: any) {
     //TODO: remove
     log += 'getResult\n';
-    console.log(event);
 
-    const data: DBAnswerData = {
-      itemId: $quizStore.qItemId,
-      questionId: element.id,
-      type: element.type,
-      value: userAnswer,
-    };
-
-    log += `element: ${$quizStore.qItemId} ${element.id} \n`;
-    log += `element: ${$quizStore.configuration.toolBaseUrl}/answer \n`;
-    const blam = await fetch(`${$quizStore.configuration.toolBaseUrl}/answer`, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify({ data }),
-    });
-    log += 'answeredQuestion blam: ' + blam + '\n';
-
-    const bla = await quizStore
-      .answerdQuestion($quizStore.qItemId, element, userAnswer)
-      .then(() => {
-        //TODO: remove
-        log += 'request succcess\n';
-        isAnswered = quizStore.isAnswered();
-        const step = $quizStore.step;
-        const countStep = $quizStore.numberQuestions;
-        //TODO: remove
-        log += 'EventTrackingService.getDetails\n';
-        const detail = EventTrackingService.getDetails(
-          $quizStore.items,
-          $quizStore.qItemId,
-          event
-        );
-        //TODO: remove
-        log += 'EventTrackingService.trackAnswer\n';
-        EventTrackingService.trackAnswer(
-          detail.title,
-          step,
-          countStep,
-          detail.element
-        );
-        //TODO: remove
-        log += '/end)\n';
-        log += 'isAnswered: ' + isAnswered + '\n';
-      });
-    //TODO: remove
-    log += 'answeredQuestion: ' + bla + '\n';
-    log += '/getResult\n';
+    if (!isArticle) {
+      const bla = await quizStore
+        .answerdQuestion($quizStore.qItemId, element, userAnswer)
+        .then(() => {
+          //TODO: remove
+          log += 'request succcess\n';
+          isAnswered = quizStore.isAnswered();
+          const step = $quizStore.step;
+          const countStep = $quizStore.numberQuestions;
+          //TODO: remove
+          log += 'EventTrackingService.getDetails\n';
+          const detail = EventTrackingService.getDetails(
+            $quizStore.items,
+            $quizStore.qItemId,
+            event
+          );
+          //TODO: remove
+          log += 'EventTrackingService.trackAnswer\n';
+          EventTrackingService.trackAnswer(
+            detail.title,
+            step,
+            countStep,
+            detail.element
+          );
+          //TODO: remove
+          log += '/end)\n';
+          log += 'isAnswered: ' + isAnswered + '\n';
+        });
+      log += 'answeredQuestion: ' + bla + '\n';
+    } else {
+      isAnswered = true;
+      //TODO: remove
+      log += '/getResult\n';
+    }
   }
 
   function round(value: number, exponent: number) {
