@@ -23,7 +23,7 @@
 
   let userAnswer = getDefaultAnswer();
   let isAnswered = false;
-  $: log = { out: '1. ' };
+  $: log = { out: '2. ' };
   $: isArticle = document.querySelector('.ld-1741686');
   $: labelPosition = !userAnswer
     ? 50
@@ -41,7 +41,9 @@
   async function getResult(event: any) {
     //TODO: remove
     log.out += 'getResult\n';
-    console.log(event);
+    log.out += `$quizStore.qItemId ${$quizStore.qItemId}\n`;
+    log.out += `element ${JSON.stringify(element)}\n`;
+    log.out += `$userAnswer ${JSON.stringify(userAnswer)}\n`;
     await quizStore
       .answerdQuestion($quizStore.qItemId, element, userAnswer)
       .then(() => {
