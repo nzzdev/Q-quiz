@@ -184,6 +184,13 @@
         },
         "articleRecommendations": {
           "$ref": "#/definitions/articleRecommendations"
+        },
+        "articleRecommendationThema": {
+          "type": "string",
+          "title": "Artikelempfehlung: Thema anhängen",
+          "Q:options": {
+            "placeholder": "Optionales Text für Mehr zum Thema HIER-IHR-THEMA-TEXT"
+          }
         }
       },
       "required": ["question", "answer", "min", "max", "step"]
@@ -247,6 +254,13 @@
         },
         "articleRecommendations": {
           "$ref": "#/definitions/articleRecommendations"
+        },
+        "articleRecommendationThema": {
+          "type": "string",
+          "title": "Artikelempfehlung: Thema anhängen",
+          "Q:options": {
+            "placeholder": "Optionales Text für Mehr zum Thema HIER-IHR-THEMA-TEXT"
+          }
         }
       },
       "required": ["question", "min", "max", "step"]
@@ -283,6 +297,13 @@
         },
         "articleRecommendations": {
           "$ref": "#/definitions/articleRecommendations"
+        },
+        "articleRecommendationThema": {
+          "type": "string",
+          "title": "Artikelempfehlung: Thema anhängen",
+          "Q:options": {
+            "placeholder": "Optionales Text für Mehr zum Thema HIER-IHR-THEMA-TEXT"
+          }
         }
       },
       "required": ["question"]
@@ -320,6 +341,13 @@
         },
         "articleRecommendations": {
           "$ref": "#/definitions/articleRecommendations"
+        },
+        "articleRecommendationThema": {
+          "type": "string",
+          "title": "Artikelempfehlung: Thema anhängen",
+          "Q:options": {
+            "placeholder": "Optionales Text für Mehr zum Thema HIER-IHR-THEMA-TEXT"
+          }
         },
         "quizLink": {
           "type": "string",
