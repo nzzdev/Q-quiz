@@ -62,6 +62,7 @@
           detail.element
         );
         log += '/end)\n';
+        log += 'isAnswered: ' + isAnswered + '\n';
       });
   }
 
@@ -87,7 +88,7 @@
 <BaseElement {element} {isAnswered}>
   <div class="q-quiz-input">
     {#if isAnswered}
-      <Statistic {element} {userAnswer} {toolBaseUrl} />
+      <Statistic bind:log {element} {userAnswer} {toolBaseUrl} />
     {:else}
       <div class="q-quiz-input-range-container">
         <div class="q-quiz-input-range-position-label-container">
