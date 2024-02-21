@@ -24,6 +24,8 @@ const route: ServerRoute = {
       doc = JSON.parse(request.payload);
     }
 
+    console.log('doc', doc);
+
     // we want some properties on every document that goes into user-store
     // TODO
     // @ts-ignore

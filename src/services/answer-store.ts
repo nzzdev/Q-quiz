@@ -34,6 +34,7 @@ export class AnswerDatabase {
           return response.id;
         } else {
           // TODO: set boom text error
+          console.log('response not ok', response);
           return new Boom();
         }
       })

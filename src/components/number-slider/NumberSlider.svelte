@@ -24,7 +24,7 @@
 
   let userAnswer = getDefaultAnswer();
   let isAnswered = false;
-  $: log = '9. ';
+  $: log = '10. ';
   $: isArticle = document.querySelector('.ld-1741686');
   $: labelPosition = !userAnswer
     ? 50
@@ -79,17 +79,21 @@
         type: element.type,
         value: userAnswer,
       };
-      fetch(`${$quizStore.configuration.toolBaseUrl}/answer`, {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify({ data }),
-      }).catch((error) => {
-        //TODO: remove
-        log += `error: ${error}\n`;
-        console.error('error', error);
-      });
+      try {
+        fetch(`${$quizStore.configuration.toolBaseUrl}/answer`, {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+          },
+          body: JSON.stringify({ data }),
+        }).catch((error) => {
+          //TODO: remove
+          log += `error: ${error}\n`;
+          console.error('error', error);
+        });
+      } catch (err) {
+        log += `try catch: ${err}\n`;
+      }
     }
     log += '/getResult\n';
   }
