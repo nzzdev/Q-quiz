@@ -15,6 +15,9 @@
 
   const { quizStore } = getContext(key) as QuizStoreContext;
 
+  $: log = '1. ';
+  $: isArticle = document.querySelector('.ld-1741686');
+
   let userAnswer = getDefaultAnswer();
   let isAnswered = false;
   $: labelPosition = !userAnswer
@@ -34,6 +37,8 @@
     quizStore
       .answerdQuestion($quizStore.qItemId, element, userAnswer)
       .then(() => {
+        log += `Items: ${JSON.stringify($quizStore.items)}`;
+        log += `Step: ${$quizStore.step}`;
         isAnswered = quizStore.isAnswered();
         const step = $quizStore.step;
         const countStep = $quizStore.numberQuestions;
@@ -65,6 +70,11 @@
     return index !== -1 ? str.length - index - 1 : 0;
   }
 </script>
+
+{#if isArticle}
+  <div class="s-font-note-s">Bewegen Sie den Slider</div>
+  <div class="s-font-note-s">{log}</div>
+{/if}
 
 <BaseElement {element} {isAnswered}>
   <div class="q-quiz-input">
