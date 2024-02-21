@@ -4,14 +4,20 @@
 
   import { EventTrackingService } from '@src/services/event-tracking';
   import key from '@src/services/key-service';
-  import type { SliderQuestion, QuizStoreContext } from '@src/interfaces';
+  import type {
+    SliderQuestion,
+    QuizStoreContext,
+    ButtonColorStyle,
+  } from '@src/interfaces';
 
-  import Button from '../atomic/Button.svelte';
+  // import Button from '../atomic/Button.svelte';
   import BaseElement from '../quiz-base-elelement/BaseElement.svelte';
   import Statistic from './Statistic.svelte';
+  import { ColorDefaults } from '@src/constants';
 
   export let element: SliderQuestion;
   export let toolBaseUrl: string;
+  export let colorStyle: ButtonColorStyle = ColorDefaults.Button.Color;
 
   const { quizStore } = getContext(key) as QuizStoreContext;
 
@@ -30,7 +36,8 @@
     );
   }
 
-  function getResult(event: CustomEvent) {
+  function getResult(event: any) {
+    console.log(event);
     quizStore
       .answerdQuestion($quizStore.qItemId, element, userAnswer)
       .then(() => {
@@ -40,7 +47,7 @@
         const detail = EventTrackingService.getDetails(
           $quizStore.items,
           $quizStore.qItemId,
-          event.detail.event
+          event
         );
         EventTrackingService.trackAnswer(
           detail.title,
@@ -125,8 +132,17 @@
           {/if}
         </div>
       </div>
-
-      <Button on:action={getResult} disabled={false}>Antworten</Button>
+      <div class="button-container">
+        <button
+          class="button s-button"
+          style="--q-quiz-button-bg-color: {colorStyle.Background}; --q-quiz-button-hover-color: {colorStyle.Hover}; --q-quiz-button-disabled-color: {colorStyle.Disabled};"
+          on:click={getResult}
+        >
+          <div class="s-font-note-s button-text" style:color={colorStyle.Text}>
+            Antworten
+          </div>
+        </button>
+      </div>
     {/if}
   </div>
 </BaseElement>
@@ -203,5 +219,39 @@
 
   .q-quiz-input-range-position-label__label {
     padding: 0 $basis-margin;
+  }
+
+  .button-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .button {
+    display: flex;
+    align-items: safe;
+    width: 100%;
+    padding: 12px;
+    cursor: pointer;
+    background-color: var(--q-quiz-button-bg-color);
+
+    &:hover {
+      opacity: 1;
+      background-color: var(--q-quiz-button-hover-color);
+    }
+
+    &:disabled,
+    &:disabled:hover {
+      background-color: var(--q-quiz-button-disabled-color);
+      border-color: #848484;
+      cursor: not-allowed;
+    }
+
+    &-icon {
+      margin-top: 7px;
+    }
+
+    &-text {
+      font-weight: 400;
+    }
   }
 </style>
