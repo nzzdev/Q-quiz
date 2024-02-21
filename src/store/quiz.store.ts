@@ -101,7 +101,7 @@ const store = () => {
       };
 
       //TODO: remove
-      let log = '';
+      let log = 'questionId: ' + element.id + '\n';
 
       return fetch(`${storeItems.configuration.toolBaseUrl}/answer`, {
         method: 'POST',
@@ -118,7 +118,7 @@ const store = () => {
                 (item) => item.progressIndex === step
               );
               //TODO: remove
-              log += 'foundedItem: ' + foundedItem;
+              log += 'foundedItem: ' + foundedItem + '\n';
               if (foundedItem) {
                 const question = foundedItem.item as QuizBaseQuestion;
                 foundedItem.isAnswered = true;
