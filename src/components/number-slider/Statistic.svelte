@@ -17,6 +17,7 @@
   export let element: SliderQuestion;
   export let userAnswer: number;
   export let toolBaseUrl: string;
+  //TODO: remove
   export let log: string;
 
   const { containerWidthStore } = getContext(key) as QuizStoreContext;
@@ -37,10 +38,12 @@
       labelText = 'Ihre Schätzung';
     }
 
+    //TODO: remove
     log += 'statistic\n';
     fetch(`${toolBaseUrl}/answers/${element.type}/${element.id}`)
       .then((response) => response.json())
       .then((results: NumberOfAnswersPerChoice[]) => {
+        //TODO: remove
         log += 'request success\n';
         if (element.type === QuizElementType.NumberGuess) {
           answers = results;
@@ -49,8 +52,10 @@
         } else {
           new Error('Wrong type of question');
         }
+        //TODO: remove
         log += 'setup\n';
         setup($containerWidthStore);
+        //TODO: remove
         log += '/setup\n';
       });
   });

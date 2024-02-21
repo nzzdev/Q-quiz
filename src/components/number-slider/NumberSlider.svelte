@@ -38,22 +38,26 @@
     );
   }
 
-  function getResult(event: any) {
+  async function getResult(event: any) {
+    //TODO: remove
     log += 'getResult\n';
     console.log(event);
-    quizStore
+    const bla = await quizStore
       .answerdQuestion($quizStore.qItemId, element, userAnswer)
       .then(() => {
+        //TODO: remove
         log += 'request succcess\n';
         isAnswered = quizStore.isAnswered();
         const step = $quizStore.step;
         const countStep = $quizStore.numberQuestions;
+        //TODO: remove
         log += 'EventTrackingService.getDetails\n';
         const detail = EventTrackingService.getDetails(
           $quizStore.items,
           $quizStore.qItemId,
           event
         );
+        //TODO: remove
         log += 'EventTrackingService.trackAnswer\n';
         EventTrackingService.trackAnswer(
           detail.title,
@@ -61,9 +65,12 @@
           countStep,
           detail.element
         );
+        //TODO: remove
         log += '/end)\n';
         log += 'isAnswered: ' + isAnswered + '\n';
       });
+    //TODO: remove
+    log += 'answeredQuestion: ' + bla + '\n';
   }
 
   function round(value: number, exponent: number) {
