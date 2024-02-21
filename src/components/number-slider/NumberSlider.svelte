@@ -32,29 +32,24 @@
   }
 
   function getResult(event: CustomEvent) {
-    try {
-      quizStore
-        .answerdQuestion($quizStore.qItemId, element, userAnswer)
-        .then(() => {
-          isAnswered = quizStore.isAnswered();
-          const step = $quizStore.step;
-          const countStep = $quizStore.numberQuestions;
-          const detail = EventTrackingService.getDetails(
-            $quizStore.items,
-            $quizStore.qItemId,
-            event.detail.event
-          );
-          EventTrackingService.trackAnswer(
-            detail.title,
-            step,
-            countStep,
-            detail.element
-          );
-        });
-    } catch (err) {
-      alert(error);
-      console.error('Slider', err);
-    }
+    quizStore
+      .answerdQuestion($quizStore.qItemId, element, userAnswer)
+      .then(() => {
+        isAnswered = quizStore.isAnswered();
+        const step = $quizStore.step;
+        const countStep = $quizStore.numberQuestions;
+        const detail = EventTrackingService.getDetails(
+          $quizStore.items,
+          $quizStore.qItemId,
+          event.detail.event
+        );
+        EventTrackingService.trackAnswer(
+          detail.title,
+          step,
+          countStep,
+          detail.element
+        );
+      });
   }
 
   function round(value: number, exponent: number) {
