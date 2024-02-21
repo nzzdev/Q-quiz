@@ -135,7 +135,7 @@ const store = () => {
             //TODO: remove
             return 'repsonse not ok: ' + response.statusText + ' ' + log;
           }
-          return log;
+          return response;
         })
         .catch((error) => {
           //TODO: remove

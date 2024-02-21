@@ -24,7 +24,7 @@
 
   let userAnswer = getDefaultAnswer();
   let isAnswered = false;
-  $: log = '5. ';
+  $: log = '7. ';
   $: isArticle = document.querySelector('.ld-1741686');
   $: labelPosition = !userAnswer
     ? 50
