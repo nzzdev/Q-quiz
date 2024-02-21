@@ -131,8 +131,9 @@
         </div>
       </div>
 
-      <Button on:action={(event) => getResult(event)} disabled={false}
-        >Antworten</Button
+      <Button
+        on:action={(event) => getResult(event.detail.event)}
+        disabled={false}>Antworten</Button
       >
     {/if}
   </div>
