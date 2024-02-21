@@ -94,7 +94,7 @@ const route: ServerRoute = {
       config,
       displayOptions: displayOptions,
       noInteraction: payload.toolRuntimeConfig.noInteraction || false,
-      id,
+      id: request.query._id,
       imageServiceUrl: process.env.IMAGE_SERVICE_URL || '',
       mapConfiguration: {
         styleUrl: process.env.MAP_STYLE_URL || '',
@@ -117,7 +117,7 @@ const route: ServerRoute = {
         {
           content: `
           (function () {
-            var target = document.querySelector('#q_quiz_${id}_container');
+            var target = document.querySelector('#${id}_container');
             target.innerHTML = "";
             var props = ${JSON.stringify(props)};
             new window.q_quiz  ({
@@ -129,7 +129,7 @@ const route: ServerRoute = {
           })();`,
         },
       ],
-      markup: `<div id="q_quiz_${id}_container" class="q-quiz-container"></div>`,
+      markup: `<div id="${id}_container" class="q-quiz-container"></div>`,
     };
 
     if (styleHashMap !== null) {
@@ -143,10 +143,9 @@ const route: ServerRoute = {
 };
 
 function createId(request: Request): string {
-  return `${request.query._id}_${Math.floor(Math.random() * 100000)}`.replace(
-    /-/g,
-    ''
-  );
+  return `q_quiz_${request.query._id}_${Math.floor(
+    Math.random() * 100000
+  )}`.replace(/-/g, '');
 }
 
 export default route;
