@@ -82,6 +82,7 @@
 
 {#if isArticle}
   <div class="s-font-note-s">Bewegen Sie den Slider</div>
+  <div class="s-font-note-s">{log}</div>
 {/if}
 <BaseElement {element} {isAnswered}>
   <div class="q-quiz-input">
