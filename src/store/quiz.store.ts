@@ -87,7 +87,7 @@ const store = () => {
         return state;
       });
     },
-    answerdQuestion: (
+    answerdQuestion: async (
       qItemId: string,
       element: MultipleChoice | SliderQuestion | MapPointGuess,
       answer: DBAnswerMapPointGuessValue | string | number
