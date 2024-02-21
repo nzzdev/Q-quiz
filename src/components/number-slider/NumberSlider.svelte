@@ -23,7 +23,7 @@
 
   let userAnswer = getDefaultAnswer();
   let isAnswered = false;
-  $: log = '';
+  $: log = { out: '1. ' };
   $: isArticle = document.querySelector('.ld-1741686');
   $: labelPosition = !userAnswer
     ? 50
@@ -40,25 +40,25 @@
 
   async function getResult(event: any) {
     //TODO: remove
-    log += 'getResult\n';
+    log.out += 'getResult\n';
     console.log(event);
-    const bla = await quizStore
+    await quizStore
       .answerdQuestion($quizStore.qItemId, element, userAnswer)
       .then(() => {
         //TODO: remove
-        log += 'request succcess\n';
+        log.out += 'request succcess\n';
         isAnswered = quizStore.isAnswered();
         const step = $quizStore.step;
         const countStep = $quizStore.numberQuestions;
         //TODO: remove
-        log += 'EventTrackingService.getDetails\n';
+        log.out += 'EventTrackingService.getDetails\n';
         const detail = EventTrackingService.getDetails(
           $quizStore.items,
           $quizStore.qItemId,
           event
         );
         //TODO: remove
-        log += 'EventTrackingService.trackAnswer\n';
+        log.out += 'EventTrackingService.trackAnswer\n';
         EventTrackingService.trackAnswer(
           detail.title,
           step,
@@ -66,12 +66,11 @@
           detail.element
         );
         //TODO: remove
-        log += '/end)\n';
-        log += 'isAnswered: ' + isAnswered + '\n';
+        log.out += '/end)\n';
+        log.out += 'isAnswered: ' + isAnswered + '\n';
       });
     //TODO: remove
-    log += 'answeredQuestion: ' + bla + '\n';
-    log += '/getResult\n';
+    log.out += '/getResult\n';
   }
 
   function round(value: number, exponent: number) {
@@ -91,7 +90,7 @@
 
 {#if isArticle}
   <div class="s-font-note-s">Bewegen Sie den Slider</div>
-  <div class="s-font-note-s">{log}</div>
+  <div class="s-font-note-s">{log.out}</div>
 {/if}
 <BaseElement {element} {isAnswered}>
   <div class="q-quiz-input">
@@ -157,7 +156,7 @@
           class="button s-button"
           style="--q-quiz-button-bg-color: {colorStyle.Background}; --q-quiz-button-hover-color: {colorStyle.Hover}; --q-quiz-button-disabled-color: {colorStyle.Disabled};"
           on:click={(event) => {
-            log += 'click\n';
+            log.out += 'click\n';
             getResult(event);
           }}
         >
