@@ -90,8 +90,7 @@ const store = () => {
     answerdQuestion: (
       qItemId: string,
       element: MultipleChoice | SliderQuestion | MapPointGuess,
-      answer: DBAnswerMapPointGuessValue | string | number,
-      log: { out: string } = { out: 'default' }
+      answer: DBAnswerMapPointGuessValue | string | number
     ) => {
       const storeItems = get({ subscribe });
       const data: DBAnswerData = {
@@ -102,7 +101,7 @@ const store = () => {
       };
 
       //TODO: remove
-      log.out += 'questionId: ' + element.id + '\n';
+      let log = 'questionId: ' + element.id + '\n';
 
       return fetch(`${storeItems.configuration.toolBaseUrl}/answer`, {
         method: 'POST',
@@ -119,7 +118,7 @@ const store = () => {
                 (item) => item.progressIndex === step
               );
               //TODO: remove
-              log.out += 'foundedItem: ' + foundedItem + '\n';
+              log += 'foundedItem: ' + foundedItem + '\n';
               if (foundedItem) {
                 const question = foundedItem.item as QuizBaseQuestion;
                 foundedItem.isAnswered = true;
@@ -140,7 +139,7 @@ const store = () => {
         })
         .catch((error) => {
           //TODO: remove
-          return log;
+          return 'error: ' + error;
           console.error('error', error);
         });
     },

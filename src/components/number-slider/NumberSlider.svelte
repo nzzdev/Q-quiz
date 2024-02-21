@@ -8,6 +8,7 @@
     SliderQuestion,
     QuizStoreContext,
     ButtonColorStyle,
+    DBAnswerData,
   } from '@src/interfaces';
 
   // import Button from '../atomic/Button.svelte';
@@ -23,7 +24,7 @@
 
   let userAnswer = getDefaultAnswer();
   let isAnswered = false;
-  $: log = { out: '2. ' };
+  $: log = '1. ';
   $: isArticle = document.querySelector('.ld-1741686');
   $: labelPosition = !userAnswer
     ? 50
@@ -40,27 +41,62 @@
 
   async function getResult(event: any) {
     //TODO: remove
-    log.out += 'getResult\n';
-    log.out += `$quizStore.qItemId ${$quizStore.qItemId}\n`;
-    log.out += `element ${JSON.stringify(element)}\n`;
-    log.out += `$userAnswer ${JSON.stringify(userAnswer)}\n`;
-    await quizStore
+    log += 'getResult\n';
+    console.log(event);
+
+    const data: DBAnswerData = {
+      itemId: $quizStore.qItemId,
+      questionId: element.id,
+      type: element.type,
+      value: userAnswer,
+    };
+
+    await fetch(`${$quizStore.configuration.toolBaseUrl}/answer`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({ data }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          const step = $quizStore.step;
+          const foundedItem = $quizStore.items.find(
+            (item) => item.progressIndex === step
+          );
+          //TODO: remove
+          log += 'foundedItem: ' + foundedItem + '\n';
+        } else {
+          // TODO:
+          console.error('repsonse not ok', response.statusText);
+          //TODO: remove
+          return 'repsonse not ok: ' + response.statusText + ' ' + log;
+        }
+        return log;
+      })
+      .catch((error) => {
+        //TODO: remove
+        return 'error: ' + error;
+        console.error('error', error);
+      });
+
+    const bla = await quizStore
       .answerdQuestion($quizStore.qItemId, element, userAnswer)
       .then(() => {
         //TODO: remove
-        log.out += 'request succcess\n';
+        log += 'request succcess\n';
         isAnswered = quizStore.isAnswered();
         const step = $quizStore.step;
         const countStep = $quizStore.numberQuestions;
         //TODO: remove
-        log.out += 'EventTrackingService.getDetails\n';
+        log += 'EventTrackingService.getDetails\n';
         const detail = EventTrackingService.getDetails(
           $quizStore.items,
           $quizStore.qItemId,
           event
         );
         //TODO: remove
-        log.out += 'EventTrackingService.trackAnswer\n';
+        log += 'EventTrackingService.trackAnswer\n';
         EventTrackingService.trackAnswer(
           detail.title,
           step,
@@ -68,11 +104,12 @@
           detail.element
         );
         //TODO: remove
-        log.out += '/end)\n';
-        log.out += 'isAnswered: ' + isAnswered + '\n';
+        log += '/end)\n';
+        log += 'isAnswered: ' + isAnswered + '\n';
       });
     //TODO: remove
-    log.out += '/getResult\n';
+    log += 'answeredQuestion: ' + bla + '\n';
+    log += '/getResult\n';
   }
 
   function round(value: number, exponent: number) {
@@ -92,7 +129,7 @@
 
 {#if isArticle}
   <div class="s-font-note-s">Bewegen Sie den Slider</div>
-  <div class="s-font-note-s">{log.out}</div>
+  <div class="s-font-note-s">{log}</div>
 {/if}
 <BaseElement {element} {isAnswered}>
   <div class="q-quiz-input">
@@ -158,7 +195,7 @@
           class="button s-button"
           style="--q-quiz-button-bg-color: {colorStyle.Background}; --q-quiz-button-hover-color: {colorStyle.Hover}; --q-quiz-button-disabled-color: {colorStyle.Disabled};"
           on:click={(event) => {
-            log.out += 'click\n';
+            log += 'click\n';
             getResult(event);
           }}
         >

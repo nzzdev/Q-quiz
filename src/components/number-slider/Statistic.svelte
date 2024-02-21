@@ -18,7 +18,7 @@
   export let userAnswer: number;
   export let toolBaseUrl: string;
   //TODO: remove
-  export let log: { out: string };
+  export let log: string;
 
   const { containerWidthStore } = getContext(key) as QuizStoreContext;
 
@@ -39,12 +39,12 @@
     }
 
     //TODO: remove
-    log.out += 'statistic\n';
+    log += 'statistic\n';
     fetch(`${toolBaseUrl}/answers/${element.type}/${element.id}`)
       .then((response) => response.json())
       .then((results: NumberOfAnswersPerChoice[]) => {
         //TODO: remove
-        log.out += 'request success\n';
+        log += 'request success\n';
         if (element.type === QuizElementType.NumberGuess) {
           answers = results;
         } else if (element.type === QuizElementType.NumberPoll) {
@@ -53,10 +53,10 @@
           new Error('Wrong type of question');
         }
         //TODO: remove
-        log.out += 'setup\n';
+        log += 'setup\n';
         setup($containerWidthStore);
         //TODO: remove
-        log.out += '/setup\n';
+        log += '/setup\n';
       });
   });
 
