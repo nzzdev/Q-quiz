@@ -143,9 +143,10 @@ const route: ServerRoute = {
 };
 
 function createId(request: Request): string {
-  return `q_quiz_${request.query._id}_${Math.floor(
-    Math.random() * 100000
-  )}`.replace(/-/g, '');
+  return `${request.query._id}_${Math.floor(Math.random() * 100000)}`.replace(
+    /-/g,
+    ''
+  );
 }
 
 export default route;
