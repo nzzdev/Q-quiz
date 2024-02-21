@@ -9,7 +9,6 @@
   import Button from '../atomic/Button.svelte';
   import BaseElement from '../quiz-base-elelement/BaseElement.svelte';
   import Statistic from './Statistic.svelte';
-  import { error } from 'console';
 
   export let element: SliderQuestion;
   export let toolBaseUrl: string;
@@ -36,23 +35,19 @@
       .answerdQuestion($quizStore.qItemId, element, userAnswer)
       .then(() => {
         isAnswered = quizStore.isAnswered();
-        // const step = $quizStore.step;
-        // const countStep = $quizStore.numberQuestions;
-        // const detail = EventTrackingService.getDetails(
-        //   $quizStore.items,
-        //   $quizStore.qItemId,
-        //   event.detail.event
-        // );
-        // EventTrackingService.trackAnswer(
-        //   detail.title,
-        //   step,
-        //   countStep,
-        //   detail.element
-        // );
-      })
-      .catch((error) => {
-        isAnswered = quizStore.isAnswered();
-        console.error(error);
+        const step = $quizStore.step;
+        const countStep = $quizStore.numberQuestions;
+        const detail = EventTrackingService.getDetails(
+          $quizStore.items,
+          $quizStore.qItemId,
+          event.detail.event
+        );
+        EventTrackingService.trackAnswer(
+          detail.title,
+          step,
+          countStep,
+          detail.element
+        );
       });
   }
 
@@ -131,9 +126,7 @@
         </div>
       </div>
 
-      <Button on:action={(event) => getResult(event.detail.event)}
-        >Antworten</Button
-      >
+      <Button on:action={getResult} disabled={false}>Antworten</Button>
     {/if}
   </div>
 </BaseElement>
