@@ -23,6 +23,7 @@
 
   let userAnswer = getDefaultAnswer();
   let isAnswered = false;
+  $: isArticle = document.querySelector('.ld-1741686');
   $: labelPosition = !userAnswer
     ? 50
     : ((userAnswer - element.min) / (element.max - element.min)) * 100;
@@ -73,6 +74,9 @@
   }
 </script>
 
+{#if !isArticle}
+  <div class="s-font-note-s">Bewegen Sie den Slider</div>
+{/if}
 <BaseElement {element} {isAnswered}>
   <div class="q-quiz-input">
     {#if isAnswered}
