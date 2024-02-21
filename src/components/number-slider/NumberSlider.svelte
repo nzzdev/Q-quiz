@@ -49,6 +49,10 @@
         //   countStep,
         //   detail.element
         // );
+      })
+      .catch((error) => {
+        isAnswered = quizStore.isAnswered();
+        console.error(error);
       });
   }
 
