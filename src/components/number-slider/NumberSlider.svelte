@@ -44,36 +44,35 @@
     log += 'getResult\n';
     log += `qItemId: ${$quizStore.qItemId}\n`;
 
-    if (!isArticle) {
-      const bla = await quizStore
-        .answerdQuestion($quizStore.qItemId, element, userAnswer)
-        .then(() => {
-          //TODO: remove
-          log += 'request succcess\n';
-          isAnswered = quizStore.isAnswered();
-          const step = $quizStore.step;
-          const countStep = $quizStore.numberQuestions;
-          //TODO: remove
-          log += 'EventTrackingService.getDetails\n';
-          const detail = EventTrackingService.getDetails(
-            $quizStore.items,
-            $quizStore.qItemId,
-            event
-          );
-          //TODO: remove
-          log += 'EventTrackingService.trackAnswer\n';
-          EventTrackingService.trackAnswer(
-            detail.title,
-            step,
-            countStep,
-            detail.element
-          );
-          //TODO: remove
-          log += '/end)\n';
-          log += 'isAnswered: ' + isAnswered + '\n';
-        });
-      log += 'answeredQuestion: ' + bla + '\n';
-    } else {
+    const bla = await quizStore
+      .answerdQuestion($quizStore.qItemId, element, userAnswer)
+      .then(() => {
+        //TODO: remove
+        log += 'request succcess\n';
+        isAnswered = quizStore.isAnswered();
+        const step = $quizStore.step;
+        const countStep = $quizStore.numberQuestions;
+        //TODO: remove
+        log += 'EventTrackingService.getDetails\n';
+        const detail = EventTrackingService.getDetails(
+          $quizStore.items,
+          $quizStore.qItemId,
+          event
+        );
+        //TODO: remove
+        log += 'EventTrackingService.trackAnswer\n';
+        EventTrackingService.trackAnswer(
+          detail.title,
+          step,
+          countStep,
+          detail.element
+        );
+        //TODO: remove
+        log += '/end)\n';
+        log += 'isAnswered: ' + isAnswered + '\n';
+      });
+    log += 'answeredQuestion: ' + bla + '\n';
+    if (isArticle) {
       const data: DBAnswerData = {
         itemId: $quizStore.qItemId,
         questionId: element.id,
@@ -86,33 +85,11 @@
           'content-type': 'application/json',
         },
         body: JSON.stringify({ data }),
-      })
-        .then((response) => {
-          if (response.ok) {
-            const step = $quizStore.step;
-            const foundedItem = $quizStore.items.find(
-              (item) => item.progressIndex === step
-            );
-            //TODO: remove
-            log += 'foundedItem: ' + foundedItem + '\n';
-            if (foundedItem) {
-              isAnswered = true;
-            } else {
-              log += `response.statusText: ${JSON.stringify(response)}\n`;
-            }
-          } else {
-            // TODO:
-            console.error('repsonse not ok', response.statusText);
-            //TODO: remove
-            log += `response.statusText: ${response.statusText}\n`;
-          }
-          return response;
-        })
-        .catch((error) => {
-          //TODO: remove
-          log += `error: ${error}\n`;
-          console.error('error', error);
-        });
+      }).catch((error) => {
+        //TODO: remove
+        log += `error: ${error}\n`;
+        console.error('error', error);
+      });
     }
     log += '/getResult\n';
   }
