@@ -4,28 +4,19 @@
 
   import { EventTrackingService } from '@src/services/event-tracking';
   import key from '@src/services/key-service';
-  import type {
-    SliderQuestion,
-    QuizStoreContext,
-    ButtonColorStyle,
-    DBAnswerData,
-  } from '@src/interfaces';
+  import type { SliderQuestion, QuizStoreContext } from '@src/interfaces';
 
-  // import Button from '../atomic/Button.svelte';
+  import Button from '../atomic/Button.svelte';
   import BaseElement from '../quiz-base-elelement/BaseElement.svelte';
   import Statistic from './Statistic.svelte';
-  import { ColorDefaults } from '@src/constants';
 
   export let element: SliderQuestion;
   export let toolBaseUrl: string;
-  export let colorStyle: ButtonColorStyle = ColorDefaults.Button.Color;
 
   const { quizStore } = getContext(key) as QuizStoreContext;
 
   let userAnswer = getDefaultAnswer();
   let isAnswered = false;
-  $: log = '10. ';
-  $: isArticle = document.querySelector('.ld-1741686');
   $: labelPosition = !userAnswer
     ? 50
     : ((userAnswer - element.min) / (element.max - element.min)) * 100;
@@ -39,63 +30,25 @@
     );
   }
 
-  async function getResult(event: any) {
-    //TODO: remove
-    log += 'getResult\n';
-    log += `qItemId: ${$quizStore.qItemId}\n`;
-
-    const bla = await quizStore
+  function getResult(event: CustomEvent) {
+    quizStore
       .answerdQuestion($quizStore.qItemId, element, userAnswer)
       .then(() => {
-        //TODO: remove
-        log += 'request succcess\n';
         isAnswered = quizStore.isAnswered();
         const step = $quizStore.step;
         const countStep = $quizStore.numberQuestions;
-        //TODO: remove
-        log += 'EventTrackingService.getDetails\n';
         const detail = EventTrackingService.getDetails(
           $quizStore.items,
           $quizStore.qItemId,
-          event
+          event.detail.event
         );
-        //TODO: remove
-        log += 'EventTrackingService.trackAnswer\n';
         EventTrackingService.trackAnswer(
           detail.title,
           step,
           countStep,
           detail.element
         );
-        //TODO: remove
-        log += '/end)\n';
-        log += 'isAnswered: ' + isAnswered + '\n';
       });
-    log += 'answeredQuestion: ' + bla + '\n';
-    if (isArticle) {
-      const data: DBAnswerData = {
-        itemId: $quizStore.qItemId,
-        questionId: element.id,
-        type: element.type,
-        value: userAnswer,
-      };
-      try {
-        fetch(`${$quizStore.configuration.toolBaseUrl}/answer`, {
-          method: 'POST',
-          headers: {
-            'content-type': 'application/json',
-          },
-          body: JSON.stringify({ data }),
-        }).catch((error) => {
-          //TODO: remove
-          log += `error: ${error}\n`;
-          console.error('error', error);
-        });
-      } catch (err) {
-        log += `try catch: ${err}\n`;
-      }
-    }
-    log += '/getResult\n';
   }
 
   function round(value: number, exponent: number) {
@@ -113,14 +66,10 @@
   }
 </script>
 
-{#if isArticle}
-  <div class="s-font-note-s">Bewegen Sie den Slider</div>
-  <div class="s-font-note-s">{log}</div>
-{/if}
 <BaseElement {element} {isAnswered}>
   <div class="q-quiz-input">
     {#if isAnswered}
-      <Statistic bind:log {element} {userAnswer} {toolBaseUrl} />
+      <Statistic {element} {userAnswer} {toolBaseUrl} />
     {:else}
       <div class="q-quiz-input-range-container">
         <div class="q-quiz-input-range-position-label-container">
@@ -176,20 +125,8 @@
           {/if}
         </div>
       </div>
-      <div class="button-container">
-        <button
-          class="button s-button"
-          style="--q-quiz-button-bg-color: {colorStyle.Background}; --q-quiz-button-hover-color: {colorStyle.Hover}; --q-quiz-button-disabled-color: {colorStyle.Disabled};"
-          on:click={(event) => {
-            log += 'click\n';
-            getResult(event);
-          }}
-        >
-          <div class="s-font-note-s button-text" style:color={colorStyle.Text}>
-            Antworten
-          </div>
-        </button>
-      </div>
+
+      <Button on:action={getResult} disabled={false}>Antworten</Button>
     {/if}
   </div>
 </BaseElement>
@@ -266,39 +203,5 @@
 
   .q-quiz-input-range-position-label__label {
     padding: 0 $basis-margin;
-  }
-
-  .button-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-  .button {
-    display: flex;
-    align-items: safe;
-    width: 100%;
-    padding: 12px;
-    cursor: pointer;
-    background-color: var(--q-quiz-button-bg-color);
-
-    &:hover {
-      opacity: 1;
-      background-color: var(--q-quiz-button-hover-color);
-    }
-
-    &:disabled,
-    &:disabled:hover {
-      background-color: var(--q-quiz-button-disabled-color);
-      border-color: #848484;
-      cursor: not-allowed;
-    }
-
-    &-icon {
-      margin-top: 7px;
-    }
-
-    &-text {
-      font-weight: 400;
-    }
   }
 </style>

@@ -100,9 +100,6 @@ const store = () => {
         value: answer,
       };
 
-      //TODO: remove
-      let log = 'questionId: ' + element.id + '\n';
-
       return fetch(`${storeItems.configuration.toolBaseUrl}/answer`, {
         method: 'POST',
         headers: {
@@ -117,8 +114,6 @@ const store = () => {
               const foundedItem = state.items.find(
                 (item) => item.progressIndex === step
               );
-              //TODO: remove
-              log += 'foundedItem: ' + foundedItem + '\n';
               if (foundedItem) {
                 const question = foundedItem.item as QuizBaseQuestion;
                 foundedItem.isAnswered = true;
@@ -132,14 +127,9 @@ const store = () => {
           } else {
             // TODO:
             console.error('repsonse not ok', response.statusText);
-            //TODO: remove
-            return 'repsonse not ok: ' + response.statusText + ' ' + log;
           }
-          return response;
         })
         .catch((error) => {
-          //TODO: remove
-          return 'error: ' + error;
           console.error('error', error);
         });
     },
