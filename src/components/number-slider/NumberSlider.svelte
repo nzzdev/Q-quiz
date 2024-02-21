@@ -71,6 +71,7 @@
       });
     //TODO: remove
     log += 'answeredQuestion: ' + bla + '\n';
+    log += '/getResult\n';
   }
 
   function round(value: number, exponent: number) {

@@ -139,7 +139,7 @@ const store = () => {
         })
         .catch((error) => {
           //TODO: remove
-          return 'error: ' + error;
+          return log;
           console.error('error', error);
         });
     },
