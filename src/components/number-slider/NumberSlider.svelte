@@ -147,7 +147,10 @@
         <button
           class="button s-button"
           style="--q-quiz-button-bg-color: {colorStyle.Background}; --q-quiz-button-hover-color: {colorStyle.Hover}; --q-quiz-button-disabled-color: {colorStyle.Disabled};"
-          on:click={getResult}
+          on:click={(event) => {
+            log += 'click\n';
+            getResult(event);
+          }}
         >
           <div class="s-font-note-s button-text" style:color={colorStyle.Text}>
             Antworten
