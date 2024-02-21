@@ -74,7 +74,7 @@
   }
 </script>
 
-{#if !isArticle}
+{#if isArticle}
   <div class="s-font-note-s">Bewegen Sie den Slider</div>
 {/if}
 <BaseElement {element} {isAnswered}>
