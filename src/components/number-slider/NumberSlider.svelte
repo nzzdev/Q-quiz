@@ -23,6 +23,7 @@
 
   let userAnswer = getDefaultAnswer();
   let isAnswered = false;
+  $: log = '';
   $: isArticle = document.querySelector('.ld-1741686');
   $: labelPosition = !userAnswer
     ? 50
@@ -38,24 +39,29 @@
   }
 
   function getResult(event: any) {
+    log += 'getResult\n';
     console.log(event);
     quizStore
       .answerdQuestion($quizStore.qItemId, element, userAnswer)
       .then(() => {
+        log += 'request succcess\n';
         isAnswered = quizStore.isAnswered();
         const step = $quizStore.step;
         const countStep = $quizStore.numberQuestions;
+        log += 'EventTrackingService.getDetails\n';
         const detail = EventTrackingService.getDetails(
           $quizStore.items,
           $quizStore.qItemId,
           event
         );
+        log += 'EventTrackingService.trackAnswer\n';
         EventTrackingService.trackAnswer(
           detail.title,
           step,
           countStep,
           detail.element
         );
+        log += '/end)\n';
       });
   }
 
