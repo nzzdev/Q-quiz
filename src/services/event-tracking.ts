@@ -3,17 +3,21 @@ import type { Cover, ElementItemStore } from '@src/interfaces';
 
 export class EventTrackingService {
   public static trackNextScreen(element: HTMLElement) {
-    const event = new CustomEvent('q-tracking-event', {
-      bubbles: true,
-      detail: {
-        eventInfo: {
-          componentName: 'q-quiz',
-          eventAction: 'next-screen',
-          eventNonInteractive: false,
+    try {
+      const event = new CustomEvent('q-tracking-event', {
+        bubbles: true,
+        detail: {
+          eventInfo: {
+            componentName: 'q-quiz',
+            eventAction: 'next-screen',
+            eventNonInteractive: false,
+          },
         },
-      },
-    });
-    element.dispatchEvent(event);
+      });
+      element.dispatchEvent(event);
+    } catch (err) {
+      console.warn('Error in trackNextScreen', err);
+    }
   }
 
   public static trackClickLink(
@@ -22,17 +26,21 @@ export class EventTrackingService {
     step: number | string,
     element: HTMLElement
   ) {
-    const event = new CustomEvent('q-tracking-event', {
-      bubbles: true,
-      detail: {
-        eventInfo: {
-          componentName: 'q-quiz',
-          eventAction: `link-${title}-${step}-${link}`,
-          eventNonInteractive: false,
+    try {
+      const event = new CustomEvent('q-tracking-event', {
+        bubbles: true,
+        detail: {
+          eventInfo: {
+            componentName: 'q-quiz',
+            eventAction: `link-${title}-${step}-${link}`,
+            eventNonInteractive: false,
+          },
         },
-      },
-    });
-    element.dispatchEvent(event);
+      });
+      element.dispatchEvent(event);
+    } catch (err) {
+      console.warn('Error in trackClickLink', err);
+    }
   }
 
   public static trackAnswer(
@@ -41,17 +49,21 @@ export class EventTrackingService {
     countSteps: number,
     element: HTMLElement
   ) {
-    const event = new CustomEvent('q-tracking-event', {
-      bubbles: true,
-      detail: {
-        eventInfo: {
-          componentName: 'q-quiz',
-          eventAction: `answer-${title}-${step}-${countSteps}`,
-          eventNonInteractive: false,
+    try {
+      const event = new CustomEvent('q-tracking-event', {
+        bubbles: true,
+        detail: {
+          eventInfo: {
+            componentName: 'q-quiz',
+            eventAction: `answer-${title}-${step}-${countSteps}`,
+            eventNonInteractive: false,
+          },
         },
-      },
-    });
-    element.dispatchEvent(event);
+      });
+      element.dispatchEvent(event);
+    } catch (err) {
+      console.warn('Error in trackAnswer', err);
+    }
   }
 
   // TODO: rename
