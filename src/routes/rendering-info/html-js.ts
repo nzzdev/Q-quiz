@@ -117,7 +117,7 @@ const route: ServerRoute = {
         {
           content: `
           (function () {
-            var target = document.querySelector('#${id}_container');
+            var target = document.querySelector('#q_quiz_${id}_container');
             target.innerHTML = "";
             var props = ${JSON.stringify(props)};
             new window.q_quiz  ({
@@ -129,7 +129,7 @@ const route: ServerRoute = {
           })();`,
         },
       ],
-      markup: `<div id="${id}_container" class="q-quiz-container"></div>`,
+      markup: `<div id="q_quiz_${id}_container" class="q-quiz-container"></div>`,
     };
 
     if (styleHashMap !== null) {
