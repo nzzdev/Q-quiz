@@ -51,7 +51,7 @@
   {#if element.text}
     <p class="s-font-text">{element.text}</p>
   {/if}
-  {#if element.urlRecommendations}
+  {#if element.urlRecommendations && element.urlRecommendations.links.length > 0}
     <Divider />
     <ArticleRecommendations recommendations={element.urlRecommendations} />
     {#if !element.quizLink}
