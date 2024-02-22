@@ -15,7 +15,7 @@
 
   const { quizStore } = getContext(key) as QuizStoreContext;
 
-  $: log = '2. ';
+  $: log = '3. ';
   $: isArticle = document.querySelector('.ld-1741686');
 
   let userAnswer = getDefaultAnswer();
@@ -34,12 +34,15 @@
   }
 
   function getResult(event: CustomEvent) {
+    log += `qItemId: ${$quizStore.qItemId}`;
+    log += `userAnswer: ${JSON.stringify(userAnswer)}`;
+    log += `element: ${JSON.stringify(element)}`;
     quizStore
       .answerdQuestion($quizStore.qItemId, element, userAnswer.toString())
       .then(() => {
         log += `Items: ${JSON.stringify($quizStore.items)}`;
         log += `Step: ${$quizStore.step}`;
-        isAnswered = quizStore.isAnswered();
+        isAnswered = true;
         const step = $quizStore.step;
         const countStep = $quizStore.numberQuestions;
         const detail = EventTrackingService.getDetails(
