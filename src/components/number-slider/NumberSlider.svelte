@@ -19,7 +19,7 @@
 
   const { quizStore } = getContext(key) as QuizStoreContext;
 
-  $: log = '4. ';
+  $: log = '5. ';
   $: isArticle = document.querySelector('.ld-1741686');
 
   let userAnswer = getDefaultAnswer();
@@ -73,10 +73,10 @@
       body: JSON.stringify({ data }),
     })
       .then((response) => {
-        log += `qItemId: ${JSON.stringify(response)}`;
+        log += `qItemId: ${response}`;
       })
       .catch((err) => {
-        log += `error: ${JSON.stringify(err)}`;
+        log += `error: ${err}`;
       });
     // -------------------------
   }
