@@ -4,11 +4,7 @@
 
   import { EventTrackingService } from '@src/services/event-tracking';
   import key from '@src/services/key-service';
-  import type {
-    SliderQuestion,
-    QuizStoreContext,
-    DBAnswerData,
-  } from '@src/interfaces';
+  import type { SliderQuestion, QuizStoreContext } from '@src/interfaces';
 
   import Button from '../atomic/Button.svelte';
   import BaseElement from '../quiz-base-elelement/BaseElement.svelte';
@@ -18,9 +14,6 @@
   export let toolBaseUrl: string;
 
   const { quizStore } = getContext(key) as QuizStoreContext;
-
-  $: log = '6. ';
-  $: isArticle = document.querySelector('.ld-1741686');
 
   let userAnswer = getDefaultAnswer();
   let isAnswered = false;
@@ -56,34 +49,6 @@
           detail.element
         );
       });
-
-    // -------------------------
-    const data: DBAnswerData = {
-      itemId: $quizStore.qItemId,
-      questionId: element.id,
-      type: element.type,
-      value: userAnswer,
-    };
-
-    log += `qItemId: ${JSON.stringify({ data })}`;
-    log += 'qItemId :' + JSON.stringify({ data });
-    log += 'checkStringify :' + JSON.stringify({ isCheck: true });
-    log += `href: ${window.location.href}`;
-    log += `href: ${window.location.hostname}`;
-    await fetch(`${$quizStore.configuration.toolBaseUrl}/answer`, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify({ data }),
-    })
-      .then((response) => {
-        log += `qItemId: ${response}`;
-      })
-      .catch((err) => {
-        log += `error: ${err}`;
-      });
-    // -------------------------
   }
 
   function round(value: number, exponent: number) {
@@ -100,11 +65,6 @@
     return index !== -1 ? str.length - index - 1 : 0;
   }
 </script>
-
-{#if isArticle}
-  <div class="s-font-note-s">Bewegen Sie den Slider</div>
-  <div class="s-font-note-s">{log}</div>
-{/if}
 
 <BaseElement {element} {isAnswered}>
   <div class="q-quiz-input">

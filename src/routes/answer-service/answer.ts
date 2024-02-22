@@ -1,5 +1,4 @@
 import type { Request, ResponseToolkit, ServerRoute } from '@hapi/hapi';
-import Boom from '@hapi/boom';
 import Joi from 'joi';
 import { AnswerDatabase } from '@src/services/answer-store';
 
@@ -24,7 +23,7 @@ const route: ServerRoute = {
       doc = JSON.parse(request.payload);
     }
 
-    console.log('doc', doc);
+    console.log('Save document', JSON.stringify(doc));
 
     // we want some properties on every document that goes into user-store
     // TODO
@@ -32,9 +31,7 @@ const route: ServerRoute = {
     doc.created_at = new Date().toISOString();
 
     const database = new AnswerDatabase();
-    const dbAnswer = await database.saveAnswer(doc);
-    console.warn(JSON.stringify(dbAnswer));
-    return dbAnswer;
+    return await database.saveAnswer(doc);
   },
 };
 
