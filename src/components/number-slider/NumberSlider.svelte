@@ -15,7 +15,7 @@
 
   const { quizStore } = getContext(key) as QuizStoreContext;
 
-  $: log = '1. ';
+  $: log = '2. ';
   $: isArticle = document.querySelector('.ld-1741686');
 
   let userAnswer = getDefaultAnswer();
@@ -35,7 +35,7 @@
 
   function getResult(event: CustomEvent) {
     quizStore
-      .answerdQuestion($quizStore.qItemId, element, userAnswer)
+      .answerdQuestion($quizStore.qItemId, element, userAnswer.toString())
       .then(() => {
         log += `Items: ${JSON.stringify($quizStore.items)}`;
         log += `Step: ${$quizStore.step}`;
@@ -136,7 +136,9 @@
         </div>
       </div>
 
-      <Button on:action={getResult} disabled={false}>Antworten</Button>
+      <Button on:action={(event) => getResult(event)} disabled={false}
+        >Antworten</Button
+      >
     {/if}
   </div>
 </BaseElement>

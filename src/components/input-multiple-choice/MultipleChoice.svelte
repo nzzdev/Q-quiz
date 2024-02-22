@@ -12,6 +12,9 @@
   export let element: MultipleChoice;
   export let toolBaseUrl: string;
 
+  $: log = '1. ';
+  $: isArticle = document.querySelector('.ld-1741686');
+
   const { quizStore } = getContext(key) as QuizStoreContext;
 
   let userAnswer: string;
@@ -56,6 +59,11 @@
     return array;
   }
 </script>
+
+{#if isArticle}
+  <div class="s-font-note-s">Sie können nur ein Antwort geben</div>
+  <div class="s-font-note-s">{log}</div>
+{/if}
 
 <BaseElement {element} isAnswered={!!userAnswer}>
   {#if userAnswer}
