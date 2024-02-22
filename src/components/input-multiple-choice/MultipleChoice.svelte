@@ -12,18 +12,12 @@
   export let element: MultipleChoice;
   export let toolBaseUrl: string;
 
-  $: log = '2. ';
-  $: isArticle = document.querySelector('.ld-1741686');
-
   const { quizStore } = getContext(key) as QuizStoreContext;
 
   let userAnswer: string;
   let shuffledAnswers = shuffleArray(element.choices.concat([element.answer]));
 
   function getResult(answer: string, event: CustomEvent) {
-    log += `qItemId: ${$quizStore.qItemId}`;
-    log += `userAnswer: ${JSON.stringify(answer)}`;
-    log += `element: ${JSON.stringify(element)}`;
     quizStore.answerdQuestion($quizStore.qItemId, element, answer).then(() => {
       userAnswer = answer;
       const detail = EventTrackingService.getDetails(
@@ -62,11 +56,6 @@
     return array;
   }
 </script>
-
-{#if isArticle}
-  <div class="s-font-note-s">Sie können nur ein Antwort geben</div>
-  <div class="s-font-note-s">{log}</div>
-{/if}
 
 <BaseElement {element} isAnswered={!!userAnswer}>
   {#if userAnswer}

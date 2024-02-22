@@ -143,7 +143,7 @@
           distance: correctLatLng.distanceTo(userAnswerLatLng),
         })
         .then(() => {
-          isAnswered = quizStore.isAnswered();
+          isAnswered = true;
           const step = $quizStore.step;
           const countStep = $quizStore.numberQuestions;
           const detail = EventTrackingService.getDetails(

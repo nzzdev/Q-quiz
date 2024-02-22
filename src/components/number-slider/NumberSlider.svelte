@@ -34,14 +34,9 @@
   }
 
   function getResult(event: CustomEvent) {
-    log += `qItemId: ${$quizStore.qItemId}`;
-    log += `userAnswer: ${JSON.stringify(userAnswer)}`;
-    log += `element: ${JSON.stringify(element)}`;
     quizStore
       .answerdQuestion($quizStore.qItemId, element, userAnswer.toString())
       .then(() => {
-        log += `Items: ${JSON.stringify($quizStore.items)}`;
-        log += `Step: ${$quizStore.step}`;
         isAnswered = true;
         const step = $quizStore.step;
         const countStep = $quizStore.numberQuestions;
