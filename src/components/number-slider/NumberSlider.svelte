@@ -68,6 +68,8 @@
     log += `qItemId: ${JSON.stringify({ data })}`;
     log += 'qItemId :' + JSON.stringify({ data });
     log += 'checkStringify :' + JSON.stringify({ isCheck: true });
+    log += `href: ${window.location.href}`;
+    log += `href: ${window.location.hostname}`;
     await fetch(`${$quizStore.configuration.toolBaseUrl}/answer`, {
       method: 'POST',
       headers: {
