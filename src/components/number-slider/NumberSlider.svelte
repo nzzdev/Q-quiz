@@ -19,7 +19,7 @@
 
   const { quizStore } = getContext(key) as QuizStoreContext;
 
-  $: log = '5. ';
+  $: log = '6. ';
   $: isArticle = document.querySelector('.ld-1741686');
 
   let userAnswer = getDefaultAnswer();
@@ -65,6 +65,9 @@
       value: userAnswer,
     };
 
+    log += `qItemId: ${JSON.stringify({ data })}`;
+    log += 'qItemId :' + JSON.stringify({ data });
+    log += 'checkStringify :' + JSON.stringify({ isCheck: true });
     await fetch(`${$quizStore.configuration.toolBaseUrl}/answer`, {
       method: 'POST',
       headers: {
