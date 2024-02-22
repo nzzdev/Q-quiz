@@ -157,7 +157,7 @@ export class ScoreService {
     if (question.userAnswer && question.userAnswer.answer) {
       if (
         question.type === QuizElementType.MultipleChoice &&
-        question.userAnswer.answer === answer
+        question.userAnswer.isCorrect
       ) {
         return 1;
       }
