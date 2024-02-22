@@ -118,19 +118,21 @@ export interface QuizElements {
 }
 
 export interface QuizBaseQuestion extends BaseElement {
+  answer: string | number | MapPointGuessAnswer;
   urlRecommendations?: UrlRecommendations;
   question: string;
   image?: QuizImage;
   introduction?: string;
   answerText?: string;
   userAnswer?: UserAnswer;
+  isAnswered?: boolean;
   questionSubTitle?: string;
   notes?: string;
 }
 
 export interface UserAnswer {
   answer?: string | number | AnswerGeoData;
-  isCorrect: boolean;
+  isCorrect?: boolean;
 }
 
 export interface QuizStoreContext {

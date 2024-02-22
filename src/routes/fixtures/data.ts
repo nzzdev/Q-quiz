@@ -3,6 +3,10 @@ import type { ServerRoute } from '@hapi/hapi';
 import lastCardt from '../../../resources/fixtures/data/last-card.json';
 import allCoverWithImageAndthemeLogo from '../../../resources/fixtures/data/all-cover-with-image-and-theme-title.json';
 import all from '../../../resources/fixtures/data/all.json';
+import multipleChoiceLastCard from '../../../resources/fixtures/data/multiple-choice-last-card.json';
+import mapPointGuessLastCard from '../../../resources/fixtures/data/map-point-guess-last-card.json';
+import numberGuessLastCard from '../../../resources/fixtures/data/number-guess-last-card.json';
+import numberPollGuessLastCard from '../../../resources/fixtures/data/number-poll-last-card.json';
 import allQuestionTypesWithImages from '../../../resources/fixtures/data/all-question-types-with-images.json';
 import coverWithTitleNoLastCard from '../../../resources/fixtures/data/cover-with-title-no-last-card.json';
 import singleBigNumberGuess from '../../../resources/fixtures/data/single-big-number-guess.json';
@@ -20,10 +24,14 @@ import singleNumberPoll from '../../../resources/fixtures/data/single-number-pol
 import stripPlotNumberGuess from '../../../resources/fixtures/data/strip-plot-number-guess.json';
 
 const fixtureData = [
-  lastCardt,
   allCoverWithImageAndthemeLogo,
   allQuestionTypesWithImages,
   all,
+  lastCardt,
+  multipleChoiceLastCard,
+  mapPointGuessLastCard,
+  numberGuessLastCard,
+  numberPollGuessLastCard,
   coverWithTitleNoLastCard,
   singleBigNumberGuess,
   singleBigNumberPoll,

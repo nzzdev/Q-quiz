@@ -33,7 +33,7 @@
 
   onMount(() => {
     if (element.type === QuizElementType.NumberPoll) {
-      labelText = 'Ihre Schätzung';
+      labelText = 'Ihre Antwort';
     }
 
     //TODO: remove

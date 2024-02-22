@@ -23,6 +23,7 @@ const route: ServerRoute = {
       doc = JSON.parse(request.payload);
     }
 
+    // log saved document
     console.log('Save document', JSON.stringify(doc));
 
     // we want some properties on every document that goes into user-store

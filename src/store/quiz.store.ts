@@ -1,3 +1,4 @@
+import { QuizElementType } from '@src/enums';
 import type {
   DBAnswerData,
   DBAnswerMapPointGuessValue,
@@ -114,13 +115,24 @@ const store = () => {
               const foundedItem = state.items.find(
                 (item) => item.progressIndex === step
               );
+
               if (foundedItem) {
                 const question = foundedItem.item as QuizBaseQuestion;
-                foundedItem.isAnswered = true;
+                question.isAnswered = true;
                 question.userAnswer = {
                   answer: answer,
-                  isCorrect: true,
                 };
+
+                if (
+                  foundedItem.item.type === QuizElementType.MultipleChoice ||
+                  foundedItem.item.type === QuizElementType.NumberGuess ||
+                  foundedItem.item.type === QuizElementType.MapPointGuess
+                ) {
+                  question.userAnswer = {
+                    answer: answer,
+                    isCorrect: answer === question.answer,
+                  };
+                }
               }
               return state;
             });
