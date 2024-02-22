@@ -4,7 +4,11 @@
 
   import { EventTrackingService } from '@src/services/event-tracking';
   import key from '@src/services/key-service';
-  import type { SliderQuestion, QuizStoreContext } from '@src/interfaces';
+  import type {
+    SliderQuestion,
+    QuizStoreContext,
+    DBAnswerData,
+  } from '@src/interfaces';
 
   import Button from '../atomic/Button.svelte';
   import BaseElement from '../quiz-base-elelement/BaseElement.svelte';
@@ -15,7 +19,7 @@
 
   const { quizStore } = getContext(key) as QuizStoreContext;
 
-  $: log = '3. ';
+  $: log = '4. ';
   $: isArticle = document.querySelector('.ld-1741686');
 
   let userAnswer = getDefaultAnswer();
@@ -33,8 +37,8 @@
     );
   }
 
-  function getResult(event: CustomEvent) {
-    quizStore
+  async function getResult(event: CustomEvent) {
+    await quizStore
       .answerdQuestion($quizStore.qItemId, element, userAnswer.toString())
       .then(() => {
         isAnswered = true;
@@ -52,6 +56,29 @@
           detail.element
         );
       });
+
+    // -------------------------
+    const data: DBAnswerData = {
+      itemId: $quizStore.qItemId,
+      questionId: element.id,
+      type: element.type,
+      value: userAnswer,
+    };
+
+    await fetch(`${$quizStore.configuration.toolBaseUrl}/answer`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({ data }),
+    })
+      .then((response) => {
+        log += `qItemId: ${JSON.stringify(response)}`;
+      })
+      .catch((err) => {
+        log += `error: ${JSON.stringify(err)}`;
+      });
+    // -------------------------
   }
 
   function round(value: number, exponent: number) {

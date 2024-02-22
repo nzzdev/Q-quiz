@@ -18,7 +18,7 @@ const route: ServerRoute = {
       },
     },
   },
-  handler: function (request: Request, h: ResponseToolkit) {
+  handler: async function (request: Request, h: ResponseToolkit) {
     let doc = request.payload;
     if (typeof request.payload !== 'object') {
       doc = JSON.parse(request.payload);
@@ -32,7 +32,9 @@ const route: ServerRoute = {
     doc.created_at = new Date().toISOString();
 
     const database = new AnswerDatabase();
-    return database.saveAnswer(doc);
+    const dbAnswer = await database.saveAnswer(doc);
+    console.warn(JSON.stringify(dbAnswer));
+    return dbAnswer;
   },
 };
 
