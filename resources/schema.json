@@ -178,10 +178,6 @@
             "placeholder": "Sagt dem Nutzer in Prosa, welche Antwort richtig ist und liefert idealerweise noch etwas Erklärung dazu."
           }
         },
-        "notes": {
-          "type": "string",
-          "title": "Anmerkungen"
-        },
         "articleRecommendations": {
           "$ref": "#/definitions/articleRecommendations"
         },
@@ -248,10 +244,6 @@
             "placeholder": "Sollte so gewählt sein, dass sich zwischen Minimal- und Maximalwert etwa 100-500 Zwischenschritte ergeben."
           }
         },
-        "notes": {
-          "type": "string",
-          "title": "Anmerkungen"
-        },
         "articleRecommendations": {
           "$ref": "#/definitions/articleRecommendations"
         },
@@ -290,10 +282,6 @@
         "answerText": {
           "type": "string",
           "title": "Ausformulierte Antwort"
-        },
-        "notes": {
-          "type": "string",
-          "title": "Anmerkungen"
         },
         "articleRecommendations": {
           "$ref": "#/definitions/articleRecommendations"
