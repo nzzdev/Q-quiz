@@ -118,14 +118,16 @@ const route: ServerRoute = {
           content: `
           (function () {
             var target = document.querySelector('#${id}_container');
-            target.innerHTML = "";
-            var props = ${JSON.stringify(props)};
-            new window.q_quiz  ({
-              "target": target,
-              "props": {
-                componentConfiguration: props
-              }
-            })
+            if (target) {
+              target.innerHTML = "";
+              var props = ${JSON.stringify(props)};
+              new window.q_quiz  ({
+                "target": target,
+                "props": {
+                  componentConfiguration: props
+                }
+              })
+            }
           })();`,
         },
       ],
