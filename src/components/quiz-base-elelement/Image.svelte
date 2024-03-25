@@ -25,6 +25,7 @@
   class="image-container"
 >
   <img
+    loading="lazy"
     class:q-quiz-question-image--format-1-1={format ===
       ImageSizeFomat.FORMAT_1_1}
     class="q-quiz-question-image"

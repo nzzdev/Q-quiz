@@ -86,7 +86,7 @@ export class EventTrackingService {
     let title = itemId;
 
     if (cover) {
-      title = cover.title;
+      title = `${cover.title}-${itemId}`;
     }
 
     return { title, element };
